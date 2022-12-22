@@ -1,0 +1,12 @@
+{
+    "Course": true,
+    "Lesson": true,
+    "Student": true,
+    "Practice": true,
+    "Question": true,
+    "TaxonomyCategory": true,
+    "User": true,
+    "Instructor": true,
+    "Auth": true,
+    "Tag": true
+}

@@ -1,0 +1,11 @@
+{
+    "name": "TaxonomyCategory",
+    "alias": "taxonomycategory",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\TaxonomyCategory\\Providers\\TaxonomyCategoryServiceProvider"
+    ],
+    "files": []
+}
