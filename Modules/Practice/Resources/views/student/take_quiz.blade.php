@@ -10,9 +10,10 @@
         #sortable > div {
             float: right;
         }
-div{
-    font-size: 16px;
-}
+
+        div {
+            font-size: 18px;
+        }
     </style>
 @endpush
 @section("content")
@@ -47,46 +48,48 @@ div{
         </div>
     </div>
 
-    <div class="bg-primary pb-lg-64pt py-32pt">
-        <div class="container page__container">
-            <nav class="course-nav">
-                <a href="student-take-lesson.html"
-                   data-toggle="tooltip"
-                   data-placement="bottom"
-                   data-title="Getting Started with Angular: Introduction"><span
-                        class="material-icons">check_circle</span></a>
-                <a data-toggle="tooltip"
-                   data-placement="bottom"
-                   data-title="Getting Started with Angular: Introduction to TypeScript"
-                   href="student-take-lesson.html"><span class="material-icons">check_circle</span></a>
-                <a data-toggle="tooltip"
-                   data-placement="bottom"
-                   data-title="Getting Started with Angular: Comparing Angular to AngularJS"
-                   href="student-take-lesson.html"><span class="material-icons">check_circle</span></a>
-                <a href="student-take-quiz.html"
-                   data-toggle="tooltip"
-                   data-placement="bottom"
-                   data-title="Quiz: Getting Started with Angular"><span class="material-icons text-primary">account_circle</span></a>
-            </nav>
+{{--    <div class="bg-primary pb-lg-64pt py-32pt">--}}
+{{--        <div class="container page__container">--}}
+{{--            <nav class="course-nav">--}}
+{{--                <a href="student-take-lesson.html"--}}
+{{--                   data-toggle="tooltip"--}}
+{{--                   data-placement="bottom"--}}
+{{--                   data-title="Getting Started with Angular: Introduction"><span--}}
+{{--                        class="material-icons">check_circle</span></a>--}}
+{{--                <a data-toggle="tooltip"--}}
+{{--                   data-placement="bottom"--}}
+{{--                   data-title="Getting Started with Angular: Introduction to TypeScript"--}}
+{{--                   href="student-take-lesson.html"><span class="material-icons">check_circle</span></a>--}}
+{{--                <a data-toggle="tooltip"--}}
+{{--                   data-placement="bottom"--}}
+{{--                   data-title="Getting Started with Angular: Comparing Angular to AngularJS"--}}
+{{--                   href="student-take-lesson.html"><span class="material-icons">check_circle</span></a>--}}
+{{--                <a href="student-take-quiz.html"--}}
+{{--                   data-toggle="tooltip"--}}
+{{--                   data-placement="bottom"--}}
+{{--                   data-title="Quiz: Getting Started with Angular"><span class="material-icons text-primary">account_circle</span></a>--}}
+{{--            </nav>--}}
 
-            <div class="d-flex flex-wrap align-items-end justify-content-end mb-16pt">
-                <h1 class="text-white flex m-0">Question 1 of 5</h1>
-                <p class="h1 text-white-50 font-weight-light m-0">00:14</p>
-            </div>
+{{--            <div class="d-flex flex-wrap align-items-end justify-content-end mb-16pt">--}}
+{{--                <h1 class="text-white flex m-0">Question 1 of 5</h1>--}}
+{{--                <p class="h1 text-white-50 font-weight-light m-0">00:14</p>--}}
+{{--            </div>--}}
 
-            <p class="hero__lead measure-hero-lead text-white-50">An angular 2 project written in typescript is*
-                transpiled to javascript duri*ng the build process. Which of the following additional features are
-                provided to the developer while programming on typescript over javascript?</p>
-        </div>
-    </div>
+{{--            <p class="hero__lead measure-hero-lead text-white-50">An angular 2 project written in typescript is*--}}
+{{--                transpiled to javascript duri*ng the build process. Which of the following additional features are--}}
+{{--                provided to the developer while programming on typescript over javascript?</p>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     @foreach($questions as $qu)
         <div class="navbar navbar-expand-md navbar-list navbar-light bg-white border-bottom-2 "
              style="white-space: nowrap;">
             <div class="container page__container">
                 <ul class="nav navbar-nav flex navbar-list__item">
                     <li class="nav-item">
-                        <i class="material-icons text-50 mr-8pt">tune</i>
-                        {{$qu->question_text}}:
+                        <i class="material-icons text-50 mr-8pt">help</i>
+                      <b style="font-size: 26px">
+                          {{$qu->question_text}}:
+                      </b>
                     </li>
                 </ul>
                 {{--            <div class="nav navbar-nav ml-sm-auto navbar-list__item">--}}
@@ -108,7 +111,9 @@ div{
         <div class="container page__container">
             <div class="page-section">
                 <div class="page-separator">
-                    <div class="page-separator__text">Your Answer</div>
+                    <div class="page-separator__text">
+                        الخيارات
+                    </div>
                 </div>
 
                 @if ($qu->question_type == 'radio_answer')
@@ -129,55 +134,25 @@ div{
                         @endforeach
                     @endforeach
                 @elseif($qu->question_type == 'true_false_answer')
-                    <div class="row">
-                        <div class="col-1">
-                            صح
-                        </div>
-                        <div class="col-1">
-                            خطأ
-                        </div>
-                    </div>
                     @foreach(\Modules\Question\Entities\Answer::where('question_id',$qu->id)->get() as $answer)
+                        @php(json_encode($data_radio_answer=$answer->answer['answer'], 15, 512))
+                        <div class="row">
+                        @foreach($data_radio_answer as $index=>$ans)
 
-                        @foreach(\Modules\Question\Entities\Answer::where('question_id',$qu->id)->get() as $answer)
-                            @php(json_encode($data_radio_answer=$answer->answer['answer'], 15, 512))
-                            @foreach($data_radio_answer as $index=>$ans)
-
-                                <div class="row">
-                                    <div class="col-1">
-                                        <div class="form-group">
-
-
-                                            <input
-                                                id="customRadio{{$index}}{{$answer->id}}"
-                                                type="radio"
-                                                name="true_false{{$index}}{{$answer->id}}"
-                                                value="{{$ans}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-1">
-                                        <div class="form-group">
-
-
-                                            <input
-                                                id="customRadio{{$index}}{{$answer->id}}"
-                                                type="radio"
-                                                name="true_false{{$index}}{{$answer->id}}"
-                                                value="{{$ans}}">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-10">
-                                        <div class="form-group">
-
-
-                                            <label class="">{{$ans}}</label>
-                                        </div>
+                                <div class="form-group col-3">
+                                    <div class="custom-control custom-checkbox">
+                                        <input id="customRadio{{$index}}{{$answer->id}}"
+                                               type="radio"
+                                               name="question-{{$answer->id}}"
+                                               value="{{$ans}}"
+                                               class="custom-control-input">
+                                        <label for="customRadio{{$index}}{{$answer->id}}"
+                                               class="custom-control-label">{{$ans}}</label>
                                     </div>
                                 </div>
 
-                            @endforeach
                         @endforeach
+                        </div>
                     @endforeach
 
                 @elseif($qu->question_type == 'filling_blank_answer')

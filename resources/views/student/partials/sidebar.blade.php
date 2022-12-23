@@ -93,7 +93,7 @@
                 </li>
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
-                       href="student-take-quiz.html">
+                       href="{{route('student.practice.take',['id'=>\Modules\Practice\Entities\Practice::latest()->first()->id])}}">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
                         <span class="sidebar-menu-text">Take Quiz</span>
                     </a>
@@ -123,7 +123,8 @@
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
                        href="student-path-assessment-result.html">
-                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">assignment_turned_in</span>
+                        <span
+                            class="material-icons sidebar-menu-icon sidebar-menu-icon--left">assignment_turned_in</span>
                         <span class="sidebar-menu-text">Skill Result</span>
                     </a>
                 </li>
