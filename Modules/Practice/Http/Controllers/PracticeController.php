@@ -6,9 +6,9 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Modules\Practice\Entities\Practice;
-use Modules\Question\Entities\Answer;
-use Modules\Question\Entities\Question;
+use Modules\DataResource\Entities\Practice\Practice;
+use Modules\DataResource\Entities\Question\Answer;
+use Modules\DataResource\Entities\Question\Question;
 
 class PracticeController extends Controller
 {

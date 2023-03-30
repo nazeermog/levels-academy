@@ -44,8 +44,10 @@
             <!-- Drawer Layout Content -->
             <div class="mdk-drawer-layout__content page-content">
 
-            @yield("content")
-            <!-- Footer -->
+                <div class="font-droid">
+                    @yield('content')
+                </div>
+                <!-- Footer -->
             @include('student.partials.footer')
             <!-- // END Footer -->
 

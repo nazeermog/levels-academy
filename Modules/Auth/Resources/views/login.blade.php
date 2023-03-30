@@ -30,7 +30,16 @@
 
     <!-- App CSS -->
     <link type="text/css" href="{{asset('css/app.css')}}" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: myFirstFont;
+            src: url(/fonts/DroidKufi-Regular.ttf);
+        }
 
+        * {
+            font-family: myFirstFont !important;
+        }
+    </style>
 </head>
 
 <body class="layout-sticky layout-sticky-subnav ">
@@ -69,14 +78,14 @@
                 <div class="pt-32pt pt-sm-64pt pb-32pt">
                     <div class="container page__container">
                         <div class="row mb-32pt">
-{{--                            <div class="col-lg-8 d-flex align-items-center">--}}
-                                <div class="flex" style="max-width: 100%">
+                            {{--                            <div class="col-lg-8 d-flex align-items-center">--}}
+                            <div class="flex" style="max-width: 100%">
 
-                                    @include('auth::notification.error')
-                                    @include('auth::notification.success')
-                                </div>
+                                @include('auth::notification.error')
+                                @include('auth::notification.success')
+                            </div>
 
-{{--                            </div>--}}
+                            {{--                            </div>--}}
 
                         </div>
                         <form action="{{route('users.login')}}"

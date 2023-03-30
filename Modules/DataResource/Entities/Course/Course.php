@@ -1,0 +1,25 @@
+<?php
+
+namespace Modules\DataResource\Entities\Course;
+
+use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Model;
+
+
+class Course extends Model
+{
+    use Translatable;
+
+    protected $table = 'courses';
+    public $translationForeignKey = 'course_id';
+    protected $translatedAttributes = [
+        'title',
+        'slug',
+        'desc'
+    ];
+    protected $fillable = [
+        'price',
+        'taxonomy_id',
+        'is_active',
+    ];
+}

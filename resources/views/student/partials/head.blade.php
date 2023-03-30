@@ -41,4 +41,14 @@
 <link type="text/css"
       href="{{asset('css/app.css')}}"
       rel="stylesheet">
+<style>
+    @font-face {
+        font-family: myFirstFont;
+        src: url(/fonts/DroidKufi-Regular.ttf);
+    }
+
+    .font-droid {
+        font-family: myFirstFont !important;
+    }
+</style>
 @stack('css')

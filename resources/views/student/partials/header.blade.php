@@ -26,13 +26,16 @@
 
                             <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
 
-                                <span class="avatar-title rounded bg-primary"><img src="../../public/images/illustration/student/128/white.svg"
-                                                                                   alt="logo"
-                                                                                   class="img-fluid" /></span>
+                                <span class="avatar-title rounded bg-primary"><img
+                                        src="../../public/images/illustration/student/128/white.svg"
+                                        alt="logo"
+                                        class="img-fluid"/></span>
 
                             </span>
 
-                <span class="d-none d-lg-block">Luma</span>
+                <span class="d-none d-lg-block">
+مدرسة اللغة العربية
+                </span>
             </a>
 
             <!-- // END Navbar Brand -->
@@ -41,7 +44,8 @@
 
                             <span class="avatar avatar-sm mr-12pt">
 
-                                <span class="avatar-title rounded navbar-avatar"><i class="material-icons">opacity</i></span>
+                                <span class="avatar-title rounded navbar-avatar"><i
+                                        class="material-icons">opacity</i></span>
 
                             </span>
 
@@ -188,7 +192,8 @@
                                                     </span>
                                                     <span class="flex d-flex flex-column">
                                                         <strong class="text-black-100">Adrian. D</strong>
-                                                        <span class="text-black-70">Wants to join your private group.</span>
+                                                        <span
+                                                            class="text-black-70">Wants to join your private group.</span>
                                                     </span>
                                                 </span>
                                 </a>

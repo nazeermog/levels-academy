@@ -8,5 +8,8 @@
     "User": true,
     "Instructor": true,
     "Auth": true,
-    "Tag": true
+    "Tag": true,
+    "Taxonomy": true,
+    "Partner": true,
+    "DataResource": true
 }

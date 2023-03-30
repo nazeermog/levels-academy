@@ -45,7 +45,17 @@
     <link type="text/css"
           href="{{asset('css/app.css')}}"
           rel="stylesheet">
-@stack('css')
+    <style>
+        @font-face {
+            font-family: myFirstFont;
+            src: url(/fonts/DroidKufi-Regular.ttf);
+        }
+
+        .font-droid {
+            font-family: myFirstFont !important;
+        }
+    </style>
+    @stack('css')
 </head>
 
 <body class="layout-sticky layout-sticky-subnav ">
@@ -75,7 +85,7 @@
 
 @include('instructor.partials.header')
 
-    <!-- // END Header -->
+<!-- // END Header -->
 
     <!-- Header Layout Content -->
     <div class="mdk-header-layout__content">
@@ -87,22 +97,24 @@
 
             <!-- Drawer Layout Content -->
             <div class="mdk-drawer-layout__content page-content">
+                <div class="font-droid">
 
-             @yield('content')
 
+                    @yield('content')
+                </div>
                 <!-- Footer -->
 
-             @include('instructor.partials.footer')
+            @include('instructor.partials.footer')
 
-                <!-- // END Footer -->
+            <!-- // END Footer -->
 
             </div>
             <!-- // END drawer-layout__content -->
 
             <!-- Drawer -->
 
-            @include('instructor.partials.sidebar')
-            <!-- // END Drawer -->
+        @include('instructor.partials.sidebar')
+        <!-- // END Drawer -->
 
         </div>
         <!-- // END drawer-layout -->

@@ -25,7 +25,9 @@
                     </h2>
 
                     <ol class="breadcrumb p-0 m-0">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="index.html">
+                                الرئيسية
+                            </a></li>
 
                         <li class="breadcrumb-item active">
 
@@ -133,20 +135,24 @@
                     </ul>
 
                     <div class="page-separator">
-                        <div class="page-separator__text">New Question</div>
+                        <div class="page-separator__text">
+                            إضافة سؤال
+                        </div>
                     </div>
                     <div class="card card-body">
 
                         <div class="form-group">
-                            <label class="form-label">Question</label>
-                            <textarea class="form-control" rows="3" placeholder="Question" id="question"></textarea>
+                            <label class="form-label">
+                                نص السؤال
+                            </label>
+                            <textarea class="form-control" rows="3" placeholder="أدخل نص السؤال" id="question"></textarea>
                             {{--                            <div style="height: 150px;"--}}
                             {{--                                 id="question"--}}
                             {{--                                 class="mb-0"--}}
                             {{--                                 data-toggle="quill"--}}
                             {{--                                 data-quill-placeholder="Question">--}}
                             {{--                            </div>--}}
-                            <small class="form-text text-muted">Shortly describe the question.</small>
+{{--                            <small class="form-text text-muted">Shortly describe the question.</small>--}}
                         </div>
 
                         <div class="form-group">
@@ -251,15 +257,43 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Completion Points</label>
+                            <label class="form-label">
+                                علامة السؤال
+                            </label>
                             <input type="text"
                                    id="question_points"
                                    class="form-control"
-                                   value="1000">
+                                   value="10">
                         </div>
+                        <div class="form-group">
+                            <label class="form-label"
+                                   for="select01">
+                                التاغ
+                            </label>
+                            <select id="select01"
+                                    data-toggle="select"
+                                    data-multiple="true"
+                                    multiple="multiple"
+                                    class="form-control">
+                                <option value="My first option">
+                                    مستوى متوسط
+                                </option>
+                                <option value="Another option">
+                                    اختيار متعدد
+                                </option>
+                                <option value="Third option is here">
+                                    رتب الكلمات
+                                </option>
+                                <option value="Third option is here">
+                                  أحرف العطف
+                                </option>
+                            </select>
+                        </div>
+
                         <div>
                             <button type="button" id="add_question"
-                                    class="btn btn-outline-secondary">Add Question
+                                    class="btn btn-outline-secondary">
+                                إضافة السؤال
                             </button>
                         </div>
                     </div>
@@ -270,29 +304,38 @@
                     <div class="card">
                         <div class="card-header text-center">
                             <button type="submit"
-                                    class="btn btn-accent">Save changes
+                                    class="btn btn-accent">
+                                حفظ الاختبار
                             </button>
                         </div>
                         <div class="list-group list-group-flush">
                             <div class="list-group-item d-flex">
                                 <a class="flex"
-                                   href="#"><strong>Save Draft</strong></a>
+                                   href="#"><strong>
+                                        حفظ كمسودة
+                                    </strong></a>
                                 <i class="material-icons text-muted">check</i>
                             </div>
                             <div class="list-group-item">
                                 <a href="#"
-                                   class="text-danger"><strong>Delete Quiz</strong></a>
+                                   class="text-danger"><strong>
+                                        حذف التدريب
+                                    </strong></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="page-separator">
-                        <div class="page-separator__text">Courses</div>
+                        <div class="page-separator__text">
+                            الدروس
+                        </div>
                     </div>
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group mb-0">
-                                <label class="form-label">Add to course</label>
+                                <label class="form-label">
+                                    إضافة إلى درس
+                                </label>
                                 <select name="course"
                                         id="course"
                                         data-toggle="select"
@@ -302,16 +345,16 @@
                                         class="form-control"
                                         data-placeholder="Select course ...">
                                     <option data-avatar-src="../../public/images/paths/angular_40x40@2x.png"
-                                            selected="">Angular Fundamentals
+                                            selected="">
+                                        حروف العطف
                                     </option>
-                                    <option data-avatar-src="../../public/images/paths/swift_40x40@2x.png">Build an iOS
-                                        Application in Swift
+                                    <option data-avatar-src="../../public/images/paths/swift_40x40@2x.png">
+                                        اللغة العربية المستوى الثالث
                                     </option>
                                 </select>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </form>
         </div>

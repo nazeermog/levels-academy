@@ -5,10 +5,7 @@ namespace Modules\Practice\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
-use Modules\Practice\Entities\Practice;
-use Modules\Question\Entities\Answer;
-use Modules\Question\Entities\Question;
+use Modules\DataResource\Entities\Question\Question;
 
 class StudentPracticeController extends Controller
 {

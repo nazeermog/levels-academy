@@ -7,56 +7,64 @@
             <!-- Sidebar Content -->
 
 
-            <div class="sidebar-heading">Instructor</div>
+            <div class="sidebar-heading font-droid">
+                المعلم
+            </div>
             <ul class="sidebar-menu">
 
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
                        href="instructor-dashboard.html">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">school</span>
-                        <span class="sidebar-menu-text">Instructor Dashboard</span>
+                        <span class="sidebar-menu-text font-droid">
+                            الواجهة الرئيسية
+                        </span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
                        href="instructor-courses.html">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">import_contacts</span>
-                        <span class="sidebar-menu-text">Manage Courses</span>
+                        <span class="sidebar-menu-text font-droid">
+                            إدارة الدروس
+                        </span>
                     </a>
                 </li>
+{{--                <li class="sidebar-menu-item">--}}
+{{--                    <a class="sidebar-menu-button"--}}
+{{--                       href="instructor-quizzes.html">--}}
+{{--                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">help</span>--}}
+{{--                        <span class="sidebar-menu-text">Manage Quizzes</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="sidebar-menu-item">--}}
+{{--                    <a class="sidebar-menu-button"--}}
+{{--                       href="instructor-earnings.html">--}}
+{{--                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">trending_up</span>--}}
+{{--                        <span class="sidebar-menu-text">Earnings</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="sidebar-menu-item">--}}
+{{--                    <a class="sidebar-menu-button"--}}
+{{--                       href="instructor-statement.html">--}}
+{{--                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">receipt</span>--}}
+{{--                        <span class="sidebar-menu-text">Statement</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="sidebar-menu-item">--}}
+{{--                    <a class="sidebar-menu-button"--}}
+{{--                       href="instructor-edit-course.html">--}}
+{{--                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">post_add</span>--}}
+{{--                        <span class="sidebar-menu-text">Edit Course</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
-                       href="instructor-quizzes.html">
-                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">help</span>
-                        <span class="sidebar-menu-text">Manage Quizzes</span>
-                    </a>
-                </li>
-                <li class="sidebar-menu-item">
-                    <a class="sidebar-menu-button"
-                       href="instructor-earnings.html">
-                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">trending_up</span>
-                        <span class="sidebar-menu-text">Earnings</span>
-                    </a>
-                </li>
-                <li class="sidebar-menu-item">
-                    <a class="sidebar-menu-button"
-                       href="instructor-statement.html">
-                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">receipt</span>
-                        <span class="sidebar-menu-text">Statement</span>
-                    </a>
-                </li>
-                <li class="sidebar-menu-item">
-                    <a class="sidebar-menu-button"
-                       href="instructor-edit-course.html">
-                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">post_add</span>
-                        <span class="sidebar-menu-text">Edit Course</span>
-                    </a>
-                </li>
-                <li class="sidebar-menu-item">
-                    <a class="sidebar-menu-button"
-                       href="instructor-edit-quiz.html">
+                       href="{{route('practice.create')}}">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">format_shapes</span>
-                        <span class="sidebar-menu-text">Edit Quiz</span>
+                        <span class="sidebar-menu-text font-droid">
+                            إدارة الاختبارات
+                        </span>
                     </a>
                 </li>
 
