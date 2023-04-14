@@ -1,0 +1,12 @@
+{
+    "name": "DataSource",
+    "alias": "datasource",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "DataSource\\Providers\\DataSourceServiceProvider",
+        "DataSource\\Providers\\RouteServiceProvider"
+    ],
+    "files": []
+}

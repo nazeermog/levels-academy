@@ -10,6 +10,5 @@
     "Auth": true,
     "Tag": true,
     "Taxonomy": true,
-    "Partner": true,
-    "DataResource": true
+    "Partner": true
 }

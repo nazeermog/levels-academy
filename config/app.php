@@ -185,7 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        DataSource\Providers\DataSourceServiceProvider::class,
         /*
          * Application Service Providers...
          */
