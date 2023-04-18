@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "^7.3|^8.0",
         "astrotomic/laravel-translatable": "^11.12",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
@@ -71,6 +71,9 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true
+        },
+        "platform": {
+            "php": "8.2.0"
         }
     },
     "minimum-stability": "dev",
