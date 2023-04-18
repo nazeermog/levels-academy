@@ -4,6 +4,7 @@ namespace DataSource\Traits\Admin;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
+
 //use Modules\Media\Rpositories\Admin\AdminMediaRepository;
 
 trait AdminCRUDGenericRepository
@@ -16,6 +17,11 @@ trait AdminCRUDGenericRepository
     protected function getModel()
     {
         return new $this->model;
+    }
+
+    protected function getTypeModel()
+    {
+        return new $this->typeModel;
     }
 
     public function store($data)

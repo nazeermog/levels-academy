@@ -15,13 +15,12 @@ class Store extends FormRequest
 
     public function rules()
     {
-
         return [
-            'ordering' => ['numeric', 'required'],
-            'type_id' => ['numeric', 'required'],
-            'type' => ['in:Quiz,Practice,Lesson'],
-            'course_id' => ['numeric', Rule::in(array_values(Course::services()->active()->pluck('id')->toArray()))],
-//            'service_delivery_time' => ['required', 'numeric', Rule::in(array_values(auth()->user()->colors_times_ids))],
+            'arrayData' => ['array', 'required'],
+            'arrayData.*.ordering' => ['numeric', 'required'],
+            'arrayData.*.type_id' => ['numeric', 'required'],
+            'arrayData.*.type' => ['in:Quiz,Practice,Lesson'],
+            'course_id' => ['numeric', 'exists:courses,id'],
         ];
     }
 }
