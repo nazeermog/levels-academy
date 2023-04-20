@@ -2,10 +2,11 @@
 
 namespace Modules\Practice\Http\Controllers;
 
+use DataSource\Repositories\DB\Practice\Student\StudentPracticeTypeRepository;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\DataResource\Entities\Question\Question;
+
 
 class StudentPracticeController extends Controller
 {
@@ -45,8 +46,14 @@ class StudentPracticeController extends Controller
      */
     public function show($id)
     {
-        $questions = Question::where('practice_id',$id)->get();
-        return view('practice::student.take_quiz',compact('questions'));
+        $questions = Question::where('practice_id', $id)->get();
+        return view('practice::student.take_quiz', compact('questions'));
+    }
+
+    public function showPractice($id)
+    {
+        $practice = StudentPracticeTypeRepository::find($id);
+        return view('practice::student.numbers_sum', compact('practice'));
     }
 
     /**

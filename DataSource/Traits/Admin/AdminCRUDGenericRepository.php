@@ -19,6 +19,7 @@ trait AdminCRUDGenericRepository
         return new $this->model;
     }
 
+
     protected function getTypeModel()
     {
         return new $this->typeModel;
@@ -27,17 +28,24 @@ trait AdminCRUDGenericRepository
     public function store($data)
     {
         $data = Arr::except($data, ['image']);
+
         $object = $this->getModel()->create($data);
-        $paths[] = array(
-            'src' => $object->addMediaFromBase64($data['image']),
-        );
-        foreach ($paths as $path) {
-//            AdminMediaRepository::store($path, $object);
-            if (isset($object->image))
-                $object->image = $path['src'];
-            if (isset($object->icon))
-                $object->icon = $path['src'];
+        foreach ($object->getTranslatableAttributes() as $attribute) {
+            foreach (localeSupported() as $locale) {
+                $object->translateOrNew($locale)->{$attribute} = $data[$attribute . '-' . $locale];
+            }
         }
+        $object->save();
+//        $paths[] = array(
+//            'src' => $object->addMediaFromBase64($data['image']),
+//        );
+//        foreach ($paths as $path) {
+////            AdminMediaRepository::store($path, $object);
+//            if (isset($object->image))
+//                $object->image = $path['src'];
+//            if (isset($object->icon))
+//                $object->icon = $path['src'];
+//        }
         return $object;
     }
 
@@ -69,7 +77,7 @@ trait AdminCRUDGenericRepository
         return $object;
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         return $this->getModel()->destroy($id);
     }

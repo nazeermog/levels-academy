@@ -3,7 +3,8 @@
 namespace Modules\Course\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use Modules\DataResource\Repositories\DB\Course\Student\StudentCoursesRepository;
+use DataSource\Repositories\DB\Course\Student\StudentCoursesRepository;
+
 
 class StudentCoursesController extends Controller
 {

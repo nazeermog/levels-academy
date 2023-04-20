@@ -95,15 +95,15 @@
                 {{--                        <span class="sidebar-menu-text">Take Lesson</span>--}}
                 {{--                    </a>--}}
                 {{--                </li>--}}
-                <li class="sidebar-menu-item">
-                    <a class="sidebar-menu-button"
-                       href="{{route('student.practice.take',['id'=>\Modules\DataResource\Entities\Practice\Practice::latest()->first()->id])}}">
-                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
-                        <span class="sidebar-menu-text">
-                            التدريبات
-                        </span>
-                    </a>
-                </li>
+{{--                <li class="sidebar-menu-item">--}}
+{{--                    <a class="sidebar-menu-button"--}}
+{{--                       href="{{route('student.practice.take',['id'=>\Modules\DataResource\Entities\Practice\Practice::latest()->first()->id])}}">--}}
+{{--                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>--}}
+{{--                        <span class="sidebar-menu-text">--}}
+{{--                            التدريبات--}}
+{{--                        </span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
                 {{--                <li class="sidebar-menu-item">--}}
                 {{--                    <a class="sidebar-menu-button"--}}
                 {{--                       href="student-quiz-results.html">--}}

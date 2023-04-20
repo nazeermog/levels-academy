@@ -3,7 +3,7 @@
 namespace Modules\Taxonomy\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use Modules\DataResource\Repositories\DB\Taxonomy\Student\StudentTaxonomyRepository;
+use DataSource\Repositories\DB\Taxonomy\Student\StudentTaxonomyRepository;
 
 class StudentTaxonomyController extends Controller
 {

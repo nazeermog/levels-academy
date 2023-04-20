@@ -23,13 +23,11 @@ class AdminCourseContentController extends BaseController
 //    protected string $interface_category = AdminCategoryRepository::class;
     protected string $store_request = Store::class;
 //    protected string $update_request = Update::class;
-//    protected $id_request = Id::class;
-    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function create()
     {
         $lessons = AdminLessonRepository::list();
         $practices = AdminPracticeRepository::list();
 
-        dd(ApiLessonsRepository::apiCall());
         $route_name = $this->route_name;
         $table_name = $this->table_name;
         return view($this->module . '.create', compact('route_name', 'table_name', 'lessons', 'practices'));

@@ -16,11 +16,12 @@ Route::group([
 
 });
 Route::group([
-    'middleware' => ['auth', 'role:student'],
+//    'middleware' => ['auth', 'role:student'],
     'prefix' => 'student',
 ], function () {
     Route::prefix('practice')->group(function () {
         Route::get('take-quiz/{id}', [StudentPracticeController::class, 'show'])->name('student.practice.take');
+        Route::get('{id}', [StudentPracticeController::class, 'showPractice'])->name('student.practice');
     });
 
 });

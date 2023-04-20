@@ -2,13 +2,19 @@
 
 namespace DataSource\Entities\Practice;
 
-use Illuminate\Database\Eloquent\Model;
+use DataSource\Entities\BaseModel;
 
-
-class Practice extends Model
+/**
+ * @property int $id
+ * @property string $title
+ * @property boolean $is_active
+ */
+class Practice extends BaseModel
 {
     protected $table = 'practices';
-    protected $fillable = ['course_id', 'title'];
+    protected $translatedAttributes = ['title'];
+    public $translationForeignKey = 'practice_id';
+    protected $fillable = ['is_active'];
 
 }
 

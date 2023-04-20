@@ -10,7 +10,7 @@ trait AdminCRUDControllerActions
     private $repository = null;
     private $category_repository = null;
 
-    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function index()
     {
         $list = $this->getRepository()->index();
         $route_name = $this->route_name;
@@ -18,7 +18,7 @@ trait AdminCRUDControllerActions
         return view($this->module . '.index', compact('list', 'route_name', 'table_name'));
     }
 
-    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function create()
     {
         $route_name = $this->route_name;
         $table_name = $this->table_name;
@@ -26,7 +26,7 @@ trait AdminCRUDControllerActions
         return view($this->module . '.create', compact('route_name', 'table_name'));
     }
 
-    public function show($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function show($id)
     {
         $item = $this->getRepository()->find($id);
         $route_name = $this->route_name;
@@ -34,7 +34,7 @@ trait AdminCRUDControllerActions
         return view($this->module . '.show', compact('item', 'route_name', 'table_name'));
     }
 
-    public function store(): \Illuminate\Http\RedirectResponse
+    public function store()
     {
         try {
             DB::beginTransaction();
@@ -48,7 +48,7 @@ trait AdminCRUDControllerActions
 
     }
 
-    public function update(): \Illuminate\Http\RedirectResponse
+    public function update()
     {
         try {
             DB::beginTransaction();
@@ -61,11 +61,11 @@ trait AdminCRUDControllerActions
         }
     }
 
-    public function delete(): \Illuminate\Http\RedirectResponse
+    public function destroy($id)
     {
         try {
             DB::beginTransaction();
-            $this->getRepository()->delete($this->getIdRequest()->validated()['model_id']);
+            $this->getRepository()->destroy($id);
             DB::commit();
             return redirect()->route('admin.' . $this->route_name . '.index')->withSuccess('deleted successfully');
         } catch (\Exception $exception) {
