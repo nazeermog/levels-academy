@@ -19,6 +19,21 @@
             <hr/>
             <div class="row">
 
+                    <div class="col-md-4 ">
+                        <label for="">Practice</label>
+                        <select class="form-control" name="practice_id">
+                            @foreach($practices as $practice)
+                                <option value="{{$practice->id}}">
+                                    {{$practice->title}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+            </div>
+            <hr/>
+            <div class="row">
+
                 <div class="col-md-6 ">
                     <label for="">seconds speed </label>
                     <input class="form-control" name="seconds_speed">

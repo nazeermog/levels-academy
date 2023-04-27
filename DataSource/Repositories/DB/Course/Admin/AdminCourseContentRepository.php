@@ -19,18 +19,20 @@ class AdminCourseContentRepository
         foreach (localeSupported() as $locale) {
             $course->translateOrNew($locale)->title = $data['title-' . $locale];
             $course->translateOrNew($locale)->slug = $data['slug-' . $locale];
-            $course->translateOrNew($locale)->desc = $data['desc-' . $locale];
         }
         $course->price = $data['price'];
         $course->taxonomy_id = $data['taxonomy_id'];
         $course->is_active = 1;
         $course->save();
+        foreach ($data['arrayData'] as $item) {
+            $content = $this->getModel();
+            $content->ordering = $item['ordering'];
+            $content->course_id = $course->id;
+            $content->content_type = get_class($item['course_type']);
+            $content->content_id = $item['type_id'];
+            $content->save();
+        }
 
-        $content = $this->getModel();
-        $content->course_id = $course->id;
-        $content->content_type = get_class($data['course_type']);
-        $content->content_id = $data['course_id'];
-        $content->save();
-        return $content;
+        return $course;
     }
 }

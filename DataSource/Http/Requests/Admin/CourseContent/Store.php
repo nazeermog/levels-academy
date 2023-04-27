@@ -15,13 +15,18 @@ class Store extends FormRequest
 
     public function rules()
     {
-        return [
+        $mergeArray = [];
+        foreach (localeSupported() as $locale) {
+            $mergeArray['title-' . $locale] = ['required', 'string'];
+            $mergeArray['slug-' . $locale] = ['required', 'string'];
+        }
+        return array_merge([
             'arrayData' => ['array', 'required'],
             'arrayData.*.ordering' => ['numeric', 'required'],
             'arrayData.*.type_id' => ['numeric', 'required'],
             'arrayData.*.type' => ['in:Quiz,Practice,Lesson'],
-            'course_id' => ['numeric', 'exists:courses,id'],
-        ];
+            'price' => ['required'],
+        ], $mergeArray);
     }
 }
 

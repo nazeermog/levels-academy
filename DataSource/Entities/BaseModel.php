@@ -11,7 +11,9 @@ class BaseModel extends Model
 
     public function getTranslatableAttributes(): array
     {
-        return $this->translatedAttributes;
+        if (isset($this->translatedAttributes))
+            return $this->translatedAttributes;
+        else return [];
     }
 
 }

@@ -1,4 +1,3 @@
-
 <!-- jQuery -->
 <script src="{{asset('vendor/jquery.min.js')}}"></script>
 
@@ -20,5 +19,13 @@
 
 <!-- Preloader -->
 <script src="{{asset('js/preloader.js')}}"></script>
+<script>
+    $(function () {
+        $.ajaxSetup({
+            headers:
+                {'X-CSRF-TOKEN': '{{csrf_token()}}'}
+        });
 
+    });
+</script>
 @stack('js')

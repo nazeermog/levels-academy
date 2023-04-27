@@ -3,9 +3,12 @@
 namespace Modules\Practice\Http\Controllers;
 
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeTypeRepository;
+use DataSource\Repositories\DB\ResultPractice\Student\StudentResultPracticeRepository;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Modules\Practice\Http\Requests\Store;
 
 
 class StudentPracticeController extends Controller
@@ -54,6 +57,28 @@ class StudentPracticeController extends Controller
     {
         $practice = StudentPracticeTypeRepository::find($id);
         return view('practice::student.numbers_sum', compact('practice'));
+    }
+
+    public function sendResultPractice(Store $request)
+    {
+        try {
+            DB::beginTransaction();
+            $data = StudentResultPracticeRepository::sendResult($request->validated());
+            DB::commit();
+            return response()->json([
+                'data' => $data,
+                'status' => true,
+                'message' => 'result Sent',
+            ]);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return response()->json([
+                'data' => null,
+                'status' => false,
+                'message' => $exception->getMessage(),
+            ], 500);
+        }
+
     }
 
     /**

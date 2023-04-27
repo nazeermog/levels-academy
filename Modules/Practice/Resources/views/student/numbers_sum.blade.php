@@ -1,7 +1,8 @@
 @extends("student.layouts.dashboard")
 @push('css')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <style>
 
         .cards {
@@ -136,8 +137,12 @@
 
 @endsection
 @push('js')
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+            integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+            integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+            crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.9.3/tsparticles.confetti.bundle.min.js"></script>
     <script>
@@ -171,7 +176,7 @@
             cards.appendChild(newCard);
         }
 
-        const arr = Array.from({length: {{$practice->card_number}} }, () => Math.floor(Math.random() *  {{rand($practice->range_number_from, $practice->range_number_to) }}));
+        const arr = Array.from({length: {{$practice->card_number}}}, () => Math.floor(Math.random() * {{rand($practice->range_number_from, $practice->range_number_to) }}));
         console.log(arr);
 
         const initialValue = 0;
@@ -211,6 +216,31 @@
         console.log(sumNumber);
         document.querySelector("#sendResult").addEventListener('click', function prossesResult() {
             const inputValue = parseInt(document.getElementById("inputValue").value);
+
+            $.ajax({
+                method: "POST",
+                url: "{{ route('student.practice.store')}}",
+                data: {
+                    practice_id: {{$practice->practice_id}},
+                    practice_type_id: {{$practice->id}},
+                    level_title: '{{$practice->title}}',
+                    result_student: inputValue,
+                    result_true: sumNumber,
+                    student_id: 0,
+                    is_true: sumNumber === inputValue,
+                    seconds_speed: {{$practice->seconds_speed}},
+                    card_number: {{$practice->card_number}},
+                    range_number_from: {{$practice->range_number_from}},
+                    range_number_to: {{$practice->range_number_to}}
+                },
+                success: function (one, two, three) {
+                    toastr.success('updated successfully')
+                },
+                error: function (one, two, three) {
+                    toastr.error('error')
+                },
+            });
+
 
             console.log(inputValue);
             if (sumNumber === inputValue) {

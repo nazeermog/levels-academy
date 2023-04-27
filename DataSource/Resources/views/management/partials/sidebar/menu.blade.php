@@ -24,7 +24,6 @@
                 {{--                    </a>--}}
                 {{--                </li>--}}
                 {{--                <li class="mt-1 mb-1 p-0 w-100" style="border-bottom: 1px solid #4b545c;">--}}
-
                 {{--                </li>--}}
                 <li class="nav-item {{Route::is('admin.practices.*')?'menu-open':''}} ">
                     <a href="#"
@@ -48,12 +47,99 @@
                             <a href="{{route('admin.practices.create')}}"
                                class="nav-link  {{ Route::is('admin.practices.create')?'active':''}}">
 
-                                <p class="ml-3">- Practice Levels</p>
+                                <p class="ml-3">- Create Practice </p>
                             </a>
                         </li>
 
 
                     </ul>
+
+
+                </li>
+                <li class="nav-item {{Route::is('admin.practicesType.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.practicesType.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Practices Levels
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.practicesType.index')}}"
+                               class="nav-link  {{ Route::is('admin.practicesType.index')?'active':''}}">
+
+                                <p class="ml-3">- Practice Levels</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.practicesType.create')}}"
+                               class="nav-link  {{ Route::is('admin.practicesType.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Practice Levels</p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
+                <li class="nav-item {{Route::is('admin.resultPractices.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.resultPractices.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Result Practices
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.resultPractices.index')}}"
+                               class="nav-link  {{ Route::is('admin.resultPractices.index')?'active':''}}">
+
+                                <p class="ml-3">- Result Practice </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
+                <li class="nav-item {{Route::is('admin.courseContent.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.courseContent.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Courses
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.courseContent.index')}}"
+                               class="nav-link  {{ Route::is('admin.courseContent.index')?'active':''}}">
+
+                                <p class="ml-3">- Courses </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.courseContent.create')}}"
+                               class="nav-link  {{ Route::is('admin.courseContent.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Courses </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
 
                 </li>
 

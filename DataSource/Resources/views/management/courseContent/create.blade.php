@@ -32,33 +32,36 @@
 @endpush
 @section('content')
     <div class="container py-5">
-        <div class="row">
-            <label>Add Course </label>
-        </div>
-        <hr/>
-        <div class="row">
-            @foreach(localeSupported() as $locale)
-                <div class="col-md-4 m-1">
-                    <label for="">Title {{ucwords($locale)}}</label>
-                    <input class="form-control" name="title-{{$locale}}">
-                </div>
-            @endforeach
-        </div>
-        <div class="row">
-            @foreach(localeSupported() as $locale)
-                <div class="col-md-4 m-1">
-                    <label for="">Slug {{ucwords($locale)}}</label>
-                    <input class="form-control" name="slug-{{$locale}}">
-                </div>
-            @endforeach
-        </div>
-        <div class="row">
-            <div class="col-md-4 m-1">
-                <label for="">Price </label>
-                <input class="form-control" name="price">
+        <form id="form-course">
+            <div class="row">
+                <label>Add Course </label>
             </div>
-        </div>
-        <hr/>
+            <hr/>
+            <div class="row">
+                @foreach(localeSupported() as $locale)
+                    <div class="col-md-4 m-1">
+                        <label for="">Title {{ucwords($locale)}}</label>
+                        <input class="form-control" name="title-{{$locale}}" id="title-{{$locale}}">
+                    </div>
+                @endforeach
+            </div>
+            <div class="row">
+                @foreach(localeSupported() as $locale)
+                    <div class="col-md-4 m-1">
+                        <label for="">Slug {{ucwords($locale)}}</label>
+                        <input class="form-control" name="slug-{{$locale}}" id="slug-{{$locale}}">
+                    </div>
+                @endforeach
+            </div>
+            <div class="row">
+                <div class="col-md-4 m-1">
+                    <label for="">Price </label>
+                    <input class="form-control" name="price" id="price">
+                </div>
+            </div>
+            <hr/>
+        </form>
+
 
         <div class="row">
             <label>Course Content</label>
@@ -80,7 +83,8 @@
                                         <li class="draggable-item cursor-pointer"
                                             data-type="Lesson"
                                             data-id="{{$lesson->id}}">
-                                            <div class="d-flex align-items-center justify-content-between border px-3 py-2">
+                                            <div
+                                                class="d-flex align-items-center justify-content-between border px-3 py-2">
                                                 <h4>{{$lesson->title}}</h4>
                                                 <i class="bi bi-chevron-double-right move-btn"></i>
                                             </div>
@@ -106,7 +110,8 @@
                                         <li class="draggable-item cursor-pointer"
                                             data-type="Practice"
                                             data-id="{{$practice->id}}">
-                                            <div class="d-flex align-items-center justify-content-between border px-3 py-2">
+                                            <div
+                                                class="d-flex align-items-center justify-content-between border px-3 py-2">
                                                 <h4>{{$practice->title}}</h4>
                                                 <i class="bi bi-chevron-double-right move-btn"></i>
                                             </div>
@@ -209,6 +214,24 @@
                         type: li.getAttribute('data-type')
                     })
                 });
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('admin.courseContent.store')}}",
+                    data: {
+                        arrayData: dataArray,
+                        price: $('#price').val(),
+
+                    },
+                    success: function (one, two, three) {
+                        toastr.success('updated successfully')
+                    },
+                    error: function (one, two, three) {
+                        toastr.error('error')
+                    },
+                });
+
+                console.log(dataArray)
+                console.log(($('#form-course').serializeArray()) )
 
             })
         });

@@ -16,5 +16,9 @@ class Practice extends BaseModel
     public $translationForeignKey = 'practice_id';
     protected $fillable = ['is_active'];
 
+    public function levels()
+    {
+        return $this->hasMany(PracticeType::class, 'practice_id');
+    }
 }
 

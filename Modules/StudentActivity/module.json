@@ -1,0 +1,11 @@
+{
+    "name": "StudentActivity",
+    "alias": "studentactivity",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\StudentActivity\\Providers\\StudentActivityServiceProvider"
+    ],
+    "files": []
+}

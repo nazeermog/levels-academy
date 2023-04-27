@@ -10,5 +10,7 @@
     "Auth": true,
     "Tag": true,
     "Taxonomy": true,
-    "Partner": true
+    "Partner": true,
+    "StudentActivity": true,
+    "ResultPractice": true
 }

@@ -11,4 +11,6 @@ class StudentPracticeTypeRepository
     {
         return PracticeType::find($id);
     }
+
+
 }

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->integer('card_number')->nullable();
             $table->integer('range_number_from')->nullable();
             $table->integer('range_number_to')->nullable();
+            $table->unsignedBigInteger('practice_id');
             $table->timestamps();
         });
     }

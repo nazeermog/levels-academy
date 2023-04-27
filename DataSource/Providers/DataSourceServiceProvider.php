@@ -26,6 +26,8 @@ class DataSourceServiceProvider extends ServiceProvider
         'Tag',
         'Taxonomy',
         'User',
+        'StudentActivity',
+        'ResultPractice'
     ];
 
     /**

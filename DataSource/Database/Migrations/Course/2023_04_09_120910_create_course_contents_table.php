@@ -15,6 +15,7 @@ return new class extends Migration {
         Schema::create('course_contents', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('course_id')->index();
+          
             $table->integer('ordering')->index();
             $table->morphs('content');
             $table->timestamps();

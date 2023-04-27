@@ -1,0 +1,11 @@
+{
+    "name": "ResultPractice",
+    "alias": "resultpractice",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ResultPractice\\Providers\\ResultPracticeServiceProvider"
+    ],
+    "files": []
+}
