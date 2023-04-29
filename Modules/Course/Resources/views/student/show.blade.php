@@ -102,7 +102,7 @@
                                             <li class="accordion__menu-link">
                                                 <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
                                                 <a class="flex"
-                                                   href="student-take-quiz.html">Quiz: Getting Started With Angular</a>
+                                                   href="{{route('student.practice.show',['id'=>\DataSource\Entities\Practice\Practice::first()->id])}}">Quiz: Getting Started With Angular</a>
                                             </li>
                                         </ul>
                                     </div>
