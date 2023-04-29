@@ -1123,7 +1123,7 @@
                         <div class="popoverContainer d-none">
                             <div class="media">
                                 <div class="media-left mr-12pt">
-                                    <img src="../../public/images/paths/wordpress_40x40@2x.png"
+                                    <img src="{{asset('/images/paths/wordpress_40x40@2x.png')}}"
                                          width="40"
                                          height="40"
                                          alt="Angular"
@@ -1220,7 +1220,7 @@
                                class="card-img-top js-image"
                                data-position="left"
                                data-height="140">
-                                <img src="../../public/images/paths/react_430x168.png"
+                                <img src="{{asset('/images/paths/react_430x168.png')}}"
                                      alt="course">
                                 <span class="overlay__content">
                                                     <span class="overlay__action d-flex flex-column text-center">
@@ -1272,7 +1272,7 @@
                         <div class="popoverContainer d-none">
                             <div class="media">
                                 <div class="media-left mr-12pt">
-                                    <img src="../../public/images/paths/react_40x40@2x.png"
+                                    <img src="{{asset('/images/paths/react_40x40@2x.png')}}"
                                          width="40"
                                          height="40"
                                          alt="Angular"
@@ -1423,7 +1423,7 @@
 
                                 <a class="card border-0 mb-0"
                                    href="">
-                                    <img src="../../public/images/achievements/flinto.png"
+                                    <img src="{{asset('/images/achievements/flinto.png')}}"
                                          alt="Flinto"
                                          class="card-img"
                                          style="max-height: 100%; width: initial;">
@@ -1442,7 +1442,7 @@
                                                             <span class="col d-flex flex-column">
                                                                 <span class="text-right flex mb-16pt">
                                                                     <img
-                                                                        src="../../public/images/paths/flinto_40x40@2x.png"
+                                                                        src="{{asset('/images/paths/flinto_40x40@2x.png')}}"
                                                                         width="64"
                                                                         alt="Flinto"
                                                                         class="rounded">
@@ -1453,7 +1453,7 @@
                                                             <span
                                                                 class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
                                                                 <img
-                                                                    src="../../public/images/illustration/achievement/128/white.png"
+                                                                    src="{{asset('/images/illustration/achievement/128/white.png')}}"
                                                                     width="64"
                                                                     alt="achievement">
                                                             </span>
@@ -1473,7 +1473,7 @@
 
                                 <a class="card border-0 mb-0"
                                    href="">
-                                    <img src="../../public/images/achievements/angular.png"
+                                    <img src="{{asset('/images/achievements/angular.png')}}"
                                          alt="Angular fundamentals"
                                          class="card-img"
                                          style="max-height: 100%; width: initial;">
@@ -1492,7 +1492,7 @@
                                                             <span class="col d-flex flex-column">
                                                                 <span class="text-right flex mb-16pt">
                                                                     <img
-                                                                        src="../../public/images/paths/angular_64x64.png"
+                                                                        src="{{asset('/images/paths/angular_64x64.png')}}"
                                                                         width="64"
                                                                         alt="Angular fundamentals"
                                                                         class="rounded">
@@ -1503,7 +1503,7 @@
                                                             <span
                                                                 class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
                                                                 <img
-                                                                    src="../../public/images/illustration/achievement/128/white.png"
+                                                                    src="{{asset('/images/illustration/achievement/128/white.png')}}"
                                                                     width="64"
                                                                     alt="achievement">
                                                             </span>
@@ -1516,9 +1516,7 @@
                                                         </span>
                                                     </span>
                                 </a>
-
                             </div>
-
                         </div>
                     </div>
                 </div>

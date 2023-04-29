@@ -9,5 +9,6 @@ Route::group([
 ], function () {
     Route::prefix('courses')->group(function () {
         Route::get('', [StudentCourseController::class, 'index'])->name('student.courses.index');
+        Route::get('show', [StudentCourseController::class, 'show'])->name('student.courses.show');
     });
 });

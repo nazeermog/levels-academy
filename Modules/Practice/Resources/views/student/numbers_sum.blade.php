@@ -183,16 +183,8 @@
             }
 
             const arr = Array.from({
-                length: {
-                    {
-                        $practice - > card_number
-                    }
-                }
-            }, () => Math.floor(Math.random() * {
-                {
-                    rand($practice - > range_number_from, $practice - > range_number_to)
-                }
-            }));
+                length: {{$practice-> card_number}}
+            }, () => Math.floor(Math.random() * {{rand($practice->range_number_from, $practice->range_number_to)}}));
             console.log(arr);
 
             const initialValue = 0;
@@ -237,41 +229,18 @@
                     method: "POST",
                     url: "{{ route('student.practice.store')}}",
                     data: {
-                        practice_id: {
-                            {
-                                $practice - > practice_id
-                            }
-                        },
-                        practice_type_id: {
-                            {
-                                $practice - > id
-                            }
-                        },
+                        practice_id: {{$practice->practice_id}},
+                        practice_type_id: {{$practice->id}},
                         level_title: '{{$practice->title}}',
                         result_student: inputValue,
                         result_true: sumNumber,
                         student_id: 0,
                         is_true: sumNumber === inputValue,
-                        seconds_speed: {
-                            {
-                                $practice - > seconds_speed
-                            }
-                        },
-                        card_number: {
-                            {
-                                $practice - > card_number
-                            }
-                        },
-                        range_number_from: {
-                            {
-                                $practice - > range_number_from
-                            }
-                        },
-                        range_number_to: {
-                            {
-                                $practice - > range_number_to
-                            }
-                        }
+                        seconds_speed: {{$practice->seconds_speed}},
+                        card_number: {{$practice->card_number}},
+                        range_number_from: {{$practice ->range_number_from }},
+                        range_number_to: {{$practice->range_number_to}}
+
                     },
                     success: function(one, two, three) {
                         toastr.success('updated successfully')
@@ -299,11 +268,7 @@
                 effect: "cards",
                 simulateTouch: false,
                 autoplay: {
-                    delay: {
-                        {
-                            $practice - > seconds_speed
-                        }
-                    },
+                    delay: {{$practice->seconds_speed }},
                     stopOnLastSlide: true,
                 },
             });

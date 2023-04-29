@@ -6,7 +6,7 @@ use Modules\Practice\Http\Controllers\StudentPracticeController;
 
 
 Route::group([
-    'middleware' => ['auth', 'role:instructor'],
+//    'middleware' => ['auth', 'role:instructor'],
     'prefix' => 'instructor',
 ], function () {
     Route::prefix('practice')->group(function () {
