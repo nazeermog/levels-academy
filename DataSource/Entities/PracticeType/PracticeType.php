@@ -1,6 +1,6 @@
 <?php
 
-namespace DataSource\Entities\Practice;
+namespace DataSource\Entities\PracticeType;
 
 use DataSource\Entities\BaseModel;
 

@@ -2,7 +2,7 @@
 
 namespace DataSource\Repositories\DB\Practice\Admin;
 
-use DataSource\Entities\Practice\PracticeType;
+use DataSource\Entities\PracticeType\PracticeType;
 use DataSource\Traits\Admin\AdminCRUDGenericRepository;
 
 class AdminPracticeRepository

@@ -3,7 +3,7 @@
 namespace DataSource\Repositories\DB\Practice\Student;
 
 
-use DataSource\Entities\Practice\PracticeTypeDetail;
+use DataSource\Entities\PracticeType\PracticeTypeDetail;
 
 class StudentPracticeTypeRepository
 {

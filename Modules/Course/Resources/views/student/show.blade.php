@@ -16,7 +16,8 @@
                            class="btn btn-white">Resume course</a>
                     </div>
                 </div>
-                <div class="navbar navbar-expand-sm navbar-light bg-white border-bottom-2 navbar-list p-0 m-0 align-items-center">
+                <div
+                    class="navbar navbar-expand-sm navbar-light bg-white border-bottom-2 navbar-list p-0 m-0 align-items-center">
                     <div class="container page__container">
                         <ul class="nav navbar-nav flex align-items-sm-center">
                             <li class="nav-item navbar-list__item">
@@ -88,7 +89,8 @@
                                         <ul class="list-unstyled collapse show"
                                             id="toc-content-1">
                                             <li class="accordion__menu-link">
-                                                <span class="material-icons icon-16pt icon--left text-body">check_circle</span>
+                                                <span
+                                                    class="material-icons icon-16pt icon--left text-body">check_circle</span>
                                                 <a class="flex"
                                                    href="student-take-lesson.html">Introduction</a>
                                                 <span class="text-muted">8m 42s</span>
@@ -108,7 +110,7 @@
                                             <li class="accordion__menu-link">
                                                 <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
                                                 <a class="flex"
-                                                   href="{{route('student.practice.show',['id'=>\DataSource\Entities\Practice\PracticeType::first()->id])}}">Quiz:
+                                                   href="{{route('student.practice.show',['id'=>\DataSource\Entities\PracticeType\PracticeType::first()->id])}}">Quiz:
                                                     Getting Started With Angular</a>
                                             </li>
                                         </ul>
@@ -140,7 +142,8 @@
                                         <ul class="list-unstyled collapse"
                                             id="toc-content-2">
                                             <li class="accordion__menu-link">
-                                                <span class="material-icons icon-16pt icon--left text-body">check_circle</span>
+                                                <span
+                                                    class="material-icons icon-16pt icon--left text-body">check_circle</span>
                                                 <a class="flex"
                                                    href="student-take-lesson.html">Introduction</a>
                                                 <span class="text-muted">8m 42s</span>
@@ -272,10 +275,10 @@
                                             <span class="rating__item"><span class="material-icons">star</span></span>
 
                                             <span class="rating__item"><span
-                                                        class="material-icons">star_border</span></span>
+                                                    class="material-icons">star_border</span></span>
 
                                             <span class="rating__item"><span
-                                                        class="material-icons">star_border</span></span>
+                                                    class="material-icons">star_border</span></span>
 
                                         </div>
                                         <small class="text-muted">3/5</small>
@@ -307,7 +310,7 @@
                                             <span class="rating__item"><span class="material-icons">star</span></span>
 
                                             <span class="rating__item"><span
-                                                        class="material-icons">star_border</span></span>
+                                                    class="material-icons">star_border</span></span>
 
                                         </div>
                                         <small class="text-muted">4/5</small>
@@ -346,7 +349,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 pt-sm-32pt pt-md-0 d-flex flex-column align-items-center justify-content-start">
+                    <div
+                        class="col-md-5 pt-sm-32pt pt-md-0 d-flex flex-column align-items-center justify-content-start">
                         <div class="text-center">
                             <p class="mb-16pt">
                                 <img src="{{asset('/images/people/110/guy-6.jpg')}}"
@@ -417,7 +421,7 @@
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span
-                                                        class="material-icons">star_border</span></span>
+                                                    class="material-icons">star_border</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -450,7 +454,7 @@
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span
-                                                        class="material-icons">star_border</span></span>
+                                                    class="material-icons">star_border</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -483,7 +487,7 @@
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span
-                                                        class="material-icons">star_border</span></span>
+                                                    class="material-icons">star_border</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -758,10 +762,11 @@
 
                             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
 
-                                <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal "
-                                     data-partial-height="44"
-                                     data-toggle="popover"
-                                     data-trigger="click">
+                                <div
+                                    class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal "
+                                    data-partial-height="44"
+                                    data-toggle="popover"
+                                    data-trigger="click">
 
                                     <a href="student-course.html"
                                        class="js-image"
@@ -769,14 +774,16 @@
                                         <img src="{{asset('/images/paths/angular_430x168.png')}}"
                                              alt="course">
                                         <span class="overlay__content align-items-start justify-content-start">
-                                                            <span class="overlay__action card-body d-flex align-items-center">
+                                                            <span
+                                                                class="overlay__action card-body d-flex align-items-center">
                                                                 <i class="material-icons mr-4pt">play_circle_outline</i>
                                                                 <span class="card-title text-white">Preview</span>
                                                             </span>
                                                         </span>
                                     </a>
 
-                                    <span class="corner-ribbon corner-ribbon--default-right-top corner-ribbon--shadow bg-accent text-white">NEW</span>
+                                    <span
+                                        class="corner-ribbon corner-ribbon--default-right-top corner-ribbon--shadow bg-accent text-white">NEW</span>
 
                                     <div class="mdk-reveal__content">
                                         <div class="card-body">
@@ -800,7 +807,7 @@
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span
-                                                                class="material-icons">star_border</span></span>
+                                                            class="material-icons">star_border</span></span>
                                                 </div>
                                                 <small class="text-50">6 hours</small>
                                             </div>
@@ -882,10 +889,11 @@
 
                             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
 
-                                <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal "
-                                     data-partial-height="44"
-                                     data-toggle="popover"
-                                     data-trigger="click">
+                                <div
+                                    class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal "
+                                    data-partial-height="44"
+                                    data-toggle="popover"
+                                    data-trigger="click">
 
                                     <a href="student-course.html"
                                        class="js-image"
@@ -893,7 +901,8 @@
                                         <img src="{{asset('/images/paths/swift_430x168.png')}}"
                                              alt="course">
                                         <span class="overlay__content align-items-start justify-content-start">
-                                                            <span class="overlay__action card-body d-flex align-items-center">
+                                                            <span
+                                                                class="overlay__action card-body d-flex align-items-center">
                                                                 <i class="material-icons mr-4pt">play_circle_outline</i>
                                                                 <span class="card-title text-white">Preview</span>
                                                             </span>
@@ -922,7 +931,7 @@
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span
-                                                                class="material-icons">star_border</span></span>
+                                                            class="material-icons">star_border</span></span>
                                                 </div>
                                                 <small class="text-50">6 hours</small>
                                             </div>
@@ -1004,10 +1013,11 @@
 
                             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
 
-                                <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal "
-                                     data-partial-height="44"
-                                     data-toggle="popover"
-                                     data-trigger="click">
+                                <div
+                                    class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal "
+                                    data-partial-height="44"
+                                    data-toggle="popover"
+                                    data-trigger="click">
 
                                     <a href="student-course.html"
                                        class="js-image"
@@ -1015,7 +1025,8 @@
                                         <img src="{{asset('/images/paths/wordpress_430x168.png')}}"
                                              alt="course">
                                         <span class="overlay__content align-items-start justify-content-start">
-                                                            <span class="overlay__action card-body d-flex align-items-center">
+                                                            <span
+                                                                class="overlay__action card-body d-flex align-items-center">
                                                                 <i class="material-icons mr-4pt">play_circle_outline</i>
                                                                 <span class="card-title text-white">Preview</span>
                                                             </span>
@@ -1044,7 +1055,7 @@
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span
-                                                                class="material-icons">star_border</span></span>
+                                                            class="material-icons">star_border</span></span>
                                                 </div>
                                                 <small class="text-50">6 hours</small>
                                             </div>
@@ -1126,10 +1137,11 @@
 
                             <div class="col-12 col-sm-6 col-md-4 col-xl-3">
 
-                                <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal "
-                                     data-partial-height="44"
-                                     data-toggle="popover"
-                                     data-trigger="click">
+                                <div
+                                    class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal "
+                                    data-partial-height="44"
+                                    data-toggle="popover"
+                                    data-trigger="click">
 
                                     <a href="student-course.html"
                                        class="js-image"
@@ -1137,7 +1149,8 @@
                                         <img src="{{asset('/images/paths/react_430x168.png')}}"
                                              alt="course">
                                         <span class="overlay__content align-items-start justify-content-start">
-                                                            <span class="overlay__action card-body d-flex align-items-center">
+                                                            <span
+                                                                class="overlay__action card-body d-flex align-items-center">
                                                                 <i class="material-icons mr-4pt">play_circle_outline</i>
                                                                 <span class="card-title text-white">Preview</span>
                                                             </span>
@@ -1166,7 +1179,7 @@
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span
-                                                                class="material-icons">star_border</span></span>
+                                                            class="material-icons">star_border</span></span>
                                                 </div>
                                                 <small class="text-50">6 hours</small>
                                             </div>

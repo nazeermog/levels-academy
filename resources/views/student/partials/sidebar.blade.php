@@ -22,7 +22,7 @@
                     <a class="sidebar-menu-button"
                        href="{{route('student.courses.index')}}">
                                                     <span
-                                                            class="material-icons sidebar-menu-icon sidebar-menu-icon--left">local_library</span>
+                                                        class="material-icons sidebar-menu-icon sidebar-menu-icon--left">local_library</span>
                         <span class="sidebar-menu-text">Browse Courses</span>
                     </a>
                 </li>
@@ -37,7 +37,7 @@
                     <a class="sidebar-menu-button"
                        href="student-dashboard.html">
                                                     <span
-                                                            class="material-icons sidebar-menu-icon sidebar-menu-icon--left">account_box</span>
+                                                        class="material-icons sidebar-menu-icon sidebar-menu-icon--left">account_box</span>
                         <span class="sidebar-menu-text">Student Dashboard</span>
                     </a>
                 </li>
@@ -54,7 +54,7 @@
                     <a class="sidebar-menu-button"
                        href="student-paths.html">
                                                     <span
-                                                            class="material-icons sidebar-menu-icon sidebar-menu-icon--left">timeline</span>
+                                                        class="material-icons sidebar-menu-icon sidebar-menu-icon--left">timeline</span>
                         <span class="sidebar-menu-text">My Paths</span>
                     </a>
                 </li>
@@ -85,7 +85,7 @@
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">class</span>
                         <span class="sidebar-menu-text">Take Course</span>
                         <span
-                                class="sidebar-menu-badge badge badge-accent badge-notifications ml-auto">PRO</span>
+                            class="sidebar-menu-badge badge badge-accent badge-notifications ml-auto">PRO</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
@@ -97,7 +97,7 @@
                 </li>
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
-                       href="{{route('student.practice.show',['id'=>\DataSource\Entities\Practice\PracticeType::first()->id])}}">
+                       href="{{route('student.practice.show',['id'=>\DataSource\Entities\PracticeType\PracticeType::first()->id])}}">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
                         <span class="sidebar-menu-text">
                             Practice
@@ -115,7 +115,7 @@
                     <a class="sidebar-menu-button"
                        href="student-quiz-result-details.html">
                                                     <span
-                                                            class="material-icons sidebar-menu-icon sidebar-menu-icon--left">live_help</span>
+                                                        class="material-icons sidebar-menu-icon sidebar-menu-icon--left">live_help</span>
                         <span class="sidebar-menu-text">Quiz Result</span>
                     </a>
                 </li>
@@ -130,7 +130,7 @@
                     <a class="sidebar-menu-button"
                        href="student-path-assessment-result.html">
                                         <span
-                                                class="material-icons sidebar-menu-icon sidebar-menu-icon--left">assignment_turned_in</span>
+                                            class="material-icons sidebar-menu-icon sidebar-menu-icon--left">assignment_turned_in</span>
                         <span class="sidebar-menu-text">Skill Result</span>
                     </a>
                 </li>

@@ -1,6 +1,6 @@
 <?php
 
-namespace DataSource\Entities\Practice;
+namespace DataSource\Entities\PracticeType;
 
 use DataSource\Entities\BaseModel;
 
@@ -16,7 +16,7 @@ use DataSource\Entities\BaseModel;
 class PracticeTypeDetail extends BaseModel
 {
 
-    protected $table = 'practice_types';
+    protected $table = 'practice_type_details';
     protected $translatedAttributes = ['title'];
     public $translationForeignKey = 'practice_type_id';
     protected $fillable = [

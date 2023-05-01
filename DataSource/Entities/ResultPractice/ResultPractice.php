@@ -3,7 +3,7 @@
 namespace DataSource\Entities\ResultPractice;
 
 use DataSource\Entities\BaseModel;
-use DataSource\Entities\Practice\PracticeType;
+use DataSource\Entities\PracticeType\PracticeType;
 use DataSource\Entities\Student\Student;
 use Illuminate\Database\Eloquent\Model;
 
