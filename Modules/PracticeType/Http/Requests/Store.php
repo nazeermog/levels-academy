@@ -14,7 +14,7 @@ class Store extends FormRequest
     public function rules()
     {
         return [
-            'practice_id' => ['required', 'numeric', 'exists:practices,id'],
+            'practice_id' => ['required', 'numeric', 'exists:practice_types,id'],
             // 'student_id' => ['required', 'numeric', 'exists:students,id'],
             'is_true' => ['required'],
             'seconds_speed' => ['required', 'numeric'],
