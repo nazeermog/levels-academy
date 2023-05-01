@@ -18,8 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('question_id')->index();
             $table->unsignedBigInteger('tag_id')->index();
             $table->timestamps();
-            $table->foreign('question_id')->on('questions')->references('id')->onDelete('cascade');
-            $table->foreign('tag_id')->on('tags')->references('id')->onDelete('cascade');
+
         });
     }
 

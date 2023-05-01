@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('locale')->index();
             $table->unique(['locale', 'question_id']);
             $table->timestamps();
-            $table->foreign('question_id')->on('questions')->references('id')->onDelete('cascade');
+
 
         });
     }

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('country');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

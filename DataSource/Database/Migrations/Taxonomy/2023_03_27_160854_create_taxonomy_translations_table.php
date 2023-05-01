@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('desc')->nullable();
             $table->string('locale')->index();
             $table->unique(['taxonomy_id', 'locale']);
-            $table->foreign('taxonomy_id')->references('id')->on('taxonomies')->onDelete('cascade');
+
         });
     }
 

@@ -18,8 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('taxonomy_id')->index();
             $table->unsignedBigInteger('partner_id')->index();
             $table->timestamps();
-            $table->foreign('partner_id')->on('partners')->references('id')->onDelete('cascade');
-            $table->foreign('taxonomy_id')->on('taxonomies')->references('id')->onDelete('cascade');
+
         });
     }
 

@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('tag_id')->index();
             $table->timestamps();
             $table->unique(['tag_id', 'locale']);
-            $table->foreign('tag_id')->on('tags')->references('id')->onDelete('cascade');
+
         });
     }
 

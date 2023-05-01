@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('locale')->index();
             $table->unique(['lesson_id', 'locale']);
             $table->timestamps();
-            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
         });
     }
 

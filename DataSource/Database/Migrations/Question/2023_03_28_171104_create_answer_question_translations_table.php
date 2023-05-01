@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('locale')->index();
             $table->unique(['locale', 'answer_question_id']);
             $table->timestamps();
-            $table->foreign('answer_question_id')->on('answer_questions')->references('id')->onDelete('cascade');
         });
     }
 

@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('practice_id')->index();
             $table->enum('question_type',['radio_answer','true_false_answer','checkbox_answer','filling_blank_answer','sortable','text_answer']);
             $table->timestamps();
-            $table->foreign('practice_id')->on('practices')->references('id')->onDelete('cascade');
         });
     }
 
