@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Modules\Practice\Http\Requests\Store;
+use Modules\PracticeType\Http\Requests\Store;
 
 
 class StudentPracticeController extends Controller
