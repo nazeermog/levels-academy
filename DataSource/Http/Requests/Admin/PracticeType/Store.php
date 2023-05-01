@@ -24,7 +24,7 @@ class Store extends FormRequest
             'card_number' => ['required', 'numeric'],
             'range_number_from' => ['required', 'numeric'],
             'range_number_to' => ['required', 'numeric'],
-            'practice_id' => ['required', 'numeric', 'exists:practices,id'],
+            'practice_id' => ['required', 'numeric', 'exists:practice_types,id'],
         ], $mergeArray);
     }
 }
