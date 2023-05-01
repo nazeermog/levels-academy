@@ -3,7 +3,7 @@
 namespace DataSource\Entities\ResultPractice;
 
 use DataSource\Entities\BaseModel;
-use DataSource\Entities\Practice\Practice;
+use DataSource\Entities\Practice\PracticeType;
 use DataSource\Entities\Student\Student;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,7 +35,7 @@ class ResultPractice extends Model
 
     public function practice()
     {
-        return $this->hasOne(Practice::class, 'id', 'practice_id');
+        return $this->hasOne(PracticeType::class, 'id', 'practice_id');
     }
 
     public function resultsType()

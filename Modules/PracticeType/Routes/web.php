@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Practice\Http\Controllers\PracticeController;
-use Modules\Practice\Http\Controllers\StudentPracticeController;
+use Modules\PracticeType\Http\Controllers\PracticeController;
+use Modules\PracticeType\Http\Controllers\StudentPracticeController;
 
 
 Route::group([

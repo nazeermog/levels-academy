@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('student_activities', function (Blueprint $table) {
             $table->id();
-            $table->morphs('Practice');
+            $table->morphs('PracticeType');
             $table->float('result');
             $table->integer('attempt');
             $table->timestamps();

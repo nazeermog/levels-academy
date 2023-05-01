@@ -24,7 +24,7 @@ class Store extends FormRequest
             'arrayData' => ['array', 'required'],
             'arrayData.*.ordering' => ['numeric', 'required'],
             'arrayData.*.type_id' => ['numeric', 'required'],
-            'arrayData.*.type' => ['in:Quiz,Practice,Lesson'],
+            'arrayData.*.type' => ['in:Quiz,PracticeType,Lesson'],
             'price' => ['required'],
         ], $mergeArray);
     }

@@ -2,7 +2,7 @@
     "Course": true,
     "Lesson": true,
     "Student": true,
-    "Practice": true,
+    "PracticeType": true,
     "Question": true,
     "TaxonomyCategory": true,
     "User": true,
@@ -12,5 +12,7 @@
     "Taxonomy": true,
     "Partner": true,
     "StudentActivity": true,
-    "ResultPractice": true
+    "ResultPractice": true,
+    "Inrollment": true,
+    "InrollmentRequest": true
 }

@@ -2,12 +2,12 @@
 
 namespace DataSource\Repositories\DB\Practice\Admin;
 
-use DataSource\Entities\Practice\PracticeType;
+use DataSource\Entities\Practice\PracticeTypeDetail;
 use DataSource\Traits\Admin\AdminCRUDGenericRepository;
 
 class AdminPracticeTypeRepository
 {
     use AdminCRUDGenericRepository;
 
-    protected $model = PracticeType::class;
+    protected $model = PracticeTypeDetail::class;
 }

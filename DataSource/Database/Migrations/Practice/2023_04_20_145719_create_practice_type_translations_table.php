@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('practice_translations', function (Blueprint $table) {
+        Schema::create('practice_type_translations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('practice_id')->index();
             $table->string('title');

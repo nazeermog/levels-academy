@@ -1,0 +1,11 @@
+{
+    "name": "PracticeType",
+    "alias": "practicetype",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\PracticeType\\Providers\\PracticeTypeServiceProvider"
+    ],
+    "files": []
+}

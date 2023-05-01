@@ -8,7 +8,10 @@
                 <div class="hero py-64pt text-center text-sm-left">
                     <div class="container page__container">
                         <h1 class="text-white">Angular Fundamentals</h1>
-                        <p class="lead text-white-50 measure-hero-lead mb-24pt">It’s not every day that one of the most important front-end libraries in web development gets a complete overhaul. Keep your skills relevant and up-to-date with this comprehensive introduction to Google’s popular community project.</p>
+                        <p class="lead text-white-50 measure-hero-lead mb-24pt">It’s not every day that one of the most
+                            important front-end libraries in web development gets a complete overhaul. Keep your skills
+                            relevant and up-to-date with this comprehensive introduction to Google’s popular community
+                            project.</p>
                         <a href="student-take-lesson.html"
                            class="btn btn-white">Resume course</a>
                     </div>
@@ -65,7 +68,10 @@
                             <h4>Getting Started With Angular</h4>
                         </div>
 
-                        <p class="text-70 mb-24pt">Good tools make application development quick*er and easier to maintain than* if you did everything by hand. The goal in this guide is to build and run a simple Angular application in TypeScript, using the Angular CLI while adhering to the Style Guide recommendations that benefit every Angular project.</p>
+                        <p class="text-70 mb-24pt">Good tools make application development quick*er and easier to
+                            maintain than* if you did everything by hand. The goal in this guide is to build and run a
+                            simple Angular application in TypeScript, using the Angular CLI while adhering to the Style
+                            Guide recommendations that benefit every Angular project.</p>
 
                         <div class="card mb-32pt mb-lg-64pt">
                             <ul class="accordion accordion--boxed js-accordion mb-0"
@@ -102,7 +108,8 @@
                                             <li class="accordion__menu-link">
                                                 <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
                                                 <a class="flex"
-                                                   href="{{route('student.practice.show',['id'=>\DataSource\Entities\Practice\Practice::first()->id])}}">Quiz: Getting Started With Angular</a>
+                                                   href="{{route('student.practice.show',['id'=>\DataSource\Entities\Practice\PracticeType::first()->id])}}">Quiz:
+                                                    Getting Started With Angular</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -114,7 +121,9 @@
                             <div class="page-num">2</div>
                             <h4>Creating and Communicating Between Angular Components</h4>
                         </div>
-                        <p class="text-70 mb-24pt">Data sharing is an essential concept to understand before diving into your first Angular project. In this section, you will learn four different methods for sharing data between Angular components.</p>
+                        <p class="text-70 mb-24pt">Data sharing is an essential concept to understand before diving into
+                            your first Angular project. In this section, you will learn four different methods for
+                            sharing data between Angular components.</p>
 
                         <div class="card mb-0">
                             <ul class="accordion accordion--boxed js-accordion mb-0"
@@ -190,8 +199,12 @@
                         <div class="page-separator">
                             <div class="page-separator__text">About this course</div>
                         </div>
-                        <p class="text-70">This course will teach you the fundamentals o*f working with Angular 2. You *will learn everything you need to know to create complete applications including: components, services, directives, pipes, routing, HTTP, and even testing.</p>
-                        <p class="text-70 mb-0">This course will teach you the fundamentals o*f working with Angular 2. You *will learn everything you need to know to create complete applications including: components, services, directives, pipes, routing, HTTP, and even testing.</p>
+                        <p class="text-70">This course will teach you the fundamentals o*f working with Angular 2. You
+                            *will learn everything you need to know to create complete applications including:
+                            components, services, directives, pipes, routing, HTTP, and even testing.</p>
+                        <p class="text-70 mb-0">This course will teach you the fundamentals o*f working with Angular 2.
+                            You *will learn everything you need to know to create complete applications including:
+                            components, services, directives, pipes, routing, HTTP, and even testing.</p>
                     </div>
                     <div class="col-md-5">
                         <div class="page-separator">
@@ -230,7 +243,9 @@
                 <div class="row">
                     <div class="col-md-7 mb-24pt mb-md-0">
                         <h4>About the author</h4>
-                        <p class="text-70 mb-24pt">Eddie Bryan is a software developer at LearnD*ash. With more than 20 years o*f software development experience, he has gained a passion for Agile software development -- especially Lean.</p>
+                        <p class="text-70 mb-24pt">Eddie Bryan is a software developer at LearnD*ash. With more than 20
+                            years o*f software development experience, he has gained a passion for Agile software
+                            development -- especially Lean.</p>
 
                         <div class="page-separator">
                             <div class="page-separator__text bg-white">More from the author</div>
@@ -256,9 +271,11 @@
 
                                             <span class="rating__item"><span class="material-icons">star</span></span>
 
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                            <span class="rating__item"><span
+                                                        class="material-icons">star_border</span></span>
 
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                            <span class="rating__item"><span
+                                                        class="material-icons">star_border</span></span>
 
                                         </div>
                                         <small class="text-muted">3/5</small>
@@ -289,7 +306,8 @@
 
                                             <span class="rating__item"><span class="material-icons">star</span></span>
 
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                            <span class="rating__item"><span
+                                                        class="material-icons">star_border</span></span>
 
                                         </div>
                                         <small class="text-muted">4/5</small>
@@ -356,7 +374,8 @@
             <div class="container">
                 <div class="page-headline text-center">
                     <h2>Feedback</h2>
-                    <p class="lead text-70 measure-lead mx-auto">What other students turned professionals have to say about us after learning with us and reaching their goals.</p>
+                    <p class="lead text-70 measure-lead mx-auto">What other students turned professionals have to say
+                        about us after learning with us and reaching their goals.</p>
                 </div>
 
                 <div class="position-relative carousel-card p-0 mx-auto">
@@ -376,7 +395,9 @@
 
                                 <div class="card card-feedback card-body">
                                     <blockquote class="blockquote mb-0">
-                                        <p class="text-70 small mb-0">A wonderful course on how to start. Eddie beautifully conveys all essentials of a becoming a good Angular developer. Very glad to have taken this course. Thank you Eddie Bryan.</p>
+                                        <p class="text-70 small mb-0">A wonderful course on how to start. Eddie
+                                            beautifully conveys all essentials of a becoming a good Angular developer.
+                                            Very glad to have taken this course. Thank you Eddie Bryan.</p>
                                     </blockquote>
                                 </div>
                                 <div class="media ml-12pt">
@@ -395,7 +416,8 @@
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                            <span class="rating__item"><span
+                                                        class="material-icons">star_border</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -406,7 +428,9 @@
 
                                 <div class="card card-feedback card-body">
                                     <blockquote class="blockquote mb-0">
-                                        <p class="text-70 small mb-0">A wonderful course on how to start. Eddie beautifully conveys all essentials of a becoming a good Angular developer. Very glad to have taken this course. Thank you Eddie Bryan.</p>
+                                        <p class="text-70 small mb-0">A wonderful course on how to start. Eddie
+                                            beautifully conveys all essentials of a becoming a good Angular developer.
+                                            Very glad to have taken this course. Thank you Eddie Bryan.</p>
                                     </blockquote>
                                 </div>
                                 <div class="media ml-12pt">
@@ -425,7 +449,8 @@
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                            <span class="rating__item"><span
+                                                        class="material-icons">star_border</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -436,7 +461,9 @@
 
                                 <div class="card card-feedback card-body">
                                     <blockquote class="blockquote mb-0">
-                                        <p class="text-70 small mb-0">A wonderful course on how to start. Eddie beautifully conveys all essentials of a becoming a good Angular developer. Very glad to have taken this course. Thank you Eddie Bryan.</p>
+                                        <p class="text-70 small mb-0">A wonderful course on how to start. Eddie
+                                            beautifully conveys all essentials of a becoming a good Angular developer.
+                                            Very glad to have taken this course. Thank you Eddie Bryan.</p>
                                     </blockquote>
                                 </div>
                                 <div class="media ml-12pt">
@@ -455,7 +482,8 @@
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                            <span class="rating__item"><span
+                                                        class="material-icons">star_border</span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -639,7 +667,9 @@
                             <span class="rating__item"><span class="material-icons">star</span></span>
                             <span class="rating__item"><span class="material-icons">star_border</span></span>
                         </div>
-                        <p class="text-70 mb-0">A wonderful course on how to start. Eddie beautifully conveys all essentials of a becoming a good Angular developer. Very glad to have taken this course. Thank you Eddie Bryan.</p>
+                        <p class="text-70 mb-0">A wonderful course on how to start. Eddie beautifully conveys all
+                            essentials of a becoming a good Angular developer. Very glad to have taken this course.
+                            Thank you Eddie Bryan.</p>
                     </div>
                 </div>
 
@@ -666,7 +696,8 @@
                             <span class="rating__item"><span class="material-icons">star</span></span>
                             <span class="rating__item"><span class="material-icons">star_border</span></span>
                         </div>
-                        <p class="text-70 mb-0">This course is absolutely amazing, Bryan goes* out of his way to really expl*ain things clearly I couldn&#39;t be happier, so glad I made this purchase!</p>
+                        <p class="text-70 mb-0">This course is absolutely amazing, Bryan goes* out of his way to really
+                            expl*ain things clearly I couldn&#39;t be happier, so glad I made this purchase!</p>
                     </div>
                 </div>
 
@@ -693,7 +724,8 @@
                             <span class="rating__item"><span class="material-icons">star</span></span>
                             <span class="rating__item"><span class="material-icons">star_border</span></span>
                         </div>
-                        <p class="text-70 mb-0">This course is absolutely amazing, Bryan goes* out of his way to really expl*ain things clearly I couldn&#39;t be happier, so glad I made this purchase!</p>
+                        <p class="text-70 mb-0">This course is absolutely amazing, Bryan goes* out of his way to really
+                            expl*ain things clearly I couldn&#39;t be happier, so glad I made this purchase!</p>
                     </div>
                 </div>
 
@@ -767,7 +799,8 @@
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
-                                                    <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                                    <span class="rating__item"><span
+                                                                class="material-icons">star_border</span></span>
                                                 </div>
                                                 <small class="text-50">6 hours</small>
                                             </div>
@@ -792,24 +825,29 @@
                                         </div>
                                     </div>
 
-                                    <p class="my-16pt text-70">Learn the fundamentals of working with Angular and how to create basic applications.</p>
+                                    <p class="my-16pt text-70">Learn the fundamentals of working with Angular and how to
+                                        create basic applications.</p>
 
                                     <div class="mb-16pt">
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with Angular</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with
+                                                    Angular</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular applications</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular
+                                                    applications</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Working with the Angular CLI</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Working with the Angular
+                                                    CLI</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Understanding Dependency Injection</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Understanding Dependency
+                                                    Injection</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
@@ -883,7 +921,8 @@
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
-                                                    <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                                    <span class="rating__item"><span
+                                                                class="material-icons">star_border</span></span>
                                                 </div>
                                                 <small class="text-50">6 hours</small>
                                             </div>
@@ -908,24 +947,29 @@
                                         </div>
                                     </div>
 
-                                    <p class="my-16pt text-70">Learn the fundamentals of working with Angular and how to create basic applications.</p>
+                                    <p class="my-16pt text-70">Learn the fundamentals of working with Angular and how to
+                                        create basic applications.</p>
 
                                     <div class="mb-16pt">
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with Angular</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with
+                                                    Angular</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular applications</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular
+                                                    applications</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Working with the Angular CLI</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Working with the Angular
+                                                    CLI</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Understanding Dependency Injection</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Understanding Dependency
+                                                    Injection</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
@@ -999,7 +1043,8 @@
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
-                                                    <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                                    <span class="rating__item"><span
+                                                                class="material-icons">star_border</span></span>
                                                 </div>
                                                 <small class="text-50">6 hours</small>
                                             </div>
@@ -1024,24 +1069,29 @@
                                         </div>
                                     </div>
 
-                                    <p class="my-16pt text-70">Learn the fundamentals of working with Angular and how to create basic applications.</p>
+                                    <p class="my-16pt text-70">Learn the fundamentals of working with Angular and how to
+                                        create basic applications.</p>
 
                                     <div class="mb-16pt">
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with Angular</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with
+                                                    Angular</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular applications</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular
+                                                    applications</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Working with the Angular CLI</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Working with the Angular
+                                                    CLI</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Understanding Dependency Injection</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Understanding Dependency
+                                                    Injection</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
@@ -1115,7 +1165,8 @@
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
                                                     <span class="rating__item"><span class="material-icons">star</span></span>
-                                                    <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                                    <span class="rating__item"><span
+                                                                class="material-icons">star_border</span></span>
                                                 </div>
                                                 <small class="text-50">6 hours</small>
                                             </div>
@@ -1140,24 +1191,29 @@
                                         </div>
                                     </div>
 
-                                    <p class="my-16pt text-70">Learn the fundamentals of working with Angular and how to create basic applications.</p>
+                                    <p class="my-16pt text-70">Learn the fundamentals of working with Angular and how to
+                                        create basic applications.</p>
 
                                     <div class="mb-16pt">
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with Angular</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Fundamentals of working with
+                                                    Angular</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular applications</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Create complete Angular
+                                                    applications</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Working with the Angular CLI</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Working with the Angular
+                                                    CLI</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>
-                                            <p class="flex text-50 lh-1 mb-0"><small>Understanding Dependency Injection</small></p>
+                                            <p class="flex text-50 lh-1 mb-0"><small>Understanding Dependency
+                                                    Injection</small></p>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="material-icons icon-16pt text-50 mr-8pt">check</span>

@@ -2,18 +2,18 @@
 
 namespace DataSource\Repositories\DB\Practice\Admin;
 
-use DataSource\Entities\Practice\Practice;
+use DataSource\Entities\Practice\PracticeType;
 use DataSource\Traits\Admin\AdminCRUDGenericRepository;
 
 class AdminPracticeRepository
 {
     use AdminCRUDGenericRepository;
 
-    protected $model = Practice::class;
+    protected $model = PracticeType::class;
 
     public static function list()
     {
-        return Practice::all();
+        return PracticeType::all();
     }
 
 }

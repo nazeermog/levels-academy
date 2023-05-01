@@ -12,14 +12,12 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('practice_types', function (Blueprint $table) {
+        Schema::create('practice_type_detail_translations', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_active')->default(1);
-            $table->integer('seconds_speed')->nullable();
-            $table->integer('card_number')->nullable();
-            $table->integer('range_number_from')->nullable();
-            $table->integer('range_number_to')->nullable();
-            $table->unsignedBigInteger('practice_id');
+            $table->string('title');
+            $table->unsignedBigInteger('practice_type_id');
+            $table->string('locale');
+            $table->unique(['locale', 'practice_type_id']);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('practice_types');
+        Schema::dropIfExists('practice_type_translations');
     }
 };

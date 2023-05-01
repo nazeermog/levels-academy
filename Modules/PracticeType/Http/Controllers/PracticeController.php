@@ -1,17 +1,14 @@
 <?php
 
-namespace Modules\Practice\Http\Controllers;
+namespace Modules\PracticeType\Http\Controllers;
 
-use DataSource\Repositories\DB\Practice\Student\StudentPracticeTypeRepository;
-use DataSource\Repositories\DB\ResultPractice\Student\StudentResultPracticeRepository;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Modules\Practice\Http\Requests\Store;
 
 
-class StudentPracticeController extends Controller
+class PracticeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,8 +25,7 @@ class StudentPracticeController extends Controller
      */
     public function create()
     {
-
-        return view('practice::student.take_quiz');
+        return view('practice::create');
     }
 
     /**
@@ -39,7 +35,34 @@ class StudentPracticeController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+        DB::beginTransaction();
+        $practice = new PracticeType();
+        $practice->course_id = 1;
+        $practice->title = 'test';
+        $practice->save();
+        $points = $request->input('points');
+        $questions = $request->input('questions');
+        $types = $request->input('question_types');
+        $answers = $request->input('answers');
+        for ($i = 0; $i < count($points); $i++) {
 
+            $question = new Question();
+            $question->point = $points[$i];
+            $question->question_text = $questions[$i];
+            $question->practice_id = $practice->id;
+
+            $question->question_type = $types[$i];
+            $question->save();
+            $answer = new Answer();
+            $answer->is_correct = true;
+            $answer->answer = isset($answers[$i]) ? $answers[$i] : $answers[$i + 1];
+            $answer->question_id = $question->id;
+            $answer->save();
+
+
+        }
+        DB::commit();
     }
 
     /**
@@ -49,36 +72,7 @@ class StudentPracticeController extends Controller
      */
     public function show($id)
     {
-        $questions = Question::where('practice_id', $id)->get();
-        return view('practice::student.take_quiz', compact('questions'));
-    }
-
-    public function showPractice($id)
-    {
-        $practice = StudentPracticeTypeRepository::find($id);
-        return view('practice::student.numbers_sum', compact('practice'));
-    }
-
-    public function sendResultPractice(Store $request)
-    {
-        try {
-            DB::beginTransaction();
-            $data = StudentResultPracticeRepository::sendResult($request->validated());
-            DB::commit();
-            return response()->json([
-                'data' => $data,
-                'status' => true,
-                'message' => 'result Sent',
-            ]);
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            return response()->json([
-                'data' => null,
-                'status' => false,
-                'message' => $exception->getMessage(),
-            ], 500);
-        }
-
+        return view('practice::show');
     }
 
     /**

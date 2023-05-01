@@ -12,14 +12,15 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('practices', function (Blueprint $table) {
+        Schema::create('practice_type_details', function (Blueprint $table) {
             $table->id();
-//            $table->unsignedBigInteger('course_id')->index();
-            // $table->unsignedBigInteger('student_id')->index();
-            $table->timestamps();
-            // $table->foreign('student_id')->on('students')->references('user_id')->onDelete('cascade');
             $table->boolean('is_active')->default(1);
-          //  $table->foreign('course_id')->on('courses')->references('id')->onDelete('cascade');
+            $table->integer('seconds_speed')->nullable();
+            $table->integer('card_number')->nullable();
+            $table->integer('range_number_from')->nullable();
+            $table->integer('range_number_to')->nullable();
+            $table->unsignedBigInteger('practice_id');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('practices');
+        Schema::dropIfExists('practice_types');
     }
 };

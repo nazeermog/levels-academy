@@ -1,16 +1,15 @@
 <?php
 
-namespace Modules\Practice\Providers;
+namespace Modules\PracticeType\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
 
-class PracticeServiceProvider extends ServiceProvider
+class PracticeTypeServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'Practice';
+    protected $moduleName = 'PracticeType';
 
     /**
      * @var string $moduleNameLower

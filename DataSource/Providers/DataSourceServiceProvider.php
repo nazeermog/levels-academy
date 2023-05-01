@@ -20,7 +20,7 @@ class DataSourceServiceProvider extends ServiceProvider
         'Instructor',
         'Lesson',
         'Partner',
-        'Practice',
+        'PracticeType',
         'Question',
         'Student',
         'Tag',
