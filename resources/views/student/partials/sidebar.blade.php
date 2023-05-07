@@ -15,7 +15,9 @@
                     <a class="sidebar-menu-button"
                        href="index.html">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">home</span>
-                        <span class="sidebar-menu-text">Home</span>
+                        <span class="sidebar-menu-text">
+                            الرئيسية
+                        </span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
@@ -23,14 +25,19 @@
                        href="{{route('student.courses.index')}}">
                                                     <span
                                                         class="material-icons sidebar-menu-icon sidebar-menu-icon--left">local_library</span>
-                        <span class="sidebar-menu-text">Browse Courses</span>
+                        <span class="sidebar-menu-text">
+                            تصفح الدورات
+
+                        </span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
                        href="paths.html">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">style</span>
-                        <span class="sidebar-menu-text">Browse Paths</span>
+                        <span class="sidebar-menu-text">
+                            مسارات التعليم
+                        </span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
@@ -38,7 +45,7 @@
                        href="student-dashboard.html">
                                                     <span
                                                         class="material-icons sidebar-menu-icon sidebar-menu-icon--left">account_box</span>
-                        <span class="sidebar-menu-text">Student Dashboard</span>
+                        <span class="sidebar-menu-text">لوحة التحكم</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
@@ -47,6 +54,7 @@
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">search</span>
                         <span class="sidebar-menu-text">
                             الدروس
+
                         </span>
                     </a>
                 </li>
@@ -55,35 +63,35 @@
                        href="student-paths.html">
                                                     <span
                                                         class="material-icons sidebar-menu-icon sidebar-menu-icon--left">timeline</span>
-                        <span class="sidebar-menu-text">My Paths</span>
+                        <span class="sidebar-menu-text">مساري التعليمي</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
                        href="student-path.html">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">change_history</span>
-                        <span class="sidebar-menu-text">Path Details</span>
+                        <span class="sidebar-menu-text">تفاصيل المسار</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
                        href="{{route('student.courses.show')}}">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">face</span>
-                        <span class="sidebar-menu-text">Course Preview</span>
+                        <span class="sidebar-menu-text">عرض الدورة التدريبية</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
                        href="student-lesson.html">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">panorama_fish_eye</span>
-                        <span class="sidebar-menu-text">Lesson Preview</span>
+                        <span class="sidebar-menu-text">عرض الدرس</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
                        href="student-take-course.html">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">class</span>
-                        <span class="sidebar-menu-text">Take Course</span>
+                        <span class="sidebar-menu-text"> احضر الدورة التدريبية </span>
                         <span
                             class="sidebar-menu-badge badge badge-accent badge-notifications ml-auto">PRO</span>
                     </a>
@@ -92,7 +100,7 @@
                     <a class="sidebar-menu-button"
                        href="student-take-lesson.html">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">import_contacts</span>
-                        <span class="sidebar-menu-text">Take Lesson</span>
+                        <span class="sidebar-menu-text">احضر الدرس</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
@@ -100,7 +108,7 @@
                        href="{{route('student.practice.show',['id'=>\DataSource\Entities\PracticeType\PracticeType::first()->id])}}">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
                         <span class="sidebar-menu-text">
-                            Practice
+                            التمارين
                         </span>
                     </a>
                 </li>
@@ -108,7 +116,7 @@
                     <a class="sidebar-menu-button"
                        href="student-quiz-results.html">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">poll</span>
-                        <span class="sidebar-menu-text">My Quizzes</span>
+                        <span class="sidebar-menu-text">مذاكراتي</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
@@ -116,7 +124,7 @@
                        href="student-quiz-result-details.html">
                                                     <span
                                                         class="material-icons sidebar-menu-icon sidebar-menu-icon--left">live_help</span>
-                        <span class="sidebar-menu-text">Quiz Result</span>
+                        <span class="sidebar-menu-text">نتائج المذاكرات</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
