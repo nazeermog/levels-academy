@@ -14,7 +14,7 @@ class PracticeTypeServiceProvider extends ServiceProvider
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'practice';
+    protected $moduleNameLower = 'practicetype';
 
     /**
      * Boot the application events.
