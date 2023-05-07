@@ -26,15 +26,16 @@
 
                             <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
 
-                                <span class="avatar-title rounded bg-primary"><img
-                                        src="../../public/images/illustration/student/128/white.svg"
+                                <span class="avatar-title rounded "><img
+                                        src="{{asset('images/logo/Levels-logo.png')}}"
                                         alt="logo"
                                         class="img-fluid"/></span>
 
                             </span>
 
                 <span class="d-none d-lg-block">
-مدرسة اللغة العربية</span>
+Levels Academy
+                </span>
             </a>
 
             <!-- // END Navbar Brand -->

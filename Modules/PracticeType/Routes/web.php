@@ -5,14 +5,21 @@ use Modules\PracticeType\Http\Controllers\PracticeController;
 use Modules\PracticeType\Http\Controllers\StudentPracticeController;
 
 
-Route::group([
-//    'middleware' => ['auth', 'role:instructor'],
-    'prefix' => 'instructor',
-], function () {
-    Route::prefix('practice')->group(function () {
-        Route::get('create', [PracticeController::class, 'create'])->name('practice.create');
-        Route::post('create', [PracticeController::class, 'store'])->name('practice.store');
-    });
+//Route::group([
+////    'middleware' => ['auth', 'role:instructor'],
+//    ['as' => 'instructor.', 'prefix' => 'instructor'],
+//], function () {
+////        Route::get('create', [PracticeController::class, 'create'])->name('practice.create');
+////        Route::post('create', [PracticeController::class, 'store'])->name('practice.store');
+//        Route::resource('practice-details', PracticeController::class);
+//});
+
+
+
+
+
+Route::group(['as' => 'instructor.', 'prefix' => 'instructor'], function () {
+    Route::resource('practice-details', PracticeController::class);
 
 });
 Route::group([

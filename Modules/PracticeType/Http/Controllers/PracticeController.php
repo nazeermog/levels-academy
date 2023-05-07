@@ -2,6 +2,8 @@
 
 namespace Modules\PracticeType\Http\Controllers;
 
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeTypeRepository;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -16,17 +18,26 @@ class PracticeController extends Controller
      */
     public function index()
     {
-        return view('practice::index');
+        $list  = (new AdminPracticeTypeRepository())->index();
+        $route_name = 'practice-details';
+        $table_name = 'Practice Type Details';
+        return view( 'practicetype::instructor.practiceTypeDetails.index', compact('list', 'route_name', 'table_name'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
+
     public function create()
     {
-        return view('practice::create');
+        $route_name = 'practice-details';
+        $table_name = 'Practice Type Details';
+        $practices = AdminPracticeRepository::list();
+        return view( 'practicetype::instructor.practiceTypeDetails.create', compact('route_name', 'table_name', 'practices'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,36 +46,18 @@ class PracticeController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        DB::beginTransaction();
-        $practice = new PracticeType();
-        $practice->course_id = 1;
-        $practice->title = 'test';
-        $practice->save();
-        $points = $request->input('points');
-        $questions = $request->input('questions');
-        $types = $request->input('question_types');
-        $answers = $request->input('answers');
-        for ($i = 0; $i < count($points); $i++) {
-
-            $question = new Question();
-            $question->point = $points[$i];
-            $question->question_text = $questions[$i];
-            $question->practice_id = $practice->id;
-
-            $question->question_type = $types[$i];
-            $question->save();
-            $answer = new Answer();
-            $answer->is_correct = true;
-            $answer->answer = isset($answers[$i]) ? $answers[$i] : $answers[$i + 1];
-            $answer->question_id = $question->id;
-            $answer->save();
-
-
+        $route_name = 'practice-details';
+        try {
+            DB::beginTransaction();
+            (new AdminPracticeTypeRepository())->store($request->all());
+            DB::commit();
+            return redirect()->route('instructor.' .$route_name . '.index')->withSuccess('created successfully');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($exception->getMessage());
         }
-        DB::commit();
-    }
 
+    }
     /**
      * Show the specified resource.
      * @param int $id
@@ -72,7 +65,11 @@ class PracticeController extends Controller
      */
     public function show($id)
     {
-        return view('practice::show');
+        $item = (new AdminPracticeTypeRepository())->find($id);
+        $route_name = 'practice-details';
+        $table_name = 'Practice Type Details';
+        $practices = AdminPracticeRepository::list();
+        return view('practicetype::instructor.practiceTypeDetails.show', compact('item', 'route_name', 'table_name', 'practices'));
     }
 
     /**
@@ -82,7 +79,7 @@ class PracticeController extends Controller
      */
     public function edit($id)
     {
-        return view('practice::edit');
+        return view('practicetype::edit');
     }
 
     /**
