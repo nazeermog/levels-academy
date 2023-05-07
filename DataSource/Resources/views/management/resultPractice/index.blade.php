@@ -34,11 +34,40 @@
                 </div>
                 <div class="card-body ">
                     @if (isset($list)&&$list->count() > 0)
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <label for="">Text Search</label>
+                                <input type="text" class="form-control" placeholder="search">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Student Name</label>
+                                <select class="form-control">
+                                    <option>Student Name</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <label for="">From </label>
+                                <input type="date" class="form-control" placeholder="search">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">To </label>
+                                <input type="date" class="form-control" placeholder="search">
+                            </div>
+
+
+                        </div>
+                        <button class="btn btn-primary form-group">Search</button>
+
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Date</th>
                                     <th>Student</th>
 
                                     <th>Level</th>
@@ -52,8 +81,9 @@
                                 </thead>
                                 <tbody>
                                 @foreach($list as $item)
-                                    <tr >
+                                    <tr>
                                         <td>{{ $item->id}}</td>
+                                        <td>{{ $item->created_at->format('Y-m-d h:m')}}</td>
                                         <td>
                                             {{--                                            {{$item->student->first_name .' '.$item->student->last_name}}--}}
                                             Student Name
@@ -81,10 +111,12 @@
                                         </td>
                                         <td class="{{$item->is_true?'alert-success-edited':'alert-danger-edited'}}">
                                             @if($item->is_true)
-                                                <i class="fas fa-check text-success " style="padding-left: 2rem!important;"></i>
+                                                <i class="fas fa-check text-success "
+                                                   style="padding-left: 2rem!important;"></i>
 
                                             @else
-                                                <i class=" fas fa-ban text-danger " style="padding-left: 2rem!important;"></i>
+                                                <i class=" fas fa-ban text-danger "
+                                                   style="padding-left: 2rem!important;"></i>
                                             @endif
                                         </td>
                                     </tr>

@@ -1,121 +1,123 @@
 @extends("student.layouts.dashboard")
 @push('css')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<style>
-    .cards {
-        position: relative;
-        height: 100vh;
-    }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <style>
+        .cards {
+            position: relative;
+            height: 100vh;
+        }
 
-    .cards .card {
-        background-color: #93bfcf;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-        width: 250px;
-        height: 350px;
-        margin: 10px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 20px;
-    }
+        .cards .card {
+            background-color: #93bfcf;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            width: 250px;
+            height: 350px;
+            margin: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 20px;
+        }
 
-    .cards .card {
-        color: #ffffff;
-        font-size: 2.5rem;
-    }
+        .cards .card {
+            color: #ffffff;
+            font-size: 2.5rem;
+        }
 
-    html,
-    body {
-        position: relative;
-        height: 100%;
-    }
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
 
-    body {
-        background: #eee;
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        color: #000;
-        margin: 0;
-        padding: 0;
-    }
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
 
-    .swiper {
-        width: 240px;
-        height: 320px;
-    }
+        .swiper {
+            width: 240px;
+            height: 320px;
+        }
 
-    .swiper-slide {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 18px;
-        font-size: 22px;
-        font-weight: bold;
-        color: #fff;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        background-color: #489FB7;
-    }
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            background-color: #489FB7;
+        }
 
-    #form {
-        display: flex;
-        flex-direction: column;
-        max-width: 300px;
-        margin: auto;
-    }
+        #form {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px;
+            margin: auto;
+        }
 
-    #form input {
-        display: block;
-        width: 100%;
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #000;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #dbdbdb;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        border-radius: 10px;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    }
+        #form input {
+            display: block;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #000;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #dbdbdb;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 10px;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
 
 
-    .swiper-slide:nth-child(2n) {
-        background-color: #878687;
-    }
+        .swiper-slide:nth-child(2n) {
+            background-color: #878687;
+        }
 
-    .swiper-slide:nth-child(3n) {
-        background-color: #1C3352;
-    }
+        .swiper-slide:nth-child(3n) {
+            background-color: #1C3352;
+        }
 
-    .swiper-slide:nth-child(4n) {
-        background-color: #fff;
-        color: #000;
-    }
-</style>
+        .swiper-slide:nth-child(4n) {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
 @endpush
 @section("content")
-<div class="vh-100 d-flex justify-content-center align-items-center" id="btnStart">
-    <button class="btn btn-primary" id="startGame">Start Game</button>
-</div>
-<div class="position-relative min-vh-100 d-flex flex-column align-items-center justify-content-center d-none" id="gameContent">
-    <div class="container">
-        <div class="swiper game-slider" id="game-slider">
-            <div class="swiper-wrapper"></div>
-        </div>
-        <div id="form" class="mt-5">
-            <input class="form-control" type="text" placeholder="Enter Your Result" id="inputValue" />
-            <button class="btn btn-primary mt-2" id="sendResult">Send Result</button>
+    <div class="vh-100 d-flex justify-content-center align-items-center" id="btnStart">
+        <button class="btn btn-primary" id="startGame">Start Game</button>
+    </div>
+    <div class="position-relative min-vh-100 d-flex flex-column align-items-center justify-content-center d-none"
+         id="gameContent">
+        <div class="container">
+            <div class="swiper game-slider" id="game-slider">
+                <div class="swiper-wrapper"></div>
+            </div>
+            <div id="form" class="mt-5">
+                <input class="form-control" type="text" placeholder="Enter Your Result" id="inputValue"/>
+                <button class="btn btn-primary mt-2" id="sendResult">Send Result</button>
+            </div>
         </div>
     </div>
-</div>
 
 @endsection
 <div class="modal fade" tabindex="-1" id="you-win">
@@ -139,136 +141,138 @@
     </div>
 </div>
 @push('js')
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.9.3/tsparticles.confetti.bundle.min.js"></script>
-<script>
-    function reloadPage() {
-        window.location.reload();
-    };
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+            integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+            integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-confetti@2.9.3/tsparticles.confetti.bundle.min.js"></script>
+    <script>
+        function reloadPage() {
+            window.location.reload();
+        };
 
-    const divBtn = document.querySelector('#btnStart');
-    const btnStart = document.querySelector('#startGame');
-    const gameContent = document.querySelector('#gameContent');
-    const cards = document.querySelector(".game-slider .swiper-wrapper");
-    const formInput = document.querySelector("#inputValue");
-    const formButton = document.querySelector("#sendResult");
-
-
-
-
-    btnStart.addEventListener('click', function() {
-        if (gameContent.classList.contains) {
-            divBtn.classList.add('d-none');
-            gameContent.classList.remove('d-none');
-            // Disabled Button When Input empty
-            formButton.disabled = true;
-            formInput.addEventListener("keyup", buttonState);
-
-            function buttonState() {
-                if (document.querySelector("#inputValue").value === "") {
-                    formButton.disabled = true;
-                } else {
-                    formButton.disabled = false;
-                }
-            }
+        const divBtn = document.querySelector('#btnStart');
+        const btnStart = document.querySelector('#startGame');
+        const gameContent = document.querySelector('#gameContent');
+        const cards = document.querySelector(".game-slider .swiper-wrapper");
+        const formInput = document.querySelector("#inputValue");
+        const formButton = document.querySelector("#sendResult");
 
 
-            function createElement(number) {
-                const newCard = document.createElement("div");
-                newCard.classList.add("swiper-slide")
-                newCard.innerHTML = number;
-                cards.appendChild(newCard);
-            }
+        btnStart.addEventListener('click', function () {
+            if (gameContent.classList.contains) {
+                divBtn.classList.add('d-none');
+                gameContent.classList.remove('d-none');
+                // Disabled Button When Input empty
+                formButton.disabled = true;
+                formInput.addEventListener("keyup", buttonState);
 
-            const arr = Array.from({
-                length: {{$practice-> card_number}}
-            }, () => Math.floor(Math.random() * {{rand($practice->range_number_from, $practice->range_number_to)}}));
-            console.log(arr);
-
-            const initialValue = 0;
-            const sumNumber = arr.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
-
-            const cardNumber = arr.length;
-
-            const number = arr.map(a => {
-                createElement(a);
-            });
-
-            let InputElemet = document.getElementById('inputValue');
-
-            InputElemet.addEventListener('input', function(event) {
-
-                var regex = new RegExp(/^([1-9][0-9]*)$/);
-
-                if (regex.test(InputElemet.value)) {
-
-                    return true;
-
-                } else {
-
-                    InputElemet.value = "";
-
-                    return false;
+                function buttonState() {
+                    if (document.querySelector("#inputValue").value === "") {
+                        formButton.disabled = true;
+                    } else {
+                        formButton.disabled = false;
+                    }
                 }
 
-            });
-            var modalWin = new bootstrap.Modal('#you-win', {
-                show: true
-            });
-            var modallose = new bootstrap.Modal('#you-lose', {
-                show: true
-            });
 
-            console.log(sumNumber);
-            document.querySelector("#sendResult").addEventListener('click', function prossesResult() {
-                const inputValue = parseInt(document.getElementById("inputValue").value);
+                function createElement(number) {
+                    const newCard = document.createElement("div");
+                    newCard.classList.add("swiper-slide")
+                    newCard.innerHTML = number;
+                    cards.appendChild(newCard);
+                }
 
-                $.ajax({
-                    method: "POST",
-                    url: "{{ route('student.practice.store')}}",
-                    data: {
-                        practice_id: {{$practice->practice_id}},
-                        practice_type_id: {{$practice->id}},
-                        level_title: '{{$practice->title}}',
-                        result_student: inputValue,
-                        result_true: sumNumber,
-                        student_id: 0,
-                        is_true: sumNumber === inputValue,
-                        seconds_speed: {{$practice->seconds_speed}},
-                        card_number: {{$practice->card_number}},
-                        range_number_from: {{$practice ->range_number_from }},
-                        range_number_to: {{$practice->range_number_to}}
+                const arr = Array.from({
+                    length: {{$practice-> card_number}}
+                }, () => Math.floor(Math.random() * {{rand($practice->range_number_from, $practice->range_number_to)}}));
+                console.log(arr);
 
-                    },
-                    success: function(one, two, three) {
-                        toastr.success('updated successfully')
-                    },
-                    error: function(one, two, three) {
-                        toastr.error('error')
-                    },
+                const initialValue = 0;
+                const sumNumber = arr.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
+
+                const cardNumber = arr.length;
+
+                const number = arr.map(a => {
+                    createElement(a);
                 });
 
+                let InputElemet = document.getElementById('inputValue');
 
-                console.log(inputValue);
-                if (sumNumber === inputValue) {
-                    modalWin.show()
-                    setTimeout(winner, 0);
-                    document.getElementById("inputValue").value = '';
-                } else {
-                    modallose.show();
-                }
+                InputElemet.addEventListener('input', function (event) {
 
-            })
+                    var regex = new RegExp(/^([1-9][0-9]*)$/);
+
+                    if (regex.test(InputElemet.value)) {
+
+                        return true;
+
+                    } else {
+
+                        InputElemet.value = "";
+
+                        return false;
+                    }
+
+                });
+                var modalWin = new bootstrap.Modal('#you-win', {
+                    show: true
+                });
+                var modallose = new bootstrap.Modal('#you-lose', {
+                    show: true
+                });
+
+                console.log(sumNumber);
+                document.querySelector("#sendResult").addEventListener('click', function prossesResult() {
+                    const inputValue = parseInt(document.getElementById("inputValue").value);
+
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ route('student.practice.store')}}",
+                        data: {
+                            practice_id: {{$practice->practice_id}},
+                            practice_type_id: {{$practice->id}},
+                            level_title: '{{$practice->title}}',
+                            result_student: inputValue,
+                            result_true: sumNumber,
+                            student_id: 0,
+                            is_true: sumNumber === inputValue,
+                            seconds_speed: {{$practice->seconds_speed}},
+                            card_number: {{$practice->card_number}},
+                            range_number_from: {{$practice ->range_number_from }},
+                            range_number_to: {{$practice->range_number_to}}
+
+                        },
+                        success: function (one, two, three) {
+                            toastr.success('updated successfully')
+                        },
+                        error: function (one, two, three) {
+                            toastr.error('error')
+                        },
+                    });
 
 
-            var swiper = new Swiper(".game-slider", {
-                loop: false,
-                effect: "cards",
-                simulateTouch: false,
-                autoplay: {
-                    delay: {{$practice->seconds_speed }},
+                    console.log(inputValue);
+                    if (sumNumber === inputValue) {
+                        modalWin.show()
+                        setTimeout(winner, 0);
+                        document.getElementById("inputValue").value = '';
+                    } else {
+                        modallose.show();
+                    }
+
+                })
+
+
+                var swiper = new Swiper(".game-slider", {
+                    loop: false,
+                    effect: "cards",
+                    simulateTouch: false,
+                    autoplay: {
+                        delay: {{$practice->seconds_speed *100}},
                     stopOnLastSlide: true,
                 },
             });

@@ -61,7 +61,7 @@
                        class="nav-link {{Route::is('admin.practicesType.*')?'active':''}}">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>
-                            Practices Levels
+                            Practice Type Details
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -71,14 +71,14 @@
                             <a href="{{route('admin.practicesType.index')}}"
                                class="nav-link  {{ Route::is('admin.practicesType.index')?'active':''}}">
 
-                                <p class="ml-3">- Practice Levels</p>
+                                <p class="ml-3">- Practice Type Details</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('admin.practicesType.create')}}"
                                class="nav-link  {{ Route::is('admin.practicesType.create')?'active':''}}">
 
-                                <p class="ml-3">- Create Practice Levels</p>
+                                <p class="ml-3">- Create Practice  Type Details</p>
                             </a>
                         </li>
 
