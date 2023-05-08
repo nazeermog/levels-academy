@@ -40,7 +40,7 @@
     <div class="row">
         <div class="col-12 mb-4">
             <button class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#addBox">
-                Add box
+                Add Step
             </button>
         </div>
         <div class="col-md-5">
@@ -163,7 +163,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addBoxLabel">Add box</h1>
+                <h1 class="modal-title fs-5" id="addBoxLabel">Add Step</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -175,7 +175,7 @@
                     Close
                 </button>
                 <button type="button" class="btn btn-primary" id="add-box">
-                    Add Box
+                    Save
                 </button>
             </div>
         </div>
@@ -294,7 +294,7 @@
                     <div class="border-bottom d-flex justify-content-between">
                     <div class="box-information">
                         <h6>${title.value}</h6>
-                        <p>${description.value}</p> 
+                        <p>${description.value}</p>
                     </div>
                     <div>
                         <button

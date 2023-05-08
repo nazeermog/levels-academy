@@ -34,7 +34,7 @@
 
 
         <div class="row">
-            <label>Course Content</label>
+            <label>Steps Course Content</label>
         </div>
 
         @include('datasource::management.courseContent.partials.steps')
