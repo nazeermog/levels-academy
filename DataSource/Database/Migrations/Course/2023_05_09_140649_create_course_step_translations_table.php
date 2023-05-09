@@ -12,10 +12,13 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('practice_type_instructors', function (Blueprint $table) {
+        Schema::create('course_step_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('instructor_id');
-            $table->unsignedBigInteger('practice_type_id');
+            $table->string('title');
+            $table->string('desc')->nullable();
+            $table->string('locale')->index();
+            $table->unsignedBigInteger('course_step_id')->index();
+            $table->unique(['course_step_id', 'locale']);
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('practice_type_instructors');
+        Schema::dropIfExists('course_step_translations');
     }
 };

@@ -15,16 +15,6 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
 
-                {{--                <li class="nav-item">--}}
-                {{--                    <a href="{{route('home')}}" class="nav-link">--}}
-                {{--                        <i class="nav-icon fas fa-tachometer-alt"></i>--}}
-                {{--                        <p>--}}
-                {{--                            Dashboard--}}
-                {{--                        </p>--}}
-                {{--                    </a>--}}
-                {{--                </li>--}}
-                {{--                <li class="mt-1 mb-1 p-0 w-100" style="border-bottom: 1px solid #4b545c;">--}}
-                {{--                </li>--}}
                 <li class="nav-item {{Route::is('admin.practices.*')?'menu-open':''}} ">
                     <a href="#"
                        class="nav-link {{Route::is('admin.practices.*')?'active':''}}">
@@ -50,11 +40,7 @@
                                 <p class="ml-3">- Create Practice Type </p>
                             </a>
                         </li>
-
-
                     </ul>
-
-
                 </li>
                 <li class="nav-item {{Route::is('admin.practicesType.*')?'menu-open':''}} ">
                     <a href="#"
@@ -69,16 +55,9 @@
 
                         <li class="nav-item">
                             <a href="{{route('admin.practicesType.index')}}"
-                               class="nav-link  {{ Route::is('admin.practicesType.index')?'active':''}}">
+                               class="nav-link  {{ Route::is('admin.practicesType.index')||Route::is('admin.practicesType.create')?'active':''}}">
 
                                 <p class="ml-3">- Practice Type Details</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('admin.practicesType.create')}}"
-                               class="nav-link  {{ Route::is('admin.practicesType.create')?'active':''}}">
-
-                                <p class="ml-3">- Create Practice  Type Details</p>
                             </a>
                         </li>
 
@@ -134,6 +113,37 @@
                                class="nav-link  {{ Route::is('admin.courseContent.create')?'active':''}}">
 
                                 <p class="ml-3">- Create Courses </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
+                <li class="nav-item {{Route::is('admin.taxonomies.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.taxonomies.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Categories
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.taxonomies.index')}}"
+                               class="nav-link  {{ Route::is('admin.taxonomies.index')?'active':''}}">
+
+                                <p class="ml-3">- Categories </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.taxonomies.create')}}"
+                               class="nav-link  {{ Route::is('admin.taxonomies.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Category </p>
                             </a>
                         </li>
 

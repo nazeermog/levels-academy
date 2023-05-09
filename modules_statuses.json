@@ -14,5 +14,5 @@
     "StudentActivity": true,
     "ResultPractice": true,
     "Inrollment": true,
-    "InrollmentRequest": true
+    "LearningPath": true
 }

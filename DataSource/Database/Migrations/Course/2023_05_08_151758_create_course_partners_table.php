@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,12 +13,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('course_partners', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price', 8, 3);
-            $table->unsignedBigInteger('taxonomy_id')->index();
-            $table->boolean('is_active')->default(1);
-            $table->boolean('is_auto_join');
+            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('partner_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('course_partners');
     }
 };

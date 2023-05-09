@@ -3,11 +3,12 @@
 namespace DataSource\Entities\Taxonomy;
 
 use Astrotomic\Translatable\Translatable;
+use DataSource\Entities\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\Partner\Partner;
 
 
-class Taxonomy extends Model
+class Taxonomy extends BaseModel
 {
     use Translatable;
 

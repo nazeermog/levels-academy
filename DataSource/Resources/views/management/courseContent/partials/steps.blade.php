@@ -136,23 +136,6 @@
                         <ul class="list-unstyled connected-sortable droppable-area2 mb-0 p-0"></ul>
                     </div>
                 </div>
-                <div class="card box mb-3" onclick="selectBox()">
-                    <div class="card-body">
-                        <div class="border-bottom d-flex justify-content-between">
-                            <div class="box-information">
-                                <h6>Title1</h6>
-                                <p>Description1</p>
-                            </div>
-                            <div class="">
-                                <button class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#editBox"
-                                    onclick="openUpdateInfo();">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <ul class="list-unstyled connected-sortable droppable-area2 mb-0 p-0"></ul>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -377,5 +360,10 @@
             updateInformation();
             modaledit.hide();
         });
+
     </script>
+
+
 @endpush
+
+

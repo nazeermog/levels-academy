@@ -15,11 +15,13 @@ class Course extends Model
     protected $translatedAttributes = [
         'title',
         'slug',
-        'desc'
+        'desc',
+        'about'
     ];
     protected $fillable = [
         'price',
         'taxonomy_id',
+        'is_auto_join',
         'is_active',
     ];
 }

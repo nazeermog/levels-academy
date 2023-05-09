@@ -45,10 +45,32 @@
     </div>
 @endsection
 
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $('#submitForm').click(function(e) {
+                e.preventDefault();
+                // var form = $('#form-course').serialize();
+                // var formData = new FormData(form[0]);
 
-
-{{-- <head> --}}
-
-{{--    <title>Course Content</title> --}}
-{{--   --}}
-{{-- </head> --}}
+console.log($('.box'))
+                {{--$.ajax({--}}
+                {{--    url: "{{ route('management.courseContent.store') }}",--}}
+                {{--    type: 'POST',--}}
+                {{--    data: formData,--}}
+                {{--    contentType: false,--}}
+                {{--    processData: false,--}}
+                {{--    success: function(data) {--}}
+                {{--        console.log(data);--}}
+                {{--        if (data.status == 'success') {--}}
+                {{--            window.location.href = "{{ route('management.courseContent.index') }}";--}}
+                {{--        }--}}
+                {{--    },--}}
+                {{--    error: function(data) {--}}
+                {{--        console.log(data);--}}
+                {{--    }--}}
+                {{--});--}}
+            });
+        });
+    </script>
+@endpush

@@ -1,0 +1,11 @@
+{
+    "name": "LearningPath",
+    "alias": "learningpath",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\LearningPath\\Providers\\LearningPathServiceProvider"
+    ],
+    "files": []
+}

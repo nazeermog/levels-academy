@@ -1,0 +1,11 @@
+{
+    "name": "Inrollment",
+    "alias": "inrollment",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Inrollment\\Providers\\InrollmentServiceProvider"
+    ],
+    "files": []
+}
