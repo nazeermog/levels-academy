@@ -32,7 +32,8 @@ trait AdminCRUDGenericRepository
         $object = $this->getModel()->create($data);
         foreach ($object->getTranslatableAttributes() as $attribute) {
             foreach (localeSupported() as $locale) {
-                $object->translateOrNew($locale)->{$attribute} = $data[$attribute . '-' . $locale];
+                if (isset($data[$attribute . '-' . $locale]))
+                    $object->translateOrNew($locale)->{$attribute} = $data[$attribute . '-' . $locale];
             }
         }
         $object->save();

@@ -1,0 +1,13 @@
+<?php
+
+namespace DataSource\Entities\Course;
+
+
+use Illuminate\Database\Eloquent\Model;
+
+class CourseTag extends Model
+{
+
+    protected $fillable = [];
+
+}

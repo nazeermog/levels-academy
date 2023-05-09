@@ -12,15 +12,11 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('course_translations', function (Blueprint $table) {
+        Schema::create('course_steps', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('course_id')->index();
-            $table->string('slug')->unique();
-            $table->string('title');
-            $table->longText('desc');
-            $table->longText('about')->nullable();
-            $table->string('locale')->index();
-            $table->unique(['course_id', 'locale']);
+            $table->morphs('stepable');
+            $table->integer('ordering')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('course_translations');
+        Schema::dropIfExists('course_steps');
     }
 };
