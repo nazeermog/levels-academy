@@ -46,7 +46,6 @@
 @endsection
 
 
-
 {{-- <head> --}}
 
 {{--    <title>Course Content</title> --}}

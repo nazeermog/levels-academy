@@ -56,7 +56,7 @@
                         <div class="accordion-body">
                             <ul class="list-unstyled connected-sortable droppable-area1 mb-0" id="list1">
                                 @foreach ($lessons as $lesson)
-                                    <li class="draggable-item cursor-pointer" data-id="{{ $lesson->id }}">
+                                    <li class="draggable-item cursor-pointer" data-id="list1" id="{{ $lesson->id }}">
                                         <div class="d-flex align-items-center justify-content-between border px-3 py-2">
                                             <h4>{{ $lesson->title }}</h4>
                                             <i class="bi bi-chevron-double-right move-btn"></i>
@@ -78,7 +78,7 @@
                         <div class="accordion-body">
                             <ul class="list-unstyled connected-sortable droppable-area1 mb-0" id="list2">
                                 @foreach ($practices as $practice)
-                                    <li class="draggable-item cursor-pointer" data-id="{{ $practice->id }}">
+                                    <li class="draggable-item cursor-pointer" data-id="list2" id="{{ $lesson->id }}">
                                         <div class="d-flex align-items-center justify-content-between border px-3 py-2">
                                             <h4>{{ $practice->title }}</h4>
                                             <i class="bi bi-chevron-double-right move-btn"></i>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingThree">
+                    <h2 class="accordion-header" id="headingThree" id="list3">
                         <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                             Quizzes
@@ -98,14 +98,14 @@
                     </h2>
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
                         <div class="accordion-body">
-                            <ul class="list-unstyled connected-sortable droppable-area1 mb-0" id="list3">
-                                <li class="draggable-item cursor-pointer" data-id="list3">
+                            <ul class="list-unstyled connected-sortable droppable-area1 mb-0">
+                                <li class="draggable-item cursor-pointer" data-id="1" data-type="Quizzes">
                                     <div class="d-flex align-items-center justify-content-between border px-3 py-2">
                                         <h4>Task5</h4>
                                         <i class="bi bi-chevron-double-right move-btn"></i>
                                     </div>
                                 </li>
-                                <li class="draggable-item cursor-pointer" data-id="list3">
+                                <li class="draggable-item cursor-pointer" data-id="2" data-type="Quizzes">
                                     <div class="d-flex align-items-center justify-content-between border px-3 py-2">
                                         <h4>Task6</h4>
                                         <i class="bi bi-chevron-double-right move-btn"></i>
@@ -227,6 +227,7 @@
         const editBox = document.querySelector("#edit-box");
         // const OpeneditBox = document.querySelectorAll(".edit-btn");
         const myCards = document.querySelector(".cards");
+        const submit = document.getElementById("submitForm");
         const moveItemBtn = document.querySelectorAll(".move-btn");
 
         $(document).ready(function() {
@@ -377,5 +378,39 @@
             updateInformation();
             modaledit.hide();
         });
+        submit.addEventListener('click', function() {
+            const boxArr = []
+            const card = document.querySelectorAll('.card');
+            card.forEach(function(item, index) {
+                const title = item.querySelector('h6');
+                const desc = item.querySelector('p');
+                const tasks = item.querySelectorAll('.draggable-item');
+                console.log("taaaaa", tasks);
+
+
+                boxArr.push({
+                    'title': title.innerHTML,
+                    'desc': desc.innerHTML,
+                    'type': [],
+                })
+
+                tasks.forEach((task, i) => {
+                    const taskId = task.getAttribute(['data-id']);
+                    const taskType = task.getAttribute(['data-type']);
+
+                    boxArr.forEach((box, inx) => {
+                        console.log(index, inx);
+                        if (index === inx) {
+                            box.type.push({
+                                'id': taskId,
+                                'type': taskType,
+                            })
+                        }
+                    })
+                })
+            })
+
+            console.log('boxArr =>', boxArr);
+        })
     </script>
 @endpush
