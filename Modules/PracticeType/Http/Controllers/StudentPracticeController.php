@@ -29,7 +29,7 @@ class StudentPracticeController extends Controller
     public function create()
     {
 
-        return view('practice::student.take_quiz');
+        return view('practicetype::student.take_quiz');
     }
 
     /**
@@ -50,13 +50,13 @@ class StudentPracticeController extends Controller
     public function show($id)
     {
         $questions = Question::where('practice_id', $id)->get();
-        return view('practice::student.take_quiz', compact('questions'));
+        return view('practicetype::student.take_quiz', compact('questions'));
     }
 
     public function showPractice($id)
     {
         $practice = StudentPracticeTypeRepository::find($id);
-        return view('practice::student.numbers_sum', compact('practice'));
+        return view('practicetype::student.numbers_sum', compact('practice'));
     }
 
     public function sendResultPractice(Store $request)
