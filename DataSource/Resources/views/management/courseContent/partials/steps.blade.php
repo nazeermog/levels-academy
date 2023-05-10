@@ -56,6 +56,7 @@
                         <div class="accordion-body">
                             <ul class="list-unstyled connected-sortable droppable-area1 mb-0" id="list1">
                                 @foreach ($lessons as $lesson)
+
                                     <li class="draggable-item cursor-pointer" data-id="list1" id="{{ $lesson->id }}">
                                         <div class="d-flex align-items-center justify-content-between border px-3 py-2">
                                             <h4>{{ $lesson->title }}</h4>
@@ -78,7 +79,7 @@
                         <div class="accordion-body">
                             <ul class="list-unstyled connected-sortable droppable-area1 mb-0" id="list2">
                                 @foreach ($practices as $practice)
-                                    <li class="draggable-item cursor-pointer" data-id="list2" id="{{ $lesson->id }}">
+                                    <li class="draggable-item cursor-pointer" data-id="list2" id="{{ $practice->id }}">
                                         <div class="d-flex align-items-center justify-content-between border px-3 py-2">
                                             <h4>{{ $practice->title }}</h4>
                                             <i class="bi bi-chevron-double-right move-btn"></i>
