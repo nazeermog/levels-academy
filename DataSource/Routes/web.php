@@ -14,5 +14,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::resource('practices', AdminPracticeController::class);
     Route::resource('practicesType', AdminPracticeTypeController::class);
     Route::resource('taxonomies', AdminTaxonomyController::class);
+
     Route::get('resultPractices', [AdminResultPracticeController::class, 'index'])->name('resultPractices.index');
 });
