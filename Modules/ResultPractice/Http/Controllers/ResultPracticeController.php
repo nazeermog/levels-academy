@@ -2,9 +2,11 @@
 
 namespace Modules\ResultPractice\Http\Controllers;
 
+use DataSource\Repositories\DB\ResultPractice\Admin\AdminResultPracticeRepository;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+
 
 class ResultPracticeController extends Controller
 {
@@ -14,17 +16,23 @@ class ResultPracticeController extends Controller
      */
     public function index()
     {
-        return view('resultpractice::index');
+        $list  = (new AdminResultPracticeRepository())->index();
+        $route_name = 'result-practice';
+        $table_name = 'Result Practice  ';
+        return view( 'resultpractice::instructor.index', compact('list', 'route_name', 'table_name'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      * @return Renderable
      */
+
     public function create()
     {
-        return view('resultpractice::create');
+
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -33,9 +41,9 @@ class ResultPracticeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
 
+
+    }
     /**
      * Show the specified resource.
      * @param int $id
@@ -43,7 +51,7 @@ class ResultPracticeController extends Controller
      */
     public function show($id)
     {
-        return view('resultpractice::show');
+
     }
 
     /**

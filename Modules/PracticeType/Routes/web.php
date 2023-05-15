@@ -5,6 +5,7 @@ use Modules\PracticeType\Http\Controllers\PracticeController;
 use Modules\PracticeType\Http\Controllers\StudentPracticeController;
 
 
+
 //Route::group([
 ////    'middleware' => ['auth', 'role:instructor'],
 //    ['as' => 'instructor.', 'prefix' => 'instructor'],
@@ -20,6 +21,7 @@ use Modules\PracticeType\Http\Controllers\StudentPracticeController;
 
 Route::group(['as' => 'instructor.', 'prefix' => 'instructor'], function () {
     Route::resource('practice-details', PracticeController::class);
+
 
 });
 Route::group([
