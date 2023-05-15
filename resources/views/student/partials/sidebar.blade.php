@@ -33,7 +33,7 @@
                 </li>
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
-                       href="paths.html">
+                       href="{{route('student.paths.index')}}">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">style</span>
                         <span class="sidebar-menu-text">
                             مسارات التعليم
