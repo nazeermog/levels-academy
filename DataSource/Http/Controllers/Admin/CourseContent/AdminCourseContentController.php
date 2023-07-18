@@ -22,6 +22,7 @@ class AdminCourseContentController extends BaseController
     protected string $interface = AdminCourseContentRepository::class;
 //    protected string $interface_category = AdminCategoryRepository::class;
     protected string $store_request = Store::class;
+
 //    protected string $update_request = Update::class;
     public function create()
     {

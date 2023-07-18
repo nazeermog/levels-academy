@@ -15,6 +15,9 @@ class AdminCourseContentRepository
 
     public function store($data)
     {
+        $stepsArray = (($data->get('data')));
+        $courseData = (json_decode($data->get('formdata'),true));
+dd($courseData,$stepsArray);
         $course = $this->getTypeModel();
         foreach (localeSupported() as $locale) {
             $course->translateOrNew($locale)->title = $data['title-' . $locale];

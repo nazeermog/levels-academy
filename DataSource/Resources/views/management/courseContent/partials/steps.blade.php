@@ -1,7 +1,7 @@
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"/>
 
     <style>
         .droppable-area2,
@@ -48,7 +48,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                         <span class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Lessons
                         </span>
                     </h2>
@@ -71,7 +71,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingTwo">
                         <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                             Practices
                         </span>
                     </h2>
@@ -93,7 +93,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingThree" id="list3">
                         <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                              data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                             Quizzes
                         </span>
                     </h2>
@@ -129,7 +129,7 @@
                             </div>
                             <div class="">
                                 <button class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#editBox"
-                                    onclick="openUpdateInfo();">
+                                        onclick="openUpdateInfo();">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                             </div>
@@ -146,7 +146,7 @@
                             </div>
                             <div class="">
                                 <button class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#editBox"
-                                    onclick="openUpdateInfo();">
+                                        onclick="openUpdateInfo();">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                             </div>
@@ -168,7 +168,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="title" class="form-control mb-3" id="title" />
+                <input type="text" placeholder="title" class="form-control mb-3" id="title"/>
                 <textarea placeholder="Description" class="form-control" id="description"></textarea>
             </div>
             <div class="modal-footer">
@@ -192,7 +192,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input type="text" placeholder="title" class="form-control mb-3" id="editTitle" />
+                <input type="text" placeholder="title" class="form-control mb-3" id="editTitle"/>
                 <textarea placeholder="Description" class="form-control" id="editDescription"></textarea>
             </div>
             <div class="modal-footer">
@@ -210,17 +210,17 @@
 
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
-        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous">
+            integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
-        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous">
+            integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
-        integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
-        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
     <script>
@@ -231,9 +231,9 @@
         const submit = document.getElementById("submitForm");
         const moveItemBtn = document.querySelectorAll(".move-btn");
 
-        $(document).ready(function() {
-            $(".move-btn").click(function() {
-                setTimeout(function() {
+        $(document).ready(function () {
+            $(".move-btn").click(function () {
+                setTimeout(function () {
                     var selectBox = $(".box.selected .droppable-area2");
                     var itemSelect = $(" .droppable-area1 li.selected");
 
@@ -244,7 +244,7 @@
                         $(btnIcon)
                             .addClass("bi bi-trash text-danger delete")
                             .removeClass("bi bi-chevron-double-right move-btn");
-                        $(itemCopyed).on("click", function() {
+                        $(itemCopyed).on("click", function () {
                             $(this).remove();
                         });
                     } else {
@@ -253,7 +253,7 @@
                 }, 20);
             });
 
-            $(".droppable-area1").on("click", "li", function() {
+            $(".droppable-area1").on("click", "li", function () {
                 $(".droppable-area1 li").removeClass("selected");
                 $(this).addClass("selected");
             });
@@ -277,9 +277,9 @@
         setTimeout(selectBox, 10);
 
         function selectBox() {
-            cards.forEach(function(item, index) {
-                item.addEventListener("click", function() {
-                    cards.forEach(function(item) {
+            cards.forEach(function (item, index) {
+                item.addEventListener("click", function () {
+                    cards.forEach(function (item) {
                         item.classList.remove("selected");
                     });
                     this.classList.add("selected");
@@ -323,9 +323,10 @@
             const OpenediwtBox = document.querySelectorAll(".edit-btn");
             modalsEidt = OpenediwtBox;
         }
+
         updateModal();
 
-        addBox.addEventListener("click", function(event) {
+        addBox.addEventListener("click", function (event) {
             event.preventDefault();
             addBoxs();
             modal.hide();
@@ -368,21 +369,21 @@
         setTimeout(openUpdateInfo, 10);
 
         function openUpdateInfo() {
-            modalsEidt.forEach(function(box) {
-                box.addEventListener("click", function() {
+            modalsEidt.forEach(function (box) {
+                box.addEventListener("click", function () {
                     editBoxe();
                 });
             });
         }
 
-        editBox.addEventListener("click", function() {
+        editBox.addEventListener("click", function () {
             updateInformation();
             modaledit.hide();
         });
-        submit.addEventListener('click', function() {
+        submit.addEventListener('click', function () {
             const boxArr = []
             const card = document.querySelectorAll('.card');
-            card.forEach(function(item, index) {
+            card.forEach(function (item, index) {
                 const title = item.querySelector('h6');
                 const desc = item.querySelector('p');
                 const tasks = item.querySelectorAll('.draggable-item');
@@ -410,7 +411,24 @@
                     })
                 })
             })
+            $('#boxArray').val(boxArr)
 
+            console.log($('#boxArr'))
+
+
+
+            $.post('{{route('admin.courseContent.store')}}',
+
+                {
+                    _token: '{{csrf_token()}}',
+                    data: boxArr,
+                    formdata: JSON.stringify($('#form-course').serializeArray()),
+                    dataType : 'json',
+                }
+            )
+                .done(function (data) {
+                     alert("Data Loaded: " + data);
+                });
             console.log('boxArr =>', boxArr);
         })
     </script>

@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="container py-5">
-        <form id="form-course">
+        <form id="form-course" method="POST" action="{{route('admin.courseContent.store')}}">
             <div class="row">
                 <label>Add Course </label>
             </div>
-            <hr />
+            <hr/>
             <div class="row">
                 @foreach (localeSupported() as $locale)
                     <div class="col-md-4 m-1">
@@ -29,7 +29,9 @@
                     <input class="form-control" name="price" id="price">
                 </div>
             </div>
-            <hr />
+            <hr/>
+
+
         </form>
 
 
@@ -37,11 +39,12 @@
             <label>Steps Course Content</label>
         </div>
 
+
         @include('datasource::management.courseContent.partials.steps')
-        <hr />
-        <div class="row">
-            <button class="btn btn-primary col-md-2 m-2" id="submitForm">SAVE</button>
-        </div>
+                <hr/>
+                <div class="row">
+                    <button class="btn btn-primary col-md-2 m-2" id="submitForm">SAVE</button>
+                </div>
     </div>
 @endsection
 

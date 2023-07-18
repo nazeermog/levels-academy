@@ -2,6 +2,7 @@
 
 namespace DataSource\Traits\Admin;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -34,11 +35,12 @@ trait AdminCRUDControllerActions
         return view($this->module . '.show', compact('item', 'route_name', 'table_name'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
         try {
             DB::beginTransaction();
-            $this->getRepository()->store($this->getStoreRequest()->validated());
+//            $this->getRepository()->store($this->getStoreRequest()->validated());
+            $this->getRepository()->store($request);
             DB::commit();
             return redirect()->route('admin.' . $this->route_name . '.index')->withSuccess('created successfully');
         } catch (\Exception $exception) {
