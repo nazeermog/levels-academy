@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->morphs('stepable');
             $table->integer('ordering')->default(0);
             $table->boolean('is_active')->default(true);
+            $table->unsignedBigInteger('course_content_id')->index();
             $table->timestamps();
         });
     }

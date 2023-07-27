@@ -381,55 +381,49 @@
             modaledit.hide();
         });
         submit.addEventListener('click', function () {
-            const boxArr = []
-            const card = document.querySelectorAll('.card');
-            card.forEach(function (item, index) {
-                const title = item.querySelector('h6');
-                const desc = item.querySelector('p');
-                const tasks = item.querySelectorAll('.draggable-item');
-                console.log("taaaaa", tasks);
+    const boxArr = [];
+    const card = document.querySelectorAll('.card');
 
+    card.forEach(function (item, index) {
+        const title = item.querySelector('h6');
+        const desc = item.querySelector('p');
+        const tasks = item.querySelectorAll('.draggable-item');
 
-                boxArr.push({
-                    'title': title.innerHTML,
-                    'desc': desc.innerHTML,
-                    'type': [],
-                })
+        const boxData = {
+            'title': title.innerHTML,
+            'desc': desc.innerHTML,
+            'type': [],
+            'ordering': index + 1,
+        };
 
-                tasks.forEach((task, i) => {
-                    const taskId = task.getAttribute(['data-id']);
-                    const taskType = task.getAttribute(['data-type']);
+        tasks.forEach((task, i) => {
+            const taskId = task.getAttribute('data-id');
+            const taskType = task.getAttribute('data-type');
 
-                    boxArr.forEach((box, inx) => {
-                        console.log(index, inx);
-                        if (index === inx) {
-                            box.type.push({
-                                'id': taskId,
-                                'type': taskType,
-                            })
-                        }
-                    })
-                })
-            })
-            $('#boxArray').val(boxArr)
+            boxData.type.push({
+                'id': taskId,
+                'type': taskType,
+            });
+        });
 
-            console.log($('#boxArr'))
+        boxArr.push(boxData);
+    });
 
+    document.getElementById('boxArr').value = JSON.stringify(boxArr);
 
+    $.post('{{ route('admin.courseContent.store') }}', {
+        _token: '{{ csrf_token() }}',
+        data: boxArr,
+        formdata: JSON.stringify($('#form-course').serializeArray()),
+        dataType: 'json',
+    })
+    .done(function (data) {
+        alert("Data Loaded: " + data);
+    });
+    
+    console.log('boxArr =>', boxArr);
+    console.log('Form data =>', JSON.stringify($('#form-course').serializeArray()));
+});
 
-            $.post('{{route('admin.courseContent.store')}}',
-
-                {
-                    _token: '{{csrf_token()}}',
-                    data: boxArr,
-                    formdata: JSON.stringify($('#form-course').serializeArray()),
-                    dataType : 'json',
-                }
-            )
-                .done(function (data) {
-                     alert("Data Loaded: " + data);
-                });
-            console.log('boxArr =>', boxArr);
-        })
     </script>
 @endpush

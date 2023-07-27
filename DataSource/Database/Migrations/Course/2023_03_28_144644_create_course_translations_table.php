@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('course_id')->index();
             $table->string('slug')->unique();
             $table->string('title');
-            $table->longText('desc');
+            $table->longText('desc')->nullable();
             $table->longText('about')->nullable();
             $table->string('locale')->index();
             $table->unique(['course_id', 'locale']);

@@ -10,6 +10,7 @@ use DataSource\Traits\Admin\AdminCRUDControllerActions;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\CourseContent\Store;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 
 class AdminCourseContentController extends BaseController
@@ -24,6 +25,7 @@ class AdminCourseContentController extends BaseController
     protected string $store_request = Store::class;
 
 //    protected string $update_request = Update::class;
+
     public function create()
     {
         $lessons = AdminLessonRepository::list();
@@ -33,5 +35,34 @@ class AdminCourseContentController extends BaseController
         $table_name = $this->table_name;
         return view($this->module . '.create', compact('route_name', 'table_name', 'lessons', 'practices'));
     }
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title-en' => 'required|string|max:255',
+            'title-ar' => 'required|string|max:255',
+            'slug-en' => 'required|string|max:255',
+            'slug-ar' => 'required|string|max:255',
+            'price' => 'required|numeric',
+        ]);
+    
+        $courseContentRepo = new AdminCourseContentRepository();
+    
+        $boxArr = $request->input('data');
+
+        $formdata=[];
+        //$formdata2 = $request->input('boxArr');
+        $courseData = json_decode($request->input('boxArr'), true);
+
+        // Merge the validated data with the form data
+        $data = array_merge($validatedData, ['boxArr' => $courseData]);
+        //dd($data);
+        $course = $courseContentRepo->store($data);
+    
+        return redirect()->route('admin.courseContent.index')->withSuccess('Course created successfully');
+    }
+    
+    
+    
+
 
 }

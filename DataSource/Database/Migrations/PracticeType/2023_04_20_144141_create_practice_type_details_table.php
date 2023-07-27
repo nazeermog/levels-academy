@@ -31,6 +31,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('practice_types');
+        Schema::dropIfExists('practice_type_details');
     }
 };
