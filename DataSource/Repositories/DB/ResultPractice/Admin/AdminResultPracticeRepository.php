@@ -10,5 +10,6 @@ class AdminResultPracticeRepository
     use AdminCRUDGenericRepository;
 
     protected $model = ResultPractice::class;
+    
 
 }
