@@ -53,10 +53,12 @@ class StudentPracticeController extends Controller
         return view('practicetype::student.take_quiz', compact('questions'));
     }
 
-    public function showPractice($id)
+    public function showPractice($id, $type = 'numbers_sum')
     {
+
         $practice = StudentPracticeTypeRepository::find($id);
-        return view('practicetype::student.numbers_sum', compact('practice'));
+
+        return view('practicetype::student.' . $type, compact('practice'));
     }
 
     public function sendResultPractice(Store $request)
