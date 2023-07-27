@@ -44,12 +44,10 @@ class AdminCourseContentController extends BaseController
             'slug-ar' => 'required|string|max:255',
             'price' => 'required|numeric',
         ]);
-    
-        $courseContentRepo = new AdminCourseContentRepository();
-    
-        $boxArr = $request->input('data');
 
-        $formdata=[];
+        $courseContentRepo = new AdminCourseContentRepository();
+       // $courseContentRepo = $this->getRepository();
+
         //$formdata2 = $request->input('boxArr');
         $courseData = json_decode($request->input('boxArr'), true);
 
@@ -57,12 +55,12 @@ class AdminCourseContentController extends BaseController
         $data = array_merge($validatedData, ['boxArr' => $courseData]);
         //dd($data);
         $course = $courseContentRepo->store($data);
-    
+
         return redirect()->route('admin.courseContent.index')->withSuccess('Course created successfully');
     }
-    
-    
-    
+
+
+
 
 
 }

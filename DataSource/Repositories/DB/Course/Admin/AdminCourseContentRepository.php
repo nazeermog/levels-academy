@@ -26,17 +26,21 @@ class AdminCourseContentRepository
         $course->taxonomy_id = 1;
         $course->is_auto_join = 1;
         $course->save();
-      
+
         foreach ($data['boxArr'] as $item) {
             $content = $this->getModel();
+            foreach (localeSupported() as $locale) {
+                $content->translateOrNew($locale)->title = $item['title-' . $locale];
+                $content->translateOrNew($locale)->desc = $item['desc-' . $locale];
+            }
             $content->ordering = $item['ordering'];
             $content->course_id = $course->id;
 
-            foreach ($item['type'] as $typeItem) {
-                $content->content_type = $typeItem['type'];
-                $content->content_id = $typeItem['id'];
-                $content->save();
-            }
+            $content->save();
+
+            //todo::add steps
+//            $step->content_type = $item['type'];
+//            $step->content_id = $item['type_id'];
         }
         return $course;
     }
