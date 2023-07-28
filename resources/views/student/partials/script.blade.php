@@ -25,7 +25,6 @@
             headers:
                 {'X-CSRF-TOKEN': '{{csrf_token()}}'}
         });
-
     });
 </script>
 @stack('js')
