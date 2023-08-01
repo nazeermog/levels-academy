@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('taxonomy_id')->index();
             $table->boolean('is_active')->default(1);
             $table->boolean('is_auto_join');
+            $table->string('photo');
+
             $table->timestamps();
         });
     }

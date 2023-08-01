@@ -73,13 +73,7 @@
 {{--                        <span class="sidebar-menu-text">تفاصيل المسار</span>--}}
 {{--                    </a>--}}
 {{--                </li>--}}
-                <li class="sidebar-menu-item">
-                    <a class="sidebar-menu-button"
-                       href="{{route('student.courses.show')}}">
-                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">face</span>
-                        <span class="sidebar-menu-text">عرض الدورة التدريبية</span>
-                    </a>
-                </li>
+                
 {{--                <li class="sidebar-menu-item">--}}
 {{--                    <a class="sidebar-menu-button"--}}
 {{--                       href="student-lesson.html">--}}

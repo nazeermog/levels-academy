@@ -4,11 +4,17 @@ use Illuminate\Support\Facades\Route;
 use Modules\Course\Http\Controllers\Student\StudentCourseController;
 
 Route::group([
-//    'middleware' => ['auth', 'role:student'],
+    // 'middleware' => ['auth', 'role:student'],
     'prefix' => 'student',
 ], function () {
     Route::prefix('courses')->group(function () {
         Route::get('', [StudentCourseController::class, 'index'])->name('student.courses.index');
-        Route::get('show', [StudentCourseController::class, 'show'])->name('student.courses.show');
+        Route::get('show/{CourseId}', [StudentCourseController::class, 'show'])->name('student.courses.show');
     });
 });
+
+
+
+
+
+

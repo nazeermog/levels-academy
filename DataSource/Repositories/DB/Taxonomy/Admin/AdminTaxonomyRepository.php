@@ -10,4 +10,9 @@ class AdminTaxonomyRepository
     use AdminCRUDGenericRepository;
 
     protected $model = Taxonomy::class;
+
+    public static function list()
+    {
+        return Taxonomy::all();
+    }
 }

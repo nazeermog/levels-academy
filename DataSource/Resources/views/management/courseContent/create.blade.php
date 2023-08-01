@@ -1,8 +1,9 @@
 @extends('datasource::management.layout.master')
 
 @section('content')
+@if($taxonomies->count()>0)
     <div class="container py-5">
-        <form id="form-course" method="POST" action="{{route('admin.courseContent.store')}}">
+        <form id="form-course" method="POST" action="{{route('admin.courseContent.store')}}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="boxArr" id="boxArr">
 
@@ -30,8 +31,18 @@
                 <div class="col-md-4 m-1">
                 <label for="price">Price</label>
                   <input class="form-control" type="number" name="price" id="price">
-
                 </div>
+                <div class="col-md-4 mt-3">
+                <select class="btn btn-outline my-3 col-12" name="taxonomy_id" style="background-color: transparent; border: 1px solid #ced4da; border-radius: 0; ">
+                                @foreach($taxonomies as $taxonomy)
+                                  <option value="{{ $taxonomy->id }}">{{ $taxonomy->title }}</option>
+                                @endforeach
+                </select>
+                </div>
+                <div class="col-md-4 m-1">
+                <label for="photo">Photo</label>
+                  <input class="form-control" type="file" name="photo" id="photo">
+                </div>  
             </div>
             <hr/>
             <div class="row">
@@ -54,6 +65,18 @@
 
  
     </div>
+    @else <div class="card border-top border-0 border-4 border-primary table-responsive">
+
+<div class="card-header">
+    <h3 class="card-title float-left">You should have some categories first.</h3>
+    <a href="{{route('admin.taxonomies.create')}}"
+       class="btn btn-primary float-right">+ Add New</a>
+   
+     
+    </div>
+
+@endif
+
 @endsection
 
 

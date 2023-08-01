@@ -39,7 +39,7 @@
 <div class="container py-5">
     <div class="row">
         <div class="col-12 mb-4">
-            <button class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#addBox">
+            <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal" data-bs-target="#addBox">
                 Add Step
             </button>
         </div>
@@ -52,7 +52,8 @@
                             Lessons
                         </span>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                    
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
                         <div class="accordion-body">
                             <ul class="list-unstyled connected-sortable droppable-area1 mb-0" id="list1">
                                 @foreach ($lessons as $lesson)
@@ -67,6 +68,24 @@
                             </ul>
                         </div>
                     </div>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                        <div class="accordion-body">
+                            <ul class="list-unstyled connected-sortable droppable-area1 mb-0">
+                                <li class="draggable-item cursor-pointer" data-id="1" data-type="Lessons">
+                                    <div class="d-flex align-items-center justify-content-between border px-3 py-2">
+                                        <h4>Task1</h4>
+                                        <i class="bi bi-chevron-double-right move-btn"></i>
+                                    </div>
+                                </li>
+                                <li class="draggable-item cursor-pointer" data-id="2"    data-type="Lessons">
+                                    <div class="d-flex align-items-center justify-content-between border px-3 py-2">
+                                        <h4>Task2</h4>
+                                        <i class="bi bi-chevron-double-right move-btn"></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingTwo">
@@ -77,9 +96,10 @@
                     </h2>
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
                         <div class="accordion-body">
-                            <ul class="list-unstyled connected-sortable droppable-area1 mb-0" id="list2">
+                            <ul class="list-unstyled connected-sortable droppable-area1 mb-0" >
+                            <!-- id="list2" -->
                                 @foreach ($practices as $practice)
-                                    <li class="draggable-item cursor-pointer" data-id="list2" id="{{ $practice->id }}">
+                                    <li class="draggable-item cursor-pointer" data-id="{{ $practice->id }}" id="{{ $practice->id }}" data-type="Practices">
                                         <div class="d-flex align-items-center justify-content-between border px-3 py-2">
                                             <h4>{{ $practice->title }}</h4>
                                             <i class="bi bi-chevron-double-right move-btn"></i>
@@ -370,6 +390,7 @@
 
         function openUpdateInfo() {
             modalsEidt.forEach(function (box) {
+                event.preventDefault();
                 box.addEventListener("click", function () {
                     editBoxe();
                 });

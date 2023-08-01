@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('course_content_id')->index();
             $table->string('title');
+            $table->string('desc');
             $table->string('locale')->index();
             $table->unique(['course_content_id', 'locale']);
             $table->timestamps();

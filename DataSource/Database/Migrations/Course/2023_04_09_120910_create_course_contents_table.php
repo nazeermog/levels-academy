@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('course_id')->index();
           
             $table->integer('ordering')->index();
-            $table->morphs('content');
             $table->timestamps();
         });
     }

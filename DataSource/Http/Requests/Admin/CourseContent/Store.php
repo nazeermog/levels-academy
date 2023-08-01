@@ -21,12 +21,14 @@ class Store extends FormRequest
            $mergeArray['slug-' . $locale] = ['required', 'string'];
        }
        return array_merge([
-           'boxArr' => ['array', 'required'],
-           'boxArr.*.ordering' => ['numeric', 'required'],
-           'boxArr.*.type_id' => ['numeric', 'required'],
-           'boxArr.*.type' => ['in:Quiz,PracticeType,Lesson'],
-           'price' => ['required'],
-       ], $mergeArray);
+        //  'boxArr' => ['array', 'required'],
+        'boxArr.*.ordering' => ['numeric', 'required'],
+        'boxArr.*.type.id' => ['numeric', 'required'],
+        'boxArr.*.type.type' => ['in:Quizzes,Practices,Lessons'],
+        'taxonomy_id' => ['numeric','required'],
+        'photo'=>['image','mimes:jpeg,png,jpg,svg','required'],
+        'price' => ['required'],
+    ], $mergeArray);
         return[];
     }
 }

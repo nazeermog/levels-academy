@@ -2,8 +2,10 @@
 
 namespace DataSource\Entities\Course;
 
-use Astrotomic\Translatable\Translatable;
+use DataSource\Entities\Course\Course;
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Translatable;
+use DataSource\Entities\Course\CourseStep;
 
 /**
  * @property int $id
@@ -21,18 +23,22 @@ class CourseContent extends Model
 
     public $translationForeignKey = 'course_content_id';
     protected $translatedAttributes = [
-        'title'
+        'title',
+        'desc'
     ];
 
     protected $fillable = [
         'course_id',
         'ordering',
-        'content_type',
-        'content_id',
+   
     ];
-
-    public function content()
+    public function courseSteps()
     {
-        return $this->morphTo();
+        return $this->hasMany(CourseStep::class);
     }
+    public function course()
+    {
+        return $this->belongsto(Course::class);
+    }
+  
 }

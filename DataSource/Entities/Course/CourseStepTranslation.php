@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CourseStepTranslation extends Model
 {
-    protected $fillable = [];
+    protected $fillable = [
+        'title',
+        'desc'
+    ];
 }

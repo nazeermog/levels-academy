@@ -2,8 +2,9 @@
 
 namespace DataSource\Entities\Course;
 
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Translatable;
+use DataSource\Entities\Course\CourseContent;
 
 
 class Course extends Model
@@ -23,5 +24,10 @@ class Course extends Model
         'taxonomy_id',
         'is_auto_join',
         'is_active',
+        'photo',
     ];
+    public function courseContents()
+    {
+        return $this->hasMany(CourseContent::class);
+    }
 }
