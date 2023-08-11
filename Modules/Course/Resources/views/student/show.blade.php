@@ -8,7 +8,7 @@
                 <div class="hero py-64pt text-center text-sm-left">
                     <div class="container page__container">
                         <h1 class="text-white">{{$course->title}}</h1>
-                        <p class="lead text-white-50 measure-hero-lead mb-24pt">{{$course->slug}}</p>
+                        <p class="lead text-white-50 measure-hero-lead mb-24pt">{{$course->desc}}</p>
                         <a href="student-take-lesson.html"
                            class="btn btn-white">Resume course</a>
                     </div>
@@ -20,25 +20,25 @@
                             <li class="nav-item navbar-list__item">
                                 <div class="media align-items-center">
                                                     <span class="media-left mr-16pt">
-                                                        <img src="{{asset('/images/people/50/guy-6.jpg')}}"
+                                                    <img src="{{asset($instructor->avatar)}}"
                                                              width="40"
                                                              alt="avatar"
                                                              class="rounded-circle">
                                                     </span>
                                     <div class="media-body">
                                         <a class="card-title m-0"
-                                           href="teacher-profile.html">Eddie Bryan</a>
+                                           href="teacher-profile.html">{{ $instructor->first_name.' '.$instructor->last_name}}</a>
                                         <p class="text-50 lh-1 mb-0">Instructor</p>
                                     </div>
                                 </div>
                             </li>
                             <li class="nav-item navbar-list__item">
                                 <i class="material-icons text-muted icon--left">schedule</i>
-                                2h 46m
+                            {{$totalLessonTime}}m
                             </li>
                             <li class="nav-item navbar-list__item">
                                 <i class="material-icons text-muted icon--left">assessment</i>
-                                Beginner
+                                {{$course->level}}
                             </li>
                             <li class="nav-item ml-sm-auto text-sm-center flex-column navbar-list__item">
                                 <div class="rating rating-24">
@@ -74,7 +74,7 @@
                         <a class="accordion__toggle"
                         data-toggle="collapse"
                         href="#toc-content-{{ $content->id }}">
-                            <span class="flex">1 of 4 Steps</span>
+                            <span class="flex"> {{$coursestepCount[$content->id]}} Steps</span>
                             <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
                         </a>
                         <div class="accordion__menu collapse show"
@@ -84,16 +84,25 @@
                                 <li class="accordion__menu-link">
                                 @if ($step->stepable_type === 'Lessons')
                                     <span class="material-icons icon-16pt icon--left text-body">play_circle_outline</span>
+                                    <a class="flex"
+                                    href="{{route('student.lesson.show', ['lessonId' => $step->stepable_id,'courseId'=> $course->id] ) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
                                 @elseif ($step->stepable_type === 'Practices')
+                                @if ($step->title === 'abacus')
+                                <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
+                                    <a class="flex"
+                                        href="{{route('student.practice.show', ['id' => 1,'type'=>'abacus'] ) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
+                                @else
                                     <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
-                                    @elseif ($step->stepable_type === 'Quizzes')
-                                    <span class="material-icons icon-16pt icon--left text-50">question_answer</span>
-
+                                    <a class="flex"
+                                        href="{{route('student.practice.show', ['id' => 1] ) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
                                 @endif
-                                        <a class="flex"
-                                        href="student-take-lesson.html">{{ $step->stepable_type }}: {{ $step->title }}</a>
-                                        <!-- <span class="text-muted">12m 10s</span> -->
-                                    </li>
+
+                                @elseif ($step->stepable_type === 'Quizzes')
+                                    <span class="material-icons icon-16pt icon--left text-50">question_answer</span>
+                                @endif
+                                        
+                                
+
                             @endforeach
                             </ul>
                         </div>
@@ -134,39 +143,21 @@
                         <div class="page-separator">
                             <div class="page-separator__text">About this course</div>
                         </div>
-                        <p class="text-70">This course will teach you the fundamentals o*f working with Angular 2. You
-                            *will learn everything you need to know to create complete applications including:
-                            components, services, directives, pipes, routing, HTTP, and even testing.</p>
-                        <p class="text-70 mb-0">This course will teach you the fundamentals o*f working with Angular 2.
-                            You *will learn everything you need to know to create complete applications including:
-                            components, services, directives, pipes, routing, HTTP, and even testing.</p>
+                        <p class="text-70">{{$course->about}}</p>
                     </div>
                     <div class="col-md-5">
                         <div class="page-separator">
                             <div class="page-separator__text bg-white">What you’ll learn</div>
                         </div>
                         <ul class="list-unstyled">
-                            <li class="d-flex align-items-center">
-                                <span class="material-icons text-50 mr-8pt">check</span>
-                                <span class="text-70">Fundamentals of working with Angular</span>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <span class="material-icons text-50 mr-8pt">check</span>
-                                <span class="text-70">Create complete Angular applications</span>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <span class="material-icons text-50 mr-8pt">check</span>
-                                <span class="text-70">Working with the Angular CLI</span>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <span class="material-icons text-50 mr-8pt">check</span>
-                                <span class="text-70">Understanding Dependency Injection</span>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <span class="material-icons text-50 mr-8pt">check</span>
-                                <span class="text-70">Testing with Angular</span>
-                            </li>
+                            @foreach(explode("\n", $course->benefit) as $benefit)
+                                <li class="d-flex align-items-center">
+                                    <span class="material-icons text-50 mr-8pt">check</span>
+                                    <span class="text-70">{{ $benefit }}</span>
+                                </li>
+                            @endforeach
                         </ul>
+
                     </div>
                 </div>
             </div>
@@ -178,9 +169,7 @@
                 <div class="row">
                     <div class="col-md-7 mb-24pt mb-md-0">
                         <h4>About the author</h4>
-                        <p class="text-70 mb-24pt">Eddie Bryan is a software developer at LearnD*ash. With more than 20
-                            years o*f software development experience, he has gained a passion for Agile software
-                            development -- especially Lean.</p>
+                        <p class="text-70 mb-24pt">{{$instructor->about}}</p>
 
                         <div class="page-separator">
                             <div class="page-separator__text bg-white">More from the author</div>
@@ -285,14 +274,14 @@
                         class="col-md-5 pt-sm-32pt pt-md-0 d-flex flex-column align-items-center justify-content-start">
                         <div class="text-center">
                             <p class="mb-16pt">
-                                <img src="{{asset('/images/people/110/guy-6.jpg')}}"
+                            <img src="{{asset($instructor->avatar)}}"
                                      alt="guy-6"
                                      class="rounded-circle"
                                      width="64">
                             </p>
-                            <h4 class="m-0">Eddie Bryan</h4>
+                            <h4 class="m-0">{{ $instructor->first_name.' '.$instructor->last_name}}</h4>
                             <p class="lh-1">
-                                <small class="text-muted">Angular, Web Development</small>
+                                <small class="text-muted">{{$instructor->spec}}</small>
                             </p>
                             <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
                                 <a href="teacher-profile.html"

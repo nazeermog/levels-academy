@@ -154,6 +154,102 @@
                 </li>
 
 
+                </li>
+                <li class="nav-item {{Route::is('admin.coursePath.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.coursePath.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Course Paths
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.coursePath.index')}}"
+                               class="nav-link  {{ Route::is('admin.coursePath.index')?'active':''}}">
+
+                                <p class="ml-3">- Course Paths </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.coursePath.create')}}"
+                               class="nav-link  {{ Route::is('admin.coursePath.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Course Paths </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
+
+                <li class="nav-item {{Route::is('admin.lessons.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.lessons.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Lessons
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.lessons.index')}}"
+                               class="nav-link  {{ Route::is('admin.lessons.index')?'active':''}}">
+
+                                <p class="ml-3">- Lessons </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.lessons.create')}}"
+                               class="nav-link  {{ Route::is('admin.lessons.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Lessons </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
+                <li class="nav-item {{Route::is('admin.instructors.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.instructors.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                        Instructors
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.instructors.index')}}"
+                               class="nav-link  {{ Route::is('admin.instructors.index')?'active':''}}">
+
+                                <p class="ml-3">- Instructors </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.instructors.create')}}"
+                               class="nav-link  {{ Route::is('admin.instructors.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Instructor </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
+
                 {{--                <li class="nav-item {{$url == route('admin.customers.index')?'menu-open':''}} ">--}}
                 {{--                    <a href="#"--}}
                 {{--                       class="nav-link {{$url == route('admin.customers.index')?'active':''}}">--}}

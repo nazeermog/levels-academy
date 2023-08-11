@@ -10,7 +10,7 @@
             @csrf
             <div class="row">
                 @foreach(localeSupported() as $locale)
-                    <div class="col-md-4 m-1">
+                    <div class="col-md-3 m-1">
                         <label for="">Title {{ucwords($locale)}}</label>
                         <input class="form-control" name="title-{{$locale}}">
                     </div>

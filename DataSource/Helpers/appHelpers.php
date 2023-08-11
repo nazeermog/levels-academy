@@ -3,6 +3,6 @@
 if (!function_exists('localeSupported')) {
     function localeSupported()
     {
-        return ['ar', 'en'];
+        return ['ar', 'en','de'];
     }
 }

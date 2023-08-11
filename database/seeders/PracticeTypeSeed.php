@@ -37,6 +37,11 @@ class PracticeTypeSeed extends Seeder
                 'title' => 'العداد',
                 'locale' => 'ar',
             ],
+             [
+                'practice_id' => 1,
+                'title' => 'Abakus',
+                'locale' => 'de',
+            ],
             [
                 'practice_id' => 2,
                 'title' => 'Numbers Sum',
@@ -46,6 +51,11 @@ class PracticeTypeSeed extends Seeder
                 'practice_id' => 2,
                 'title' => 'جمع الأرقام',
                 'locale' => 'ar',
+            ],
+            [
+                'practice_id' => 2,
+                'title' => 'Zahlensumme',
+                'locale' => 'de',
             ],
         ]);
     }

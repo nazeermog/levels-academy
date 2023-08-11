@@ -9,7 +9,8 @@ class LessonTranslation extends Model
 {
     protected $fillable = [
         'title',
-        'desc'
+        'desc',
+        'attachment_name',
     ];
 
 }

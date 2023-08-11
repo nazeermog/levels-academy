@@ -16,7 +16,9 @@ return new class extends Migration {
             $table->id();
             $table->decimal('price', 8, 3);
             $table->unsignedBigInteger('taxonomy_id')->index();
+            $table->unsignedBigInteger('instructor_id')->index();
             $table->boolean('is_active')->default(1);
+            $table->unsignedBigInteger('course_path_id')->index()->nullable();
             $table->boolean('is_auto_join');
             $table->string('photo');
 

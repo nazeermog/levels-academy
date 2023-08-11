@@ -19,6 +19,10 @@ class Store extends FormRequest
        foreach (localeSupported() as $locale) {
            $mergeArray['title-' . $locale] = ['required', 'string'];
            $mergeArray['slug-' . $locale] = ['required', 'string'];
+           $mergeArray['desc-' . $locale] = ['required', 'string'];
+           $mergeArray['about-' . $locale] = ['required', 'string'];
+           $mergeArray['benefit-' . $locale] = ['required', 'string'];
+           $mergeArray['level-' . $locale] = ['required', 'string'];
        }
        return array_merge([
         //  'boxArr' => ['array', 'required'],
@@ -28,6 +32,8 @@ class Store extends FormRequest
         'taxonomy_id' => ['numeric','required'],
         'photo'=>['image','mimes:jpeg,png,jpg,svg','required'],
         'price' => ['required'],
+        'instructor_id' => ['numeric','required'],
+
     ], $mergeArray);
         return[];
     }

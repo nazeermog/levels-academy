@@ -2,6 +2,7 @@
 
 namespace DataSource\Entities\Course;
 
+use DataSource\Entities\Lesson\Lesson;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use DataSource\Entities\Course\CourseContent;
@@ -30,5 +31,11 @@ class CourseStep extends Model
     {
         return $this->belongsToMany(CourseContent::class);
     }
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class, 'stepable_id');
+    }
+
+   
 
 }

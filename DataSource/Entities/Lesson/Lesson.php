@@ -2,8 +2,9 @@
 
 namespace DataSource\Entities\Lesson;
 
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Translatable;
+use DataSource\Entities\Course\CourseStep;
 
 class Lesson extends Model
 {
@@ -14,12 +15,19 @@ class Lesson extends Model
     public $translationForeignKey = 'lesson_id';
     protected $translatedAttributes = [
         'title',
-        'desc'
+        'desc',
+        'attachment_name',
     ];
     protected $fillable = [
         'url',
         'time',
         'is_active',
+        'attachment',
+        
     ];
-
+    public function courseStep()
+    {
+        return $this->belongsTo(CourseStep::class, 'stepable_id');
+    }
+    
 }

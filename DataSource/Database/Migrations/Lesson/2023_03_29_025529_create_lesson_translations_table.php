@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('lesson_id')->index();
             $table->string('title');
             $table->longText('desc')->nullable();
+            $table->string('attachment_name')->nullable();
             $table->string('locale')->index();
             $table->unique(['lesson_id', 'locale']);
             $table->timestamps();

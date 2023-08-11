@@ -9,6 +9,9 @@ class CourseTranslation extends Model
     protected $fillable = [
         'title',
         'slug',
-        'desc'
+        'desc',
+        'about',
+        'benefit',
+        'level',
     ];
 }

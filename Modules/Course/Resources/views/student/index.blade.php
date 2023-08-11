@@ -145,7 +145,7 @@
                         <div class="d-flex">
                             <div class="flex">
                             <a href="{{ route('student.courses.show', ['CourseId' => $course->id]) }}" class="card-title">{{$course->title}}</a>
-                                <small class="text-50 font-weight-bold mb-4pt">Elijah Murray</small>
+                                <small class="text-50 font-weight-bold mb-4pt">{{ $instructor[$course->id]->first_name.' '.$instructor[$course->id]->last_name}}</small>
                             </div>
                             <a href="student-take-course.html" data-toggle="tooltip" data-title="Add Favorite"
                                data-placement="top" data-boundary="window"
@@ -165,7 +165,7 @@
                         <div class="row justify-content-between">
                             <div class="col-auto d-flex align-items-center">
                                 <span class="material-icons icon-16pt text-50 mr-4pt">access_time</span>
-                                <p class="flex text-50 lh-1 mb-0"><small>6 hours</small></p>
+                                <p class="flex text-50 lh-1 mb-0"><small>{{ $totalLessonTime[$course->id] }}m</small></p>
                             </div>
                             <div class="col-auto d-flex align-items-center">
                                 <span class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>

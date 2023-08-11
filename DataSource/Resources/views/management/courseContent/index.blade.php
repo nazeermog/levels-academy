@@ -53,23 +53,64 @@
                                         </td>
                                         
                                         <td>
-                                        <!-- for show i delete it 
-                                                                                <div class="row">
+                                      
+                                           
+                                                <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1"
+                                                     role="dialog"
+                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete
+                                                                    Confirmation</h5>
+                                                                
+                                                                    <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                Are You Sure You Wont
+                                                                Delete {{$item->title}}?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close
+                                                                </button>
+                                                                <form
+                                                                    action="{{route('admin.'.$route_name.'.destroy',$item->id)}}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method("DELETE")
+                                                                    <button type="submit" class="btn btn-danger">
+                                                                        Delete
+                                                                    </button>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
 
                                                 <div class="ml-1">
-                                                        <a href="route('admin.'.$route_name.'.show',['practice'=>$item->id])"
-                                                       class="btn btn-outline-primary ">Edit</a>
+                                                    <a href="{{route('admin.'.$route_name.'.show',$item->id)}}"
+                                                    class="btn btn-outline-primary ">Edit</a>
                                                     <button class="btn btn-outline-danger"
                                                             data-toggle="modal"
                                                             data-target="#exampleModal{{$item->id}}">
                                                         Delete
                                                     </button>
                                                 </div>
-                                            -->
 
+
+                                                <!-- Modal -->
                                                 <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1"
-                                                     role="dialog"
-                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    role="dialog"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -105,7 +146,8 @@
                                                 </div>
 
                                             </div>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{$item->id}}">Delete </button>
+
+
                                         </td>
                                     </tr>
                                 @endforeach

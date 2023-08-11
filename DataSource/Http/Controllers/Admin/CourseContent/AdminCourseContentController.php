@@ -4,9 +4,13 @@ namespace DataSource\Http\Controllers\Admin\CourseContent;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use DataSource\Entities\Course\CourseStep;
+use DataSource\Entities\Course\CourseContent;
+use DataSource\Entities\Instructor\Instructor;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\CourseContent\Store;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
+use DataSource\Http\Requests\Admin\CourseContent\update;
 use DataSource\Repositories\API\Lesson\ApiLessonsRepository;
 use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
@@ -32,10 +36,39 @@ class AdminCourseContentController extends BaseController
         $lessons = AdminLessonRepository::list();
         $practices = AdminPracticeRepository::list();
         $taxonomies = AdminTaxonomyRepository::list();
+        $instructors = Instructor::all();
 
         $route_name = $this->route_name;
         $table_name = $this->table_name;
-        return view($this->module . '.create', compact('route_name', 'table_name','taxonomies', 'lessons', 'practices'));
+        return view($this->module . '.create', compact('route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors'));
+    }
+    
+    public function show($courseId)
+    {
+        $lessons = AdminLessonRepository::list();
+        $practices = AdminPracticeRepository::list();
+        $taxonomies = AdminTaxonomyRepository::list();
+        $instructors = Instructor::all();
+        $item=$this->getRepository()->find($courseId);
+       
+        $route_name = $this->route_name;
+        $table_name = $this->table_name;
+        return view($this->module . '.show', compact('item','route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors'));
+    }
+    public function update(Request $request,$courseId)
+    {
+        $storeRequest = new update();
+        $validatedData = $request->validate($storeRequest->rules());
+
+        $courseContentRepo = $this->getRepository();
+
+        $courseData = json_decode($request->input('boxArr'), true);
+
+        $data = array_merge($validatedData, ['boxArr' => $courseData]);
+        // dd($data);
+        $course = $courseContentRepo->update($request,$data,$courseId);
+
+        return redirect()->route('admin.courseContent.index')->withSuccess('Course created successfully');
     }
     public function store(Request $request)
     {
@@ -47,11 +80,13 @@ class AdminCourseContentController extends BaseController
         $courseData = json_decode($request->input('boxArr'), true);
 
         $data = array_merge($validatedData, ['boxArr' => $courseData]);
-        //dd($data);
+        // dd($data);
         $course = $courseContentRepo->store($request,$data);
 
         return redirect()->route('admin.courseContent.index')->withSuccess('Course created successfully');
     }
+  
+    
     
   
     

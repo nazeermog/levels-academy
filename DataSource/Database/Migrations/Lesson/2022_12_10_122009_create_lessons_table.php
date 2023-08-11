@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('time');
             $table->string('url');
             $table->boolean('is_active')->default(1);
+            $table->string('attachment')->nullable();
             $table->timestamps();
         });
     }

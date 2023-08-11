@@ -2,8 +2,10 @@
 
 namespace DataSource\Entities\Instructor;
 
-use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\User\User;
+use DataSource\Entities\Course\Course;
+use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Translatable;
 
 /**
  * @property integer $user_id
@@ -15,13 +17,32 @@ use DataSource\Entities\User\User;
  */
 class Instructor extends Model
 {
-    protected $primaryKey = 'user_id';
+    use Translatable;
 
+    // protected $primaryKey = 'user_id';
+    public $translationForeignKey = 'instructor_id';
+
+    protected $translatedAttributes = [
+        'about',
+        'spec',
+        'country',
+       
+    ];
+        protected $fillable = [
+        'user_id',
+        'first_name',
+        'last_name',
+        'avatar',
+        ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 }

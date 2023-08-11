@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('instructors', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->unique()->primary();
+            $table->id();
+            $table->unsignedBigInteger('user_id')->index();
             $table->string('avatar')->nullable();
-            $table->string('country');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->timestamps();
         });
     }
