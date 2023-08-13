@@ -10,15 +10,15 @@ use DataSource\Repositories\DB\CoursePath\Admin\AdminCoursePathRepository;
 
 class LearningPathController extends Controller
 {
-    public function index()
-    {
-        $taxonomies = AdminTaxonomyRepository::list();
-        $coursePaths = AdminCoursePathRepository::list();
-        $coursesCounts = AdminCoursePathRepository::CourseCounter();
-        return view('learningpath::student.index', [
-            'taxonomies' => $taxonomies,
-            'coursePaths' => $coursePaths,
-            'coursesCounts' => $coursesCounts,
-        ]);
-    }
+  public function index()
+  {
+    $taxonomies = AdminTaxonomyRepository::list();
+    $coursePaths = AdminCoursePathRepository::list();
+    $coursesCounts = AdminCoursePathRepository::CourseCounter();
+    return view('learningpath::student.index', [
+      'taxonomies' => $taxonomies,
+      'coursePaths' => $coursePaths,
+      'coursesCounts' => $coursesCounts,
+    ]);
+  }
 }

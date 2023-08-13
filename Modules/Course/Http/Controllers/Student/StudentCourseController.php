@@ -14,48 +14,47 @@ use DataSource\Repositories\DB\Instructor\Admin\AdminInstructorRepository;
 class StudentCourseController extends Controller
 {
 
-    public function index()
-{
+  public function index()
+  {
     $taxonomies = AdminTaxonomyRepository::list();
     $courses = AdminCourseRepository::list();
     $courseLessons = AdminCourseRepository::courseLessons();
-    $totalLessonTime=0;
-    $totalLessonTime=AdminLessonRepository::TotalLessonsHours($courses);
-    $instructor=AdminInstructorRepository::InstructorForCourse($courses);
+    $totalLessonTime = 0;
+    $totalLessonTime = AdminLessonRepository::TotalLessonsHours($courses);
+    $instructor = AdminInstructorRepository::InstructorForCourse($courses);
     return view('course::student.index', [
-        'taxonomies' => $taxonomies,
-        'courses' => $courses,
-        'courseLessons' => $courseLessons,
-        'totalLessonTime' => $totalLessonTime,
-        'instructor'=>$instructor
+      'taxonomies' => $taxonomies,
+      'courses' => $courses,
+      'courseLessons' => $courseLessons,
+      'totalLessonTime' => $totalLessonTime,
+      'instructor' => $instructor
 
     ]);
-}
+  }
 
-    public function show($courseId)
-    {  
-        $course = Course::findOrFail($courseId);
-        $contents = CourseContent::where('course_id', $course->id)->get();
-        $contentSteps = [];
-        
-        foreach ($contents as $content) {
-            $steps = $content->courseSteps()->get();
-            $contentSteps[$content->id] = $steps;
-            $coursestepCount[$content->id]=$steps->count();
-        }   
-     
-        $instructor=AdminInstructorRepository::InstructorForOneCourse($course);
-        $totalLessonTime=AdminLessonRepository::SingleCoursTotalLesson($course);
+  public function show($courseId)
+  {
+    $course = Course::findOrFail($courseId);
+    $contents = CourseContent::where('course_id', $course->id)->get();
+    $contentSteps = [];
 
-        return view('course::student.show', [
-            'course' => $course,
-            'contents' => $contents,
-            'contentSteps' => $contentSteps,
-            'totalLessonTime' => $totalLessonTime,
-            'coursestepCount'=>$coursestepCount,
-            'instructor'=>$instructor
-
-        ]);
+    foreach ($contents as $content) {
+      $steps = $content->courseSteps()->get();
+      $contentSteps[$content->id] = $steps;
+      $coursestepCount[$content->id] = $steps->count();
     }
 
+    $instructor = AdminInstructorRepository::InstructorForOneCourse($course);
+    $totalLessonTime = AdminLessonRepository::SingleCoursTotalLesson($course);
+
+    return view('course::student.show', [
+      'course' => $course,
+      'contents' => $contents,
+      'contentSteps' => $contentSteps,
+      'totalLessonTime' => $totalLessonTime,
+      'coursestepCount' => $coursestepCount,
+      'instructor' => $instructor
+
+    ]);
+  }
 }

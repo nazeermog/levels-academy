@@ -174,10 +174,26 @@
     </div>
     <div class="abacus d-none">
       <p id="feedback" class="fs-4 text-success fw-bold"></p>
+      @php
+        $first=true;
+      @endphp
+      <h1 style="direction:ltr"> @foreach ($randomNumbers as $num)
+        @if (!$first)
+          {{' + '}}
+        @else
+        @php
+        $first=false;
+        @endphp
+        @endif
+       {{$num}}
+      @endforeach
+      </h1>
+
       <div id="abacus">
         <div class="stander"></div>
         <div class="rods"></div>
         <div class="stander"></div>
+        
         <!-- <button class="btn btn-primary">submit</button> -->
       </div>
       <div class="submit mt-4 text-center" id="submit">
@@ -195,6 +211,7 @@
         </button> -->
       </div>
     </div>
+   
 
 @endsection
 
@@ -207,11 +224,11 @@
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
-        crossorigin="anonymous"
-    >
-        <script src="./assets/js/main.js"></script>
+        crossorigin="anonymous">
 
 </script>
+
+
 <script>
 const data = [
   [0, 0, 0, 0, 0],
@@ -219,38 +236,43 @@ const data = [
   [0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
 ];
-const result = [
-  [1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1],
-];
-const step1 = [
-  [0, 1, 1, 1, 1],
-  [0, 1, 1, 1, 1],
-  [0, 1, 1, 1, 1],
-  [0, 1, 1, 1, 1],
-];
-const step2 = [
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-];
-const step3 = [
-  [0, 0, 0, 1, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-];
-const step4 = [
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 1],
-];
+// const result = [
+//   [0, 1, 1, 1, 0],
+//   [0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0],
+// ];
 
-const steps = [step1, step2, step3, step4];
+// const step1Php=stepsPhp[0];
+// const step2Php=stepsPhp[1];
+// const step3Php=stepsPhp[2];
+// const step4Php=stepsPhp[3];
+
+// console.log(step1Php);
+// console.log(step2Php);
+// console.log(step3Php);
+// console.log(step4Php);
+
+// const steps = [step1Php, step2Php, step3Php, step4Php];
+
+const randoms = <?php echo json_encode($randomNumbers); ?>;
+console.log(randoms);
+
+// const stepsPhp = <?php echo json_encode($results); ?>;
+// console.log(stepsPhp);
+
+const steps = [];
+let lastStepResult;
+<?php foreach ($results as $index => $result): ?>
+  const stepPhp<?= $index ?> = <?= json_encode($result) ?>;
+  lastStepResult = stepPhp<?= $index ?>;
+  // const randomForStep<?= $index ?> = randoms[<?= $index ?>];
+  // console.log( randomForStep<?= $index ?>);
+  console.log(stepPhp<?= $index ?>);
+  steps.push(stepPhp<?= $index ?>);
+<?php endforeach; ?>
+const result = lastStepResult;
+
 
 console.log(data.length);
 const abacus = document.querySelector(".abacus");

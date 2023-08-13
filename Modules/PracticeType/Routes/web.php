@@ -29,6 +29,8 @@ Route::group([
 //        Route::get('{id}', [StudentPracticeController::class, 'showPractice'])->name('student.practice.show');
         Route::get('{id}/types/{type?}', [StudentPracticeController::class, 'showPractice'])->name('student.practice.show');
         Route::post('resultPractice', [StudentPracticeController::class, 'sendResultPractice'])->name('student.practice.store');
+        Route::get('abacusesolver', [StudentPracticeController::class, 'solver'])->name('student.abacus.solver');
+
     });
 
 });
