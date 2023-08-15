@@ -177,7 +177,7 @@
       @php
         $first=true;
       @endphp
-      <h1 style="direction:ltr"> @foreach ($randomNumbers as $num)
+      <h1 style="direction:ltr;"> @foreach ($randomNumbers as $num)
         @if (!$first)
           {{' + '}}
         @else

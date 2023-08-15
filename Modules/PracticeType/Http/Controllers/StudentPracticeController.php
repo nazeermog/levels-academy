@@ -132,14 +132,9 @@ class StudentPracticeController extends Controller
     $colCount=4;
     for ($i = 0; $i < $count; $i++) {
       $rand=rand($min, $max);
-      //$rand=1;
       $randomNumbers[] = $rand;
       $sum+=$rand;
       $result = solveAbacus($sum,$colCount);
-      //$result=rotateArray($result);
-
-      // $table=printTableFromArray($result);
-      // $tables[]=$table;
       $results[] = $result;
     }
     return view('practicetype::student.abacus', compact('randomNumbers','results'));
@@ -155,8 +150,8 @@ Function getExactLength($number,$colCount) {
 }
 function getDigitsAsNumbers($number)
 {
-  $digitsAsString = (string) abs($number);
-  $digits = array_map('intval', str_split($digitsAsString));
+  $digitsAsString = (string) $number;
+  $digits = str_split($digitsAsString);
   return $digits;
 }
 function giveOnecol($number)
