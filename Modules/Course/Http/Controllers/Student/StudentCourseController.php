@@ -10,6 +10,7 @@ use DataSource\Repositories\DB\Course\Admin\AdminCourseRepository;
 use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
 use DataSource\Repositories\DB\Taxonomy\Admin\AdminTaxonomyRepository;
 use DataSource\Repositories\DB\Instructor\Admin\AdminInstructorRepository;
+use DataSource\Repositories\DB\Course\Student\StudentCourseRatingRepository;
 
 class StudentCourseController extends Controller
 {
@@ -22,12 +23,16 @@ class StudentCourseController extends Controller
     $totalLessonTime = 0;
     $totalLessonTime = AdminLessonRepository::TotalLessonsHours($courses);
     $instructor = AdminInstructorRepository::InstructorForCourse($courses);
+    $courseRate=StudentCourseRatingRepository::CalculateAverageRatingForAllCourses($courses);
+
     return view('course::student.index', [
       'taxonomies' => $taxonomies,
       'courses' => $courses,
       'courseLessons' => $courseLessons,
       'totalLessonTime' => $totalLessonTime,
-      'instructor' => $instructor
+      'instructor' => $instructor,
+      'courseRate'=> $courseRate,
+
 
     ]);
   }
@@ -43,9 +48,16 @@ class StudentCourseController extends Controller
       $contentSteps[$content->id] = $steps;
       $coursestepCount[$content->id] = $steps->count();
     }
-
     $instructor = AdminInstructorRepository::InstructorForOneCourse($course);
     $totalLessonTime = AdminLessonRepository::SingleCoursTotalLesson($course);
+    $courseRate=StudentCourseRatingRepository::CalculateAverageRatingForCourse($course);
+    $ratingWithComments=StudentCourseRatingRepository::ratingWithComments($course);
+    $ratingCount=StudentCourseRatingRepository::RatingCount($course);
+    $rating5=StudentCourseRatingRepository::CountEachStar5($course);
+    $rating4=StudentCourseRatingRepository::CountEachStar4($course);
+    $rating3=StudentCourseRatingRepository::CountEachStar3($course);
+    $rating2=StudentCourseRatingRepository::CountEachStar2($course);
+    $rating1=StudentCourseRatingRepository::CountEachStar1($course);
 
     return view('course::student.show', [
       'course' => $course,
@@ -53,8 +65,17 @@ class StudentCourseController extends Controller
       'contentSteps' => $contentSteps,
       'totalLessonTime' => $totalLessonTime,
       'coursestepCount' => $coursestepCount,
-      'instructor' => $instructor
-
+      'instructor' => $instructor,
+      'courseRate'=> $courseRate,
+      'ratingWithComments'=>$ratingWithComments,
+      'ratingCount'=>$ratingCount,
+      'rating5'=>$rating5,
+      'rating4'=>$rating4,
+      'rating3'=>$rating3,
+      'rating2'=>$rating2,
+      'rating1'=>$rating1,
     ]);
   }
+
+  
 }

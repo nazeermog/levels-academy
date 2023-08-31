@@ -63,7 +63,37 @@
 
 
                     </ul>
+                    <li class="nav-item {{Route::is('admin.Practiceslevels.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.Practiceslevels.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                        Practice levels
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
 
+                        <li class="nav-item">
+                            <a href="{{route('admin.Practiceslevels.index')}}"
+                               class="nav-link  {{ Route::is('admin.Practiceslevels.index')?'active':''}}">
+
+                                <p class="ml-3">- Practice levels </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.Practiceslevels.create')}}"
+                               class="nav-link  {{ Route::is('admin.Practiceslevels.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Practice level </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
 
                 </li>
                 <li class="nav-item {{Route::is('admin.resultPractices.*')?'menu-open':''}} ">
@@ -249,6 +279,7 @@
 
 
                 </li>
+              
 
                 {{--                <li class="nav-item {{$url == route('admin.customers.index')?'menu-open':''}} ">--}}
                 {{--                    <a href="#"--}}

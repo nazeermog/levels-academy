@@ -2,7 +2,7 @@
 
 namespace DataSource\Repositories\DB\Course\Student;
 
-use Modules\DataResource\Entities\Course\Course;
+use DataSource\Entities\Course\Course;
 
 class StudentCoursesRepository
 {

@@ -18,6 +18,9 @@ class Store extends FormRequest
        $mergeArray = [];
        foreach (localeSupported() as $locale) {
            $mergeArray['title-' . $locale] = ['required', 'string'];
+           $mergeArray['desc-' . $locale] = ['required', 'string'];
+           $mergeArray['about-' . $locale] = ['required', 'string'];
+           $mergeArray['benefit-' . $locale] = ['required', 'string'];
        }
        return array_merge([
         'course_id.*' => ['numeric','required'],

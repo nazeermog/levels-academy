@@ -227,15 +227,48 @@
         crossorigin="anonymous">
 
 </script>
+@php
+  $data = [];
+  for ($i = 0; $i < $colCount; $i++) {
+      $data[$i] = [];
+      for ($j = 0; $j < 5; $j++) {
+          $data[$i][$j] = 0;
+      }
+  }
+  $jsonData = json_encode($data);
 
+@endphp
+
+
+
+    @php
+    
+    function extractNumberFromMatrix($matrix) {
+    $number = 0;
+    $rowCount = count($matrix);
+    
+    for ($i = 0; $i < $rowCount; $i++) {
+        $col = $matrix[$i];
+        $oneBeads = $col[3];
+        $twoBeads = $col[2];
+        $threeBeads = $col[1];
+        $fourBeads = $col[0];
+        $fiveBeads = $col[4] * 5;
+        
+        $digit = $oneBeads + $twoBeads * 2 + $threeBeads * 3 + $fourBeads * 4 + $fiveBeads;
+        
+        $number = $digit . $number;
+    }
+    
+    return $number;
+}
+
+
+
+    @endphp
 
 <script>
-const data = [
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-];
+const data = {{$jsonData}}
 // const result = [
 //   [0, 1, 1, 1, 0],
 //   [0, 0, 0, 0, 0],
@@ -260,14 +293,11 @@ console.log(randoms);
 
 // const stepsPhp = <?php echo json_encode($results); ?>;
 // console.log(stepsPhp);
-
 const steps = [];
 let lastStepResult;
 <?php foreach ($results as $index => $result): ?>
   const stepPhp<?= $index ?> = <?= json_encode($result) ?>;
   lastStepResult = stepPhp<?= $index ?>;
-  // const randomForStep<?= $index ?> = randoms[<?= $index ?>];
-  // console.log( randomForStep<?= $index ?>);
   console.log(stepPhp<?= $index ?>);
   steps.push(stepPhp<?= $index ?>);
 <?php endforeach; ?>
@@ -306,6 +336,7 @@ function createRod(col) {
     rods.insertAdjacentHTML("afterbegin", html);
   }
 }
+const arrResult = [];
 
 function startGame(rodNumber) {
   abacus.classList.remove("d-none");
@@ -362,6 +393,7 @@ function startGame(rodNumber) {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
   }
 
+
   const submit = document.querySelector("#submit");
 
   submit.addEventListener("click", function () {
@@ -376,6 +408,7 @@ function startGame(rodNumber) {
       }
       subArr.reverse();
       arrResult.push(subArr.map((arr) => parseInt(arr, 10)));
+  
     }
     if (compareResult(result, arrResult)) {
       feedback.textContent = "The answer is correct";
@@ -389,14 +422,19 @@ function startGame(rodNumber) {
       nextStep.classList.remove("d-none");
       prevStep.classList.remove("d-none");
     }
+    
 
-    if (compareResult(data, result)) {
+    console.log(arrResult);
+    console.log(result);
+
+    if (compareResult(arrResult, result)) {
       console.log("true");
     } else {
       console.log("false");
     }
   });
 }
+
 
 function dataStart(dataBead) {
   const rodsContainer = document.querySelector(".rods");
@@ -530,5 +568,30 @@ prevStep.addEventListener("click", function () {
     console.log("rere");
   }
 });
+document.querySelector("#submit").addEventListener('click', function prossesResult() {
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ route('student.practice.store')}}",
+                        data: {
+                            practice_id: {{$practice->practice_id}},
+                            practice_type_id: {{$practice->id}},
+                            level_title: '{{$practice->practiceLevel->title}}',
+                            result_student: 1,///need function
+                            result_true: 1,///need function
+                            student_id: 0,
+                            is_true: 1,///need function
+                            seconds_speed: null,
+                            card_number: null,
+                            range_number_from: {{$practice ->range_number_from }},
+                            range_number_to: {{$practice->range_number_to}}
+                        },
+                        success: function (one, two, three) {
+                            toastr.success('updated successfully')
+                        },
+                        error: function (one, two, three) {
+                            toastr.error('error')
+                        },
+                    });
+                });
 </script>
 @endpush

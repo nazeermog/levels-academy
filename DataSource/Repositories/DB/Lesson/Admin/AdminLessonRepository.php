@@ -55,6 +55,7 @@ class AdminLessonRepository
     }
      public static function TotalLessonsHours($courses)
     {
+        
      $totalLessonTimes = [];
 
      foreach ($courses as $course) {
@@ -87,9 +88,19 @@ class AdminLessonRepository
         return $totalLessonTime;
     }
 
-    
-
-    
+    public static function SingleCoursTotalLessonCount($course)
+    {
+        $totalLessonTime = 0;
+        $courseContents = $course->courseContents()->with('courseSteps.lesson')->get();
+        foreach ($courseContents as $courseContent) {
+            foreach ($courseContent->courseSteps as $step) {
+                if ($step->stepable_type === 'Lessons' && $step->lesson) {
+                    $totalLessonTime++;
+                }
+            }
+        }
+        return $totalLessonTime;
+    }
    
     
 }

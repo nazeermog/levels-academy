@@ -13,6 +13,7 @@ use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
 use DataSource\Repositories\DB\Taxonomy\Admin\AdminTaxonomyRepository;
 use DataSource\Repositories\DB\CoursePath\Admin\AdminCoursePathRepository;
 use DataSource\Repositories\DB\Instructor\Admin\AdminInstructorRepository;
+use DataSource\Repositories\DB\Course\Student\StudentCourseRatingRepository;
 
 class LessonController extends Controller
 {
@@ -25,12 +26,16 @@ class LessonController extends Controller
         
         $totalLessonTime=AdminLessonRepository::SingleCoursTotalLesson($course);
         $instructor=AdminInstructorRepository::InstructorForOneCourse($course);
+        $courseRate=StudentCourseRatingRepository::CalculateAverageRatingForCourse($course);
+        $ratingCount=StudentCourseRatingRepository::RatingCount($course);
 
         return view('lesson::student.show', [
             'lesson' => $lesson,
             'course' => $course,
             'totalLessonTime'=>$totalLessonTime,
             'instructor'=>$instructor,
+            'courseRate'=>$courseRate,
+            'ratingCount'=>$ratingCount,
         ]);
     }
     

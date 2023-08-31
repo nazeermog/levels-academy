@@ -4,6 +4,7 @@ namespace DataSource\Http\Controllers\Admin\Practice;
 
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\PracticeType\Store;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeLevelRepository;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeTypeRepository;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
@@ -24,7 +25,8 @@ class AdminPracticeTypeController extends BaseController
         $route_name = $this->route_name;
         $table_name = $this->table_name;
         $practices = AdminPracticeRepository::list();
-        return view($this->module . '.create', compact('route_name', 'table_name', 'practices'));
+        $practiceLevels=AdminPracticeLevelRepository::list();
+        return view($this->module . '.create', compact('route_name', 'table_name', 'practices','practiceLevels'));
     }
 
     public function show($id)

@@ -29,15 +29,12 @@ class AdminCoursePathController extends BaseController
         $table_name = $this->table_name;
         return view($this->module . '.create', compact('route_name', 'table_name','taxonomies', 'courses', 'taxonomies'));
     }
-    public function store(Request $request)
+    public function store(Store $request)
     {
         $storeRequest = new Store();
         $data = $request->validate($storeRequest->rules());
 
         $coursepathRepo = $this->getRepository();
-
-
-        //dd($data);
         $course = $coursepathRepo->store($request,$data);
 
         return redirect()->route('admin.coursePath.index')->withSuccess('Course created successfully');

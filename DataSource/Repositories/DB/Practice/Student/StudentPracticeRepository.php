@@ -17,5 +17,9 @@ class StudentPracticeRepository
     {
         return PracticeTypeDetail::find($id);
     }
+    public static function list()
+    {
+        return PracticeType::all();
+    }
 
 }

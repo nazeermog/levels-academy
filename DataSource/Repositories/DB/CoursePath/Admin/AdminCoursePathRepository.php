@@ -18,6 +18,11 @@ class AdminCoursePathRepository
         return CoursePath::all();
 
     }
+    public static function find($pathId)
+    {
+        return CoursePath::find($pathId);
+
+    }
     public static function CourseCounter()
     {
         $coursePaths = CoursePath::all();
@@ -35,25 +40,25 @@ class AdminCoursePathRepository
     public function store( $request, $data)
     {
         $ordering=1;
-        foreach ($data['course_id'] as $courseId) {
             $coursePath = $this->getModel();
             foreach (localeSupported() as $locale) {
                 $coursePath->translateOrNew($locale)->title = $data['title-' . $locale];
+                $coursePath->translateOrNew($locale)->desc = $data['desc-' . $locale];
+                $coursePath->translateOrNew($locale)->about = $data['about-' . $locale];
+                $coursePath->translateOrNew($locale)->benefit = $data['benefit-' . $locale];
+
             }
             $coursePath->taxonomy_id = $data['taxonomy_id'];
-            $coursePath->ordering = $ordering;
             if ($request->hasFile('photo')) {
-                $photoPath = $request->file('photo')->store('public/course_photos');
+                $photoPath = $request->file('photo')->store('public/course_path_photos');
                 $coursePath->photo = Storage::url($photoPath);
             }
-
-            $coursePath->course_id = $courseId;
             $coursePath->save();
-
-            $course=Course::find($coursePath->course_id);
+            foreach ($data['course_id'] as $courseId) {
+            $course=Course::find($courseId);
             $course->course_path_id=$coursePath->id;  
+            $course->ordering = $ordering;
             $course->save(); 
-
             $ordering++;
         }
     }

@@ -2,6 +2,7 @@
 
 namespace DataSource\Entities\Course;
 
+use DataSource\Entities\Course\Rating;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use DataSource\Entities\Course\CoursePath;
@@ -31,6 +32,7 @@ class Course extends Model
         'course_path_id',
         'is_active',
         'photo',
+        'ordering',
     ];
     public function courseContents()
     {
@@ -43,5 +45,9 @@ class Course extends Model
     public function instructor()
     {
         return $this->belongsTo(Instructor::class);
+    }
+    public function ratings(){
+
+        return $this->hasMany(Rating::class);
     }
 }

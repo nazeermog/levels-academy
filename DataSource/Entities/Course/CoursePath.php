@@ -13,9 +13,11 @@ class CoursePath extends Model
 
     protected $translatedAttributes = [
         'title',
+        'desc',
+        'about',
+        'benefit',
     ];
     protected $fillable = [
-        'ordering',
         'course_id',
         'taxonomy_id',
         'photo',

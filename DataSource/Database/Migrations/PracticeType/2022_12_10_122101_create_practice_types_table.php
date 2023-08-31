@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->timestamps();
             // $table->foreign('student_id')->on('students')->references('user_id')->onDelete('cascade');
             $table->boolean('is_active')->default(1);
+            $table->string('photo');
           //  $table->foreign('course_id')->on('courses')->references('id')->onDelete('cascade');
         });
     }

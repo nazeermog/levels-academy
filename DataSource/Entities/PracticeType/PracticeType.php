@@ -12,9 +12,9 @@ use DataSource\Entities\BaseModel;
 class PracticeType extends BaseModel
 {
     protected $table = 'practice_types';
-    protected $translatedAttributes = ['title'];
+    protected $translatedAttributes = ['title','about'];
     public $translationForeignKey = 'practice_id';
-    protected $fillable = ['is_active'];
+    protected $fillable = ['is_active','photo'];
 
     public function levels()
     {

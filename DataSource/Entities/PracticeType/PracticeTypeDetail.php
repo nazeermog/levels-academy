@@ -3,6 +3,8 @@
 namespace DataSource\Entities\PracticeType;
 
 use DataSource\Entities\BaseModel;
+use DataSource\Entities\PracticeType\PracticeType;
+use DataSource\Entities\PracticeLevel\PracticeLevel;
 
 /**
  * @property int $id
@@ -25,11 +27,20 @@ class PracticeTypeDetail extends BaseModel
         'card_number',
         'range_number_from',
         'range_number_to',
-        'is_active'
+        'is_active',
+        'level_id',
+        'col_count',
+        'numbers_to_sum',
+        'timer',
+        'turns',
     ];
 
     public function practice()
     {
         return $this->hasOne(PracticeType::class, 'id', 'practice_id');
+    }
+    public function practiceLevel()
+    {
+        return $this->belongsTo(PracticeLevel::class,'level_id');
     }
 }

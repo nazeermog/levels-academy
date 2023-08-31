@@ -10,6 +10,9 @@ class CoursePathTranslation extends Model
     
     protected $fillable = [
         'title',
+        'desc',
+        'about',
+        'benefit',
     ];
 
 

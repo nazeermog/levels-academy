@@ -99,10 +99,10 @@
                                             {{$item->result_student}}
                                         </td>
                                         <td>
-                                            {{$item->resultsType->seconds_speed}} Second
+                                            {{$item->resultsType->seconds_speed ?? null}} Second
                                         </td>
                                         <td>
-                                            {{$item->resultsType->card_number}}
+                                            {{$item->resultsType->card_number ?? null}}
                                         </td>
                                         <td>
                                             [ {{$item->resultsType->range_number_from.' ,'.$item->resultsType->range_number_to}}

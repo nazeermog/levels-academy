@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('course_path_translations', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->longText('desc');
+            $table->longText('about')->nullable();
+            $table->longText('benefit')->nullable();
             $table->string('locale')->index();
             $table->unsignedBigInteger('course_path_id')->index();
             $table->unique(['course_path_id', 'locale']);

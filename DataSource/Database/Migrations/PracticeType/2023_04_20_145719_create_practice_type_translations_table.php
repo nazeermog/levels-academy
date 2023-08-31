@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('practice_id')->index();
             $table->string('title');
+            $table->string('about');
             $table->string('locale');
             $table->unique(['locale', 'practice_id']);
             $table->timestamps();

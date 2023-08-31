@@ -19,9 +19,9 @@ return new class extends Migration {
             $table->unsignedBigInteger('instructor_id')->index();
             $table->boolean('is_active')->default(1);
             $table->unsignedBigInteger('course_path_id')->index()->nullable();
+            $table->integer('ordering')->index()->nullable();
             $table->boolean('is_auto_join');
             $table->string('photo');
-
             $table->timestamps();
         });
     }

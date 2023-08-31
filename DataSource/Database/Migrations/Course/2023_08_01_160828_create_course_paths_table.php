@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('course_paths', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('course_id')->index();
             $table->unsignedBigInteger('taxonomy_id')->index();
-            $table->integer('ordering')->index();
             $table->string('photo');
             $table->timestamps();
         });

@@ -2,12 +2,13 @@
 
 namespace Modules\PracticeType\Http\Controllers;
 
-use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
-use DataSource\Repositories\DB\Practice\Admin\AdminPracticeTypeRepository;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Support\Renderable;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeTypeRepository;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeLevelRepository;
 
 
 class PracticeController extends Controller
@@ -35,7 +36,8 @@ class PracticeController extends Controller
         $route_name = 'practice-details';
         $table_name = 'Practice Type Details';
         $practices = AdminPracticeRepository::list();
-        return view( 'practicetype::instructor.practiceTypeDetails.create', compact('route_name', 'table_name', 'practices'));
+        $practiceLevels=AdminPracticeLevelRepository::list();
+        return view( 'practicetype::instructor.practiceTypeDetails.create', compact('route_name', 'table_name', 'practices','practiceLevels'));
     }
 
 

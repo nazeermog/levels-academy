@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class PracticeTypeTranslation extends Model
 {
-    protected $fillable = ['title'];
+    protected $fillable = ['title','about'];
 }

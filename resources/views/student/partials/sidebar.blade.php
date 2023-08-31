@@ -99,7 +99,7 @@
 {{--                </li>--}}
                 <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button"
-                       href="{{route('student.practice.show',['id'=>\DataSource\Entities\PracticeType\PracticeType::first()->id])}}">
+                       href="{{route('student.practice.index')}}">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
                         <span class="sidebar-menu-text">
                             التمارين

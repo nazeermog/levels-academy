@@ -80,9 +80,8 @@
 
 
                         <p class="hero__lead measure-hero-lead text-white-50 mb-24pt">{{$lesson->desc}}</p>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <h3>{{$lesson->attachment_name}}</h3>
+                            <div class="col-md-6">
+                                <h3>Attachment: {{$lesson->attachment_name}}</h3>
                             </div>
                             <div class="col-md-10">
                                 @php
@@ -92,9 +91,9 @@
                                 @if ($extension === 'pdf')
                                     <a class="hero__lead measure-hero-lead text-white-50 mb-24p" href="{{ asset($lesson->attachment) }}" download="{{ $lesson->attachment }}">Download PDF</a>
                                 @else
-                                    <a class="hero__lead measure-hero-lead text-white-50 mb-24p" style="text-decoration: underline;">{{ $lesson->attachment }}</a>
+                                <p class="hero__lead measure-hero-lead text-white-50 mb-24p" style="word-wrap: break-word;">{{ $lesson->attachment }}</p>
                                 @endif
-                            </div>
+                        
                         </div>
 
 
@@ -134,14 +133,19 @@
                                 Beginner
                             </li>
                             <li class="nav-item ml-sm-auto text-sm-center flex-column navbar-list__item">
-                                <div class="rating rating-24">
-                                    <div class="rating__item"><i class="material-icons">star</i></div>
-                                    <div class="rating__item"><i class="material-icons">star</i></div>
-                                    <div class="rating__item"><i class="material-icons">star</i></div>
-                                    <div class="rating__item"><i class="material-icons">star</i></div>
-                                    <div class="rating__item"><i class="material-icons">star_border</i></div>
-                                </div>
-                                <p class="lh-1 mb-0"><small class="text-muted">20 ratings</small></p>
+                            <div class="rating rating-24">
+                                        <?php
+                                        $stars_count = $courseRate;
+                                        for ($i = 1; $i <= 5; $i++) {
+                                        if ($stars_count >= $i) {
+                                        ?> 
+                                        <div class="rating__item"><i class="material-icons">star</i></div> <?php
+                                        } else {
+                                        ?> <div class="rating__item"><i class="material-icons">star_border</i></div> <?php
+                                        }}
+                                        ?>
+                                    </div>
+                                    <p class="lh-1 mb-0"><small class="text-muted">{{$ratingCount}} ratings</small></p>
                             </li>
                         </ul>
                     </div>

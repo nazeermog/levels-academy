@@ -23,6 +23,7 @@ class ResultPracticeType extends Model
         'card_number',
         'range_number_from',
         'range_number_to',
+        'timer',
     ];
 
     public function result()

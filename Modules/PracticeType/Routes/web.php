@@ -28,8 +28,13 @@ Route::group([
         Route::get('take-quiz/{id}', [StudentPracticeController::class, 'show'])->name('student.practice.take');
 //        Route::get('{id}', [StudentPracticeController::class, 'showPractice'])->name('student.practice.show');
         Route::get('{id}/types/{type?}', [StudentPracticeController::class, 'showPractice'])->name('student.practice.show');
+        Route::get('/', [StudentPracticeController::class, 'index'])->name('student.practice.index');
+        Route::get('/levels/{id}', [StudentPracticeController::class, 'showPracticeLevels'])->name('student.practice.levels');
         Route::post('resultPractice', [StudentPracticeController::class, 'sendResultPractice'])->name('student.practice.store');
-        Route::get('abacusesolver', [StudentPracticeController::class, 'solver'])->name('student.abacus.solver');
+
+        Route::get('results', [StudentPracticeController::class, 'showResultPractice'])->name('student.practice.results');
+
+        // Route::get('abacusesolver', [StudentPracticeController::class, 'solver'])->name('student.abacus.solver');
 
     });
 

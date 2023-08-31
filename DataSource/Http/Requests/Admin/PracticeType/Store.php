@@ -20,11 +20,16 @@ class Store extends FormRequest
             $mergeArray['title-' . $locale] = ['required', 'string'];
         }
         return array_merge([
-            'seconds_speed' => ['required', 'numeric'],
-            'card_number' => ['required', 'numeric'],
-            'range_number_from' => ['required', 'numeric'],
-            'range_number_to' => ['required', 'numeric'],
+            'seconds_speed' => [''],
+            'card_number' => [''],
+            'col_count' => [''],
+            'numbers_to_sum' => [''],
+            'range_number_from' => ['required','numeric'],
+            'range_number_to' => ['required','numeric'],
+            'level_id' => ['required','numeric'],
             'practice_id' => ['required', 'numeric', 'exists:practice_types,id'],
+            'timer' => [''],
+            'turns' => [''],
         ], $mergeArray);
     }
 }

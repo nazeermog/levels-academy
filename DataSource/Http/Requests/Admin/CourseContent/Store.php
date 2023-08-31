@@ -33,6 +33,7 @@ class Store extends FormRequest
         'photo'=>['image','mimes:jpeg,png,jpg,svg','required'],
         'price' => ['required'],
         'instructor_id' => ['numeric','required'],
+        'ordring' => ['numeric'],
 
     ], $mergeArray);
         return[];
