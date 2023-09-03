@@ -2,10 +2,11 @@
 
 namespace DataSource\Entities\Taxonomy;
 
-use Astrotomic\Translatable\Translatable;
 use DataSource\Entities\BaseModel;
+use DataSource\Entities\Course\Course;
 use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\Partner\Partner;
+use Astrotomic\Translatable\Translatable;
 
 
 class Taxonomy extends BaseModel
@@ -27,5 +28,10 @@ class Taxonomy extends BaseModel
     public function partners()
     {
         return $this->belongsToMany(Partner::class, 'partner_taxonomies', 'taxonomy_id', 'partner_id');
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 }

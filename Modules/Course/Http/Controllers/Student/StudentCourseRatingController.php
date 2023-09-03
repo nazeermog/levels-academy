@@ -15,18 +15,18 @@ class StudentCourseRatingController extends Controller
         $data = $request->validate([
             'rate' => 'required|integer|in:1,2,3,4,5',
             'user_review' => 'nullable|string',
+            
         ]);
-
         $rating = new Rating([
             'course_id' => $courseId,
-            'user_id' => 1,
+            'user_id' =>auth()->user()->id,
             'rate' => $data['rate'],
             'user_name' => 'fakeName',
             'user_review' => $data['user_review'] ?? null,
         ]);
         $rating->save();
 
-        return redirect()->back()->with('success', 'Thank you for rating the course!');
+        return redirect()->back()->withSuccess('success', 'Thank you for rating the course!');
     }
 
 }

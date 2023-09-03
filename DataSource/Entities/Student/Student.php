@@ -2,8 +2,10 @@
 
 namespace DataSource\Entities\Student;
 
-use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\User\User;
+use DataSource\Entities\Course\Course;
+use Illuminate\Database\Eloquent\Model;
+use DataSource\Entities\Inrollment\Inrollment;
 
 /**
  * @property integer $user_id
@@ -23,5 +25,13 @@ class Student extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function inrollments()
+    {
+        return $this->hasMany(Inrollment::class,'student_id');
+    }
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_students');
     }
 }

@@ -5,7 +5,7 @@ use Modules\Course\Http\Controllers\Student\StudentCourseController;
 use Modules\Course\Http\Controllers\Student\StudentCourseRatingController;
 
 Route::group([
-    // 'middleware' => ['auth', 'role:student'],
+    'middleware' => ['auth', 'role:student'],
     'prefix' => 'student',
 ], function () {
     Route::prefix('courses')->group(function () {

@@ -2,6 +2,7 @@
 
 namespace DataSource\Repositories\DB\Course\Student;
 
+use DataSource\Entities\Course\Course;
 use Modules\DataResource\Entities\Course\CourseContent;
 use Modules\DataResource\Responses\Course\Student\StudentCourseContentResource;
 
@@ -45,4 +46,12 @@ class StudentCourseContentRepository
             'code' => 200
         ];
     }
+
+    public static function moreCourses($course){
+
+        $instructorCourses = Course::where('instructor_id', $course->instructor_id)->where('id', '!=', $course->id)->get(); 
+        return $instructorCourses;
+      }
+    
+
 }

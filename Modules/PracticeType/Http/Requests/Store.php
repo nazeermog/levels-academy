@@ -15,15 +15,15 @@ class Store extends FormRequest
     {
         return [
             'practice_id' => ['required', 'numeric', 'exists:practice_types,id'],
-            // 'student_id' => ['required', 'numeric', 'exists:students,id'],
+            'student_id' => ['required', 'numeric', 'exists:students,user_id'],
             'is_true' => ['required'],
             'seconds_speed' => [],
             'result_student' => ['required', 'numeric'],
             'result_true' => ['required', 'numeric'],
             'level_title' => ['required'],
             'card_number' => [],
-            'range_number_from' => ['numeric'],
-            'range_number_to' => ['numeric'],
+            'range_number_from' => ['required','numeric'],
+            'range_number_to' => ['required','numeric'],
         ];
     }
 }

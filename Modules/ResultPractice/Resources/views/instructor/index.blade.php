@@ -85,8 +85,7 @@
                                     <td>{{ $item->id}}</td>
                                     <td>{{ $item->created_at->format('Y-m-d h:m')}}</td>
                                     <td>
-                                        {{--                                            {{$item->student->first_name .' '.$item->student->last_name}}--}}
-                                        Student Name
+                                    {{$item->student->first_name .' '.$item->student->last_name}}
                                     </td>
 
                                     <td>

@@ -4,6 +4,7 @@ namespace Modules\Inrollment\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Inrollment\Database\factories\StudentInrollmentFactory;
 
 class StudentInrollment extends Model
 {
@@ -13,6 +14,6 @@ class StudentInrollment extends Model
     
     protected static function newFactory()
     {
-        return \Modules\Inrollment\Database\factories\StudentInrollmentFactory::new();
+        return StudentInrollmentFactory::new();
     }
 }

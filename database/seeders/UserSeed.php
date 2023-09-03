@@ -52,17 +52,5 @@ class UserSeed extends Seeder
                 'city' => 'Cairo',
             ],
         ]);
-        // DB::table('instructors')->insert([
-        //     [
-        //         'user_id' => 3,
-        //         'first_name' => 'first',
-        //         'last_name' => 'teacher',
-        //         'country' => 'Egypt',
-        //         'city' => 'Cairo',
-        //         'spec' => 'Software Engineer and Developer',
-        //         'about' => 'first teacher is a software developer. With more than 20 years of software development experience.',
-
-        //     ],
-        // ]);
     }
 }

@@ -2,6 +2,8 @@
 
 @section('content')
 @if($taxonomies->count()>0)
+@if($instructors->count()>0)
+
     <div class="container py-5">
         <form id="form-course" method="POST" action="{{route('admin.courseContent.store')}}" enctype="multipart/form-data">
         @csrf
@@ -125,6 +127,17 @@
     @else <div class="card border-top border-0 border-4 border-primary table-responsive">
 
 <div class="card-header">
+    <h3 class="card-title float-left">You should have some instructors first.</h3>
+    <a href="{{route('admin.instructors.create')}}"
+       class="btn btn-primary float-right">+ Add New</a>
+   
+     
+    </div>
+
+@endif
+@else <div class="card border-top border-0 border-4 border-primary table-responsive">
+
+<div class="card-header">
     <h3 class="card-title float-left">You should have some categories first.</h3>
     <a href="{{route('admin.taxonomies.create')}}"
        class="btn btn-primary float-right">+ Add New</a>
@@ -133,7 +146,6 @@
     </div>
 
 @endif
-
 @endsection
 
 

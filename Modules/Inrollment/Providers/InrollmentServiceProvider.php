@@ -2,6 +2,7 @@
 
 namespace Modules\Inrollment\Providers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 

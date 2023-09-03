@@ -5,6 +5,7 @@ namespace DataSource\Repositories\DB\ResultPractice\Student;
 use DataSource\Entities\ResultPractice\ResultPractice;
 use DataSource\Entities\ResultPractice\ResultPracticeType;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeRepository;
+use Illuminate\Support\Facades\Auth;
 
 class StudentResultPracticeRepository
 {
@@ -13,7 +14,7 @@ class StudentResultPracticeRepository
 
         $result = new ResultPractice();
         $result->practice_id = $data['practice_id'];
-        $result->student_id = 0;//$data['student_id'];
+        $result->student_id = auth()->user()->id;
         $result->is_true = $data['is_true'] == 'false' ? 0 : 1;
         $result->result_true = $data['result_true'];
         $result->result_student = $data['result_student'];

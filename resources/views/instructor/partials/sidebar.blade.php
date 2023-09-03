@@ -76,7 +76,15 @@
                         </span>
                     </a>
                 </li>
-
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button"
+                       href="{{route('instructor.InrollmentCourses.index')}}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">format_shapes</span>
+                        <span class="sidebar-menu-text font-droid">
+                            إدارة الكورسات
+                        </span>
+                    </a>
+                </li>
             </ul>
 
 

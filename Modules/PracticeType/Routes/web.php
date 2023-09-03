@@ -21,7 +21,7 @@ Route::group(['as' => 'instructor.', 'prefix' => 'instructor'], function () {
 
 });
 Route::group([
-//    'middleware' => ['auth', 'role:student'],
+   'middleware' => ['auth', 'role:student'],
     'prefix' => 'student',
 ], function () {
     Route::prefix('practice')->group(function () {

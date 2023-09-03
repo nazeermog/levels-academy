@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\LearningPath\Http\Controllers\LearningPathController;
 
 Route::group([
-//    'middleware' => ['auth', 'role:student'],
+   'middleware' => ['auth', 'role:student'],
     'prefix' => 'student',
 ], function () {
     Route::prefix('paths')->group(function () {

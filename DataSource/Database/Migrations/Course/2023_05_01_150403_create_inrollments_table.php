@@ -12,10 +12,11 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('student_inrollments', function (Blueprint $table) {
+        Schema::create('inrollments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('course_id');
+            $table->decimal('progress', 5, 2)->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('student_inrollments');
+        Schema::dropIfExists('inrollments');
     }
 };

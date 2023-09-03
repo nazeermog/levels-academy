@@ -3,9 +3,10 @@
 namespace DataSource\Entities\ResultPractice;
 
 use DataSource\Entities\BaseModel;
-use DataSource\Entities\PracticeType\PracticeType;
-use DataSource\Entities\Student\Student;
 use Illuminate\Database\Eloquent\Model;
+use DataSource\Entities\Student\Student;
+use DataSource\Entities\PracticeType\PracticeType;
+use DataSource\Entities\ResultPractice\ResultPracticeType;
 
 /**
  * @property int $id
@@ -30,7 +31,7 @@ class ResultPractice extends Model
 
     public function student()
     {
-        return $this->hasOne(Student::class, 'id', 'student_id');
+        return $this->hasOne(Student::class, 'user_id', 'student_id');
     }
 
     public function practice()
@@ -40,7 +41,7 @@ class ResultPractice extends Model
 
     public function resultsType()
     {
-        return $this->hasOne(ResultPracticeType::class, 'id', 'practice_id');
+        return $this->hasOne(ResultPracticeType::class);
     }
 
 }

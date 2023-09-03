@@ -90,13 +90,14 @@
           </div>
           <small class="text-50">4/5</small>
         </div>
-        
+
       </div>
     </div>
   </div>
   <div class="container page__container">
     <div class="page-section">
       @foreach ($taxonomies as $taxonomy)
+      @if ($taxonomy->courses->count() > 0)
       <div class="page-separator">
         <div class="page-separator__text">{{$taxonomy->title}}</div>
       </div>
@@ -130,20 +131,16 @@
                 <a href="student-take-course.html" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
               </div>
               <div class="d-flex">
-           
 
-              <div class="rating rating-24">
-                <?php
-                $stars_count = $courseRate[$course->id];
-                for ($i = 1; $i <= 5; $i++) {
-                  if ($stars_count >= $i) {
-                ?> 
-                <div class="rating__item"><i class="material-icons">star</i></div> <?php
-                } else {
-                  ?> <div class="rating__item"><i class="material-icons">star_border</i></div> <?php
-                  }}
-                  ?>
-              </div>
+
+                <div class="rating rating-24">
+                  @for ($i = 1; $i <= 5; $i++) @if ($i <=$courseRate[$course->id])
+                    <div class="rating__item"><i class="material-icons">star</i></div>
+                    @else
+                    <div class="rating__item"><i class="material-icons">star_border</i></div>
+                    @endif
+                    @endfor
+                </div>
               </div>
             </div>
             <div class="card-footer">
@@ -157,7 +154,7 @@
                   <p class="flex text-50 lh-1 mb-0"><small>{{$courseLessons[$course->id]}} lessons</small></p>
                 </div>
               </div>
-              
+
             </div>
           </div>
           <div class="popoverContainer d-none">
@@ -167,6 +164,7 @@
         @endif
         @endforeach
       </div>
+      @endif
       @endforeach
 
 

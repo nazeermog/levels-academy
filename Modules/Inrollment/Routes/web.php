@@ -1,16 +1,17 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use Illuminate\Support\Facades\Route;
+use Modules\Inrollment\Http\Controllers\InrollmentController;
 
-Route::prefix('inrollment')->group(function() {
-    Route::get('/', 'InrollmentController@index');
-});
+
+Route::group([
+        'middleware' => ['auth', 'role:student'],
+        'prefix' => 'student',
+    ], function () {
+        Route::prefix('inrollment')->group(function () {
+            Route::get('', [InrollmentController::class, 'index'])->name('student.inrollment.index');
+            Route::post('{courseId}', [InrollmentController::class, 'store'])->name('student.inrollment.store');
+            Route::post('watch/lesson/{lessonId}/course/{courseId}', [InrollmentController::class, 'watched'])->name('student.lesson.watched');
+
+        });
+    });

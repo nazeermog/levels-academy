@@ -268,6 +268,7 @@
     @endphp
 
 <script>
+let arrResult = [];
 const data = {{$jsonData}}
 // const result = [
 //   [0, 1, 1, 1, 0],
@@ -336,7 +337,6 @@ function createRod(col) {
     rods.insertAdjacentHTML("afterbegin", html);
   }
 }
-const arrResult = [];
 
 function startGame(rodNumber) {
   abacus.classList.remove("d-none");
@@ -397,7 +397,6 @@ function startGame(rodNumber) {
   const submit = document.querySelector("#submit");
 
   submit.addEventListener("click", function () {
-    let arrResult = [];
     for (let i = 0; i < rods.length; i++) {
       const bead = rods[i].querySelectorAll(".bead");
       let subArr = [];
@@ -422,11 +421,10 @@ function startGame(rodNumber) {
       nextStep.classList.remove("d-none");
       prevStep.classList.remove("d-none");
     }
-    
 
     console.log(arrResult);
     console.log(result);
-
+    
     if (compareResult(arrResult, result)) {
       console.log("true");
     } else {
@@ -434,6 +432,25 @@ function startGame(rodNumber) {
     }
   });
 }
+function getRowResult(row) {
+  let sum = 0;
+  if (row[0] === 1) sum += 1;
+  if (row[1] === 1) sum += 1;
+  if (row[2] === 1) sum += 1;
+  if (row[3] === 1) sum += 1;
+  if (row[4] === 1) sum += 5;
+  return sum;
+}
+
+function getAbacusValue(arr) {
+  let value = "";
+  for (let row = 0; row < arr.length; row++) {
+    const v = getRowResult(arr[row]);
+    value = v + value;
+  }
+  return value;
+}
+
 
 
 function dataStart(dataBead) {
@@ -568,7 +585,14 @@ prevStep.addEventListener("click", function () {
     console.log("rere");
   }
 });
+
 document.querySelector("#submit").addEventListener('click', function prossesResult() {
+
+  const StudetntConvert = getAbacusValue(arrResult);
+console.log(StudetntConvert);
+
+const resultConvert = getAbacusValue(result);
+console.log(resultConvert);
                     $.ajax({
                         method: "POST",
                         url: "{{ route('student.practice.store')}}",
@@ -576,14 +600,14 @@ document.querySelector("#submit").addEventListener('click', function prossesResu
                             practice_id: {{$practice->practice_id}},
                             practice_type_id: {{$practice->id}},
                             level_title: '{{$practice->practiceLevel->title}}',
-                            result_student: 1,///need function
-                            result_true: 1,///need function
-                            student_id: 0,
-                            is_true: 1,///need function
-                            seconds_speed: null,
-                            card_number: null,
-                            range_number_from: {{$practice ->range_number_from }},
-                            range_number_to: {{$practice->range_number_to}}
+                            result_student: StudetntConvert,
+                            result_true: resultConvert,
+                            student_id: {{auth()->user()->id}},
+                            is_true: resultConvert === StudetntConvert,
+                            seconds_speed: {{$practice->range_number_from }},
+                            card_number: {{$practice->range_number_from }},
+                            range_number_from: {{$practice->range_number_from }},
+                            range_number_to: {{$practice->range_number_to}},
                         },
                         success: function (one, two, three) {
                             toastr.success('updated successfully')

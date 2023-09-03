@@ -2,9 +2,10 @@
 
 namespace Modules\Instructor\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Contracts\Support\Renderable;
+use DataSource\Repositories\DB\StudentInrollmentRepository;
 
 class InstructorController extends Controller
 {
@@ -75,5 +76,12 @@ class InstructorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showInrollmentCourses(){
+        $list  = (new StudentInrollmentRepository())->index();
+        $route_name = 'inrollments';
+        $table_name = 'inrollment Courses';
+        return view('instructor::InrollmentCourses', compact('list', 'route_name', 'table_name'));
     }
 }

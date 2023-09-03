@@ -9,8 +9,10 @@ use DataSource\Entities\Course\CourseContent;
 use DataSource\Repositories\DB\Course\Admin\AdminCourseRepository;
 use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
 use DataSource\Repositories\DB\Taxonomy\Admin\AdminTaxonomyRepository;
+use DataSource\Repositories\DB\Course\Student\StudentCoursesRepository;
 use DataSource\Repositories\DB\Instructor\Admin\AdminInstructorRepository;
 use DataSource\Repositories\DB\Course\Student\StudentCourseRatingRepository;
+use DataSource\Repositories\DB\Course\Student\StudentCourseContentRepository;
 
 class StudentCourseController extends Controller
 {
@@ -58,7 +60,9 @@ class StudentCourseController extends Controller
     $rating3=StudentCourseRatingRepository::CountEachStar3($course);
     $rating2=StudentCourseRatingRepository::CountEachStar2($course);
     $rating1=StudentCourseRatingRepository::CountEachStar1($course);
-
+    $instructorCourses=StudentCourseContentRepository::moreCourses($course);
+    $instructorCoursesRate=StudentCourseRatingRepository::CalculateAverageRatingForAllCourses($instructorCourses);
+    $ratingOnce=StudentCourseRatingRepository::ratingOnce($course);
     return view('course::student.show', [
       'course' => $course,
       'contents' => $contents,
@@ -74,6 +78,9 @@ class StudentCourseController extends Controller
       'rating3'=>$rating3,
       'rating2'=>$rating2,
       'rating1'=>$rating1,
+      'instructorCourses'=>$instructorCourses,
+      'instructorCoursesRate'=>$instructorCoursesRate,
+      'ratingOnce'=>$ratingOnce,
     ]);
   }
 

@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="#" class="brand-link">
-        <img src="{{asset('images/logoFooter.png')}}" alt="{{ config('app.name', 'Project Name') }} Logo"
+        <img src="{{asset('images/logo/Levels-logo.png')}}" alt="{{ config('app.name', 'Project Name') }} Logo"
              class="brand-image  "
              height="100"
              width="100"

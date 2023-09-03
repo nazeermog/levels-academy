@@ -18,4 +18,5 @@ Route::group([
     'middleware' => ['auth','role:instructor']
 ], function () {
     Route::get('/instructor/dashboard', [InstructorController::class,'index'])->name('instructor.dashboard');
+    Route::get('/instructor/courses', [InstructorController::class,'showInrollmentCourses'])->name('instructor.InrollmentCourses.index');
 });

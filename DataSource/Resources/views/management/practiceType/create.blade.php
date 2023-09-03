@@ -1,6 +1,8 @@
 @extends('datasource::management.layout.master')
 
 @section('content')
+@if($practiceLevels->count()>0)
+
 <div class="container py-5">
   <div class="row">
     <label>Add Practice Level</label>
@@ -93,4 +95,15 @@
     </div>
   </form>
 </div>
+@else <div class="card border-top border-0 border-4 border-primary table-responsive">
+
+<div class="card-header">
+    <h3 class="card-title float-left">You should have some levels first.</h3>
+    <a href="{{route('admin.Practiceslevels.create')}}"
+       class="btn btn-primary float-right">+ Add New</a>
+   
+     
+    </div>
+
+@endif
 @endsection

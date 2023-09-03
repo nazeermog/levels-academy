@@ -4,6 +4,7 @@ namespace DataSource\Entities\ResultPractice;
 
 use DataSource\Entities\BaseModel;
 use Illuminate\Database\Eloquent\Model;
+use DataSource\Entities\ResultPractice\ResultPractice;
 
 
 /**
