@@ -82,11 +82,11 @@
         <div class="d-flex align-items-center py-4pt" style="white-space: nowrap;">
           <small class="text-50 mr-8pt">Your rating</small>
           <div class="rating mr-8pt">
-            <span class="rating__item"><span class="material-icons text-primary">star</span></span>
-            <span class="rating__item"><span class="material-icons text-primary">star</span></span>
-            <span class="rating__item"><span class="material-icons text-primary">star</span></span>
-            <span class="rating__item"><span class="material-icons text-primary">star</span></span>
-            <span class="rating__item"><span class="material-icons text-primary">star_border</span></span>
+            <span class="rating__item"><span class="material-icons text-orange">star</span></span>
+            <span class="rating__item"><span class="material-icons text-orange">star</span></span>
+            <span class="rating__item"><span class="material-icons text-orange">star</span></span>
+            <span class="rating__item"><span class="material-icons text-orange">star</span></span>
+            <span class="rating__item"><span class="material-icons text-orange">star_border</span></span>
           </div>
           <small class="text-50">4/5</small>
         </div>
