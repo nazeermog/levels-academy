@@ -11,7 +11,7 @@
         
               <a class="card border-0 mb-0 m-2 " href="{{ route('student.practice.levels', ['id' => $practice->id]) }}">
                 <img src="{{asset('/images/achievements/flinto.png')}}" alt="Flinto" class="card-img" style="max-height: 100%; width: initial;">
-                <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                <div class="fullbleed bg-secondary" style="opacity: .5;"></div>
                 <span class="card-body d-flex flex-column align-items-center justify-content-center fullbleed">
                   <span class="row flex-nowrap">
                     <span class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
