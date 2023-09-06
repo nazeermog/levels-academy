@@ -18,6 +18,7 @@ class AdminCourseContentRepository
 
     public function store(Request $request,$data)
     {
+        dd($data);
         //$stepsArray = (($data->get('data')));
         // $courseData = json_decode($data['boxArr'], true);
         $course = $this->getModel();

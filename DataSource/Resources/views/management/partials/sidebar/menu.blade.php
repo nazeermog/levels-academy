@@ -279,6 +279,39 @@
 
 
                 </li>
+
+                
+                <li class="nav-item {{Route::is('admin.semesters.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.semesters.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                        Semesters
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.semesters.index')}}"
+                               class="nav-link  {{ Route::is('admin.semesters.index')?'active':''}}">
+
+                                <p class="ml-3">- Semesters </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.semesters.create')}}"
+                               class="nav-link  {{ Route::is('admin.semesters.create')?'active':''}}">
+
+                                <p class="ml-3">- Create semester </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
               
 
                 {{--                <li class="nav-item {{$url == route('admin.customers.index')?'menu-open':''}} ">--}}

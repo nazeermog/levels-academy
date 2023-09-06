@@ -4,6 +4,7 @@ namespace DataSource\Entities\Student;
 
 use DataSource\Entities\User\User;
 use DataSource\Entities\Course\Course;
+use DataSource\Entities\Course\Rating;
 use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\Inrollment\Inrollment;
 
@@ -33,5 +34,9 @@ class Student extends Model
     public function courses()
     {
         return $this->belongsToMany(Course::class, 'course_students');
+    }
+    public function rateing()
+    {
+        return $this->hasMany(Rating::class);
     }
 }

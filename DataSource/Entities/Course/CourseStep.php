@@ -6,6 +6,7 @@ use DataSource\Entities\Lesson\Lesson;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use DataSource\Entities\Course\CourseContent;
+use DataSource\Entities\PracticeType\PracticeType;
 
 class CourseStep extends Model
 {
@@ -33,8 +34,13 @@ class CourseStep extends Model
     }
     public function lesson()
     {
-        return $this->belongsTo(Lesson::class, 'stepable_id');
+        return $this->belongsTo(Lesson::class,'stepable_id','id');
     }
+    public function practiceType()
+    {
+        return $this->belongsTo(PracticeType::class,'stepable_id');
+    }
+
 
    
 

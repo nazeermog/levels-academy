@@ -10,4 +10,10 @@ class AdminPracticeTypeRepository
     use AdminCRUDGenericRepository;
 
     protected $model = PracticeTypeDetail::class;
+
+    public static function list()
+    {
+        return PracticeTypeDetail::all();
+    }
+
 }

@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->integer('numbers_to_sum')->nullable();
             $table->integer('timer')->nullable();
             $table->integer('turns')->nullable();
+            $table->decimal('coins_taken',6,1);
             $table->unsignedBigInteger('practice_id');
             $table->timestamps();
         });

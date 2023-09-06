@@ -17,11 +17,12 @@ class StudentCourseRatingController extends Controller
             'user_review' => 'nullable|string',
             
         ]);
+        $student = Auth::user();
         $rating = new Rating([
             'course_id' => $courseId,
             'user_id' =>auth()->user()->id,
             'rate' => $data['rate'],
-            'user_name' => 'fakeName',
+            'user_name' =>$student->first_name.' '.$student->last_name,
             'user_review' => $data['user_review'] ?? null,
         ]);
         $rating->save();

@@ -71,7 +71,10 @@
             <th>Date</th>
             <th>Student</th>
             <th>Course</th>
-            <th>Progress</th>
+            <th>Lessons Progress</th>
+            <th>Practices Progress</th>
+            <th>Quizes Progress</th>
+
           </tr>
         </thead>
         <tbody>
@@ -88,12 +91,15 @@
               {{$item->course->title}}
             </td>
             <td>
-              {{$item->progress}}%
+              {{$item->progress_lesson}}%
             </td>
             <td>
-              {{$item->result_student}}
+              {{$item->progress_practice}}%
             </td>
-
+            <td>
+              {{$item->progress_quiz}}%
+            </td>
+         
 
           </tr>
           @endforeach
@@ -102,12 +108,12 @@
       <div class="mt-3 mb-3 mx-3">
         {{$list->links('datasource::management.partials.pagination',['paginator'=>$list])}}
       </div>
-      @else
+    </div>
+    @else
       <h2>
         There is no {{$table_name}} Yet
       </h2>
       @endif
-    </div>
 
   </div>
 </div>

@@ -26,10 +26,11 @@ class Store extends FormRequest
             'numbers_to_sum' => [''],
             'range_number_from' => ['required','numeric'],
             'range_number_to' => ['required','numeric'],
+            'coins_taken'=> ['required','numeric'],
             'level_id' => ['required','numeric'],
             'practice_id' => ['required', 'numeric', 'exists:practice_types,id'],
-            'timer' => [''],
             'turns' => [''],
+            'timer' => [''],
         ], $mergeArray);
     }
 }

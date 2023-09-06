@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use DataSource\Repositories\DB\StudentInrollmentRepository;
+use DataSource\Repositories\DB\StudentScore\Instructor\AdminStudentScoreRepository;
 
 class InstructorController extends Controller
 {
@@ -83,5 +84,13 @@ class InstructorController extends Controller
         $route_name = 'inrollments';
         $table_name = 'inrollment Courses';
         return view('instructor::InrollmentCourses', compact('list', 'route_name', 'table_name'));
+    }
+    
+    public function showStudentScoreBoard(){
+        $list  = (new AdminStudentScoreRepository())->index();
+        $totalCoins=AdminStudentScoreRepository::TotalCoins();
+        $route_name = 'studentScore';
+        $table_name = 'Student Score';
+        return view('instructor::StudentScore', compact('list', 'route_name', 'table_name','totalCoins'));
     }
 }

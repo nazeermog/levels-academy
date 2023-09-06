@@ -125,12 +125,13 @@
                         <div class="mt-3 mb-3 mx-3">
                             {{$list->links('datasource::management.partials.pagination',['paginator'=>$list])}}
                         </div>
-                        @else
-                            <h2>
-                                There is no {{$table_name}} Yet
-                            </h2>
-                        @endif
+                    
                     </div>
+                    @else
+                        <h2>
+                            There is no {{$table_name}} Yet
+                        </h2>
+                    @endif
             </div>
         </div>
     </div>

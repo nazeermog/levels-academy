@@ -19,4 +19,5 @@ Route::group([
 ], function () {
     Route::get('/instructor/dashboard', [InstructorController::class,'index'])->name('instructor.dashboard');
     Route::get('/instructor/courses', [InstructorController::class,'showInrollmentCourses'])->name('instructor.InrollmentCourses.index');
+    Route::get('/instructor/studentscore', [InstructorController::class,'showStudentScoreBoard'])->name('instructor.studentscore.index');
 });

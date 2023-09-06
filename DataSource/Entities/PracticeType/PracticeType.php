@@ -3,6 +3,8 @@
 namespace DataSource\Entities\PracticeType;
 
 use DataSource\Entities\BaseModel;
+use DataSource\Entities\Course\CourseStep;
+use DataSource\Entities\PracticeType\PracticeTypeDetail;
 
 /**
  * @property int $id
@@ -19,6 +21,10 @@ class PracticeType extends BaseModel
     public function levels()
     {
         return $this->hasMany(PracticeTypeDetail::class, 'practice_id');
+    }
+    public function courseStep()
+    {
+        return $this->hasOne(CourseStep::class,'stepable_id');
     }
 }
 

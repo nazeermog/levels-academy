@@ -16,6 +16,7 @@ use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
 use DataSource\Repositories\DB\Taxonomy\Admin\AdminTaxonomyRepository;
 use DataSource\Repositories\DB\Course\Admin\AdminCourseContentRepository;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeTypeRepository;
 
 
 class AdminCourseContentController extends BaseController
@@ -34,7 +35,7 @@ class AdminCourseContentController extends BaseController
     public function create()
     {
         $lessons = AdminLessonRepository::list();
-        $practices = AdminPracticeRepository::list();
+        $practices = AdminPracticeTypeRepository::list();
         $taxonomies = AdminTaxonomyRepository::list();
         $instructors = Instructor::all();
 
@@ -46,7 +47,7 @@ class AdminCourseContentController extends BaseController
     public function show($courseId)
     {
         $lessons = AdminLessonRepository::list();
-        $practices = AdminPracticeRepository::list();
+        $practices = AdminPracticeTypeRepository::list();
         $taxonomies = AdminTaxonomyRepository::list();
         $instructors = Instructor::all();
         $item=$this->getRepository()->find($courseId);

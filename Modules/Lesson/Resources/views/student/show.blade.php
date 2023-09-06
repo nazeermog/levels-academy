@@ -1,5 +1,16 @@
 @extends("student.layouts.dashboard")
 @section('content')
+@if(session('success'))
+          <div class="alert alert-success">
+              {{ session('success') }}
+          </div>
+      @endif
+
+      @if(session('error'))
+          <div class="alert alert-danger">
+              {{ session('error') }}
+          </div>
+      @endif
 <div class="navbar navbar-light border-0 navbar-expand">
   <div class="container page__container">
     <div class="media flex-nowrap">

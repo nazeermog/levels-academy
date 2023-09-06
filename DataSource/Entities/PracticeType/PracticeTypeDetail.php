@@ -33,6 +33,7 @@ class PracticeTypeDetail extends BaseModel
         'numbers_to_sum',
         'timer',
         'turns',
+        'coins_taken',
     ];
 
     public function practice()

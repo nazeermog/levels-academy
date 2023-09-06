@@ -60,8 +60,10 @@ class InrollmentController extends Controller
   public function store(Request $request, $courseId)
   {
     $studentId = auth()->user()->id;
+    $semesterId= $request->semester_id;
     $inrollment = Inrollment::where('student_id', $studentId)
       ->where('course_id', $courseId)
+      ->where('semester_id', $semesterId)
       ->first();
 
     if ($inrollment) {
@@ -69,15 +71,13 @@ class InrollmentController extends Controller
     }
     $inrollmentNew = new Inrollment();
     $inrollmentNew->student_id = $studentId;
+    $inrollmentNew->semester_id = $request->semester_id;
     $inrollmentNew->course_id = $courseId;
     // $inrollmentNew->approved_at = now();
 
     $inrollmentNew->save();
 
-
-
-
-    return redirect()->back()->withSuccess('Enrollment successful');
+    return redirect()->back()->withSuccess('inrollment successful');
   }
 
   /**
@@ -122,52 +122,7 @@ class InrollmentController extends Controller
   }
 
 
-  public function watched($lessonId, $courseId)
-  {
-    $studentId = auth()->user()->id;
-    $existingRecord = CourseStudent::where('student_id', $studentId)
-      ->where('lesson_id', $lessonId)
-      ->where('course_id', $courseId)
-      ->first();
 
-    if (!$existingRecord) {
-      CourseStudent::create([
-        'student_id' => $studentId,
-        'lesson_id' => $lessonId,
-        'course_id' => $courseId,
-      ]);
-    }
-    $totalWatchedTime = CourseStudent::where('student_id', $studentId)
-      ->where('course_id', $courseId)
-      ->join('lessons', 'course_students.lesson_id', '=', 'lessons.id')
-      ->sum('lessons.time');
 
-    $course = Course::find($courseId);
 
-    $totalLessonTimeOld = AdminLessonRepository::SingleCoursTotalLesson($course);
-
-    $progressPercentage = ($totalWatchedTime / $totalLessonTimeOld) * 100;
-
-    $enrollment = Inrollment::where('student_id', $studentId)
-      ->where('course_id', $courseId)
-      ->first();
-
-    if ($enrollment) {
-      $enrollment->progress = number_format($progressPercentage, 1);
-      $enrollment->update();
-    }
-
-    return redirect()->back()->withSuccess('Lesson marked as watched');
-  }
-  public static function  isWatched($courseId,$lessonId)
-  {
-    $studentId = auth()->user()->id;
-
-    // Check if the lesson is watched by the student for the course.
-    $watched = CourseStudent::where('student_id', $studentId)
-      ->where('lesson_id', $lessonId)
-      ->where('course_id', $courseId)
-      ->first();
-    return $watched;
-  }
 }

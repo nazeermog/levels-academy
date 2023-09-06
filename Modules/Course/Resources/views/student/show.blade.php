@@ -1,6 +1,54 @@
 @extends("student.layouts.dashboard")
 @section('content')
 
+<style>
+  .dropbtn {
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    background-color: #aad8ce;
+    color: black;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .dropdown-content button:hover {
+    background-color: #f1f1f1;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown:hover .dropbtn {
+    background-color: #aad8ce;
+  }
+</style>
 <div class="mdk-drawer-layout__content page-content">
 
   <div class="mdk-box bg-primary mdk-box--bg-gradient-primary2 js-mdk-box mb-0" data-effects="blend-background">
@@ -10,21 +58,28 @@
           <h1 class="text-white">{{$course->title}}</h1>
           <p class="lead text-white-50 measure-hero-lead mb-24pt">{{$course->desc}}</p>
           <form method="POST" action="{{ route('student.inrollment.store', ['courseId' => $course->id]) }}">
-              @csrf
-              <button type="submit" class="btn btn-white">Enroll in Course</button>
+            @csrf
+            <div class="dropdown">
+              <button type="button" class="dropbtn btn btn-white">Enroll in Course</button>
+              <div class="dropdown-content">
+                @foreach ($semesters as $semester)
+                <button type="submit" value="{{ $semester->id }}" name="semester_id">Semester: {{ $semester->title }}</button>
+                @endforeach
+              </div>
+            </div>
           </form>
         </div>
       </div>
       @if(session('success'))
-          <div class="alert alert-success">
-              {{ session('success') }}
-          </div>
+      <div class="alert alert-success">
+        {{ session('success') }}
+      </div>
       @endif
 
       @if(session('error'))
-          <div class="alert alert-danger">
-              {{ session('error') }}
-          </div>
+      <div class="alert alert-danger">
+        {{ session('error') }}
+      </div>
       @endif
       <div class="navbar navbar-expand-sm navbar-light bg-white border-bottom-2 navbar-list p-0 m-0 align-items-center">
         <div class="container page__container">
@@ -94,7 +149,7 @@
                     <a class="flex" href="{{route('student.lesson.show', ['lessonId' => $step->stepable_id,'courseId'=> $course->id] ) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
                     @elseif ($step->stepable_type === 'Practices')
                     <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
-                    <a class="flex" href="{{route('student.practice.levels', ['id' => $step->stepable_id] ) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
+                    <a class="flex" href="{{ route('student.practice.forcourse', ['id' => $step->stepable_id, 'type' => $step->practiceType->blade_name, 'course' => $course->id]) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
                     @elseif ($step->stepable_type === 'Quizzes')
                     <span class="material-icons icon-16pt icon--left text-50">question_answer</span>
                     @endif
@@ -213,7 +268,7 @@
 </div>
 
 @if ($ratingOnce)
-  
+
 <div class="page-section border-bottom-2">
   <div class="container">
     <div class="page-headline text-center">
@@ -357,7 +412,7 @@
   <div class="pb-16pt mb-16pt border-bottom row">
     <div class="col-md-3 mb-16pt mb-md-0">
       <div class="d-flex">
-        <a href="student-profile.html" class="avatar avatar-sm mr-12pt">
+        <a href="#student-profile" class="avatar avatar-sm mr-12pt">
           <!-- <img src="LB" alt="avatar" class="avatar-img rounded-circle"> -->
           <span class="avatar-title rounded-circle">user</span>
         </a>
@@ -839,60 +894,60 @@
 <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
 <script>
-    $('.ui.rating')
-        .rating({
-            maxRating: 5,
-        });
+  $('.ui.rating')
+      .rating({
+          maxRating: 5,
+      });
 
-    var rate = ['hate it', 'bad', 'just ok', 'like it', 'love it'];
-    var selectedRating = 0; // Initialize with default value
+  var rate = ['hate it', 'bad', 'just ok', 'like it', 'love it'];
+  var selectedRating = 0; // Initialize with default value
 
-    $(document).ready(function () {
-        $.each($('#rating > i.icon'), function (index, item) {
-            $(item).attr('data-ratetext', rate[index]);
-        });
+  $(document).ready(function () {
+      $.each($('#rating > i.icon'), function (index, item) {
+          $(item).attr('data-ratetext', rate[index]);
+      });
 
-        // $(document).on('mouseenter', '#rating > i.icon', function () {
-        //     $(this)
-        //         .popup({
-        //             title: $(this).attr('data-ratetext'),
-        //             on: 'hover'
-        //         })
-        //         .popup('show');
-        // });
+      // $(document).on('mouseenter', '#rating > i.icon', function () {
+      //     $(this)
+      //         .popup({
+      //             title: $(this).attr('data-ratetext'),
+      //             on: 'hover'
+      //         })
+      //         .popup('show');
+      // });
 
-        $('#rating > i.icon').on('click', function () {
-            selectedRating = $(this).data('value');
-            console.log(selectedRating);
-        });
+      $('#rating > i.icon').on('click', function () {
+          selectedRating = $(this).data('value');
+          console.log(selectedRating);
+      });
 
-        $('#commentForm').on('submit', function (e) {
-            e.preventDefault();
-            
-            const comment = $('#commentInput').val();
-            console.log(comment);
-            console.log(selectedRating);
+      $('#commentForm').on('submit', function (e) {
+          e.preventDefault();
+          
+          const comment = $('#commentInput').val();
+          console.log(comment);
+          console.log(selectedRating);
 
-            $.ajax({
-                type: 'POST',
-                url: '/student/courses/rateCourse/' + {{$course->id}},
-                data: {
-                    rate: selectedRating,
-                    user_review: comment,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (response) {
-                    console.log("success");
-                    $('#ratingSection').hide();
-                    $('#commentForm').hide();
-                    $('#thankYouSection').show();
-                },
-                error: function (error) {
-                    console.error(error);
-                }
-            });
-        });
-    });
+          $.ajax({
+              type: 'POST',
+              url: '/student/courses/rateCourse/' + {{$course->id}},
+              data: {
+                  rate: selectedRating,
+                  user_review: comment,
+                  _token: '{{ csrf_token() }}'
+              },
+              success: function (response) {
+                  console.log("success");
+                  $('#ratingSection').hide();
+                  $('#commentForm').hide();
+                  $('#thankYouSection').show();
+              },
+              error: function (error) {
+                  console.error(error);
+              }
+          });
+      });
+  });
 </script>
 </div>
 @endsection

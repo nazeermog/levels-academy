@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,12 +13,13 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('inrollments', function (Blueprint $table) {
+        Schema::create('student_scores', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('course_id');
-            $table->decimal('progress', 5, 2)->nullable();
-            $table->timestamp('approved_at')->nullable();
+            $table->unsignedBigInteger('semester_id');
+            $table->unsignedBigInteger('practice_id');
+            $table->decimal('coin', 6, 1);
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('inrollments');
+        Schema::dropIfExists('student_scores');
     }
 };

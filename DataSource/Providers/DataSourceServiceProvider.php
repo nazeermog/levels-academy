@@ -27,7 +27,10 @@ class DataSourceServiceProvider extends ServiceProvider
         'Taxonomy',
         'User',
         'StudentActivity',
-        'ResultPractice'
+        'ResultPractice',
+        'Semester',
+        'Inrollment',
+        'StudentScore',
     ];
 
     /**

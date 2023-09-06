@@ -2,8 +2,8 @@
 
 namespace DataSource\Entities\Course;
 
-use DataSource\Entities\User\User;
 use DataSource\Entities\Course\Course;
+use DataSource\Entities\Student\Student;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -21,9 +21,9 @@ class Rating extends Model
 
         return $this->hasMany(Course::class);
     }
-    public function user()
+    public function student()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Student::class,'user_id');
     }
 
 }

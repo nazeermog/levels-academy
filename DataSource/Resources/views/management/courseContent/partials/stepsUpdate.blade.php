@@ -81,7 +81,6 @@
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
                         <div class="accordion-body">
                             <ul class="list-unstyled connected-sortable droppable-area1 mb-0">
-                                <!-- id="list2" -->
                                 @foreach ($practices as $practice)
                                     <li class="draggable-item cursor-pointer" data-id="{{ $practice->id }}"
                                         id="{{ $practice->id }}" data-type="Practices"

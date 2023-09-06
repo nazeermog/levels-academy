@@ -1,0 +1,1 @@
+@include("practicetype::student.numbers_sum")

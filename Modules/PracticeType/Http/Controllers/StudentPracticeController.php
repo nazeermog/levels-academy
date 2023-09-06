@@ -2,13 +2,20 @@
 
 namespace Modules\PracticeType\Http\Controllers;
 
-use DataSource\Entities\PracticeType\PracticeTypeDetail;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use DataSource\Entities\Course\Course;
+use DataSource\Entities\Student\Student;
 use DataSource\Entities\Question\Question;
 use Illuminate\Contracts\Support\Renderable;
 use Modules\PracticeType\Http\Requests\Store;
+use DataSource\Entities\Inrollment\Inrollment;
+use DataSource\Entities\PracticeType\PracticeType;
+use DataSource\Entities\StudentScore\StudentScore;
+use DataSource\Entities\ResultPractice\ResultPractice;
+use DataSource\Entities\PracticeType\PracticeTypeDetail;
+use DataSource\Repositories\DB\Course\Student\StudentCoursesRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeTypeRepository;
 use DataSource\Repositories\DB\ResultPractice\Student\StudentResultPracticeRepository;
@@ -22,9 +29,66 @@ class StudentPracticeController extends Controller
    */
   public function index()
   {
-    $practices=StudentPracticeRepository::list();
-  
+    $practices = StudentPracticeRepository::list();
+
     return view('practicetype::student.index', compact('practices'));
+  }
+  public function practiceForCourse($id, $type, $courseId)
+  {
+    $timer = 0;
+    $seconds_speed = 0;
+    $card_number = 0;
+    $colCount = 0;
+    $results = 0;
+    $practice = StudentPracticeTypeRepository::find($id);
+    $course = Course::find($courseId);
+    if ($type == 'numbers_sum') {
+      $card_number = $practice->card_number;
+      $seconds_speed = $practice->seconds_speed;
+      $min = $practice->range_number_from;
+      $max =  $practice->range_number_to;
+      $randomNumbers = [
+        rand($min, $max),
+        rand($min, $max),
+        rand($min, $max),
+      ];
+    } elseif ($type == 'abacus') {
+      $count = $practice->numbers_to_sum;
+      $min = $practice->range_number_from;
+      $max =  $practice->range_number_to;
+      $randomNumbers = [];
+      $sum = 0;
+      $tables = [];
+      $results = [];
+      $colCount = $practice->col_count;
+      for ($i = 0; $i < $count; $i++) {
+        $rand = rand($min, $max);
+        $randomNumbers[] = $rand;
+        $sum += $rand;
+        $result = solveAbacus($sum, $colCount);
+        $results[] = $result;
+      }
+    } elseif ($type == 'math_games' || $type == 'math_games2') {
+      $min = $practice->range_number_from;
+      $max =  $practice->range_number_to;
+      $seconds_speed = $practice->seconds_speed;
+      $timer = $practice->timer;
+      $count = $practice->numbers_to_sum;
+      $turns = $practice->turns;
+      $randomNumbers = [];
+      for ($i = 0; $i < $turns; $i++) {
+        $innerArray = [];
+
+        for ($j = 0; $j < $count; $j++) {
+          $innerArray[] = rand($min, $max);
+        }
+        $randomNumbers[] = $innerArray;
+      }
+    }
+    return view(
+      'practicetype::student.forcourse.' . $type . 'ForCourse',
+      compact('practice', 'randomNumbers', 'results', 'colCount', 'timer', 'seconds_speed', 'card_number', 'course')
+    );
   }
 
   /**
@@ -57,70 +121,71 @@ class StudentPracticeController extends Controller
     return view('practicetype::student.take_quiz', compact('questions'));
   }
 
-  public function showResultPractice(){
+  public function showResultPractice()
+  {
 
     return view('practicetype::student.practice_result');
   }
 
-  public function showPractice($id,$type)
+  public function showPractice($id, $type)
   {
-    $timer=0;
-    $seconds_speed=1300;
+    $timer = 0;
+    $seconds_speed = 0;
+    $card_number = 0;
+    $colCount = 0;
+    $results = 0;
     $practice = StudentPracticeTypeRepository::find($id);
-    if($type=='numbers_sum'){
-    $min = 50;     // Minimum value
-    $max = 100;   // Maximum valuey
-    $results=0;  // --- edit later
-    $randomNumbers = [
-      rand($min, $max),
-      rand($min, $max),
-      rand($min, $max),
-    ];
-  }
-  elseif($type=='abacus'){
-    $count = $practice->numbers_to_sum;
-    $min = $practice->range_number_from;
-    $max =  $practice->range_number_to;
-    $randomNumbers = [];
-    $sum=0;
-    $tables=[];
-    $results = [];
-    $colCount=$practice->col_count;
-    for ($i = 0; $i < $count; $i++) {
-      $rand=rand($min, $max);
-      $randomNumbers[] = $rand;
-      $sum+=$rand;
-      $result = solveAbacus($sum,$colCount);
-      $results[] = $result;
-    }
-  }
-  elseif($type=='math_games'||$type=='math_games2'){
-    $min = $practice->range_number_from;
-    $max =  $practice->range_number_to;
-    $seconds_speed= $practice->seconds_speed;
-    $timer=$practice->timer;
-    $count = $practice->numbers_to_sum;
-    $turns = $practice->turns;
-    $randomNumbers = [];
-    for ($i = 0; $i < $turns; $i++) {
+    if ($type == 'numbers_sum') {
+      $card_number = $practice->card_number;
+      $seconds_speed = $practice->seconds_speed;
+      $min = $practice->range_number_from;
+      $max =  $practice->range_number_to;
+      $randomNumbers = [
+        rand($min, $max),
+        rand($min, $max),
+        rand($min, $max),
+      ];
+    } elseif ($type == 'abacus') {
+      $count = $practice->numbers_to_sum;
+      $min = $practice->range_number_from;
+      $max =  $practice->range_number_to;
+      $randomNumbers = [];
+      $sum = 0;
+      $tables = [];
+      $results = [];
+      $colCount = $practice->col_count;
+      for ($i = 0; $i < $count; $i++) {
+        $rand = rand($min, $max);
+        $randomNumbers[] = $rand;
+        $sum += $rand;
+        $result = solveAbacus($sum, $colCount);
+        $results[] = $result;
+      }
+    } elseif ($type == 'math_games' || $type == 'math_games2') {
+      $min = $practice->range_number_from;
+      $max =  $practice->range_number_to;
+      $seconds_speed = $practice->seconds_speed;
+      $timer = $practice->timer;
+      $count = $practice->numbers_to_sum;
+      $turns = $practice->turns;
+      $randomNumbers = [];
+      for ($i = 0; $i < $turns; $i++) {
         $innerArray = [];
-        
+
         for ($j = 0; $j < $count; $j++) {
-            $innerArray[] = rand($min, $max);
+          $innerArray[] = rand($min, $max);
         }
         $randomNumbers[] = $innerArray;
       }
-    $results=0;
-    $colCount=0;
-  }
+    }
 
-    return view('practicetype::student.' . $type, compact('practice', 'randomNumbers','results','colCount','timer','seconds_speed'));
+    return view('practicetype::student.' . $type, compact('practice', 'randomNumbers', 'results', 'colCount', 'timer', 'seconds_speed', 'card_number'));
   }
   public function showPracticeLevels($id)
   {
     $practice = StudentPracticeRepository::find($id);
-    $practiceDetail=PracticeTypeDetail::where('practice_id',$practice->id)->with('practiceLevel')->get();
-    return view('practicetype::student.practice_levels',compact('practiceDetail','practice'));
+    $practiceDetail = PracticeTypeDetail::where('practice_id', $practice->id)->with('practiceLevel')->get();
+    return view('practicetype::student.practice_levels', compact('practiceDetail', 'practice'));
   }
 
 
@@ -176,34 +241,47 @@ class StudentPracticeController extends Controller
   {
     //
   }
-  // public function solver()
-  // {
-  //   $count = 4;
-  //   $min = 1;
-  //   $max = 10;
-  //   $randomNumbers = [];
-  //   $sum=0;
-  //   $tables=[];
-  //   $results = [];
-  //   $colCount=4;
-  //   for ($i = 0; $i < $count; $i++) {
-  //     $rand=rand($min, $max);
-  //     $randomNumbers[] = $rand;
-  //     $sum+=$rand;
-  //     $result = solveAbacus($sum,$colCount);
-  //     $results[] = $result;
-  //   }
-   
-  //   return view('practicetype::student.abacus', compact('randomNumbers','results'));
-  // }
+
+  public function donePracitce($practiceId, $courseId)
+  {
+    $studentId = auth()->user()->id;
+
+    $enrollment = Inrollment::where('student_id', $studentId)
+      ->where('course_id', $courseId)
+      ->first();
+
+    if (!$enrollment) {
+      return redirect()->back()->withErrors('you should be enroll to this course');
+    }
+    $semesterId = $enrollment->semester_id;
+    $coinsShouldTaken = 0;
+    $practiceTrue = ResultPractice::where('is_true', 1)->where('practice_id', $practiceId)->where('student_id', $studentId)->first();
+    if (!$practiceTrue) {
+      return redirect()->back()->withErrors('you should do the pracitce first');
+    }
+    $practice = PracticeTypeDetail::find($practiceId);
+    $coinsShouldTaken = $practice->coins_taken;
+
+    StudentScore::create(
+      [
+        'student_id' => $studentId,
+        'practice_id' => $practiceId,
+        'course_id' => $courseId,
+        'semester_id' => $semesterId,
+        'coin' => $coinsShouldTaken,
+      ]
+    );
+    return redirect()->back()->withSuccess('practice marked as done');
+  }
 }
 
-Function getExactLength($number,$colCount) {
-  $prefix="";
-  for ($i = 0; $i < ($colCount-strlen(strval($number))); $i++) {
-      $prefix.="0";
+function getExactLength($number, $colCount)
+{
+  $prefix = "";
+  for ($i = 0; $i < ($colCount - strlen(strval($number))); $i++) {
+    $prefix .= "0";
   }
-  return $prefix.$number;
+  return $prefix . $number;
 }
 function getDigitsAsNumbers($number)
 {
@@ -221,15 +299,16 @@ function giveOnecol($number)
   $one = $number >= 1 ? 1 : 0;
   return [$four, $three, $two, $one, $five];
 }
-function solveAbacus($number,$colCount){
-  $matrix=[];
-  $number=getExactLength($number,$colCount);
-  $number=strrev($number);
+function solveAbacus($number, $colCount)
+{
+  $matrix = [];
+  $number = getExactLength($number, $colCount);
+  $number = strrev($number);
   $result = getDigitsAsNumbers($number);
-  $i=0;
+  $i = 0;
   foreach ($result as $element) {
-      $matrix[$i]=giveOnecol($element);
-      $i++;
+    $matrix[$i] = giveOnecol($element);
+    $i++;
   }
   return $matrix;
 }
@@ -245,16 +324,14 @@ function transposeArray($array)
 }
 function printTableFromArray($data)
 {
-  $html= "<table border='1' style='margin=10;'>";
+  $html = "<table border='1' style='margin=10;'>";
   foreach ($data as $row) {
-    $html.= "<tr>";
+    $html .= "<tr>";
     foreach ($row as $cell) {
-      $html.= "<td>" . $cell . "</td>";
+      $html .= "<td>" . $cell . "</td>";
     }
-    $html.= "</tr>";
+    $html .= "</tr>";
   }
-  $html.= "</table>";
+  $html .= "</table>";
   return html_entity_decode($html);
 }
-
-

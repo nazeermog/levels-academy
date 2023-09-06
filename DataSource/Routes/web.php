@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use DataSource\Http\Controllers\Admin\Lesson\AdminLessonController;
 use DataSource\Http\Controllers\Admin\Practice\AdminPracticeController;
+use DataSource\Http\Controllers\Admin\Semester\AdminSemesterController;
 use DataSource\Http\Controllers\Admin\Taxonomy\AdminTaxonomyController;
 use DataSource\Http\Controllers\Admin\Dashboard\AdminDashboardController;
 use DataSource\Http\Controllers\Admin\CoursePath\AdminCoursePathController;
@@ -18,11 +19,13 @@ Route::group(['as' => 'admin.'], function () {
     Route::resource('courseContent', AdminCourseContentController::class);
     Route::resource('practices', AdminPracticeController::class);
     Route::resource('practicesType', AdminPracticeTypeController::class);
+    Route::resource('Practiceslevels', AdminPracticeLevelController::class);
     Route::resource('taxonomies', AdminTaxonomyController::class);
     Route::resource('coursePath', AdminCoursePathController::class);
     Route::resource('lessons', AdminLessonController::class);
     Route::resource('instructors', AdminInstructorController::class);
-    Route::resource('Practiceslevels', AdminPracticeLevelController::class);
+    Route::resource('semesters', AdminSemesterController::class);
+
     Route::get('resultPractices', [AdminResultPracticeController::class, 'index'])->name('resultPractices.index');
 });
 });

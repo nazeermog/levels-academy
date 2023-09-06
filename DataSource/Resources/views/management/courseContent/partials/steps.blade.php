@@ -81,13 +81,13 @@
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
                         <div class="accordion-body">
                             <ul class="list-unstyled connected-sortable droppable-area1 mb-0">
-                                <!-- id="list2" -->
-                                @foreach ($practices as $practice)
-                                    <li class="draggable-item cursor-pointer" data-id="{{ $practice->id }}"
-                                        id="{{ $practice->id }}" data-type="Practices"
+                                @foreach ($practices as $practice) 
+                                    <li class="draggable-item cursor-pointer" data-id="{{ $practice->practice->id }}"
+                                        id="{{  $practice->practice->id }}" data-type="Practices"
                                         ordering="{{ $loop->iteration }}">
                                         <div class="d-flex align-items-center justify-content-between border px-3 py-2">
-                                            <h4>{{ $practice->title }}</h4>
+                                            <!-- this is a practice details -->
+                                            <h4>{{ $practice->practice->title.' : '.$practice->title }}</h4>
                                             <i class="bi bi-chevron-double-right move-btn"></i>
                                         </div>
                                     </li>

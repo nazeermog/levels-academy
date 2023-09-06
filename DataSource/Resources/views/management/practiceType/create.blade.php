@@ -41,6 +41,10 @@
                 @endforeach
             </select>
       </div>
+      <div class="col-md-4 ">
+        <label for="">Coins Taken</label>
+        <input class="form-control" name="coins_taken" >
+      </div>
 
     </div>
     <hr />
@@ -86,7 +90,7 @@
       </div>
       <div class="col-md-6 ">
         <label for="">Turns (for math games)</label>
-        <input class="form-control" name="timer">
+        <input class="form-control" name="turns">
       </div>
     </div>
     <hr />

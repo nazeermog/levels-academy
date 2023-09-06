@@ -24,6 +24,7 @@ class StudentCourseRatingRepository
       ->where('course_id', $course->id)
       ->whereNotNull('user_review')
       ->paginate($perPage);
+      /////need edit for the photo of the comment
     return $ratingWithCommentsPaginated;
   }
 
