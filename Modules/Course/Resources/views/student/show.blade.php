@@ -294,7 +294,7 @@
         <textarea id="commentInput" placeholder="Share your thoughts..." style="height: 100px;"></textarea>
       </div>
       <div class="text-center"> <!-- Center-align the button -->
-        <button class="ui button" type="submit" style="background-color: #5567ff; color: white;">Submit</button>
+        <button class="ui button" type="submit" style="background-color: #fea11f; color: white;">Submit</button>
       </div>
     </form>
     <div class="text-center" id="thankYouSection" style="display: none;">
