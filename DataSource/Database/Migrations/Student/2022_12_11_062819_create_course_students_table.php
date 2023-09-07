@@ -15,7 +15,8 @@ return new class extends Migration {
         Schema::create('course_students', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id')->index();
-            $table->unsignedBigInteger('lesson_id')->index();
+            $table->unsignedBigInteger('lesson_id')->index()->nullable();
+            $table->unsignedBigInteger('practice_id')->index()->nullable();
             $table->unsignedBigInteger('course_id')->index();
             $table->timestamps();
         });

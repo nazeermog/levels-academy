@@ -277,7 +277,7 @@
         function reloadPage() {
             window.location.reload();
         };
-
+        let sumNumber=0;
         const divBtn = document.querySelector('#btnStart');
         const btnStart = document.querySelector('#startGame');
         const gameContent = document.querySelector('#gameContent');
@@ -316,7 +316,7 @@
                 console.log(arr);
 
                 const initialValue = 0;
-                const sumNumber = arr.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
+                 sumNumber = arr.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
 
                 const cardNumber = arr.length;
 
@@ -362,7 +362,7 @@
                             level_title: '{{$practice->title}}',
                             result_student: inputValue,
                             result_true: sumNumber,
-                            student_id: 0,
+                            student_id: {{auth()->user()->id}},
                             is_true: sumNumber === inputValue,
                             seconds_speed: {{$practice->seconds_speed}},
                             card_number: {{$practice->card_number}},

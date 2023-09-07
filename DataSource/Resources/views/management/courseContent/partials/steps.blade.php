@@ -82,8 +82,8 @@
                         <div class="accordion-body">
                             <ul class="list-unstyled connected-sortable droppable-area1 mb-0">
                                 @foreach ($practices as $practice) 
-                                    <li class="draggable-item cursor-pointer" data-id="{{ $practice->practice->id }}"
-                                        id="{{  $practice->practice->id }}" data-type="Practices"
+                                    <li class="draggable-item cursor-pointer" data-id="{{ $practice->id }}"
+                                        id="{{  $practice->id }}" data-type="Practices"
                                         ordering="{{ $loop->iteration }}">
                                         <div class="d-flex align-items-center justify-content-between border px-3 py-2">
                                             <!-- this is a practice details -->

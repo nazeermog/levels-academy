@@ -19,6 +19,7 @@ use DataSource\Repositories\DB\Course\Student\StudentCoursesRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeTypeRepository;
 use DataSource\Repositories\DB\ResultPractice\Student\StudentResultPracticeRepository;
+use DataSource\Entities\Course\CourseStudent;
 
 
 class StudentPracticeController extends Controller
@@ -244,21 +245,19 @@ class StudentPracticeController extends Controller
 
   public function donePracitce($practiceId, $courseId)
   {
+    $practiceId=(int)$practiceId;
+    $courseId=(int)$courseId;
     $studentId = auth()->user()->id;
-
-    $enrollment = Inrollment::where('student_id', $studentId)
+    $inrollment = Inrollment::where('student_id', $studentId)
       ->where('course_id', $courseId)
       ->first();
 
-    if (!$enrollment) {
+    if (!$inrollment) {
       return redirect()->back()->withErrors('you should be enroll to this course');
     }
-    $semesterId = $enrollment->semester_id;
+    $semesterId = $inrollment->semester_id;
     $coinsShouldTaken = 0;
-    $practiceTrue = ResultPractice::where('is_true', 1)->where('practice_id', $practiceId)->where('student_id', $studentId)->first();
-    if (!$practiceTrue) {
-      return redirect()->back()->withErrors('you should do the pracitce first');
-    }
+
     $practice = PracticeTypeDetail::find($practiceId);
     $coinsShouldTaken = $practice->coins_taken;
 
@@ -271,6 +270,31 @@ class StudentPracticeController extends Controller
         'coin' => $coinsShouldTaken,
       ]
     );
+    $existingRecord = CourseStudent::where('student_id', $studentId)
+      ->where('practice_id', $practiceId)
+      ->where('course_id', $courseId)
+      ->first();
+    if (!$existingRecord) {
+      CourseStudent::create([
+        'student_id' => $studentId,
+        'practice_id' => $practiceId,
+        'course_id' => $courseId,
+      ]);
+    }
+
+
+    $totalPractice = CourseStudent::where('student_id', $studentId)
+      ->where('course_id', $courseId)
+      ->where('practice_id',$practiceId)
+      ->count();
+
+    $course = Course::find($courseId);
+    $TotalPracticeOld = StudentPracticeRepository::SingleCoursTotalPractice($course);
+    $progressPercentage = ($totalPractice / $TotalPracticeOld) * 100;
+    if ($inrollment) {
+      $inrollment->progress_practice = number_format($progressPercentage, 1);
+      $inrollment->update();
+    }
     return redirect()->back()->withSuccess('practice marked as done');
   }
 }

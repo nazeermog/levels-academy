@@ -52,18 +52,12 @@ class LessonController extends Controller
         if (!$inrollment) {
             return redirect()->back()->withErrors('you should be enroll to this course');
         }
-        $existingRecord = CourseStudent::where('student_id', $studentId)
-            ->where('lesson_id', $lessonId)
-            ->where('course_id', $courseId)
-            ->first();
-
-        if (!$existingRecord) {
             CourseStudent::create([
                 'student_id' => $studentId,
                 'lesson_id' => $lessonId,
                 'course_id' => $courseId,
             ]);
-        }
+        
         $totalWatchedTime = CourseStudent::where('student_id', $studentId)
             ->where('course_id', $courseId)
             ->join('lessons', 'course_students.lesson_id', '=', 'lessons.id')

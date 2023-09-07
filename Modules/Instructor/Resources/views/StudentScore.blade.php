@@ -67,8 +67,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Date</th>
+            <th>photo</th>
             <th>Student</th>
             <th>Course</th>
             <th>Semester</th>
@@ -78,10 +77,8 @@
         <tbody>
           @foreach($list as $item)
           <tr>
-            <td>{{ $item->id}}</td>
-            <td>{{ $item->created_at->format('Y-m-d')}}</td>
+            <td><img src="{{asset( $item->student->avatar)}}" alt="student_avatar" style="max-height: 60px; max-width: 60px; border-radius: 50%;"></td>
             <td>
-
               {{$item->student->first_name .' '.$item->student->last_name}}
             </td>
 
@@ -94,21 +91,19 @@
             <td>
               {{$totalCoins[$item->student->user_id]}}
             </td>
-        
+
 
           </tr>
           @endforeach
         </tbody>
       </table>
-      <div class="mt-3 mb-3 mx-3">
-        {{$list->links('datasource::management.partials.pagination',['paginator'=>$list])}}
-      </div>
+
     </div>
     @else
-      <h2>
-        There is no {{$table_name}} Yet
-      </h2>
-      @endif
+    <h2>
+      There is no {{$table_name}} Yet
+    </h2>
+    @endif
 
   </div>
 </div>

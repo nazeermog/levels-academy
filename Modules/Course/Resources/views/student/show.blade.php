@@ -149,7 +149,7 @@
                     <a class="flex" href="{{route('student.lesson.show', ['lessonId' => $step->stepable_id,'courseId'=> $course->id] ) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
                     @elseif ($step->stepable_type === 'Practices')
                     <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
-                    <a class="flex" href="{{ route('student.practice.forcourse', ['id' => $step->stepable_id, 'type' => $step->practiceType->blade_name, 'course' => $course->id]) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
+                    <a class="flex" href="{{ route('student.practice.forcourse', ['id' => $step->stepable_id, 'type' => $step->practiceTypeDetail->practice->blade_name, 'course' => $course->id]) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
                     @elseif ($step->stepable_type === 'Quizzes')
                     <span class="material-icons icon-16pt icon--left text-50">question_answer</span>
                     @endif

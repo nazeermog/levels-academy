@@ -10,6 +10,7 @@ Route::group([
     ], function () {
         Route::prefix('inrollment')->group(function () {
             Route::get('', [InrollmentController::class, 'index'])->name('student.inrollment.index');
-       
+            Route::post('{courseId}', [InrollmentController::class, 'store'])->name('student.inrollment.store');
+
         });
     });

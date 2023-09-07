@@ -588,11 +588,11 @@ prevStep.addEventListener("click", function () {
 
 document.querySelector("#submit").addEventListener('click', function prossesResult() {
 
-  const StudetntConvert = getAbacusValue(arrResult);
-console.log(StudetntConvert);
+                const StudetntConvert = getAbacusValue(arrResult);
+                console.log(StudetntConvert);
 
-const resultConvert = getAbacusValue(result);
-console.log(resultConvert);
+                const resultConvert = getAbacusValue(result);
+                console.log(resultConvert);
                     $.ajax({
                         method: "POST",
                         url: "{{ route('student.practice.store')}}",

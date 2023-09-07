@@ -37,7 +37,7 @@ class PracticeController extends Controller
         $table_name = 'Practice Type Details';
         $practices = AdminPracticeRepository::list();
         $practiceLevels=AdminPracticeLevelRepository::list();
-        return view( 'practicetype::instructor.practiceTypeDetails.create', compact('route_name', 'table_name', 'practices','practiceLevels'));
+        return view('practicetype::instructor.practiceTypeDetails.create', compact('route_name', 'table_name', 'practices','practiceLevels'));
     }
 
 

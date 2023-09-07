@@ -22,4 +22,18 @@ class StudentPracticeRepository
         return PracticeType::all();
     }
 
+    public static function SingleCoursTotalPractice($course)
+    {
+        $totalpracticeCount = 0;
+        $courseContents = $course->courseContents()->with('courseSteps.practiceType')->get();
+        foreach ($courseContents as $courseContent) {
+            foreach ($courseContent->courseSteps as $step) {
+                if ($step->stepable_type === 'Practices') {
+                    $totalpracticeCount += 1;
+                }
+            }
+        }
+        return $totalpracticeCount;
+    }
+
 }

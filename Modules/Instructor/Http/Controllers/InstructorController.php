@@ -4,7 +4,9 @@ namespace Modules\Instructor\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Support\Renderable;
+use DataSource\Entities\StudentScore\StudentScore;
 use DataSource\Repositories\DB\StudentInrollmentRepository;
 use DataSource\Repositories\DB\StudentScore\Instructor\AdminStudentScoreRepository;
 
@@ -87,7 +89,15 @@ class InstructorController extends Controller
     }
     
     public function showStudentScoreBoard(){
-        $list  = (new AdminStudentScoreRepository())->index();
+        $list = StudentScore::select('student_id')
+        ->selectRaw('MAX(practice_id) as practice_id')
+        ->selectRaw('MAX(course_id) as course_id')
+        ->selectRaw('MAX(semester_id) as semester_id')
+        ->selectRaw('SUM(coin) as total_coin')
+        ->groupBy('student_id')
+        ->orderByDesc('total_coin')
+        ->get();
+            // dd($list);
         $totalCoins=AdminStudentScoreRepository::TotalCoins();
         $route_name = 'studentScore';
         $table_name = 'Student Score';
