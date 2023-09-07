@@ -78,9 +78,13 @@
         <tbody>
           @foreach($list as $item)
           <tr>
-            @if($loop->iteration <= 3)
-              <td class="student-rank d-flex align-items-center ">{{$loop->iteration}} <i  class="material-icons icon-40pt ml-2">stars</i> </td>
-            @endif
+            <td class="student-rank d-flex align-items-center ">{{$loop->iteration}}
+              
+              @if($loop->iteration <= 3)
+                <i  class="material-icons icon-40pt ml-2">stars</i> 
+              @endif
+              
+              </td>
             <td><img src="{{asset( $item->student->avatar)}}" alt="student_avatar" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;"></td>
             <td>
               {{$item->student->first_name .' '.$item->student->last_name}}
