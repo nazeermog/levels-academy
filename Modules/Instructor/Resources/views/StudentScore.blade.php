@@ -64,9 +64,10 @@
     <button class="btn btn-primary form-group">Search</button>
 
     <div class="table-responsive">
-      <table class="table table-hover">
+      <table class="table table-hover table-rank">
         <thead>
           <tr>
+            <th>#</th>
             <th>photo</th>
             <th>Student</th>
             <th>Course</th>
@@ -77,7 +78,10 @@
         <tbody>
           @foreach($list as $item)
           <tr>
-            <td><img src="{{asset( $item->student->avatar)}}" alt="student_avatar" style="max-height: 60px; max-width: 60px; border-radius: 50%;"></td>
+            @if($loop->iteration <= 3)
+              <td class="student-rank d-flex align-items-center ">{{$loop->iteration}} <i  class="material-icons icon-40pt ml-2">stars</i> </td>
+            @endif
+            <td><img src="{{asset( $item->student->avatar)}}" alt="student_avatar" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;"></td>
             <td>
               {{$item->student->first_name .' '.$item->student->last_name}}
             </td>

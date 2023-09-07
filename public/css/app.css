@@ -35316,3 +35316,16 @@ label {
 [dir] .preloader {
     background: var(--secondary);
 }
+
+.table-rank tbody tr:nth-child(1) .student-rank {
+    color: #fea11e;
+    font-size: 1.3rem;
+}
+
+.table-rank tbody tr:nth-child(2) .student-rank {
+    color: #b4b4b4;
+}
+
+.table-rank tbody tr:nth-child(3) .student-rank {
+    color: #ad8a56;
+}
