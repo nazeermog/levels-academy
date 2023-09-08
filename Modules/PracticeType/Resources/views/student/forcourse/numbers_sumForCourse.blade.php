@@ -1,5 +1,5 @@
 @include("practicetype::student.numbers_sum")
-<style>
+<!-- <style>
   .center-left {
     margin-right:1400px;
   }
@@ -9,7 +9,7 @@
   @csrf
     <button class="btn btn-success" type="submit" style="color: white;">markedAsDone</button>
     </form>
-</div>  
+</div>   -->
 <script>
 
       document.querySelector("#sendResult").addEventListener('click', function prossesResult() {

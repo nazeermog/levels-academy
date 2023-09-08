@@ -259,7 +259,7 @@ nextBtn.addEventListener("click", function () {
                 level_title: '{{$practice->practiceLevel->title}}',
                 result_student: Number(inputELe.value) ,///need function
                 result_true: correctAnswer[currentIndex],///need function
-                student_id: 0,
+                student_id: {{auth()->user()->id}},
                 is_true: Number(inputELe.value) === correctAnswer[currentIndex] ,///need function
                 seconds_speed: null,
                 card_number: null,

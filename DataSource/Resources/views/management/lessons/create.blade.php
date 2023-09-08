@@ -37,7 +37,7 @@
     <div id="fileUploadField" class="col-md-3 mt-3 m-1" style="display: none;">
         <div class="form-group">
             <label for="videoFile">Upload Video File:</label>
-            <input type="file" class="form-control-file" id="url" name="url">
+            <input type="file" class="form-control-file" id="url" name="url" accept=".pdf">
         </div>
     </div>
 
@@ -116,9 +116,12 @@
             if (selectedValue === 'file') {
                 $('#fileUploadField').show();
                 $('#urlField').hide();
+                $('#url').attr('accept', '.mp4');
             } else if (selectedValue === 'url') {
                 $('#fileUploadField').hide();
                 $('#urlField').show();
+                $('#url').removeAttr('accept');
+
             }
         }
 
@@ -152,9 +155,12 @@
             if (selectedValue === 'pdf') {
                 $('#pdfAttachment').show();
                 $('#textAttachment').hide();
+                $('#pdfFile').attr('accept', '.pdf');
             } else if (selectedValue === 'text') {
                 $('#pdfAttachment').hide();
                 $('#textAttachment').show();
+                $('#pdfFile').removeAttr('accept');
+
             }
         }
 

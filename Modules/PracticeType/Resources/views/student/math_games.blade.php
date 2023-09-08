@@ -72,7 +72,7 @@
           <label for="exampleFormControlInput1" class="form-label"
             >Answer</label
           >
-          <input type="text" name="" id="output" class="form-control" />
+          <input type="text" name="output" id="output" class="form-control" />
         </div>
         <div class="keypad text-center mt-2">
           <div class="mb-1">
@@ -259,10 +259,10 @@ nextBtn.addEventListener("click", function () {
                 practice_id: {{$practice->practice_id}},
                 practice_type_id: {{$practice->id}},
                 level_title: '{{$practice->practiceLevel->title}}',
-                result_student: Number(inputELe.value) ,///need function
-                result_true: correctAnswer[currentIndex],///need function
-                student_id: 0,
-                is_true: Number(inputELe.value) === correctAnswer[currentIndex] ,///need function
+                result_student: Number(inputELe.value) ,
+                result_true: correctAnswer[currentIndex],
+                student_id: {{auth()->user()->id}},
+                is_true: Number(inputELe.value) === correctAnswer[currentIndex] ,
                 seconds_speed: null,
                 card_number: null,
                 range_number_from: {{$practice ->range_number_from }},

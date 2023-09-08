@@ -30,7 +30,7 @@ class LessonController extends Controller
         $instructor = AdminInstructorRepository::InstructorForOneCourse($course);
         $courseRate = StudentCourseRatingRepository::CalculateAverageRatingForCourse($course);
         $ratingCount = StudentCourseRatingRepository::RatingCount($course);
-        $watched = InrollmentController::isWatched($courseId, $lessonId);
+        $watched = LessonController::isWatched($courseId, $lessonId);
         return view('lesson::student.show', [
             'lesson' => $lesson,
             'course' => $course,
