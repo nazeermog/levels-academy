@@ -14,6 +14,7 @@ use DataSource\Repositories\DB\Instructor\Admin\AdminInstructorRepository;
 use DataSource\Repositories\DB\Semester\Student\StudentSemesterRepository;
 use DataSource\Repositories\DB\Course\Student\StudentCourseRatingRepository;
 use DataSource\Repositories\DB\Course\Student\StudentCourseContentRepository;
+use DataSource\Repositories\DB\StudentInrollmentRepository;
 
 class StudentCourseController extends Controller
 {
@@ -64,26 +65,13 @@ class StudentCourseController extends Controller
     $instructorCourses = StudentCourseContentRepository::moreCourses($course);
     $instructorCoursesRate = StudentCourseRatingRepository::CalculateAverageRatingForAllCourses($instructorCourses);
     $ratingOnce = StudentCourseRatingRepository::ratingOnce($course);
-    $semesters = StudentSemesterRepository::semesteOnDate();
+    $semester = StudentSemesterRepository::semesteOnDate();
+    $isAuthInroll=StudentInrollmentRepository::isAuthInroll($course,$semester);
     return view('course::student.show', compact(
-      'course',
-      'contents',
-      'contentSteps',
-      'totalLessonTime',
-      'coursestepCount',
-      'instructor',
-      'courseRate',
-      'ratingWithComments',
-      'ratingCount',
-      'rating5',
-      'rating4',
-      'rating3',
-      'rating2',
-      'rating1',
-      'instructorCourses',
-      'instructorCoursesRate',
-      'ratingOnce',
-      'semesters'
+      'course', 'contents','contentSteps','totalLessonTime','coursestepCount',
+      'instructor','courseRate','ratingWithComments','ratingCount','instructorCourses',
+      'rating5','rating4','rating3','rating2','rating1','instructorCoursesRate','ratingOnce',
+      'semester','isAuthInroll',
     ));
   }
 }

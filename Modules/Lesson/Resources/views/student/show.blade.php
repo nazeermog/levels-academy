@@ -71,12 +71,8 @@
       <h3>Attachment: {{$lesson->attachment_name}}</h3>
     </div>
     <div class="col-md-10">
-      @php
-      $extension = pathinfo($lesson->attachment, PATHINFO_EXTENSION);
-      @endphp
-
-      @if ($extension === 'pdf')
-      <a class="hero__lead measure-hero-lead text-white-50 mb-24p" href="{{ asset($lesson->attachment) }}" download="{{ $lesson->attachment }}">Download PDF</a>
+      @if (Str::startsWith($lesson->attachment, '/storage/'))
+      <a class="hero__lead measure-hero-lead text-white-50 mb-24p" href="{{ asset($lesson->attachment) }}" download="{{ $lesson->attachment_name }}">Download File</a>
       @else
       <p class="hero__lead measure-hero-lead text-white-50 mb-24p" style="word-wrap: break-word;">{{ $lesson->attachment }}</p>
       @endif
@@ -85,12 +81,10 @@
     <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
       <a href="lesson.html" class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer <i class="material-icons icon--right">play_circle_outline</i></a>
       @if (!$watched)
-        
       <form method="POST" action="{{ route('student.lesson.watched', ['courseId' => $course->id, 'lessonId' => $lesson->id]) }}">
         @csrf 
         <button type="submit" class="btn btn-white">Mark as Watched</button>
       </form>
-      
       @else
       <button class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt" disabled>Watched</button>
       @endif

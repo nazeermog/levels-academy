@@ -57,17 +57,17 @@
         <div class="container page__container">
           <h1 class="text-white">{{$course->title}}</h1>
           <p class="lead text-white-50 measure-hero-lead mb-24pt">{{$course->desc}}</p>
+          @if (!$isAuthInroll)
           <form method="POST" action="{{ route('student.inrollment.store', ['courseId' => $course->id]) }}">
             @csrf
             <div class="dropdown">
               <button type="button" class="dropbtn btn btn-white">Enroll in Course</button>
               <div class="dropdown-content">
-                @foreach ($semesters as $semester)
                 <button type="submit" value="{{ $semester->id }}" name="semester_id">Semester: {{ $semester->title }}</button>
-                @endforeach
               </div>
             </div>
           </form>
+          @endif
         </div>
       </div>
       @if(session('success'))
@@ -120,11 +120,11 @@
     </div>
   </div>
 </div>
-
 <div class="container page__container">
   <div class="row">
     <div class="col-lg-7">
       <div class="border-left-2 page-section pl-32pt">
+       @if ($isAuthInroll)
         @foreach ($contents as $content)
         <div class="d-flex align-items-center page-num-container">
           <div class="page-num">{{ $content->ordering }}</div>
@@ -160,7 +160,7 @@
           </ul>
         </div>
         @endforeach
-
+        @endif
 
 
       </div>
@@ -175,7 +175,6 @@
         </div>
         <nav class="nav page-nav__menu">
           @foreach($contents as $content)
-
           <a class="nav-link" href="">{{$content->title}}</a>
           @endforeach
         </nav>
@@ -266,11 +265,11 @@
     </div>
   </div>
 </div>
-
+@if ($isAuthInroll)
 @if ($ratingOnce)
-
 <div class="page-section border-bottom-2">
   <div class="container">
+    
     <div class="page-headline text-center">
       <h2>Your Feedback Matters</h2>
       <p class="lead text-70 measure-lead mx-auto">
@@ -302,6 +301,7 @@
     </div>
   </div>
 </div>
+@endif
 @endif
 
 <div class="page-section bg-white border-bottom-2">

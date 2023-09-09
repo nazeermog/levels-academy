@@ -17,7 +17,7 @@ class StudentSemesterRepository
     }
     public static function semesteOnDate()
     {
-        $semesters = Semester::where('start_date', '<=', now())->where('end_date', '>=', now())->get();
+        $semesters = Semester::where('start_date', '<=', now())->where('end_date', '>=', now())->first();
         return $semesters;
     }
 }
