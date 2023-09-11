@@ -19,7 +19,7 @@ class ResultPracticeController extends Controller
         $list  = (new AdminResultPracticeRepository())->index();
         $route_name = 'result-practice';
         $table_name = 'Result Practice  ';
-        return view( 'resultpractice::instructor.index', compact('list', 'route_name', 'table_name'));
+        return view('resultpractice::instructor.index', compact('list', 'route_name', 'table_name'));
     }
 
 

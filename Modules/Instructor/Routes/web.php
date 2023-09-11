@@ -20,4 +20,6 @@ Route::group([
     Route::get('/instructor/dashboard', [InstructorController::class,'index'])->name('instructor.dashboard');
     Route::get('/instructor/courses', [InstructorController::class,'showInrollmentCourses'])->name('instructor.InrollmentCourses.index');
     Route::get('/instructor/studentscore', [InstructorController::class,'showStudentScoreBoard'])->name('instructor.studentscore.index');
+    Route::get('/instructor/studentscore/bycourse', [InstructorController::class,'showStudentScoreBoardByFilter'])->name('studentscore.filter');
+
 });

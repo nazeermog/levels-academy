@@ -269,14 +269,12 @@
 @if ($ratingOnce)
 <div class="page-section border-bottom-2">
   <div class="container">
-    
     <div class="page-headline text-center">
       <h2>Your Feedback Matters</h2>
       <p class="lead text-70 measure-lead mx-auto">
         Help us enhance your experience by providing your feedback. Rate the course and share your thoughts with us.
       </p>
     </div>
-
     <div class="text-center">
       <div id="rating" class="ui massive star rating" data-rating="0" data-max-rating="5">
         <i class="icon" data-value="1"></i>
