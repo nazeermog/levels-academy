@@ -161,23 +161,30 @@
           practiceId: practiceId,
         },
         success: function(response) {
-          console.log(response.list);
-          var tableBody = $('#student-score-table-body');
-          tableBody.empty();
-          response.list.forEach(function(item) {
-            var newRow = '<tr>' +
-              '<td class="student-rank d-flex align-items-center ">' + item.rank +
-              (item.rank <= 3 ? '<i class="material-icons icon-40pt ml-2">stars</i>' : '') + '</td>' +
-              '<td><img src="' + item.student_avatar + '" alt="student_avatar" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;"></td>' +
-              '<td>' + item.student_name + '</td>' +
-              '<td>' + (item.course_title ?? 'ALL') + '</td>' +
-              '<td>' + (item.practice_title ?? 'ALL') + '</td>' +
-              '<td>' + (item.semester_title ?? 'ALL') + '</td>' +
-              '<td>' + item.total_coin + '</td>' +
-              '</tr>';
-            tableBody.append(newRow);
-          });
-        },
+    console.log(response.list);
+    var tableBody = $('#student-score-table-body');
+    tableBody.empty();
+    response.list.forEach(function(item, index) {
+        var newRow = '<tr>' +
+            '<td class="student-rank d-flex align-items-center ">' + (index + 1);
+
+        // Check if the rank is in the top 3, then add the star icon
+        if (index < 3) {
+            newRow += '<i class="material-icons icon-40pt ml-2">stars</i>';
+        }
+
+        newRow += '</td>' +
+            '<td><img src="' + item.student_avatar + '" alt="student_avatar" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;"></td>' +
+            '<td>' + item.student_name + '</td>' +
+            '<td>' + (item.course_title ?? 'ALL') + '</td>' +
+            '<td>' + (item.practice_title ?? 'ALL') + '</td>' +
+            '<td>' + (item.semester_title ?? 'ALL') + '</td>' +
+            '<td>' + item.total_coin + '</td>' +
+            '</tr>';
+        tableBody.append(newRow);
+    });
+},
+
         error: function(xhr, status, error) {
           console.error(error);
         }
