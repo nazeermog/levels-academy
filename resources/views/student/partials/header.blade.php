@@ -53,11 +53,38 @@
 
       <!-- // END Navbar Search -->
 
+
       <div class="flex"></div>
+
 
       <!-- Navbar Menu -->
 
       <div class="nav navbar-nav flex-nowrap d-flex mr-16pt">
+
+        <!-- lang dropdown -->
+        <div class="nav-item dropdown dropdown-notifications dropdown-xs-down-full" data-toggle="tooltip" data-title="Language" data-placement="bottom" data-boundary="window">
+          <button class="nav-link btn-flush dropdown-toggle" type="button" data-toggle="dropdown" data-caret="false">
+            <i class="material-icons icon-24pt">language</i>{{ session('locale', config('app.locale')) }}
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div data-perfect-scrollbar class="position-relative">
+              <div class="dropdown-header"><strong>Languages</strong></div>
+              <div class="list-group list-group-flush mb-0">
+                <a class="dropdown-item" href="{{ route('locale.setting', 'en') }}" data-lang="en">
+                  <i class="flag-icon flag-icon-us m-1"></i> English
+                </a>
+                <a class="dropdown-item" href="{{ route('locale.setting', 'ar') }}" data-lang="ar">
+                <span class="flag-icon flag-icon-sa  m-1"></span> Arabic
+                </a>
+                <a class="dropdown-item" href="{{ route('locale.setting', 'de') }}" data-lang="de">
+                  <i class="flag-icon flag-icon-de  m-1"></i> German
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- // END lang dropdown -->
 
         <!-- Notifications dropdown -->
         <div class="nav-item dropdown dropdown-notifications dropdown-xs-down-full" data-toggle="tooltip" data-title="Messages" data-placement="bottom" data-boundary="window">

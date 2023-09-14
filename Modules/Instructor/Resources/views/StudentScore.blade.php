@@ -20,15 +20,12 @@
 @section('content')
 <div class="container py-5">
 
-  <!-- page-header-->
-  <!--breadcrumb-->
   <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
     {{-- <div class="breadcrumb-title pe-3">   {{$table_name}}
   </div>--}}
 
 </div>
-<!--end breadcrumb-->
-<!--EN FOR  page-header-->
+
 <div class="card border-top border-0 border-4 border-primary table-responsive">
   <div class="card-header">
     <h3 class="card-title float-left">List of {{$table_name}}</h3>
@@ -47,7 +44,6 @@
         </select>
       </div>
 
-
     </div>
     <div class="row form-group">
       <div class="col-md-6">
@@ -58,7 +54,6 @@
         <label for="">To </label>
         <input type="date" class="form-control" placeholder="search">
       </div>
-
 
     </div>
     <button class="btn btn-primary form-group">Search</button>
@@ -167,12 +162,9 @@
     response.list.forEach(function(item, index) {
         var newRow = '<tr>' +
             '<td class="student-rank d-flex align-items-center ">' + (index + 1);
-
-        // Check if the rank is in the top 3, then add the star icon
         if (index < 3) {
             newRow += '<i class="material-icons icon-40pt ml-2">stars</i>';
         }
-
         newRow += '</td>' +
             '<td><img src="' + item.student_avatar + '" alt="student_avatar" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;"></td>' +
             '<td>' + item.student_name + '</td>' +
