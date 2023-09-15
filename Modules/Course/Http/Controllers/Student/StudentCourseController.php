@@ -6,15 +6,16 @@ use App\Http\Controllers\Controller;
 use DataSource\Entities\Course\Course;
 use DataSource\Entities\Course\CourseStep;
 use DataSource\Entities\Course\CourseContent;
+use DataSource\Repositories\DB\StudentInrollmentRepository;
 use DataSource\Repositories\DB\Course\Admin\AdminCourseRepository;
 use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
 use DataSource\Repositories\DB\Taxonomy\Admin\AdminTaxonomyRepository;
 use DataSource\Repositories\DB\Course\Student\StudentCoursesRepository;
+use DataSource\Repositories\DB\CoursePath\Admin\AdminCoursePathRepository;
 use DataSource\Repositories\DB\Instructor\Admin\AdminInstructorRepository;
 use DataSource\Repositories\DB\Semester\Student\StudentSemesterRepository;
 use DataSource\Repositories\DB\Course\Student\StudentCourseRatingRepository;
 use DataSource\Repositories\DB\Course\Student\StudentCourseContentRepository;
-use DataSource\Repositories\DB\StudentInrollmentRepository;
 
 class StudentCourseController extends Controller
 {
@@ -28,16 +29,17 @@ class StudentCourseController extends Controller
     $totalLessonTime = AdminLessonRepository::TotalLessonsHours($courses);
     $instructor = AdminInstructorRepository::InstructorForCourse($courses);
     $courseRate = StudentCourseRatingRepository::CalculateAverageRatingForAllCourses($courses);
-
-    return view('course::student.index', [
+    $coursePaths = AdminCoursePathRepository::list();
+    $coursesCounts = AdminCoursePathRepository::CourseCounter();
+      return view('course::student.index', [
       'taxonomies' => $taxonomies,
       'courses' => $courses,
       'courseLessons' => $courseLessons,
       'totalLessonTime' => $totalLessonTime,
       'instructor' => $instructor,
       'courseRate' => $courseRate,
-
-
+      'coursePaths' => $coursePaths,
+      'coursesCounts' => $coursesCounts,
     ]);
   }
 

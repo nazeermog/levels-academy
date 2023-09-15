@@ -9,8 +9,8 @@
       <div class="page-separator__text">{{$taxonomy->title}}</div>
     </div>
     <div class="row">
-    @foreach ($taxonomy->courses as $course)
-    @if ($course->inrollments->count() > 0)
+      @foreach ($taxonomy->courses as $course)
+      @if ($course->inrollments->count() > 0)
 
       <div class="col-lg-3 mb-24pt">
         <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay card-group-row__card">
@@ -57,7 +57,19 @@
               </div>
               <div class="col-auto d-flex align-items-center">
                 <span class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>
-                <p class="flex text-50 lh-1 mb-0"><small>{{$courseLessons[$course->id]}} lessons</small></p>
+                <p class="flex text-50 lh-1 mb-0"><small>{{$courseLessons[$course->id]}}
+
+                    @if(session('locale', config('app.locale')) == 'en')
+                    lessons
+                    @endif
+                    @if(session('locale', config('app.locale')) == 'ar')
+                    دروس
+                    @endif
+                    @if(session('locale', config('app.locale')) == 'de')
+                    Unterricht
+                    @endif
+
+                  </small></p>
               </div>
             </div>
 

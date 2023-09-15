@@ -112,7 +112,17 @@
               @endif
               @endfor
         </div>
-        <p class="lh-1 mb-0"><small class="text-muted">{{$ratingCount}} ratings</small></p>
+        <p class="text-muted mb-0">{{$ratingCount}}<small>
+      @if(session('locale', config('app.locale')) == 'en')
+         ratings
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      التقييمات
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Bewertungen
+      @endif
+      </small></p>
         </li>
 
         </ul>
@@ -137,7 +147,17 @@
           <ul class="accordion accordion--boxed mb-0">
             <li class="accordion__item">
               <a class="accordion__toggle" data-toggle="collapse" href="#toc-content-{{ $content->id }}">
-                <span class="flex"> {{$coursestepCount[$content->id]}} Steps</span>
+                <span class="flex"> {{$coursestepCount[$content->id]}}
+                @if(session('locale', config('app.locale')) == 'en')
+                Steps
+                @endif
+                @if(session('locale', config('app.locale')) == 'ar')
+                مراحل
+                @endif
+                @if(session('locale', config('app.locale')) == 'de')
+                Schritte
+                @endif    
+                </span>
                 <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
               </a>
               <div class="accordion__menu collapse show" id="toc-content-{{ $content->id }}">
@@ -169,7 +189,17 @@
       <div class="page-section">
         <div class="page-nav__content">
           <div class="page-separator">
-            <div class="page-separator__text">Table of contents</div>
+            <div class="page-separator__text">
+            @if(session('locale', config('app.locale')) == 'en')
+            Table of contents
+            @endif
+            @if(session('locale', config('app.locale')) == 'ar')
+            جدول المحتويات
+            @endif
+            @if(session('locale', config('app.locale')) == 'de')
+            Inhaltsverzeichnis
+            @endif
+            </div>
           </div>
           <!-- <h4 class="mb-16pt">Table of contents</h4> -->
         </div>
@@ -189,13 +219,35 @@
     <div class="row ">
       <div class="col-md-7">
         <div class="page-separator">
-          <div class="page-separator__text">About this course</div>
+          <div class="page-separator__text">
+          @if(session('locale', config('app.locale')) == 'en')
+          About this course
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          حول هذه الدورة
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Über diesen Kurs
+          @endif
+          </div>
         </div>
         <p class="text-70">{{$course->about}}</p>
       </div>
       <div class="col-md-5">
         <div class="page-separator">
-          <div class="page-separator__text bg-white">What you’ll learn</div>
+          <div class="page-separator__text bg-white">
+          @if(session('locale', config('app.locale')) == 'en')
+          What you’ll learn
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          ما ستتعلمه 
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Was Sie lernen werden
+          @endif
+          
+          
+          </div>
         </div>
         <ul class="list-unstyled">
           @foreach(explode("\n", $course->benefit) as $benefit)
@@ -216,11 +268,31 @@
   <div class="container">
     <div class="row">
       <div class="col-md-7 mb-24pt mb-md-0">
-        <h4>About the author</h4>
+        <h4>
+        @if(session('locale', config('app.locale')) == 'en')
+          About the author
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          عن المؤلف
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Über den Autor
+          @endif
+        </h4>
         <p class="text-70 mb-24pt">{{$instructor->about}}</p>
 
         <div class="page-separator">
-          <div class="page-separator__text bg-white">More from the author</div>
+          <div class="page-separator__text bg-white">
+          @if(session('locale', config('app.locale')) == 'en')
+          More from the author
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          المزيد من المؤلف
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Mehr vom Autor
+          @endif
+          </div>
         </div>
         @foreach ($instructorCourses as $instructorCourse)
 
@@ -257,8 +329,16 @@
             <small class="text-muted">{{$instructor->spec}}</small>
           </p>
           <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
-            <a href="teacher-profile.html" class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">Follow</a>
-            <a href="teacher-profile.html" class="btn btn-outline-secondary">View Profile</a>
+            <a href="teacher-profile.html" class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">
+          @if(session('locale', config('app.locale')) == 'en')
+          View Profile
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          عرض الصفحة الشخصية
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Profil anzeigen
+          @endif</a>
           </div>
         </div>
       </div>
@@ -270,9 +350,27 @@
 <div class="page-section border-bottom-2">
   <div class="container">
     <div class="page-headline text-center">
-      <h2>Your Feedback Matters</h2>
+      <h2>
+      @if(session('locale', config('app.locale')) == 'en')
+      Your Feedback Matters
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      ملاحظاتك مهمة
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Ihr Feedback ist wichtig
+      @endif
+      </h2>
       <p class="lead text-70 measure-lead mx-auto">
-        Help us enhance your experience by providing your feedback. Rate the course and share your thoughts with us.
+      @if(session('locale', config('app.locale')) == 'en')
+      Help us enhance your experience by providing your feedback. Rate the course and share your thoughts with us.
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      ساعدنا في تعزيز تجربتك من خلال تقديم ملاحظاتك. قيم الدورة وشاركنا أفكارك.
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Helfen Sie uns, Ihr Erlebnis zu verbessern, indem Sie uns Ihr Feedback geben. Bewerten Sie den Kurs und teilen Sie uns Ihre Gedanken mit.
+      @endif
       </p>
     </div>
     <div class="text-center">
@@ -287,15 +385,45 @@
 
     <form id="commentForm" class="ui form">
       <div class="field">
-        <label>Your Comment:</label>
-        <textarea id="commentInput" placeholder="Share your thoughts..." style="height: 100px;"></textarea>
+        <label>
+        @if(session('locale', config('app.locale')) == 'en')
+        Your Comment:
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        تعليقك:
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Dein Kommentar:
+        @endif
+        </label>
+        <textarea id="commentInput" style="height: 100px;"></textarea>
       </div>
       <div class="text-center"> <!-- Center-align the button -->
-        <button class="ui button" type="submit" style="background-color: #fea11f; color: white;">Submit</button>
+        <button class="ui button" type="submit" style="background-color: #fea11f; color: white;">
+        @if(session('locale', config('app.locale')) == 'en')
+        Submit
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        ارسال
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Einreichen
+        @endif
+        </button>
       </div>
     </form>
     <div class="text-center" id="thankYouSection" style="display: none;">
-      <p class="lead text-100 measure-lead mx-auto" style="font-size: 24px;">Thank you for your feedback!</p>
+      <p class="lead text-100 measure-lead mx-auto" style="font-size: 24px;">
+      @if(session('locale', config('app.locale')) == 'en')
+      Thank you for your feedback!
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      !شكرا لك على ملاحظاتك
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Danke für Ihre Rückmeldung!
+      @endif  
+      </p>
     </div>
   </div>
 </div>
@@ -306,7 +434,17 @@
 
   <div class="container page__container">
     <div class="page-separator">
-      <div class="page-separator__text">Student Feedback</div>
+      <div class="page-separator__text">
+      @if(session('locale', config('app.locale')) == 'en')
+      Student Feedback
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      ردود فعل الطلاب
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Feedback der Studierenden
+      @endif
+    </div>
     </div>
     <div class="row mb-32pt">
       <div class="col-md-3 mb-32pt mb-md-0">
@@ -318,10 +456,20 @@
         @endif
         @endfor
       </div>
-      <p class="text-muted mb-0">{{$ratingCount}} ratings</p>
+      <p class="text-muted mb-0">{{$ratingCount}}
+      @if(session('locale', config('app.locale')) == 'en')
+         ratings
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      التقييمات
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Bewertungen
+      @endif
+        </p>
     </div>
     <div class="col-md-9">
-      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating5,1)}}% rated 5/5" data-placement="top">
+      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating5,1)}}%" data-placement="top">
         <div class="col-md col-sm-6">
           <div class="progress" style="height: 8px;">
             <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="{{$rating5}}" style="width: {{$rating5}}%" aria-valuemin="0" aria-valuemax="100"></div>
@@ -337,7 +485,7 @@
           </div>
         </div>
       </div>
-      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating3,1)}}% rated 4/5" data-placement="top">
+      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating3,1)}}%" data-placement="top">
         <div class="col-md col-sm-6">
           <div class="progress" style="height: 8px;">
             <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="{{$rating4}}%" style="width: {{$rating4}}%" aria-valuemin="0" aria-valuemax="100"></div>
@@ -353,7 +501,7 @@
           </div>
         </div>
       </div>
-      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating3,1)}}% rated 3/5" data-placement="top">
+      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating3,1)}}%" data-placement="top">
         <div class="col-md col-sm-6">
           <div class="progress" style="height: 8px;">
             <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="{{$rating3}}" style="width: {{$rating3}}%" aria-valuemin="0" aria-valuemax="100"></div>
@@ -369,7 +517,7 @@
           </div>
         </div>
       </div>
-      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating2,1)}}% rated 2/5" data-placement="top">
+      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating2,1)}}%" data-placement="top">
         <div class="col-md col-sm-6">
           <div class="progress" style="height: 8px;">
             <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="{{$rating2}}%" style="width: {{$rating2}}%" aria-valuemin="0" aria-valuemax="100"></div>
@@ -385,7 +533,7 @@
           </div>
         </div>
       </div>
-      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating1,1)}}% rated 1/5" data-placement="top">
+      <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating1,1)}}%" data-placement="top">
         <div class="col-md col-sm-6">
           <div class="progress" style="height: 8px;">
             <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="{{$rating1}}" style="width: {{$rating1}}%" aria-valuemin="0" aria-valuemax="100"></div>
@@ -401,8 +549,6 @@
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 
@@ -450,10 +596,18 @@
 <div class="page-section">
   <div class="container page__container">
     <div class="page-heading">
-      <h4>Top Development Courses</h4>
-      <a href="" class="text-underline ml-sm-auto">See Development Courses</a>
+      <h4>
+      @if(session('locale', config('app.locale')) == 'en')
+      Top Courses
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      أعلى الدورات
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Top-Kurse
+      @endif
+      </h4>
     </div>
-
     <div class="position-relative carousel-card">
       <div class="js-mdk-carousel row d-block" id="carousel-courses1">
 

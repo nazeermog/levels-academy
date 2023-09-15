@@ -51,7 +51,6 @@
           @else
           <video class="embed-responsive-item" controls>
             <source src="{{ asset($lesson->url) }}" type="video/mp4">
-
           </video>
           @endif
         </div>
@@ -65,25 +64,53 @@
         <p class="h1 text-white-50 font-weight-light m-0">{{$lesson->time}}m</p>
       </div>
     </div>
-
     <p class="hero__lead measure-hero-lead text-white-50 mb-24pt">{{$lesson->desc}}</p>
     <div class="col-md-6">
-      <h3>Attachment: {{$lesson->attachment_name}}</h3>
+      <h3>
+      @if(session('locale', config('app.locale')) == 'en')
+      Attachment:
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      مرفق:
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Anhang:
+      @endif
+      {{$lesson->attachment_name}}</h3>
     </div>
     <div class="col-md-10">
       @if (Str::startsWith($lesson->attachment, '/storage/'))
-      <a class="hero__lead measure-hero-lead text-white-50 mb-24p" href="{{ asset($lesson->attachment) }}" download="{{ $lesson->attachment_name }}">Download File</a>
+      <a class="hero__lead measure-hero-lead text-white-50 mb-24p" href="{{ asset($lesson->attachment) }}" download="{{ $lesson->attachment_name }}">
+      @if(session('locale', config('app.locale')) == 'en')
+      Download File
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      تحميل الملف
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Download-Datei
+      @endif
+      </a>
       @else
       <p class="hero__lead measure-hero-lead text-white-50 mb-24p" style="word-wrap: break-word;">{{ $lesson->attachment }}</p>
       @endif
 
     </div>
     <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
-      <a href="lesson.html" class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer <i class="material-icons icon--right">play_circle_outline</i></a>
       @if (!$watched)
       <form method="POST" action="{{ route('student.lesson.watched', ['courseId' => $course->id, 'lessonId' => $lesson->id]) }}">
         @csrf 
-        <button type="submit" class="btn btn-white">Mark as Watched</button>
+        <button type="submit" class="btn btn-white">
+      @if(session('locale', config('app.locale')) == 'en')
+      Mark as Watched
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      تمت مشاهدته
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Als beobachtet markieren
+      @endif
+      </button>
       </form>
       @else
       <button class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt" disabled>Watched</button>
@@ -121,8 +148,18 @@
         @endif
         @endfor
   </div>
-  <p class="lh-1 mb-0"><small class="text-muted">{{$ratingCount}} ratings</small></p>
-  </li>
+  <p class="text-muted mb-0">{{$ratingCount}}<small>
+      @if(session('locale', config('app.locale')) == 'en')
+         ratings
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      التقييمات
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      Bewertungen
+      @endif
+      </small></p>
+      </li>
   </ul>
 </div>
 </div>

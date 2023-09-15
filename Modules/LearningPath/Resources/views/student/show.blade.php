@@ -61,7 +61,19 @@
           <div class="order-1 order-sm-0">
             <h1 class="text-white">{{$coursePath->title}}</h1>
             <p class="lead text-white-50 measure-hero-lead mb-24pt">{{$coursePath->desc}}</p>
-            <a href="" class="btn btn-outline-white">GET STARTED</a>
+            <a href="" class="btn btn-outline-white">
+            <li class="nav-item navbar-list__item">
+            @if(session('locale', config('app.locale')) == 'en')
+            GET STARTED
+            @endif
+            @if(session('locale', config('app.locale')) == 'ar')
+            ابدأ الآن       
+            @endif
+            @if(session('locale', config('app.locale')) == 'de')
+            LOSLEGEN
+            @endif
+            </li>            
+          </a>
           </div>
           <div class="ml-sm-auto order-sm-1">
             <div class="position-relative overflow-hidden rounded border-4 border-light mb-16pt mb-sm-0">
@@ -75,7 +87,17 @@
     <div class="navbar navbar-expand-sm navbar-light bg-white border-bottom-2 navbar-list p-0 m-0 align-items-center">
       <div class="container-fluid page__container">
         <ul class="nav navbar-nav flex align-items-sm-center">
-          <li class="nav-item navbar-list__item">{{$totalLessonCount}} Lessons</li>
+          <li class="nav-item navbar-list__item">{{$totalLessonCount}} 
+          @if(session('locale', config('app.locale')) == 'en')
+          Lessons
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          دروس
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Unterricht
+          @endif
+          </li>
           <li class="nav-item navbar-list__item">
             <i class="material-icons text-muted icon--left">schedule</i>
             {{$totalLessonCoursesTime}}m
@@ -92,13 +114,33 @@
     <div class="row ">
       <div class="col-md-7">
         <div class="page-separator">
-          <div class="page-separator__text">Introduction</div>
+          <div class="page-separator__text">
+          @if(session('locale', config('app.locale')) == 'en')
+          Introduction
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          المقدمة
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Einführung
+          @endif
+          </div>
         </div>
         <p class="text-70">{{$coursePath->about}}</p>
       </div>
       <div class="col-md-5">
         <div class="page-separator">
-          <div class="page-separator__text ">What you’ll learn</div>
+          <div class="page-separator__text ">
+          @if(session('locale', config('app.locale')) == 'en')
+          What you’ll learn
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          ما ستتعلمه
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Was Sie lernen werden
+          @endif
+          </div>
         </div>
         <ul class="list-unstyled">
           @foreach(explode("\n", $coursePath->benefit) as $benefit)
@@ -119,9 +161,18 @@
   <div class="border-left-2 page-section pl-32pt pb-8pt">
     <div class="d-flex align-items-center page-num-container">
       <div class="page-num"></div>
-      <h4> COURSES</h4>
+      <h4> 
+      @if(session('locale', config('app.locale')) == 'en')
+      COURSES
+      @endif
+      @if(session('locale', config('app.locale')) == 'ar')
+      الدورات
+      @endif
+      @if(session('locale', config('app.locale')) == 'de')
+      KURSE
+      @endif
+      </h4>
     </div>
-
     <div class="position-relative carousel-card">
       <div class="js-mdk-carousel row d-block" id="carousel-courses1">
         <div class="row">
@@ -149,7 +200,7 @@
                         {{$instructors[$course->id]->first_name.' '. $instructors[$course->id]->last_name}}
                       </small>
                     </div>
-                    <a href="{{route('student.courses.show', ['CourseId' => $course->id])}}" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+                    <a href="{{route('student.courses.show', ['CourseId' => $course->id])}}" data-toggle="tooltip" data-title="" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
                   </div>
                   <div class="d-flex">
                     <div class="rating rating-24">
@@ -164,7 +215,7 @@
                   <div class="d-flex">
                   <div class="course-number" style="margin-right: inherit;">{{ $course->ordering }}</div>
 
-                    <small class="text-50" style="margin-right: auto!important;">{{ $totalLessonTime[$course->id] }} minutes</small>
+                    <small class="text-50" style="margin-right: auto!important;">{{ $totalLessonTime[$course->id] }}m</small>
                   </div>
 
                 </div>

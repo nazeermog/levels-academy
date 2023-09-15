@@ -41,8 +41,17 @@
                       </div>
                       <div class="flex">
                         <div class="card-title">{{ $coursePath->title }}</div>
-                        <p class="flex text-50 lh-1 mb-0"><small>{{$coursesCounts[$coursePath->id] }} courses</small></p>
-
+                        <p class="flex text-50 lh-1 mb-0"><small>{{$coursesCounts[$coursePath->id] }}    
+                        @if(session('locale', config('app.locale')) == 'en')
+                        courses
+                        @endif
+                        @if(session('locale', config('app.locale')) == 'ar')
+                        دورات
+                        @endif
+                        @if(session('locale', config('app.locale')) == 'de')
+                        Kurse
+                        @endif
+                        </small></p>
                       </div>
                     </div>
                   </div>
