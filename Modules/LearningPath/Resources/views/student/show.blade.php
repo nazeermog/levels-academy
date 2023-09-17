@@ -100,7 +100,7 @@
           </li>
           <li class="nav-item navbar-list__item">
             <i class="material-icons text-muted icon--left">schedule</i>
-            {{$totalLessonCoursesTime}}m
+            {{$totalLessonCoursesTime}}
           </li>
         </ul>
       </div>
@@ -215,7 +215,7 @@
                   <div class="d-flex">
                   <div class="course-number" style="margin-right: inherit;">{{ $course->ordering }}</div>
 
-                    <small class="text-50" style="margin-right: auto!important;">{{ $totalLessonTime[$course->id] }}m</small>
+                    <small class="text-50" style="margin-right: auto!important;">{{ $totalLessonTime[$course->id] }}</small>
                   </div>
 
                 </div>

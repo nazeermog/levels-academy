@@ -74,7 +74,7 @@
                   <i class="flag-icon flag-icon-us m-1"></i> English
                 </a>
                 <a class="dropdown-item" href="{{ route('locale.setting', 'ar') }}" data-lang="ar">
-                <span class="flag-icon flag-icon-sa  m-1"></span> Arabic
+                  <span class="flag-icon flag-icon-sa  m-1"></span> Arabic
                 </a>
                 <a class="dropdown-item" href="{{ route('locale.setting', 'de') }}" data-lang="de">
                   <i class="flag-icon flag-icon-de  m-1"></i> German
@@ -226,7 +226,17 @@
             <a class="dropdown-item" href="billing-history.html">Payments</a>
             <form method="POST" action="{{ route('users.logout') }}">
               @csrf
-              <button type="submit" class="dropdown-item">Logout</button>
+              <button type="submit" class="dropdown-item">
+                @if(session('locale', config('app.locale')) == 'en')
+                Logout
+                @endif
+                @if(session('locale', config('app.locale')) == 'ar')
+                تسجيل خروج
+                @endif
+                @if(session('locale', config('app.locale')) == 'de')
+                Ausloggen
+                @endif
+                </button>
             </form>
           </div>
         </div>

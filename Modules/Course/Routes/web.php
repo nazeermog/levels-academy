@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Instructor\Http\Controllers\InstructorController;
 use Modules\Course\Http\Controllers\Student\StudentCourseController;
 use Modules\Course\Http\Controllers\Student\StudentCourseRatingController;
 

@@ -4,16 +4,20 @@ namespace Modules\Instructor\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use DataSource\Entities\Course\Course;
 use DataSource\Entities\Student\Student;
 use Illuminate\Contracts\Support\Renderable;
+use DataSource\Entities\Instructor\Instructor;
 use DataSource\Entities\Course\CourseTranslation;
-use DataSource\Entities\PracticeType\PracticeTypeDetailTranslation;
 use DataSource\Entities\StudentScore\StudentScore;
 use DataSource\Entities\Semester\SemesterTranslation;
 use DataSource\Repositories\DB\StudentInrollmentRepository;
 use DataSource\Repositories\DB\Course\Admin\AdminCourseRepository;
-use DataSource\Repositories\DB\Practice\Admin\AdminPracticeTypeRepository;
+use DataSource\Entities\PracticeType\PracticeTypeDetailTranslation;
 use DataSource\Repositories\DB\Semester\Admin\AdminSemesterRepository;
+use DataSource\Repositories\DB\Instructor\Admin\AdminInstructorRepository;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeTypeRepository;
+use DataSource\Repositories\DB\Course\Student\StudentCourseRatingRepository;
 use DataSource\Repositories\DB\StudentScore\Instructor\AdminStudentScoreRepository;
 
 class InstructorController extends Controller
@@ -165,5 +169,13 @@ class InstructorController extends Controller
     });
 
     return response()->json(['list' => $list], 200);
+  }
+  public function showProfile($instructorId){
+    $instructor=Instructor::where('user_id',$instructorId)->first();
+    $instructorCourses = Course::where('instructor_id', $instructorId)->get(); 
+    $instructorCoursesRate = StudentCourseRatingRepository::CalculateAverageRatingForAllCourses($instructorCourses);
+    // dd($instructor,$instructorCourses,$instructorCoursesRate);
+    return view('instructor::InstructorProfile',
+    compact('instructor','instructorCourses','instructorCoursesRate'));
   }
 }

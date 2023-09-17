@@ -90,14 +90,24 @@
                   <img src="{{asset($instructor->avatar)}}" width="40" alt="avatar" class="rounded-circle">
                 </span>
                 <div class="media-body">
-                  <a class="card-title m-0" href="teacher-profile.html">{{ $instructor->first_name.' '.$instructor->last_name}}</a>
-                  <p class="text-50 lh-1 mb-0">Instructor</p>
+                  <a class="card-title m-0" href="{{ route('instructor.profile', ['instructorId' => $instructor->user_id]) }}">{{ $instructor->first_name.' '.$instructor->last_name}}</a>
+                  <p class="text-50 lh-1 mb-0">
+                    @if(session('locale', config('app.locale')) == 'en')
+                    Instructor
+                    @endif
+                    @if(session('locale', config('app.locale')) == 'ar')
+                    مدرس
+                    @endif
+                    @if(session('locale', config('app.locale')) == 'de')
+                    Lehrer
+                    @endif
+                  </p>
                 </div>
               </div>
             </li>
             <li class="nav-item navbar-list__item">
               <i class="material-icons text-muted icon--left">schedule</i>
-              {{$totalLessonTime}}m
+              {{$totalLessonTime}}
             </li>
             <li class="nav-item navbar-list__item">
               <i class="material-icons text-muted icon--left">assessment</i>
@@ -302,7 +312,7 @@
               <img src="{{asset($instructorCourse->photo)}}" alt="{{$instructorCourse->title}}" class="avatar-img rounded">
             </a>
             <div class="flex">
-              <a class="card-title mb-4pt" href="course.html">{{$instructorCourse->title}}</a>
+              <a class="card-title mb-4pt" href="">{{$instructorCourse->title}}</a>
               <div class="d-flex align-items-center">
                 <div class="rating mr-8pt">
                   @for ($i = 1; $i <= 5; $i++) @if ($i <=$instructorCoursesRate[$instructorCourse->id])
@@ -312,12 +322,12 @@
                     @endif
                     @endfor
                 </div>
+                <small class="text-muted">{{$instructorCoursesRate[$instructorCourse->id]}}/5</small>
               </div>
             </div>
           </div>
         </div>
         @endforeach
-
       </div>
       <div class="col-md-5 pt-sm-32pt pt-md-0 d-flex flex-column align-items-center justify-content-start">
         <div class="text-center">
@@ -329,7 +339,7 @@
             <small class="text-muted">{{$instructor->spec}}</small>
           </p>
           <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
-            <a href="teacher-profile.html" class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">
+            <a href="{{ route('instructor.profile', ['instructorId' => $instructor->user_id]) }}" class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">
           @if(session('locale', config('app.locale')) == 'en')
           View Profile
           @endif

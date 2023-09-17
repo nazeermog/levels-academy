@@ -2,9 +2,7 @@
 
 namespace Modules\LearningPath\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Contracts\Support\Renderable;
 use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
 use DataSource\Repositories\DB\Taxonomy\Admin\AdminTaxonomyRepository;
 use DataSource\Repositories\DB\CoursePath\Admin\AdminCoursePathRepository;
@@ -35,9 +33,10 @@ class LearningPathController extends Controller
           $instructors[$course->id] = AdminInstructorRepository::InstructorForOneCourse($course);
           $ratingavg[$course->id] =StudentCourseRatingRepository::CalculateAverageRatingForCourse($course);
           $totalLessonTime[$course->id]=AdminLessonRepository::SingleCoursTotalLesson($course);
-          $totalLessonCoursesTime=AdminLessonRepository::SingleCoursTotalLesson($course) + $totalLessonCoursesTime;
           $totalLessonCount=AdminLessonRepository::SingleCoursTotalLessonCount($course) + $totalLessonCount;
       }
+      $totalLessonCoursesTime=AdminCoursePathRepository::SinglePathTotalLesson($coursePath);
+
       return view('learningpath::student.show', compact('coursePath', 'courses', 'instructors','ratingavg','totalLessonTime','totalLessonCoursesTime','totalLessonCount'));
   }
   

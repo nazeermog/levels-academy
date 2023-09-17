@@ -61,7 +61,7 @@
       <h1 class="text-white flex m-0">{{$lesson->title}}</h1>
       <div class="d-flex align-items-center ml-16pt">
         <i class="far fa-clock text-white-50 mr-4pt" style="font-size: 24px;"></i>
-        <p class="h1 text-white-50 font-weight-light m-0">{{$lesson->time}}m</p>
+        <p class="h1 text-white-50 font-weight-light m-0">{{\Carbon\Carbon::now()->addMinutes($lesson->time)->diffForHumans(null, true, false, 2)}}</p>
       </div>
     </div>
     <p class="hero__lead measure-hero-lead text-white-50 mb-24pt">{{$lesson->desc}}</p>
@@ -134,7 +134,7 @@
       </li>
       <li class="nav-item navbar-list__item">
         <i class="material-icons text-muted icon--left">schedule</i>
-        {{$totalLessonTime}}m
+        {{$totalLessonTime}}
       </li>
       <li class="nav-item navbar-list__item">
         <i class="material-icons text-muted icon--left">assessment</i>

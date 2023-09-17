@@ -53,7 +53,7 @@
             <div class="row justify-content-between">
               <div class="col-auto d-flex align-items-center">
                 <span class="material-icons icon-16pt text-50 mr-4pt">access_time</span>
-                <p class="flex text-50 lh-1 mb-0"><small>{{ $totalLessonTime[$course->id] }}m</small></p>
+                <p class="flex text-50 lh-1 mb-0"><small>{{ \Carbon\Carbon::now()->addMinutes($totalLessonTime[$course->id])->diffForHumans(null, true, false, 2) }}</small></p>
               </div>
               <div class="col-auto d-flex align-items-center">
                 <span class="material-icons icon-16pt text-50 mr-4pt">play_circle_outline</span>

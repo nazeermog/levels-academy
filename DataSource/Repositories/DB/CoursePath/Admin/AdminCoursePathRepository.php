@@ -27,7 +27,6 @@ class AdminCoursePathRepository
     {
         $coursePaths = CoursePath::all();
         $totalLessons=0;
-        // Calculate the total number of courses for each course path
         $courseLessons = [];
     foreach ($coursePaths as $coursePath) {
         $totalLessons = 0;
@@ -36,6 +35,25 @@ class AdminCoursePathRepository
     }
         return $courseLessons;
     }
+
+    public static function SinglePathTotalLesson($coursePath)
+    {
+        $totalLessonTime = 0;
+        $courses = $coursePath->courses;
+        foreach($courses as $course){
+            $courseContents=$course->courseContents()->with('courseSteps.lesson')->get();
+            foreach ($courseContents as $courseContent) {
+                foreach ($courseContent->courseSteps as $step) {
+                    if ($step->stepable_type === 'Lessons' && $step->lesson) {
+                        $totalLessonTime += $step->lesson->time;
+                    }
+                }
+            }
+        }
+        $totalLessonTime=\Carbon\Carbon::now()->addMinutes($totalLessonTime)->diffForHumans(null, true, false, 2);
+        return $totalLessonTime;
+    }
+
     
     public function store( $request, $data)
     {
