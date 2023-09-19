@@ -100,7 +100,7 @@
           </li>
           <li class="nav-item navbar-list__item">
             <i class="material-icons text-muted icon--left">schedule</i>
-            {{$totalLessonCoursesTime}}
+            {{ \Carbon\Carbon::now()->addMinutes($totalLessonCoursesTime)->diffForHumans(null, true, false, 2)}}
           </li>
         </ul>
       </div>
@@ -215,7 +215,7 @@
                   <div class="d-flex">
                   <div class="course-number" style="margin-right: inherit;">{{ $course->ordering }}</div>
 
-                    <small class="text-50" style="margin-right: auto!important;">{{ $totalLessonTime[$course->id] }}</small>
+                    <small class="text-50" style="margin-right: auto!important;">{{  \Carbon\Carbon::now()->addMinutes($totalLessonTime[$course->id])->diffForHumans(null, true, false, 2)}}</small>
                   </div>
 
                 </div>

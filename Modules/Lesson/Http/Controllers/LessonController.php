@@ -66,7 +66,6 @@ class LessonController extends Controller
         $course = Course::find($courseId);
         $totalLessonTimeOld = AdminLessonRepository::SingleCoursTotalLesson($course);
 
-        dd($totalWatchedTime,$totalLessonTimeOld);
         $progressPercentage = ($totalWatchedTime / $totalLessonTimeOld) * 100;
         if ($inrollment) {
             $inrollment->progress_lesson = number_format($progressPercentage, 1);

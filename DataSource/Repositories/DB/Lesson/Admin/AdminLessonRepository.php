@@ -69,8 +69,6 @@ class AdminLessonRepository
                 }
             }
         }
-        $totalLessonTime = Carbon::now()->addMinutes($totalLessonTime)->diffForHumans(null, true, false, 2);
-
         $totalLessonTimes[$course->id] = $totalLessonTime;
      }
 
@@ -88,7 +86,6 @@ class AdminLessonRepository
                 }
             }
         }
-        $totalLessonTime = Carbon::now()->addMinutes($totalLessonTime)->diffForHumans(null, true, false, 2);
 
         return $totalLessonTime;
     }
