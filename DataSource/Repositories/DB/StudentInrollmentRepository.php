@@ -16,13 +16,14 @@ class StudentInrollmentRepository
   {
     return Inrollment::all();
   }
-  public static function isAuthInroll($course,$semester){
-    $inrollmentstatus=false;
-    $studentId=auth()->user()->id;
-    $inrollment=Inrollment::where('student_id',$studentId)
-    ->where('course_id',$course->id)->where('semester_id',$semester->id)->first();
-    if($inrollment){
-      $inrollmentstatus=true;
+  public static function isAuthInroll($course, $semester)
+  {
+    $inrollmentstatus = false;
+    $studentId = auth()->user()->id;
+    $inrollment = Inrollment::where('student_id', $studentId)
+      ->where('course_id', $course->id)->where('semester_id', $semester->id)->first();
+    if ($inrollment) {
+      $inrollmentstatus = true;
     }
 
     return $inrollmentstatus;

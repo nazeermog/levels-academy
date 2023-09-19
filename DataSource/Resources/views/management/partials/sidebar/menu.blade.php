@@ -312,6 +312,39 @@
 
 
                 </li>
+
+                        
+                <li class="nav-item {{Route::is('admin.parentts.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.parentts.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                        Parents
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.parentts.index')}}"
+                               class="nav-link  {{ Route::is('admin.parentts.index')?'active':''}}">
+
+                                <p class="ml-3">- Parents </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.parentts.create')}}"
+                               class="nav-link  {{ Route::is('admin.parentts.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Parent </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
               
 
                 {{--                <li class="nav-item {{$url == route('admin.customers.index')?'menu-open':''}} ">--}}

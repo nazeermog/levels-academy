@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Modules\Parentt\Http\Controllers\ParenttController;
 use Modules\Instructor\Http\Controllers\InstructorController;
 
 Route::group([

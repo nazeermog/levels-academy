@@ -7,6 +7,7 @@ use DataSource\Entities\Course\Course;
 use DataSource\Entities\Course\Rating;
 use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\Inrollment\Inrollment;
+use DataSource\Entities\Parentt\Parentt;
 
 /**
  * @property integer $user_id
@@ -27,9 +28,13 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function parentts()
+    {
+        return $this->belongsToMany(Parentt::class, 'parentt_student', 'student_id', 'parentt_id');
+    }
     public function inrollments()
     {
-        return $this->hasMany(Inrollment::class,'student_id');
+        return $this->hasMany(Inrollment::class, 'student_id');
     }
     public function courses()
     {

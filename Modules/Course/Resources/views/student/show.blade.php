@@ -107,7 +107,7 @@
             </li>
             <li class="nav-item navbar-list__item">
               <i class="material-icons text-muted icon--left">schedule</i>
-              {{$totalLessonTime}}
+              {{ \Carbon\Carbon::now()->addMinutes($totalLessonTime)->diffForHumans(null, true, false, 2)}}
             </li>
             <li class="nav-item navbar-list__item">
               <i class="material-icons text-muted icon--left">assessment</i>

@@ -31,6 +31,7 @@ class DataSourceServiceProvider extends ServiceProvider
         'Semester',
         'Inrollment',
         'StudentScore',
+        'Parentt',
     ];
 
     /**

@@ -20,6 +20,8 @@ class Semester extends BaseModel
   protected $fillable = [
     'start_date',
     'end_date',
+    'is_active',
+
   ];
   public function courses()
     {

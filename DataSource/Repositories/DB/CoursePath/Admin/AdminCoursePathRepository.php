@@ -50,7 +50,6 @@ class AdminCoursePathRepository
                 }
             }
         }
-        $totalLessonTime=\Carbon\Carbon::now()->addMinutes($totalLessonTime)->diffForHumans(null, true, false, 2);
         return $totalLessonTime;
     }
 
