@@ -67,6 +67,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
+            @if(session('locale', config('app.locale')) == 'en')
             <th>#</th>
             <th>Date</th>
             <th>Student</th>
@@ -74,7 +75,25 @@
             <th>Lessons Progress</th>
             <th>Practices Progress</th>
             <th>Quizes Progress</th>
-
+            @endif
+            @if(session('locale', config('app.locale')) == 'ar')
+            <th>#</th>
+            <th>التاريخ</th>
+            <th>الطالب</th>
+            <th>الدورة التدريبية</th>
+            <th>تقدم الدروس</th>
+            <th>تقدم الممارسات</th>
+            <th>تقدم الاختبارات</th>
+            @endif
+            @if(session('locale', config('app.locale')) == 'de')
+            <th>#</th>
+            <th>Datum</th>
+            <th>Student</th>
+            <th>Kurs</th>
+            <th>Lektionsfortschritt</th>
+            <th>Praxisfortschritt</th>
+            <th>Quiz-Fortschritt</th>
+            @endif
           </tr>
         </thead>
         <tbody>
@@ -99,19 +118,19 @@
             <td>
               {{$item->progress_quiz}}%
             </td>
-         
+
 
           </tr>
           @endforeach
         </tbody>
       </table>
-     
+
     </div>
     @else
-      <h2>
-        There is no {{$table_name}} Yet
-      </h2>
-      @endif
+    <h2>
+      There is no {{$table_name}} Yet
+    </h2>
+    @endif
 
   </div>
 </div>

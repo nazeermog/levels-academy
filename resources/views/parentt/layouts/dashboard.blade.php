@@ -1,6 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
-
+@if(session('locale', config('app.locale')) == 'en')
+<html lang="en" dir="ltr">
+@endif
+@if(session('locale', config('app.locale')) == 'ar')
+<html lang="ar" dir="rtl">
+@endif
+@if(session('locale', config('app.locale')) == 'de')
+<html lang="en" dir="ltr">
+@endif
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible"

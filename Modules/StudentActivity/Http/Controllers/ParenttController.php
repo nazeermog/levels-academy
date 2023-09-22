@@ -22,7 +22,7 @@ class ParenttController extends Controller
     $children = $parent->students;
     $list = Inrollment::whereIn('student_id', $children->pluck('user_id')->toArray())->get();
     $route_name = 'inrollments';
-    $table_name = 'inrollment Courses';
+    $table_name = 'childern progress';
     return view('studentactivity::progressChilderns',compact('list','route_name','table_name')); 
   }
 
