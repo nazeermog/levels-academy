@@ -17,8 +17,6 @@ use Modules\PracticeType\Http\Controllers\StudentPracticeController;
 
 Route::group(['as' => 'instructor.', 'prefix' => 'instructor'], function () {
     Route::resource('practice-details', PracticeController::class);
-
-
 });
 Route::group([
    'middleware' => ['auth', 'role:student'],

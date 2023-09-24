@@ -21,7 +21,7 @@
 
                     <a href="{{route('admin.'.$route_name.'.create')}}"
                        class="btn btn-primary float-right">+ Add New</a>
-                    
+
 
                 </div>
                 <div class="card-body ">
@@ -37,7 +37,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                              
                                 @foreach($list as $item)
                                     <tr>
                                         <td>{{ $item->id}}</td>
@@ -51,13 +50,11 @@
                                                    data-off-color="danger"
                                                    data-on-color="success">
                                         </td>
-                                        
                                         <td>
-                                        <!-- for show i delete it 
-                                                                                <div class="row">
+                                            <div class="row">
 
                                                 <div class="ml-1">
-                                                        <a href="route('admin.'.$route_name.'.show',['practice'=>$item->id])"
+                                                    <a href="{{route('admin.'.$route_name.'.show',$item->id)}}"
                                                        class="btn btn-outline-primary ">Edit</a>
                                                     <button class="btn btn-outline-danger"
                                                             data-toggle="modal"
@@ -65,8 +62,9 @@
                                                         Delete
                                                     </button>
                                                 </div>
-                                            -->
 
+
+                                                <!-- Modal -->
                                                 <div class="modal fade" id="exampleModal{{$item->id}}" tabindex="-1"
                                                      role="dialog"
                                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -105,7 +103,7 @@
                                                 </div>
 
                                             </div>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{$item->id}}">Delete </button>
+
                                         </td>
                                     </tr>
                                 @endforeach

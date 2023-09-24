@@ -4,6 +4,7 @@ namespace DataSource\Http\Controllers\Admin\Taxonomy;
 
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\Taxonomy\Store;
+use DataSource\Http\Requests\Admin\Taxonomy\Update;
 use DataSource\Repositories\DB\Taxonomy\Admin\AdminTaxonomyRepository;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
 
@@ -16,4 +17,6 @@ class AdminTaxonomyController extends BaseController
     protected string $route_name = 'taxonomies';
     protected string $interface = AdminTaxonomyRepository::class;
     protected string $store_request = Store::class;
+    protected string $update_request = Update::class;
+
 }

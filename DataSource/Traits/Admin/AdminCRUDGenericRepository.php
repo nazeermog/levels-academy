@@ -55,6 +55,14 @@ trait AdminCRUDGenericRepository
         $object = $this->getModel()->where('id', $data['model_id'])->first();
         $dataNew = Arr::except($data, ['model_id', 'image', 'images_old_deleted']);
         $object->update($dataNew);
+        foreach ($object->getTranslatableAttributes() as $attribute) {
+            foreach (localeSupported() as $locale) {
+                if (isset($data[$attribute . '-' . $locale])) {
+                    $object->translateOrNew($locale)->{$attribute} = $data[$attribute . '-' . $locale];
+                }
+            }
+        }
+        $object->save();
         if (isset($data['image'])) {
             $paths[] = array(
                 'src' => $object->addMediaFromBase64($data['image']),

@@ -51,8 +51,6 @@
 
                                 </div>
                                 <div class="row">
-
-
                                     @foreach(localeSupported() as $locale)
                                     <div class="col-4">
                                         <div class="form-group">
@@ -63,6 +61,20 @@
 
                                     @endforeach
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 mt-3">
+                                        <label for="start_date">Start Date</label>
+                                        <input class="form-select col-12" type="date" name="start_date" id="start_date" value="{{$item->start_date}}">
+                                    </div>
+
+                                    <div class="col-md-3 mt-3">
+                                        <label for="end_date">End Date</label>
+                                        <input class="form-select col-12" type="date" name="end_date" id="end_date" value="{{$item->end_date}}">
+                                    </div>
+
+                                </div>
+
                                 <hr />
 
                             </div>

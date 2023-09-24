@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Support\Renderable;
+use DataSource\Http\Requests\Admin\PracticeType\Store;
+use DataSource\Http\Requests\Admin\PracticeType\Update;
+use DataSource\Traits\Admin\AdminCRUDControllerActions;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeTypeRepository;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeLevelRepository;
@@ -13,10 +16,16 @@ use DataSource\Repositories\DB\Practice\Admin\AdminPracticeLevelRepository;
 
 class PracticeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+    use AdminCRUDControllerActions;
+
+    protected string $module = 'datasource::management.practice';
+    protected string $table_name = 'practice_details';
+    protected string $route_name = 'practice-details';
+    protected string $interface = AdminPracticeTypeRepository::class;
+//    protected string $interface_category = AdminCategoryRepository::class;
+    protected string $store_request = Store::class;
+    protected string $update_request = Update::class;
+//    protected $id_request = Id::class;
     public function index()
     {
         $list  = (new AdminPracticeTypeRepository())->index();
@@ -71,7 +80,8 @@ class PracticeController extends Controller
         $route_name = 'practice-details';
         $table_name = 'Practice Type Details';
         $practices = AdminPracticeRepository::list();
-        return view('practicetype::instructor.practiceTypeDetails.show', compact('item', 'route_name', 'table_name', 'practices'));
+        $practiceLevels=AdminPracticeLevelRepository::list();
+        return view('practicetype::instructor.practiceTypeDetails.show', compact('item', 'route_name', 'table_name', 'practices','practiceLevels'));
     }
 
     /**
@@ -83,25 +93,17 @@ class PracticeController extends Controller
     {
         return view('practicetype::edit');
     }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
+    public function update()
     {
-        //
+        try {
+            DB::beginTransaction();
+            $this->getRepository()->update($this->getUpdateRequest()->validated());
+            DB::commit();
+            return redirect()->route('instructor.' . $this->route_name . '.index')->withSuccess('Update successfully');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($exception->getMessage());
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

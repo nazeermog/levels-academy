@@ -5,6 +5,7 @@ namespace DataSource\Http\Controllers\Admin\Lesson;
 use Illuminate\Http\Request;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\Lesson\Store;
+use DataSource\Http\Requests\Admin\Lesson\Update;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
 use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
 
@@ -32,6 +33,15 @@ class AdminLessonController  extends BaseController
         //dd($data);
         $course = $lessonRepo->store($request,$data);
 
+        return redirect()->route('admin.lessons.index')->withSuccess('Course created successfully');
+    }
+    public function update(Request $request)
+    {
+        $storeRequest = new Update();
+        $data = $request->validate($storeRequest->rules());
+        $lessonRepo = $this->getRepository();
+        $lessonRepo->update($request,$data);
+        
         return redirect()->route('admin.lessons.index')->withSuccess('Course created successfully');
     }
 

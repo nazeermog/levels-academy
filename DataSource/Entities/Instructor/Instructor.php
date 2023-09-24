@@ -6,6 +6,7 @@ use DataSource\Entities\User\User;
 use DataSource\Entities\Course\Course;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
+use DataSource\Entities\BaseModel;
 
 /**
  * @property integer $user_id
@@ -15,9 +16,8 @@ use Astrotomic\Translatable\Translatable;
  * @property string $updated_at
  * @property User $user
  */
-class Instructor extends Model
+class Instructor extends BaseModel
 {
-    use Translatable;
 
     // protected $primaryKey = 'user_id';
     public $translationForeignKey = 'instructor_id';

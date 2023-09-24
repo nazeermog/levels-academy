@@ -46,28 +46,10 @@
                                             <input type="text" class="form-control" name="title-{{$locale}}" value="{{old('title-'.$locale,$item->translateOrDefault($locale)->title)}}" placeholder="Enter Title {{ucwords($locale)}}">
                                         </div>
                                     </div>
-
-                                    @endforeach
-
-                                </div>
-                                <div class="row">
-
-
-                                    @foreach(localeSupported() as $locale)
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Desc {{ucwords($locale)}}</label>
-                                            <textarea type="text" class="form-control" name="desc-{{$locale}}" placeholder="Enter Desc {{ucwords($locale)}}">{{old('desc-'.$locale,$item->translateOrDefault($locale)->desc)}}</textarea>
-                                        </div>
-                                    </div>
-
                                     @endforeach
                                 </div>
                                 <hr />
-
                             </div>
-
-
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary" id="submit-form">Submit</button>

@@ -25,18 +25,15 @@ class AdminLessonRepository
             $lesson->translateOrNew($locale)->title = $data['title-' . $locale];
             $lesson->translateOrNew($locale)->desc = $data['desc-' . $locale];
             $lesson->translateOrNew($locale)->attachment_name = $data['attachment_name-' . $locale];
-
         }
-    
+
         $lesson->time = $data['time'];
         if ($request->hasFile('attachment')) {
             $attachmentPath = $request->file('attachment')->store('public/Lessons_attachments');
             $lesson->attachment = Storage::url($attachmentPath);
-
         } elseif ($request->filled('attachment')) {
             $attachmentInput = $request->input('attachment');
-            $lesson->attachment=$attachmentInput;
-
+            $lesson->attachment = $attachmentInput;
         }
 
         if ($request->hasFile('url')) {
@@ -44,38 +41,75 @@ class AdminLessonRepository
             $lesson->url = Storage::url($videoPath);
         } elseif ($request->filled('url')) {
             $videoUrl = $request->input('url');
-            if (strpos($videoUrl,'https://www.youtube.com') === 0) {
+            if (strpos($videoUrl, 'https://www.youtube.com') === 0) {
                 $videoId = getYoutubeVideoId($videoUrl);
                 $lesson->url = 'https://www.youtube.com/embed/' . $videoId;
-            } else if (strpos($videoUrl,'https://player.vimeo.com') === 0) {
-                $lesson->url=$videoUrl;
+            } else if (strpos($videoUrl, 'https://player.vimeo.com') === 0) {
+                $lesson->url = $videoUrl;
             }
         }
-    
+
         $lesson->save();
     }
-     public static function TotalLessonsHours($courses)
+    public function update($request, $data)
     {
-        
-     $totalLessonTimes = [];
+        $lesson=Lesson::find($data['model_id']);
+        foreach (localeSupported() as $locale) {
+            $lesson->translateOrNew($locale)->title = $data['title-' . $locale];
+            $lesson->translateOrNew($locale)->desc = $data['desc-' . $locale];
+            $lesson->translateOrNew($locale)->attachment_name = $data['attachment_name-' . $locale];
+        }
 
-     foreach ($courses as $course) {
-        $totalLessonTime = 0;
-        $courseContents = $course->courseContents()->with('courseSteps.lesson')->get();
-        foreach ($courseContents as $courseContent) {
-            foreach ($courseContent->courseSteps as $step) {
-                if ($step->stepable_type === 'Lessons' && $step->lesson) {
-                    $totalLessonTime += $step->lesson->time;
-                }
+        $lesson->time = $data['time'];
+
+        if ($request->hasFile('attachment')) {
+            // Handle attachment update logic here, similar to what you did in the store function.
+            $attachmentPath = $request->file('attachment')->store('public/Lessons_attachments');
+            $lesson->attachment = Storage::url($attachmentPath);
+        } elseif ($request->filled('attachment')) {
+            $attachmentInput = $request->input('attachment');
+            $lesson->attachment = $attachmentInput;
+        }
+
+        if ($request->hasFile('url')) {
+            // Handle URL update logic here, similar to what you did in the store function.
+            $videoPath = $request->file('url')->store('public/Lessons_video');
+            $lesson->url = Storage::url($videoPath);
+        } elseif ($request->filled('url')) {
+            $videoUrl = $request->input('url');
+            if (strpos($videoUrl, 'https://www.youtube.com') === 0) {
+                $videoId = getYoutubeVideoId($videoUrl);
+                $lesson->url = 'https://www.youtube.com/embed/' . $videoId;
+            } elseif (strpos($videoUrl, 'https://player.vimeo.com') === 0) {
+                $lesson->url = $videoUrl;
             }
         }
-        $totalLessonTimes[$course->id] = $totalLessonTime;
-     }
 
-     return $totalLessonTimes;
+        $lesson->save();
     }
 
-      public static function SingleCoursTotalLesson($course)
+    public static function TotalLessonsHours($courses)
+    {
+
+        $totalLessonTimes = [];
+
+        foreach ($courses as $course) {
+            $totalLessonTime = 0;
+            $courseContents = $course->courseContents()->with('courseSteps.lesson')->get();
+            foreach ($courseContents as $courseContent) {
+                foreach ($courseContent->courseSteps as $step) {
+                    if ($step->stepable_type === 'Lessons' && $step->lesson) {
+                        $totalLessonTime += $step->lesson->time;
+                    }
+                }
+            }
+            $totalLessonTimes[$course->id] = $totalLessonTime;
+        }
+
+        return $totalLessonTimes;
+    }
+
+    public static function SingleCoursTotalLesson($course)
     {
         $totalLessonTime = 0;
         $courseContents = $course->courseContents()->with('courseSteps.lesson')->get();
@@ -103,11 +137,10 @@ class AdminLessonRepository
         }
         return $totalLessonTime;
     }
-   
-    
 }
 
-function getYoutubeVideoId($url) {
+function getYoutubeVideoId($url)
+{
     parse_str(parse_url($url, PHP_URL_QUERY), $params);
     if (isset($params['v'])) {
         return $params['v'];

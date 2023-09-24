@@ -72,4 +72,27 @@ class AdminInstructorRepository
         $user->save();
     }
 
+    public function update($request, $data)
+    {
+        $instructor = Instructor::find($data['model_id']);
+        foreach (localeSupported() as $locale) {
+            $instructor->translateOrNew($locale)->spec = $data['spec-' . $locale];
+            $instructor->translateOrNew($locale)->about = $data['about-' . $locale];
+            $instructor->translateOrNew($locale)->country = $data['country-' . $locale];
+        }
+        $instructor->user_id = $data['user_id'];
+        $user=User::where('id',$instructor->user_id)->first();
+        $instructor->first_name = $user->first_name;
+        $instructor->last_name = $user->last_name;
+        if ($request->hasFile('avatar')) {
+            $videoPath = $request->file('avatar')->store('public/instructors_avatars');
+            $instructor->avatar = Storage::url($videoPath);
+        }
+        
+        $instructor->save();
+
+        $user->role='instructor';
+        $user->save();
+    }
+
 }

@@ -2,11 +2,13 @@
 
 namespace DataSource\Http\Controllers\Admin\Instructor;
 
+use DataSource\Entities\Instructor\Instructor;
 use Illuminate\Http\Request;
 
 use DataSource\Entities\User\User;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\Instructor\Store;
+use DataSource\Http\Requests\Admin\Instructor\Update;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
 use DataSource\Repositories\DB\Instructor\Admin\AdminInstructorRepository;
 
@@ -19,12 +21,22 @@ class AdminInstructorController extends BaseController
     protected string $route_name = 'instructors';
     protected string $interface = AdminInstructorRepository::class;
     // protected string $store_request = Store::class;
+    protected string $update_request = Update::class;
+
     public function create()
     {
         $users = User::all();
         $route_name = $this->route_name;
         $table_name = $this->table_name;
         return view($this->module . '.create', compact('route_name', 'table_name','users'));
+    }
+    public function show($id)
+    {
+        $users = User::all();
+        $route_name = $this->route_name;
+        $table_name = $this->table_name;
+        $item=Instructor::find($id);
+        return view($this->module . '.show', compact('route_name', 'table_name','users','item'));
     }
     
     public function store(Request $request)
@@ -40,4 +52,19 @@ class AdminInstructorController extends BaseController
 
         return redirect()->route('admin.instructors.index')->withSuccess('instructor created successfully');
     }
+    public function update(Request $request)
+    {
+        $storeRequest = new Update();
+        $data = $request->validate($storeRequest->rules());
+
+        $lessonRepo = $this->getRepository();
+
+
+        // dd($data);
+        $course = $lessonRepo->update($request,$data);
+
+        return redirect()->route('admin.instructors.index')->withSuccess('instructor created successfully');
+    }
+    
+
 }

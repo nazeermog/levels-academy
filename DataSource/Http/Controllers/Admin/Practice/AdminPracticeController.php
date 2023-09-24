@@ -4,6 +4,7 @@ namespace DataSource\Http\Controllers\Admin\Practice;
 
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\Practice\Store;
+use DataSource\Http\Requests\Admin\Practice\Update;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
 
@@ -17,6 +18,6 @@ class AdminPracticeController  extends BaseController
     protected string $interface = AdminPracticeRepository::class;
 //    protected string $interface_category = AdminCategoryRepository::class;
     protected string $store_request = Store::class;
-//    protected string $update_request = Update::class;
+    protected string $update_request = Update::class;
 //    protected $id_request = Id::class;
 }

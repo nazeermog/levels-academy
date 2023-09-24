@@ -4,10 +4,11 @@ namespace DataSource\Http\Controllers\Admin\Practice;
 
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\PracticeType\Store;
-use DataSource\Repositories\DB\Practice\Admin\AdminPracticeLevelRepository;
+use DataSource\Http\Requests\Admin\PracticeType\Update;
+use DataSource\Traits\Admin\AdminCRUDControllerActions;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeTypeRepository;
-use DataSource\Traits\Admin\AdminCRUDControllerActions;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeLevelRepository;
 
 class AdminPracticeTypeController extends BaseController
 {
@@ -18,7 +19,7 @@ class AdminPracticeTypeController extends BaseController
     protected string $route_name = 'practicesType';
     protected string $interface = AdminPracticeTypeRepository::class;
     protected string $store_request = Store::class;
-//    protected string $update_request = Update::class;
+   protected string $update_request = Update::class;
 //    protected $id_request = Id::class;
     public function create()
     {
@@ -34,7 +35,8 @@ class AdminPracticeTypeController extends BaseController
         $item = $this->getRepository()->find($id);
         $route_name = $this->route_name;
         $table_name = $this->table_name;
+        $practiceLevels=AdminPracticeLevelRepository::list();
         $practices = AdminPracticeRepository::list();
-        return view($this->module . '.show', compact('item', 'route_name', 'table_name', 'practices'));
+        return view($this->module . '.show', compact('item', 'route_name', 'table_name', 'practices','practiceLevels'));
     }
 }

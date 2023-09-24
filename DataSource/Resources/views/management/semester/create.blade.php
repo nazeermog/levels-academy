@@ -21,7 +21,7 @@
             @foreach (localeSupported() as $locale)
             <div class="col-md-3 m-1">
                 <label for="">Desc {{ ucwords($locale) }}</label>
-                <input class="form-control" name="desc-{{ $locale }}" id="desc-{{ $locale }}">
+                <textarea class="form-control" name="desc-{{ $locale }}" id="desc-{{ $locale }}"></textarea>
             </div>
             @endforeach
         </div>
