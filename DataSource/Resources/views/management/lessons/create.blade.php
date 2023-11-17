@@ -49,7 +49,7 @@
             </div>
             <div class="col-md-3 mt-3 m-1">
                 <label for="time">Time (minutes)</label>
-                <input class="form-control" type="number" name="time" id="time">
+                <input class="form-control" type="number" name="time" id="time" step="0.01">
             </div>
         </div>
         <div class="row">

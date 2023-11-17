@@ -24,7 +24,18 @@
 <link type="text/css" href="{{asset('css/preloader.css')}}" rel="stylesheet">
 
 <!-- App CSS -->
-<link type="text/css" href="{{asset('css/app.css')}}" rel="stylesheet">
+@php
+    $host = request()->getHost();
+    $port = request()->getPort();
+@endphp
+@if($host === 'nazeer-blog2.test')
+    <link type="text/css" href="{{ asset('css/apptest.css') }}" rel="stylesheet">
+@else
+    <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
+@endif
+
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.css">
 
 

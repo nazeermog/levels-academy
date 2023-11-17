@@ -21,22 +21,22 @@ class PracticeTypeSeed extends Seeder
             [
                 'blade_name' => 'abacus',
                 'is_active' => 1,
-                'photo' => storeImage(public_path('images/paths/abacus.jpg'), 'public/practice_type_images'),
+                'photo' => storeImage(public_path('images/paths/new_abacus.png'), 'public/practice_type_images'),
             ],
             [
                 'blade_name' => 'numbers_sum',
                 'is_active' => 1,
-                'photo' => storeImage(public_path('images/paths/number_sum.jpg'), 'public/practice_type_images'),
+                'photo' => storeImage(public_path('images/paths/new_numbers_sum.png'), 'public/practice_type_images'),
             ],
             [
                 'blade_name' => 'math_games',
                 'is_active' => 1,
-                'photo' => storeImage(public_path('images/paths/numbers.jpg'), 'public/practice_type_images'),
+                'photo' => storeImage(public_path('images/paths/new_math_games.png'), 'public/practice_type_images'),
             ],
             [
                 'blade_name' => 'math_games2',
                 'is_active' => 1,
-                'photo' => storeImage(public_path('images/paths/numbers.jpg'), 'public/practice_type_images'),
+                'photo' => storeImage(public_path('images/paths/new_math_games2.png'), 'public/practice_type_images'),
             ],
         ]);
         DB::table('practice_type_translations')->insert([

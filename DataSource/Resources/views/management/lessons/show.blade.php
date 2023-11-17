@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="col-md-3 mt-3 m-1 ml-2">
                                     <label for="time">Time (minutes)</label>
-                                    <input class="form-control" type="number" name="time" id="time" value="{{$item->time}}">
+                                    <input class="form-control" type="number" name="time" id="time" step="0.01" value="{{$item->time}}">
                                 </div>
                             </div>
                             <div class="row">

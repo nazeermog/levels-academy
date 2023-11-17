@@ -5,13 +5,12 @@
   <div class="page-section">
     @foreach ($taxonomies as $taxonomy)
     @if ($taxonomy->courses->isNotEmpty())
+    @foreach ($taxonomy->courses as $course)
+    @if ($course->inrollments->count() > 0)
     <div class="page-separator">
       <div class="page-separator__text">{{$taxonomy->title}}</div>
     </div>
     <div class="row">
-      @foreach ($taxonomy->courses as $course)
-      @if ($course->inrollments->count() > 0)
-
       <div class="col-lg-3 mb-24pt">
         <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay card-group-row__card">
 
@@ -79,9 +78,9 @@
           <!-- Course Details Popover Content -->
         </div>
       </div>
-      @endif
-      @endforeach
     </div>
+    @endif
+    @endforeach
     @endif
     @endforeach
   </div>

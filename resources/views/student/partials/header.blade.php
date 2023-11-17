@@ -19,18 +19,23 @@
 
         <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
 
-          <span class="avatar-title rounded"><img src="{{asset('images/logo/Levels-logo.png')}}" alt="logo" class="img-fluid" /></span>
+          <span class=" rounded"><img src="{{asset('images/logo/woderhafen.jpg')}}" alt="logo" class="img-fluid" style="margin-top: 10px;border-radius: inherit;" /></span>
 
         </span>
 
         <span class="d-none d-lg-block">
-          Levels Academy
+        Woderhafen
         </span>
       </a>
 
       <!-- // END Navbar Brand -->
-
-      <span class="d-none d-md-flex align-items-center mr-16pt">
+      @php
+      $mycoins = \DataSource\Entities\StudentScore\StudentScore::where('student_id', auth()->id())
+      ->selectRaw('SUM(coin) as total_coin')
+      ->groupBy('student_id')
+      ->first();
+      @endphp
+      <span class=" d-md-flex align-items-center mr-16pt">
 
         <span class="avatar avatar-sm mr-12pt">
 
@@ -39,8 +44,29 @@
         </span>
 
         <small class="flex d-flex flex-column">
-          <strong class="navbar-text-100">Experience IQ</strong>
-          <span class="navbar-text-50">2,300 points</span>
+          <strong class="navbar-text-100">
+            @if(session('locale', config('app.locale')) == 'en')
+            Experience
+            @endif
+            @if(session('locale', config('app.locale')) == 'ar')
+            خبرة
+            @endif
+            @if(session('locale', config('app.locale')) == 'de')
+            Erfahrung
+            @endif
+            
+          </strong>
+          <span class="navbar-text-50">{{ $mycoins ? $mycoins->total_coin : 0 }}
+            @if(session('locale', config('app.locale')) == 'en')
+            Coins
+            @endif
+            @if(session('locale', config('app.locale')) == 'ar')
+            نفطة مكتسبة
+            @endif
+            @if(session('locale', config('app.locale')) == 'de')
+            Münzen
+            @endif
+            </span>
         </small>
       </span>
 
@@ -236,7 +262,7 @@
                 @if(session('locale', config('app.locale')) == 'de')
                 Ausloggen
                 @endif
-                </button>
+              </button>
             </form>
           </div>
         </div>
