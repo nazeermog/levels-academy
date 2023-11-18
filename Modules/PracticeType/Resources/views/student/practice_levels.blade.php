@@ -7,7 +7,7 @@
       @foreach ($practiceDetail as $detail)
       <div class="col-12 col-sm-{{ count($practiceDetail) > 1 ? '6' : '12' }}">
         <a class="card border-0 mb-0 m-2" href="{{ route('student.practice.show', ['id' => $detail->id, 'type' => $practice->blade_name]) }}">
-          <img src="{{ $practice->photo }}" alt="Flinto" class="card-img" style="max-height: 100%; width: initial;">
+          <img src="{{asset($practice->photo)}}" alt="Flinto" class="card-img" style="max-height: 100%; width: initial;">
           <!-- <div class="fullbleed bg-primary" style="opacity: .5;"></div> -->
           <span class="card-body d-flex flex-column align-items-center justify-content-center fullbleed ">
             <span class="row flex-nowrap" style="margin-bottom: 80px;">
