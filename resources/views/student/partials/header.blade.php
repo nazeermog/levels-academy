@@ -24,7 +24,7 @@
         </span>
 
         <span class="d-none d-lg-block">
-        Woderhafen
+        Wunderhafen
         </span>
       </a>
 
