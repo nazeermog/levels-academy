@@ -345,6 +345,40 @@
 
 
                 </li>
+
+
+
+                <li class="nav-item {{Route::is('admin.exercises.*')?'menu-open':''}} ">
+                    <a href="#"
+                       class="nav-link {{Route::is('admin.exercises.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                        Exercises
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.exercises.index')}}"
+                               class="nav-link  {{ Route::is('admin.exercises.index')?'active':''}}">
+
+                                <p class="ml-3">- Exercises </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.exercises.create')}}"
+                               class="nav-link  {{ Route::is('admin.exercises.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Exercise </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
               
 
                 {{--                <li class="nav-item {{$url == route('admin.customers.index')?'menu-open':''}} ">--}}

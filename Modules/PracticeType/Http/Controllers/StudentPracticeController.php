@@ -7,8 +7,10 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use DataSource\Entities\Course\Course;
 use DataSource\Entities\Student\Student;
+use DataSource\Entities\Exercise\Exercise;
 use DataSource\Entities\Question\Question;
 use Illuminate\Contracts\Support\Renderable;
+use DataSource\Entities\Course\CourseStudent;
 use Modules\PracticeType\Http\Requests\Store;
 use DataSource\Entities\Inrollment\Inrollment;
 use DataSource\Entities\PracticeType\PracticeType;
@@ -16,10 +18,10 @@ use DataSource\Entities\StudentScore\StudentScore;
 use DataSource\Entities\ResultPractice\ResultPractice;
 use DataSource\Entities\PracticeType\PracticeTypeDetail;
 use DataSource\Repositories\DB\Course\Student\StudentCoursesRepository;
+use DataSource\Repositories\DB\Exercise\Student\StudentExerciseRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeTypeRepository;
 use DataSource\Repositories\DB\ResultPractice\Student\StudentResultPracticeRepository;
-use DataSource\Entities\Course\CourseStudent;
 
 
 class StudentPracticeController extends Controller
@@ -33,6 +35,73 @@ class StudentPracticeController extends Controller
     $practices = StudentPracticeRepository::list();
 
     return view('practicetype::student.index', compact('practices'));
+  }
+  
+  public function showAllExercises()
+  {
+    $practices = Exercise::all();
+
+    return view('practicetype::student.index', compact('practices'));
+  }
+  public function showExercise($id, $type)
+  {
+    $timer = 0;
+    $seconds_speed = 0;
+    $card_number = 0;
+    $colCount = 0;
+    $results = 0;
+    $exercise = Exercise::find($id);
+    if ($type == 'numbers_sum') {
+      $card_number = $exercise->card_number;
+      $seconds_speed = $exercise->seconds_speed;
+      $min = $exercise->range_number_from;
+      $max =  $exercise->range_number_to;
+      $randomNumbers = [
+        rand($min, $max),
+        rand($min, $max),
+        rand($min, $max),
+      ];
+    } elseif ($type == 'abacus') {
+      $numbers = $exercise->numbers;
+      $arrayOfNumbers = explode(',', $numbers);
+      $arrayOfNumbers = array_map('trim', $arrayOfNumbers);
+      
+      $randomNumbers = [];
+      $sum = 0;
+      $colCount = $exercise->col_count;
+      $results = [];
+  
+      foreach ($arrayOfNumbers as $number) {
+          $number = (int) $number;
+  
+          $randomNumbers[] = $number;
+  
+          $sum += $number;
+  
+          $result = solveAbacus($sum, $colCount);
+  
+          $results[] = $result;
+      }
+  }
+   elseif ($type == 'math_games' || $type == 'math_games2') {
+      $min = $exercise->range_number_from;
+      $max =  $exercise->range_number_to;
+      $seconds_speed = $exercise->seconds_speed;
+      $timer = $exercise->timer;
+      $count = $exercise->numbers_to_sum;
+      $turns = $exercise->turns;
+      $randomNumbers = [];
+      for ($i = 0; $i < $turns; $i++) {
+        $innerArray = [];
+
+        for ($j = 0; $j < $count; $j++) {
+          $innerArray[] = rand($min, $max);
+        }
+        $randomNumbers[] = $innerArray;
+      }
+    }
+
+    return view('practicetype::student.exercise.' . $type. 'Exercise', compact('exercise', 'randomNumbers', 'results', 'colCount', 'timer', 'seconds_speed', 'card_number'));
   }
   public function practiceForCourse($id, $type, $courseId)
   {
@@ -315,6 +384,7 @@ function getDigitsAsNumbers($number)
 }
 function giveOnecol($number)
 {
+  $number = (int)$number;
   $five = (int)(floor($number / 5));
   $number %= 5;
   $four = $number >= 4 ? 1 : 0;

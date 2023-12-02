@@ -137,6 +137,14 @@
             </span>
           </a>
         </li>
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.index.exercise') }}">
+            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
+            <span class="sidebar-menu-text">
+              Book Exercises
+            </span>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

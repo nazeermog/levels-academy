@@ -197,7 +197,7 @@
           <button class="btn btn-secondary ms-3 d-none" id="nextStep" disabled>
             Show Result
           </button>
-       
+        
         </div>
         <button class="btn btn-primary" id="submit">Submit</button>
         <!-- <button class="btn btn-primary ms-3 d-none" id="showResult">
@@ -581,36 +581,5 @@ prevStep.addEventListener("click", function () {
   }
 });
 
-document.querySelector("#submit").addEventListener('click', function prossesResult() {
-
-                const StudetntConvert = getAbacusValue(arrResult);
-                console.log(StudetntConvert);
-
-                const resultConvert = getAbacusValue(result);
-                console.log(resultConvert);
-                    $.ajax({
-                        method: "POST",
-                        url: "{{ route('student.practice.store')}}",
-                        data: {
-                            practice_id: {{$practice->practice_id}},
-                            practice_type_id: {{$practice->id}},
-                            level_title: '{{$practice->practiceLevel->title}}',
-                            result_student: StudetntConvert,
-                            result_true: resultConvert,
-                            student_id: {{auth()->user()->id}},
-                            is_true: resultConvert === StudetntConvert,
-                            seconds_speed: {{$practice->range_number_from }},
-                            card_number: {{$practice->range_number_from }},
-                            range_number_from: {{$practice->range_number_from }},
-                            range_number_to: {{$practice->range_number_to}},
-                        },
-                        success: function (one, two, three) {
-                            toastr.success('updated successfully')
-                        },
-                        error: function (one, two, three) {
-                            toastr.error('error')
-                        },
-                    });
-                });
 </script>
 @endpush
