@@ -41,8 +41,16 @@ class StudentPracticeController extends Controller
   {
     $practices = Exercise::all();
 
-    return view('practicetype::student.index', compact('practices'));
+    return view('practicetype::student.exercise.bookExercise', compact('practices'));
   }
+
+  public function checkExercise($exerciseId)
+  {
+      $exercise = Exercise::find($exerciseId);
+
+      return response()->json(['exists' => $exercise !== null]);
+  }
+
   public function showExercise($id, $type)
   {
     $timer = 0;

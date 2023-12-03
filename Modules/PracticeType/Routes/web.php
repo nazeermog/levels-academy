@@ -30,6 +30,9 @@ Route::group([
 
         Route::get('exercise', [StudentPracticeController::class, 'showAllExercises'])->name('student.index.exercise');
         Route::get('exercise/{id}/types/{type}', [StudentPracticeController::class, 'showExercise'])->name('student.show.exercise');
+        Route::get('/check-exercise/{exerciseId}', [StudentPracticeController::class, 'checkExercise'])->name('check.exercise');
+
+
 
         Route::post('donePracitce/{practiceId}/course/{courseId}', [StudentPracticeController::class, 'donePracitce'])->name('student.practice.done');
 
