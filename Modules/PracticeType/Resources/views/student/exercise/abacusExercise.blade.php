@@ -191,7 +191,7 @@
       </div>
       <div class="submit mt-4 text-center" id="submit">
         <div class="d-block mb-2">
-        <button class="btn btn-secondary d-none margin-right" id="prevStep" disabled>
+        <button class="btn btn-secondary invisible margin-right" id="prevStep" disabled>
             Prev
           </button>
           <button class="btn btn-secondary ms-3 d-none" id="nextStep" disabled>
@@ -539,7 +539,7 @@ function updateData(dataBead) {
 }
 
 nextStep.addEventListener("click", function () {
-  prevStep.classList.remove("d-none");
+  prevStep.classList.remove("invisible");
   if (currentStep < steps.length) {
     console.log("currentStep ++", currentStep);
     nextStep.textContent = "Next";
