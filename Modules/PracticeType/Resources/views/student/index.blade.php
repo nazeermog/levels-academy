@@ -7,7 +7,7 @@
             @foreach ($practices as $practice )
             <div class="col-12 col-sm-6">
               <a class="card border-0 mb-0 m-2 " href="{{ route('student.practice.levels', ['id' => $practice->id]) }}">
-                <img src="{{$practice->photo}}" alt="Flinto" class="card-img" style="max-height: 100%; width: initial;">
+                <img src="{{asset('storage'.$practice->photo)}}" alt="Flinto" class="card-img" style="max-height: 100%; width: initial;">
                 <div class="fullbleed bg-secondary" style="opacity: .15;"></div>
                 <span class="card-body d-flex flex-column align-items-center justify-content-center fullbleed">
                   <span class="row flex-nowrap" style="margin-top: auto;">
