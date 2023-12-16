@@ -23,6 +23,7 @@
         align-items: center;
         flex-direction: column;
         height: 100vh;
+        width: 70%;
         }
 
         #abacus {
@@ -191,7 +192,7 @@
       </div>
       <div class="submit mt-4 text-center" id="submit">
         <div class="d-block mb-2">
-        <button class="btn btn-secondary invisible margin-right" id="prevStep" disabled>
+        <button class="btn btn-secondary d-none margin-right" id="prevStep" disabled>
             Prev
           </button>
           <button class="btn btn-secondary ms-3 d-none" id="nextStep" disabled>
@@ -539,7 +540,7 @@ function updateData(dataBead) {
 }
 
 nextStep.addEventListener("click", function () {
-  prevStep.classList.remove("invisible");
+  prevStep.classList.remove("d-none");
   if (currentStep < steps.length) {
     console.log("currentStep ++", currentStep);
     nextStep.textContent = "Next";
