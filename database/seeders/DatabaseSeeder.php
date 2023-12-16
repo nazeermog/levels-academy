@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\ParenttSeed;
 use Database\Seeders\PracticeTypeSeed;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeed::class,
             PracticeTypeSeed::class,
+            ParenttSeed::class,
+
         ]);
     }
 }
