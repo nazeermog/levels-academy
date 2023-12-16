@@ -21,28 +21,6 @@
                       </span>
                     </span>
                   </span>
-                  <span class="row flex-nowrap">
-                    <span class="col-auto text-center d-flex flex-column justify-content-center align-items-center">
-                      <img src="{{asset('/images/illustration/achievement/128/white.png')}}" width="64" alt="achievement">
-                    </span>
-                    <span class="col d-flex flex-column">
-                      <span>
-                        <span class="card-title text-white mb-4pt d-block" style="color:#152c46!important;">
-                        {{$practice->title}} 
-                        @if(session('locale', config('app.locale')) == 'en')
-                        Practice
-                        @endif
-                        @if(session('locale', config('app.locale')) == 'ar')
-                        تمرين
-                        @endif
-                        @if(session('locale', config('app.locale')) == 'de')
-                        Üben
-                        @endif
-                        </span>
-                        <span class="text-white-60"  style="color:#152c46!important;">{{$practice->about}}</span>
-                      </span>
-                    </span>
-                  </span>
                 </span>
               </a>
 
