@@ -23,6 +23,8 @@
         align-items: center;
         flex-direction: column;
         height: 100vh;
+        width: 70%;
+
         }
 
         #abacus {
@@ -540,6 +542,8 @@ function updateData(dataBead) {
 
 nextStep.addEventListener("click", function () {
   prevStep.classList.remove("d-none");
+  abacus.style.width = '100%';
+
   if (currentStep < steps.length) {
     console.log("currentStep ++", currentStep);
     nextStep.textContent = "Next";
