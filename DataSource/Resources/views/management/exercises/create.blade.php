@@ -34,9 +34,13 @@
                     <input type="text" class="form-control" name="numbers" id="numbers">
                     <small class="form-text text-muted">Enter numbers separated by commas (1, 2, 3, 4).</small>
                 </div>
-                <div class="col-md-6 ">
+                <div class="col-md-4 ">
                     <label for="">Column Count (for abacus)</label>
                     <input class="form-control" name="col_count">
+                </div>
+                <div class="col-md-4 ">
+                    <label for="">Code to call by</label>
+                    <input class="form-control" name="code">
                 </div>
             </div>
         </div>

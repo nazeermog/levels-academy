@@ -22,6 +22,7 @@ class Store extends FormRequest
         'col_count' => [''],
         'numbers' => ['required'],
         'practice_id' => ['required', 'numeric'],
+        'code' => ['required'],
 
     ], $mergeArray);
         return[];

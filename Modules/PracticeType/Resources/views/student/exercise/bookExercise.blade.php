@@ -5,7 +5,7 @@
     <div class="row">
         <form id="searchForm" class="d-flex">
             <div class="input-group input-group-lg">
-                <input class="form-control form-control-lg" type="text" id="exerciseId" placeholder="Enter Exercise ID">
+                <input class="form-control form-control-lg" type="text" id="exerciseCode" placeholder="Enter Exercise Code">
                 <button class="btn btn-primary btn-lg" type="button" onclick="searchExercise()">Search</button>
             </div>
         </form>
@@ -14,9 +14,9 @@
 
 <script>
     function searchExercise() {
-        const exerciseId = parseInt(document.getElementById("exerciseId").value.trim());
-        if (!isNaN(exerciseId)) {
-            fetch(`/student/practice/check-exercise/${exerciseId}`)
+        const exerciseCode = parseInt(document.getElementById("exerciseCode").value.trim());
+        if (!isNaN(exerciseCode)) {
+            fetch(`/student/practice/check-exercise/${exerciseCode}`)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -25,7 +25,7 @@
                 })
                 .then(data => {
                     if (data.exists) {
-                        window.open(`/student/practice/exercise/${exerciseId}/types/abacus`, "_blank");
+                        window.open(`/student/practice/exercise/${exerciseCode}/types/abacus`, "_blank");
                     } else {
                         alert("Exercise not found");
                     }
@@ -35,7 +35,7 @@
                     alert('Error checking exercise');
                 });
         } else {
-            alert("Please enter a valid Exercise ID");
+            alert("Please enter a valid Exercise Code");
         }
     }
     

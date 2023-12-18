@@ -18,6 +18,7 @@ use DataSource\Entities\StudentScore\StudentScore;
 use DataSource\Entities\ResultPractice\ResultPractice;
 use DataSource\Entities\PracticeType\PracticeTypeDetail;
 use DataSource\Repositories\DB\Course\Student\StudentCoursesRepository;
+use DataSource\Repositories\DB\Exercise\Admin\AdminExerciseRepository;
 use DataSource\Repositories\DB\Exercise\Student\StudentExerciseRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeTypeRepository;
@@ -44,21 +45,21 @@ class StudentPracticeController extends Controller
     return view('practicetype::student.exercise.bookExercise', compact('practices'));
   }
 
-  public function checkExercise($exerciseId)
+  public function checkExercise($exerciseCode)
   {
-      $exercise = Exercise::find($exerciseId);
+      $exercise = StudentExerciseRepository::findByCode($exerciseCode);
 
       return response()->json(['exists' => $exercise !== null]);
   }
 
-  public function showExercise($id, $type)
+  public function showExercise($code, $type)
   {
     $timer = 0;
     $seconds_speed = 0;
     $card_number = 0;
     $colCount = 0;
     $results = 0;
-    $exercise = Exercise::find($id);
+    $exercise = StudentExerciseRepository::findByCode($code);
     if ($type == 'numbers_sum') {
       $card_number = $exercise->card_number;
       $seconds_speed = $exercise->seconds_speed;
@@ -70,6 +71,7 @@ class StudentPracticeController extends Controller
         rand($min, $max),
       ];
     } elseif ($type == 'abacus') {
+      // dd($exercise);
       $numbers = $exercise->numbers;
       $arrayOfNumbers = explode(',', $numbers);
       $arrayOfNumbers = array_map('trim', $arrayOfNumbers);

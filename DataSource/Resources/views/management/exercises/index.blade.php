@@ -32,6 +32,7 @@
                                 <th>#</th>
                                 <th> Title</th>
                                 <th>Status</th>
+                                <th>Code</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -40,9 +41,12 @@
                             <tr>
                                 <td>{{ $item->id}}</td>
                                 <td>{{($item->title)}}</td>
+
                                 <td>
                                     <input type="checkbox" name="my-checkbox" data-bootstrap-switch {{($item->is_active)?'checked':''}} value="{{$item->id}}" data-off-color="danger" data-on-color="success">
                                 </td>
+                                <td>{{($item->code)}}</td>
+
                                 <td>
                                     <div class="row">
 
@@ -89,6 +93,7 @@
                                     </div>
 
                                 </td>
+                              
                             </tr>
                             @endforeach
                         </tbody>

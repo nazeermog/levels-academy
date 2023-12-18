@@ -353,7 +353,7 @@
                        class="nav-link {{Route::is('admin.exercises.*')?'active':''}}">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>
-                        Exercises
+                        Book Exercises
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -363,14 +363,14 @@
                             <a href="{{route('admin.exercises.index')}}"
                                class="nav-link  {{ Route::is('admin.exercises.index')?'active':''}}">
 
-                                <p class="ml-3">- Exercises </p>
+                                <p class="ml-3">- Book Exercises </p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('admin.exercises.create')}}"
                                class="nav-link  {{ Route::is('admin.exercises.create')?'active':''}}">
 
-                                <p class="ml-3">- Create Exercise </p>
+                                <p class="ml-3">- Create Book Exercise </p>
                             </a>
                         </li>
 

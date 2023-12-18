@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('practice_id')->index();
             $table->string('numbers');
             $table->integer('col_count')->nullable();
+            $table->string('code')->unique();
             $table->timestamps();
         });
     }

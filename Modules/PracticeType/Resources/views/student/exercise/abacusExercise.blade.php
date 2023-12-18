@@ -540,6 +540,7 @@ function updateData(dataBead) {
 }
 
 nextStep.addEventListener("click", function () {
+  abacus.style.width = '100%';
   prevStep.classList.remove("d-none");
   if (currentStep < steps.length) {
     console.log("currentStep ++", currentStep);

@@ -21,4 +21,8 @@ class StudentExerciseRepository
     {
         return Exercise::find($id);
     }
+    public static function findByCode($code)
+    {
+        return Exercise::where('code',$code)->first();
+    }
 }
