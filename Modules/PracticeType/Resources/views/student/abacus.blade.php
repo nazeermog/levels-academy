@@ -27,6 +27,13 @@
 
         }
 
+        @media(max-width: 576px){
+          .abacus {
+            height: auto;
+            width: 100%;
+          }
+        }
+
         #abacus {
         display: flex;
         justify-content: center;
@@ -51,12 +58,31 @@
         right: -45px;
         }
 
+        @media(max-width: 576px){
+          #abacus::before {
+            right: -25px;
+            width: 10px;
+          }
+        }
+
+        @media(max-width: 576px){
+          #abacus::after {
+            left: -25px;
+            width: 10px;
+          }
+        }
+
         .stander {
         width: calc(100% + 90px);
         border-radius: 100px 100px 75px 75px;
         height: 15px;
         background: #878687;
         position: relative;
+        }
+        @media(max-width: 576px){
+          .stander {
+            width: calc(100% + 50px);
+          }
         }
         .stander:first-child {
         position: absolute;
@@ -84,6 +110,12 @@
         margin-left: 30px;
         }
 
+        @media(max-width: 576px){
+          .one-rod:not(:last-child) {
+            margin-left: 20px;
+          }
+        }
+
         .rod-top {
         height: 70px;
         position: relative;
@@ -97,6 +129,14 @@
         width: 10px;
         height: 100%;
         }
+
+        @media(max-width: 576px){
+          .rod-top .rod {
+            padding: 0 3px;
+            width: 5px;
+          }
+        }
+
         .rod-top .beads {
         display: flex;
         flex-direction: column;
@@ -105,6 +145,13 @@
         padding: 15px 0;
         padding-bottom: 10px;
         }
+
+        @media(max-width: 576px){
+          .rod-top .beads {
+            padding-bottom: 15px;
+          }
+        }
+
         .rod-top .bead-top {
         width: 30px;
         height: 20px;
@@ -113,6 +160,12 @@
         transition: margin-bottom 0.5s;
         box-shadow: inset 0 -10px 10px -10px #000000, inset 0px 0px 2px rgba(0, 0, 0, 0.5);
         margin-bottom: 25px;
+        }
+        @media(max-width: 576px){
+          .rod-top .bead-top {
+            width: 20px;
+            height: 15px;
+          }
         }
         .rod-top .bead-top.active {
         margin-bottom: 0px;
@@ -128,6 +181,13 @@
         transform: translateX(-50%);
         }
 
+        @media(max-width: 576px){
+          .rod-top::before {
+            width: 47px;
+            height: 8px;
+          }
+        }
+
         .rod-bottom {
         height: 135px;
         }
@@ -139,6 +199,12 @@
         padding: 0 5px;
         width: 10px;
         height: 100%;
+        }
+        @media(max-width: 576px){
+          .rod-bottom .rod {
+            width: 6px;
+            padding: 0 3px;
+          }
         }
         .rod-bottom .beads {
         display: flex;
@@ -155,6 +221,12 @@
         border-radius: 20%;
         box-shadow: inset 0 -10px 10px -10px #000000, inset 0px 0px 2px rgba(0, 0, 0, 0.5);
         transition: margin-bottom 0.5s;
+        }
+        @media(max-width: 576px){
+          .rod-bottom .rod {
+            width: 20px;
+            height: 15px;
+          }
         }
         .rod-bottom .bead-down.active {
         margin-bottom: 40px;

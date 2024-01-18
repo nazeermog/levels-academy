@@ -7,159 +7,256 @@
         crossorigin="anonymous"
     />
     <style>
-            body {
-        background-color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        }
-        .margin-right{
+      body {
+          background-color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+      }
+      .margin-right {
           margin-right: 250px !important;
-        }
-        .abacus {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        height: 100vh;
-        width: 70%;
-        }
+      }
+      .abacus {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          height: 100vh;
+          width: 70%;
+      }
 
-        #abacus {
-        display: flex;
-        justify-content: center;
-        position: relative;
-        }
-        #abacus::after {
-        content: "";
-        width: 15px;
-        border-radius: 100px 100px 75px 75px;
-        height: 100%;
-        background: #878687;
-        position: absolute;
-        left: -45px;
-        }
-        #abacus::before {
-        content: "";
-        width: 15px;
-        border-radius: 100px 100px 75px 75px;
-        height: 100%;
-        background: #878687;
-        position: absolute;
-        right: -45px;
-        }
+      @media (max-width: 576px) {
+          .abacus {
+              height: auto;
+              width: 100%;
+          }
+      }
 
-        .stander {
-        width: calc(100% + 90px);
-        border-radius: 100px 100px 75px 75px;
-        height: 15px;
-        background: #878687;
-        position: relative;
-        }
-        .stander:first-child {
-        position: absolute;
-        top: 0;
-        z-index: 111;
-        }
-        .stander:last-child {
-        position: absolute;
-        bottom: 0;
-        z-index: 111;
-        }
+      #abacus {
+          display: flex;
+          justify-content: center;
+          position: relative;
+      }
+      #abacus::after {
+          content: "";
+          width: 15px;
+          border-radius: 100px 100px 75px 75px;
+          height: 100%;
+          background: #878687;
+          position: absolute;
+          left: -45px;
+      }
+      #abacus::before {
+          content: "";
+          width: 15px;
+          border-radius: 100px 100px 75px 75px;
+          height: 100%;
+          background: #878687;
+          position: absolute;
+          right: -45px;
+      }
 
+      @media (max-width: 576px) {
+          #abacus::before {
+              right: -25px !important;
+              width: 10px !important;
+          }
+      }
+
+      @media (max-width: 576px) {
+          #abacus::after {
+              left: -25px !important;
+              width: 10px !important;
+          }
+      }
+
+      .stander {
+          width: calc(100% + 90px);
+          border-radius: 100px 100px 75px 75px;
+          height: 15px;
+          background: #878687;
+          position: relative;
+      }
+      @media (max-width: 576px) {
+          .stander {
+              width: calc(100% + 50px) !important;
+          }
+      }
+      .stander:first-child {
+          position: absolute;
+          top: 0;
+          z-index: 111;
+      }
+      .stander:last-child {
+          position: absolute;
+          bottom: 0;
+          z-index: 111;
+      }
+
+      .rods {
+          display: flex;
+          flex-direction: row-reverse;
+          height: 205px;
+          width: 100%;
+      }
+
+      [dir="rtl"] .rods {
+          flex-direction: unset;
+      }
+
+      @media (max-width: 576px) {
         .rods {
-        display: flex;
-        flex-direction: row-reverse;
-        height: 205px;
-        width: 100%;
+          height: 177px;
         }
+      }
 
-        [dir=rtl] .rods {
-        flex-direction: unset;
-        }
+      .one-rod:not(:last-child) {
+          margin-left: 30px;
+      }
 
-        .one-rod:not(:last-child) {
-        margin-left: 30px;
-        }
+      @media (max-width: 576px) {
+          .one-rod:not(:last-child) {
+              margin-left: 20px;
+          }
+      }
 
-        .rod-top {
-        height: 70px;
-        position: relative;
-        }
-        .rod-top .rod {
-        display: flex;
-        flex-direction: column;
-        background: #878687;
-        align-items: center;
-        padding: 0 5px;
-        width: 10px;
-        height: 100%;
-        }
-        .rod-top .beads {
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-        height: 100%;
-        padding: 15px 0;
-        padding-bottom: 10px;
-        }
-        .rod-top .bead-top {
-        width: 30px;
-        height: 20px;
-        background: #489fb7;
-        border-radius: 20%;
-        transition: margin-bottom 0.5s;
-        box-shadow: inset 0 -10px 10px -10px #000000, inset 0px 0px 2px rgba(0, 0, 0, 0.5);
-        margin-bottom: 25px;
-        }
+      .rod-top {
+          height: 70px;
+          position: relative;
+      }
+      .rod-top .rod {
+          display: flex;
+          flex-direction: column;
+          background: #878687;
+          align-items: center;
+          padding: 0 5px;
+          width: 10px;
+          height: 100%;
+      }
+
+      @media (max-width: 576px) {
+          .rod-top .rod {
+              padding: 0 3px !important;
+              width: 5px !important;
+          }
+      }
+
+      .rod-top .beads {
+          display: flex;
+          flex-direction: column;
+          justify-content: end;
+          height: 100%;
+          padding: 15px 0;
+          padding-bottom: 10px;
+      }
+
+      @media (max-width: 576px) {
+          .rod-top .beads {
+              padding-bottom: 15px !important;
+          }
+      }
+
+      .rod-top .bead-top {
+          width: 30px;
+          height: 20px;
+          background: #489fb7;
+          border-radius: 20%;
+          transition: margin-bottom 0.5s;
+          box-shadow: inset 0 -10px 10px -10px #000000,
+              inset 0px 0px 2px rgba(0, 0, 0, 0.5);
+          margin-bottom: 25px;
+      }
+      @media (max-width: 576px) {
+          .rod-top .bead-top {
+              width: 20px !important;
+              height: 15px !important;
+          }
+      }
+      .rod-top .bead-top.active {
+          margin-bottom: 0px;
+      }
+      @media (max-width: 576px) {
         .rod-top .bead-top.active {
-        margin-bottom: 0px;
-        }
-        .rod-top::before {
-        content: "";
-        width: 70px;
-        height: 10px;
-        background-color: #878687;
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        transform: translateX(-50%);
-        }
+          margin-bottom: -7px;
+          }
+      }
+      .rod-top::before {
+          content: "";
+          width: 70px;
+          height: 10px;
+          background-color: #878687;
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          transform: translateX(-50%);
+      }
 
-        .rod-bottom {
-        height: 135px;
+      @media (max-width: 576px) {
+          .rod-top::before {
+              width: 47px !important;
+              height: 8px !important;
+          }
+      }
+
+      .rod-bottom {
+          height: 135px;
+      }
+
+      @media (max-width: 576px) {
+          .rod-bottom {
+            height: 107px;
         }
-        .rod-bottom .rod {
-        display: flex;
-        flex-direction: column;
-        background: #878687;
-        align-items: center;
-        padding: 0 5px;
-        width: 10px;
-        height: 100%;
-        }
-        .rod-bottom .beads {
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-        height: 100%;
-        padding: 15px 0;
-        padding-top: 0;
-        }
+      }
+
+      .rod-bottom .rod {
+          display: flex;
+          flex-direction: column;
+          background: #878687;
+          align-items: center;
+          padding: 0 5px;
+          width: 10px;
+          height: 100%;
+      }
+      @media (max-width: 576px) {
+          .rod-bottom .rod {
+              width: 6px !important;
+              padding: 0 3px !important;
+          }
+      }
+      .rod-bottom .beads {
+          display: flex;
+          flex-direction: column;
+          justify-content: end;
+          height: 100%;
+          padding: 15px 0;
+          padding-top: 0;
+      }
+      .rod-bottom .bead-down {
+          width: 30px;
+          height: 20px;
+          background: #489fb7;
+          border-radius: 20%;
+          box-shadow: inset 0 -10px 10px -10px #000000,
+              inset 0px 0px 2px rgba(0, 0, 0, 0.5);
+          transition: margin-bottom 0.5s;
+      }
+      @media (max-width: 576px) {
         .rod-bottom .bead-down {
-        width: 30px;
-        height: 20px;
-        background: #489fb7;
-        border-radius: 20%;
-        box-shadow: inset 0 -10px 10px -10px #000000, inset 0px 0px 2px rgba(0, 0, 0, 0.5);
-        transition: margin-bottom 0.5s;
-        }
-        .rod-bottom .bead-down.active {
-        margin-bottom: 40px;
-        }
+              width: 20px !important;
+              height: 15px !important;
+          }
+      }
+      .rod-bottom .bead-down.active {
+          margin-bottom: 40px;
+      }
 
-        /*# sourceMappingURL=main.css.map */
+      @media (max-width: 576px) {
+        .rod-bottom .bead-down.active {
+            margin-bottom: 32px !important;
+          }
+      }
+
 
     </style>
     <link rel="stylesheet" href="./assets/style/style.css"/>
