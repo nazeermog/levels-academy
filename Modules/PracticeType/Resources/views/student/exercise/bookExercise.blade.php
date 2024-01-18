@@ -14,8 +14,8 @@
 
 <script>
     function searchExercise() {
-        const exerciseCode = parseInt(document.getElementById("exerciseCode").value.trim());
-        if (!isNaN(exerciseCode)) {
+        const exerciseCode = document.getElementById("exerciseCode").value.trim();
+       
             fetch(`/student/practice/check-exercise/${exerciseCode}`)
                 .then(response => {
                     if (response.ok) {
@@ -34,10 +34,8 @@
                     console.error('Error:', error);
                     alert('Error checking exercise');
                 });
-        } else {
-            alert("Please enter a valid Exercise Code");
-        }
-    }
+        } 
+    
     
 </script>
 @endsection
