@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use DataSource\Entities\Exercise\Exercise;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\Exercise\Store;
+use DataSource\Http\Requests\Admin\Exercise\Update;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
 use DataSource\Repositories\DB\Exercise\Admin\AdminExerciseRepository;
 use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
@@ -23,7 +24,7 @@ class AdminExerciseController extends BaseController
     protected string $route_name = 'exercises';
     protected string $interface = AdminExerciseRepository::class;
     protected string $store_request = Store::class;
-    // protected string $update_request = Update::class;
+    protected string $update_request = Update::class;
 
     public function create()
     {
@@ -32,6 +33,16 @@ class AdminExerciseController extends BaseController
         $practices = AdminPracticeRepository::list();
         $practiceLevels = AdminPracticeLevelRepository::list();
         return view($this->module . '.create', compact('route_name', 'table_name', 'practices', 'practiceLevels'));
+    }
+    
+    public function show($id)
+    {
+        $route_name = $this->route_name;
+        $table_name = $this->table_name;
+        $practices = AdminPracticeRepository::list();
+        $practiceLevels = AdminPracticeLevelRepository::list();
+        $item=$this->getRepository()->find($id);
+        return view($this->module . '.show', compact('route_name', 'table_name', 'practices', 'practiceLevels','item'));
     }
     
 }

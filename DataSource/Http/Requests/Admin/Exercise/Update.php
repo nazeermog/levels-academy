@@ -1,10 +1,8 @@
 <?php
 
-namespace DataSource\Http\Requests\Admin\Lesson;
+namespace DataSource\Http\Requests\Admin\Exercise;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use DataSource\Entities\Lesson\Lesson;
 
 class Update extends FormRequest
 {
@@ -18,15 +16,15 @@ class Update extends FormRequest
        $mergeArray = [];
        foreach (localeSupported() as $locale) {
            $mergeArray['title-' . $locale] = ['required', 'string'];
-           $mergeArray['desc-' . $locale] = ['required', 'string'];
-           $mergeArray['attachment_name-' . $locale] = ['nullable', 'string'];
 
        }
        return array_merge([
-        'url' => ['required'],
-        'attachment' => ['nullable'],
-        'time' => ['numeric','required'],
-        'model_id' => ['integer','required'],
+        'col_count' => [''],
+        'numbers' => ['required'],
+        'practice_id' => ['required', 'numeric'],
+        'code' => ['required'],
+        'book_id' => ['required'],
+        'model_id'=> ['required'],
     ], $mergeArray);
         return[];
     }

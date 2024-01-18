@@ -23,7 +23,7 @@ class Store extends FormRequest
         'numbers' => ['required'],
         'practice_id' => ['required', 'numeric'],
         'code' => ['required'],
-
+        'book_id' => ['required'],
     ], $mergeArray);
         return[];
     }

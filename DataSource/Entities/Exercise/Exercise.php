@@ -20,8 +20,8 @@ class Exercise extends BaseModel
     protected $fillable = [
         'practice_id',
         'code',
+        'book_id',
         'col_count',
         'numbers',
-        'quiz_type'
     ];
 }

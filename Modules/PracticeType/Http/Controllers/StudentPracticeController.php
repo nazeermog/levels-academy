@@ -37,19 +37,47 @@ class StudentPracticeController extends Controller
 
     return view('practicetype::student.index', compact('practices'));
   }
-  
-  public function showAllExercises()
+
+  public function SearchAllExercises()
   {
-    $practices = Exercise::all();
+    $practices = AdminExerciseRepository::list();
 
     return view('practicetype::student.exercise.bookExercise', compact('practices'));
   }
+  public function showAllExercises()
+  {
+    $practices = AdminExerciseRepository::list();
+
+    // Organize classes based on the starting letter of book_id
+    $availableClasses = [];
+
+    foreach ($practices as $practice) {
+      $firstLetter = strtolower(substr($practice->book_id, 0, 1));
+
+      // Check if the letter is not already in the array
+      if (!in_array($firstLetter, $availableClasses)) {
+        $availableClasses[] = $firstLetter;
+      }
+    }
+    // Ensure uniqueness of classes
+    $availableClasses = array_unique($availableClasses);
+    // dd($availableClasses);
+    return view('practicetype::student.exercise.indexBookExercise', compact('availableClasses'));
+  }
+  public function AllExercisesByClass($class)
+  {
+    $exercises = Exercise::whereRaw('SUBSTRING(book_id, 1, 1) = ?', [$class])
+      ->get();
+    return view('practicetype::student.exercise.BookExerciseByClass', compact('exercises'));
+  }
+
+
 
   public function checkExercise($exerciseCode)
   {
-      $exercise = StudentExerciseRepository::findByCode($exerciseCode);
+    $exercise = StudentExerciseRepository::findByCode($exerciseCode);
 
-      return response()->json(['exists' => $exercise !== null]);
+    return response()->json(['exists' => $exercise !== null]);
   }
 
   public function showExercise($code, $type)
@@ -75,25 +103,24 @@ class StudentPracticeController extends Controller
       $numbers = $exercise->numbers;
       $arrayOfNumbers = explode(',', $numbers);
       $arrayOfNumbers = array_map('trim', $arrayOfNumbers);
-      
+
       $randomNumbers = [];
       $sum = 0;
       $colCount = $exercise->col_count;
       $results = [];
-  
+
       foreach ($arrayOfNumbers as $number) {
-          $number = (int) $number;
-  
-          $randomNumbers[] = $number;
-  
-          $sum += $number;
-  
-          $result = solveAbacus($sum, $colCount);
-  
-          $results[] = $result;
+        $number = (int) $number;
+
+        $randomNumbers[] = $number;
+
+        $sum += $number;
+
+        $result = solveAbacus($sum, $colCount);
+
+        $results[] = $result;
       }
-  }
-   elseif ($type == 'math_games' || $type == 'math_games2') {
+    } elseif ($type == 'math_games' || $type == 'math_games2') {
       $min = $exercise->range_number_from;
       $max =  $exercise->range_number_to;
       $seconds_speed = $exercise->seconds_speed;
@@ -111,7 +138,7 @@ class StudentPracticeController extends Controller
       }
     }
 
-    return view('practicetype::student.exercise.' . $type. 'Exercise', compact('exercise', 'randomNumbers', 'results', 'colCount', 'timer', 'seconds_speed', 'card_number'));
+    return view('practicetype::student.exercise.' . $type . 'Exercise', compact('exercise', 'randomNumbers', 'results', 'colCount', 'timer', 'seconds_speed', 'card_number'));
   }
   public function practiceForCourse($id, $type, $courseId)
   {
@@ -324,8 +351,8 @@ class StudentPracticeController extends Controller
 
   public function donePracitce($practiceId, $courseId)
   {
-    $practiceId=(int)$practiceId;
-    $courseId=(int)$courseId;
+    $practiceId = (int)$practiceId;
+    $courseId = (int)$courseId;
     $studentId = auth()->user()->id;
     $inrollment = Inrollment::where('student_id', $studentId)
       ->where('course_id', $courseId)
@@ -364,7 +391,7 @@ class StudentPracticeController extends Controller
 
     $totalPractice = CourseStudent::where('student_id', $studentId)
       ->where('course_id', $courseId)
-      ->where('practice_id',$practiceId)
+      ->where('practice_id', $practiceId)
       ->count();
 
     $course = Course::find($courseId);
