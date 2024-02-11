@@ -27,8 +27,11 @@ Route::group([
         Route::get('{id}/types/{type}', [StudentPracticeController::class, 'showPractice'])->name('student.practice.show');
 
         Route::get('forcourse/{id}/types/{type}/courses/{course}', [StudentPracticeController::class, 'practiceForCourse'])->name('student.practice.forcourse');
+        
+        Route::get('exercise', [StudentPracticeController::class, 'SearchAllExercises'])->name('student.index.exercise');
+        Route::get('allBookExercise', [StudentPracticeController::class, 'showAllExercises'])->name('student.index.Bookexercise');
+        Route::get('BookExerciseByClass/{class}', [StudentPracticeController::class, 'AllExercisesByClass'])->name('student.classes.Bookexercise');
 
-        Route::get('exercise', [StudentPracticeController::class, 'showAllExercises'])->name('student.index.exercise');
         Route::get('exercise/{id}/types/{type}', [StudentPracticeController::class, 'showExercise'])->name('student.show.exercise');
         Route::get('/check-exercise/{exerciseId}', [StudentPracticeController::class, 'checkExercise'])->name('check.exercise');
 

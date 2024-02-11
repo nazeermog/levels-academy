@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('numbers');
             $table->integer('col_count')->nullable();
             $table->string('code')->unique();
+            $table->string('book_id');
             $table->timestamps();
         });
     }
