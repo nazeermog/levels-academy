@@ -16,7 +16,7 @@ class AdminInstructorController extends BaseController
 {
     use AdminCRUDControllerActions;
 
-    protected string $module = 'datasource::management.Instructors';
+    protected string $module = 'datasource::management.instructors';
     protected string $table_name = 'instructors';
     protected string $route_name = 'instructors';
     protected string $interface = AdminInstructorRepository::class;

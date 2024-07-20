@@ -14,7 +14,7 @@ class AdminParenttController extends BaseController
 {
     use AdminCRUDControllerActions;
 
-    protected string $module = 'datasource::management.Parentt';
+    protected string $module = 'datasource::management.parentt';
     protected string $table_name = 'Parentts';
     protected string $route_name = 'parentts';
     protected string $interface = AdminParenttRepository::class;

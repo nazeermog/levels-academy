@@ -18,7 +18,7 @@ class AdminCoursePathController extends BaseController
 {
     use AdminCRUDControllerActions;
 
-    protected string $module = 'datasource::management.CoursePath';
+    protected string $module = 'datasource::management.coursePath';
     protected string $table_name = 'coursePath';
     protected string $route_name = 'coursePath';
     protected string $interface = AdminCoursePathRepository::class;

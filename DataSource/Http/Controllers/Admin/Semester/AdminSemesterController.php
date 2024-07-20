@@ -13,7 +13,7 @@ class AdminSemesterController extends BaseController
 {
     use AdminCRUDControllerActions;
 
-    protected string $module = 'datasource::management.Semester';
+    protected string $module = 'datasource::management.semester';
     protected string $table_name = 'Semesters';
     protected string $route_name = 'semesters';
     protected string $interface = AdminSemesterRepository::class;
