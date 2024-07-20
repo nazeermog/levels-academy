@@ -43,7 +43,16 @@ class UserSeed extends Seeder
                 'role' => 'instructor'
             ],
         ]);
-       
+        DB::table('users')->insert([
+            [
+                'first_name' => 'student2',
+                'last_name' => 'student2',
+                'email' => 'student2@student.com',
+                'password' => Hash::make('123456789'),
+                'role' => 'student'
+            ],
+        ]);
+
         DB::table('students')->insert([
             [
                 'user_id' => 2,
@@ -53,6 +62,21 @@ class UserSeed extends Seeder
                 'city' => 'Cairo',
             ],
         ]);
-      
+        DB::table('instructors')->insert([
+            [
+                'user_id' => 3,
+                'first_name' => 'instructor',
+                'last_name' => 'instructor',
+            ],
+        ]);
+        DB::table('students')->insert([
+            [
+                'user_id' => 4,
+                'first_name' => 'student2',
+                'last_name' => 'student2',
+                'country' => 'Egypt',
+                'city' => 'Cairo',
+            ],
+        ]);
     }
 }
