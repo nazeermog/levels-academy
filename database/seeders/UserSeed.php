@@ -69,6 +69,29 @@ class UserSeed extends Seeder
                 'last_name' => 'instructor',
             ],
         ]);
+        DB::table('instructors_translations')->insert([
+            [
+                'spec' => 'اختصاص ويب',
+                'about' => 'خبرة 10 سنين',
+                'country' => 'سوريا',
+                'instructor_id' => 3,
+                'locale' => 'ar',
+            ],
+            [
+                'spec' => 'Web specialty',
+                'about' => '10 years experience',
+                'country' => 'syria',
+                'instructor_id' => 3,
+                'locale' => 'en',
+            ],
+            [
+                'spec' => 'Web-Spezialität',
+                'about' => '10 Jahre',
+                'country' => 'syria',
+                'instructor_id' => 3,
+                'locale' => 'de',
+            ],
+        ]);
         DB::table('students')->insert([
             [
                 'user_id' => 4,

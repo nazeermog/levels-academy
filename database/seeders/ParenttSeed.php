@@ -28,7 +28,7 @@ class ParenttSeed extends Seeder
     ]);
     DB::table('parentts')->insert([
       [
-        'user_id' => 4,
+        'user_id' => 5, //<-----------
         'first_name' => 'parent',
         'last_name' => 'parent',
       ],
