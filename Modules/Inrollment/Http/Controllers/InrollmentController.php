@@ -25,22 +25,31 @@ class InrollmentController extends Controller
 
   public function index()
   {
-    $taxonomies = AdminTaxonomyRepository::list();
-    $courses = StudentInrollmentRepository::list();
-    $courseLessons = StudentInrollmentRepository::inrollmentLessons();
-    $totalLessonTime = 0;
-    $totalLessonTime = StudentInrollmentRepository::TotalLessonsHours($courses);
-    $instructor = StudentInrollmentRepository::InstructorForCourse($courses);
-    $courseRate=StudentInrollmentRepository::CalculateAverageRatingForAllCourses($courses);
-    return view('inrollment::index', [
-      'taxonomies' => $taxonomies,
-      'courses' => $courses,
-      'courseLessons' => $courseLessons,
-      'totalLessonTime' => $totalLessonTime,
-      'instructor' => $instructor,
-      'courseRate'=> $courseRate,
-    ]);
+      $studentId = auth()->user()->id;
+      $enrollments = Inrollment::where('student_id', $studentId)->get();
+      $courses = $enrollments->map(function ($enrollment) {
+          return $enrollment->course;
+      });
+      $coursesByTaxonomy = [];
+      foreach ($courses as $course) {
+          $taxonomy = $course->taxonomy;
+          if ($taxonomy) {
+              $coursesByTaxonomy[$taxonomy->id]['taxonomy'] = $taxonomy;
+              $coursesByTaxonomy[$taxonomy->id]['courses'][] = $course;
+          }
+      }
+      $courseLessons = StudentInrollmentRepository::inrollmentLessons();
+      $totalLessonTime = StudentInrollmentRepository::TotalLessonsHours($enrollments);
+      $instructors = StudentInrollmentRepository::InstructorForCourse($enrollments);
+      $courseRate = StudentInrollmentRepository::CalculateAverageRatingForAllCourses($enrollments);
   
+      return view('inrollment::index', [
+          'coursesByTaxonomy' => $coursesByTaxonomy,
+          'courseLessons' => $courseLessons,
+          'totalLessonTime' => $totalLessonTime,
+          'instructors' => $instructors,
+          'courseRate' => $courseRate,
+      ]);
   }
 
   /**

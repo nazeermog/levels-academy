@@ -110,4 +110,10 @@ class StudentInrollmentRepository
 
     return $averageRatings;
   }
+  public static function getAuthUserEnrollments()
+  {
+    $studentId = auth()->user()->id;
+    $courses = Inrollment::where('student_id', $studentId)->get();
+    return  $courses;
+  }
 }
