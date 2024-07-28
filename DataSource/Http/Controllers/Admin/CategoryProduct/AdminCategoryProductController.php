@@ -1,0 +1,48 @@
+<?php
+
+namespace DataSource\Http\Controllers\Admin\CategoryProduct;
+
+use Illuminate\Http\Request;
+use DataSource\Entities\User\User;
+
+use Illuminate\Support\Facades\Validator;
+use DataSource\Entities\Exercise\Exercise;
+use DataSource\Http\Controllers\BaseController;
+use DataSource\Traits\Admin\AdminCRUDControllerActions;
+use DataSource\Http\Requests\Admin\CategoryProduct\Store;
+use DataSource\Http\Requests\Admin\CategoryProduct\Update;
+use DataSource\Repositories\DB\Product\Admin\AdminProductRepository;
+use DataSource\Repositories\DB\Exercise\Admin\AdminExerciseRepository;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeRepository;
+use DataSource\Repositories\DB\Practice\Admin\AdminPracticeLevelRepository;
+use DataSource\Repositories\DB\CategoryProduct\Admin\AdminCategoryProductRepository;
+
+class AdminCategoryProductController extends BaseController
+{
+    use AdminCRUDControllerActions;
+
+    protected string $module = 'datasource::management.categoryProducts';
+    protected string $table_name = 'categoryProducts';
+    protected string $route_name = 'categoryProducts';
+    protected string $interface = AdminCategoryProductRepository::class;
+    protected string $store_request = Store::class;
+    protected string $update_request = Update::class;
+
+    public function create()
+    {
+        $route_name = $this->route_name;
+        $table_name = $this->table_name;
+        return view($this->module . '.create', compact('route_name', 'table_name'));
+    }
+    
+    public function show($id)
+    {
+        $route_name = $this->route_name;
+        $table_name = $this->table_name;
+        $practices = AdminPracticeRepository::list();
+        $practiceLevels = AdminPracticeLevelRepository::list();
+        $item=$this->getRepository()->find($id);
+        return view($this->module . '.show', compact('route_name', 'table_name', 'practices', 'practiceLevels','item'));
+    }
+    
+}

@@ -1,14 +1,14 @@
 @if(session('locale', config('app.locale')) == 'ar')
-<div class="mdk-drawer js-mdk-drawer" id="default-drawer">
+<div class="mdk-drawer js-mdk-drawer" id="default-drawer" data-position="left">
   <div class="mdk-drawer__content top-navbar">
-    <div class="sidebar sidebar-dark-pickled-bluewood sidebar-left sidebar-p-t" data-perfect-scrollbar>
+    <div class="sidebar sidebar-dark-pickled-bluewood sidebar-left sidebar-p-t" data-perfect-scrollbar dir="rtl">
       <!-- Sidebar Content -->
       <div class="sidebar-heading font-droid">
         الطالب
       </div>
       <ul class="sidebar-menu">
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{route('student.inrollment.index')}}">
+          <a class="sidebar-menu-button" href="{{ route('student.inrollment.index') }}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">local_library</span>
             <span class="sidebar-menu-text">
               الدورات المشتراة
@@ -16,7 +16,7 @@
           </a>
         </li>
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{route('student.courses.index')}}">
+          <a class="sidebar-menu-button" href="{{ route('student.courses.index') }}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">local_library</span>
             <span class="sidebar-menu-text">
               تصفح الدورات
@@ -24,19 +24,42 @@
           </a>
         </li>
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{route('student.paths.index')}}">
+          <a class="sidebar-menu-button" href="{{ route('student.paths.index') }}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">style</span>
             <span class="sidebar-menu-text">
               مسارات التعليم
             </span>
           </a>
         </li>
-
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{route('student.practice.index')}}">
+          <a class="sidebar-menu-button" href="{{ route('student.practice.index') }}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
             <span class="sidebar-menu-text">
-              التمارين
+              تمارين
+            </span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.index.exercise') }}">
+            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
+            <span class="sidebar-menu-text">
+              تمارين الكتاب
+            </span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise') }}">
+            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
+            <span class="sidebar-menu-text">
+              جميع تمارين الكتاب
+            </span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.index.products') }}">
+            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
+            <span class="sidebar-menu-text">
+              المنتجات
             </span>
           </a>
         </li>
@@ -46,54 +69,77 @@
 </div>
 
 
+
 @elseif (session('locale', config('app.locale')) == 'de')
-<div class="mdk-drawer js-mdk-drawer" data-position="left" id="default-drawer">
+<div class="mdk-drawer js-mdk-drawer" id="default-drawer" data-position="left">
   <div class="mdk-drawer__content top-navbar">
-    <div class="sidebar sidebar-dark-pickled-bluewood sidebar-right sidebar-p-t" data-position="left" data-perfect-scrollbar dir="ltr">
+    <div class="sidebar sidebar-dark-pickled-bluewood sidebar-left sidebar-p-t" data-perfect-scrollbar dir="ltr">
       <!-- Sidebar Content -->
       <div class="sidebar-heading font-droid">
-        Studentin
+        Student
       </div>
       <ul class="sidebar-menu">
-
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{route('student.inrollment.index')}}">
+          <a class="sidebar-menu-button" href="{{ route('student.inrollment.index') }}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">local_library</span>
             <span class="sidebar-menu-text">
-              Gekaufte Kurse
+              Gekocht Kurse
             </span>
           </a>
         </li>
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{route('student.courses.index')}}">
+          <a class="sidebar-menu-button" href="{{ route('student.courses.index') }}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">local_library</span>
             <span class="sidebar-menu-text">
-              Durchsuchen Sie Kurse
+              Kurse Durchsuchen
             </span>
           </a>
         </li>
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{route('student.paths.index')}}">
+          <a class="sidebar-menu-button" href="{{ route('student.paths.index') }}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">style</span>
             <span class="sidebar-menu-text">
               Bildungswege
             </span>
           </a>
         </li>
-
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{route('student.practice.index')}}">
+          <a class="sidebar-menu-button" href="{{ route('student.practice.index') }}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
             <span class="sidebar-menu-text">
               Übungen
             </span>
           </a>
         </li>
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.index.exercise') }}">
+            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
+            <span class="sidebar-menu-text">
+              Buch Übungen
+            </span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise') }}">
+            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
+            <span class="sidebar-menu-text">
+              Alle Buch Übungen
+            </span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.index.products') }}">
+            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
+            <span class="sidebar-menu-text">
+              Produkte
+            </span>
+          </a>
+        </li>
       </ul>
-
     </div>
   </div>
 </div>
+
 
 
 @elseif (session('locale', config('app.locale')) == 'en')
@@ -150,6 +196,14 @@
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
             <span class="sidebar-menu-text">
               All Book Exercises
+            </span>
+          </a>
+        </li>
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.index.products') }}">
+            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">dvr</span>
+            <span class="sidebar-menu-text">
+              Products
             </span>
           </a>
         </li>

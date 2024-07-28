@@ -24,16 +24,14 @@
         </span>
 
         <span class="d-none d-lg-block">
-        Wunderhafen
+          Wunderhafen
         </span>
       </a>
 
       <!-- // END Navbar Brand -->
       @php
-      $mycoins = \DataSource\Entities\StudentScore\StudentScore::where('student_id', auth()->id())
-      ->selectRaw('SUM(coin) as total_coin')
-      ->groupBy('student_id')
-      ->first();
+      $student = \DataSource\Entities\Student\Student::find(auth()->id());
+      $mycoins = $student ? $student->getRemainingCoins() : 0;
       @endphp
       <span class=" d-md-flex align-items-center mr-16pt">
 
@@ -54,9 +52,9 @@
             @if(session('locale', config('app.locale')) == 'de')
             Erfahrung
             @endif
-            
+
           </strong>
-          <span class="navbar-text-50">{{ $mycoins ? $mycoins->total_coin : 0 }}
+          <span class="navbar-text-50">{{ $mycoins }}
             @if(session('locale', config('app.locale')) == 'en')
             Coins
             @endif
@@ -66,7 +64,7 @@
             @if(session('locale', config('app.locale')) == 'de')
             Münzen
             @endif
-            </span>
+          </span>
         </small>
       </span>
 

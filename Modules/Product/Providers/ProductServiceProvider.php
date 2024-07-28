@@ -1,42 +1,22 @@
 <?php
 
-namespace DataSource\Providers;
+namespace Modules\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 
-class DataSourceServiceProvider extends ServiceProvider
+class ProductServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'DataSource';
+    protected $moduleName = 'Product';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'datasource';
-    protected $arrayMiggrations = [
-        'Course',
-        'Instructor',
-        'Lesson',
-        'Partner',
-        'PracticeType',
-        'Question',
-        'Student',
-        'Tag',
-        'Taxonomy',
-        'User',
-        'StudentActivity',
-        'ResultPractice',
-        'Semester',
-        'Inrollment',
-        'StudentScore',
-        'Parentt',
-        'Exercise',
-        'Product',
-        'CategoryProduct',
-        'Order',
-    ];
+    protected $moduleNameLower = 'product';
 
     /**
      * Boot the application events.
@@ -48,8 +28,9 @@ class DataSourceServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        foreach ($this->arrayMiggrations as $migrationFolder)
-            $this->loadMigrationsFrom(base_path($this->moduleName . '/Database/Migrations/' . $migrationFolder));
+        $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
+        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'product');
+        $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
     }
 
     /**
@@ -70,10 +51,10 @@ class DataSourceServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            base_path($this->moduleName . '/Config/config.php') => config_path($this->moduleNameLower . '.php'),
+            module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            base_path($this->moduleName . '/Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
         );
     }
 
@@ -84,13 +65,13 @@ class DataSourceServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/datasource/' . $this->moduleNameLower);
+        $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
 
-        $sourcePath = base_path($this->moduleName . '/Resources/views');
+        $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
             $sourcePath => $viewPath
-        ], ['views', $this->moduleNameLower . '-datasource-views']);
+        ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
@@ -102,14 +83,14 @@ class DataSourceServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/datasource/' . $this->moduleNameLower);
+        $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
             $this->loadJsonTranslationsFrom($langPath, $this->moduleNameLower);
         } else {
-            $this->loadTranslationsFrom(base_path($this->moduleName . '/Resources/lang'), $this->moduleNameLower);
-            $this->loadJsonTranslationsFrom(base_path($this->moduleName . '/Resources/lang'), $this->moduleNameLower);
+            $this->loadTranslationsFrom(module_path($this->moduleName, 'Resources/lang'), $this->moduleNameLower);
+            $this->loadJsonTranslationsFrom(module_path($this->moduleName, 'Resources/lang'), $this->moduleNameLower);
         }
     }
 
@@ -127,8 +108,8 @@ class DataSourceServiceProvider extends ServiceProvider
     {
         $paths = [];
         foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path . '/datasource/' . $this->moduleNameLower)) {
-                $paths[] = $path . '/datasource/' . $this->moduleNameLower;
+            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
+                $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
         return $paths;
