@@ -20,7 +20,7 @@
       }
 
       .calc-number {
-        font-size: 4rem;
+        font-size: 2rem;
         font-weight: bold;
       }
 
@@ -210,14 +210,13 @@ let currentIndex = 0;
 let myResults = [];
 
 function displayMatrix(index) {
-  for (i = 0; i < data[index].length; i++) {
-    const html = `
-            <div class="swiper-slide">
-              <p class="calc-number">${data[index]}</p>
-            </div>
-    `;
-    sliderDev.insertAdjacentHTML("beforeend", html);
-  }
+  let numbersHtml = data[index].map(num => `<div>${num}</div>`).join('');
+  const html = `
+          <div class="swiper-slide">
+            <div class="calc-number">${numbersHtml}</div>
+          </div>
+  `;
+  sliderDev.insertAdjacentHTML("beforeend", html);
 }
 displayMatrix(currentIndex);
 startSlider();

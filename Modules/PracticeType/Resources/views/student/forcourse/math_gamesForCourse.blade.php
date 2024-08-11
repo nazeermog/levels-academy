@@ -169,7 +169,6 @@
       </div>
     </div>
 @endsection
-
 @push('js')
 <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -210,31 +209,87 @@ console.log(correctAnswer);
 
 let currentIndex = 0;
 let myResults = [];
+let timer;
+let time = <?php echo json_encode($timer) ?>; // Initialize the time variable
 
 function displayMatrix(index) {
-  for (i = 0; i < data[index].length; i++) {
+  sliderDev.innerHTML = "";
+  for (let i = 0; i < data[index].length; i++) {
     const html = `
-            <div class="swiper-slide">
-              <p class="calc-number">${data[index][i]}</p>
-            </div>
+      <div class="swiper-slide">
+        <p class="calc-number">${data[index][i]}</p>
+      </div>
     `;
     sliderDev.insertAdjacentHTML("beforeend", html);
   }
+  console.log("number of element in this swiper: "+data[index].length);
 }
-displayMatrix(currentIndex);
-startSlider();
+
+function pauseTimer(index) {
+    clearInterval(timer); // Pause the timer
+    const pauseDuration = timeSLideDelay * data[index].length ; // Calculate the pause duration
+    setTimeout(() => {
+        startTimer(); // Resume the timer after the calculated duration
+    }, pauseDuration);
+    console.log(pauseDuration);
+}
+
+
+function startSlider() {
+  var swiper = new Swiper(".number-swiper", {
+    spaceBetween: 30,
+    centeredSlides: true,
+    autoplay: {
+      delay: timeSLideDelay,
+    },
+    loop: false,
+    effect: "fade",
+  });
+  swiper.on("slideChange", function () {
+    if (swiper.isEnd) {
+      swiper.autoplay = false;
+    } else {
+      pauseTimer(currentIndex); // Pass the current index to pauseTimer
+    }
+  });
+}
+
+function startTimer() {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, '0');
+    const sec = String(time % 60).padStart(2, '0');
+
+    document.getElementById("timer").innerHTML = `${min}:${sec}`;
+    if (time === 0) {
+      clearInterval(timer);
+      document.getElementById("timer").innerHTML = "Time's up!";
+      endResult();
+    }
+    time--;  // Decrement the time variable
+  };
+
+  tick(); // Call tick immediately
+  timer = setInterval(tick, 1000); // Then call it every second
+}
+
+function endResult() {
+  clearInterval(timer); // Stop the timer completely when showing results
+  inputELe.disabled = true;
+  nextBtn.disabled = true;
+  numberBtn.forEach((btn) => {
+    btn.disabled = true;
+  });
+  ResultBtn.classList.remove("d-none");
+}
 
 nextBtn.addEventListener("click", function () {
   sliderDev.innerHTML = "";
   if (Number(inputELe.value) === correctAnswer[currentIndex]) {
-    console.log(inputELe.value, correctAnswer[currentIndex]);
     console.log("true");
-    
   } else {
     console.log("false");
   }
   const inputResult = inputELe.value;
-
   if (Number(inputResult) == correctAnswer[currentIndex]) {
     console.log("new ajax inside");
 
@@ -260,18 +315,17 @@ nextBtn.addEventListener("click", function () {
                 result_student: Number(inputResult) ,
                 result_true: correctAnswer[currentIndex],
                 student_id: {{auth()->user()->id}},
-                is_true:Number(inputResult) === correctAnswer[currentIndex] ,
+                is_true: Number(inputResult) === correctAnswer[currentIndex],
                 seconds_speed: null,
                 card_number: null,
                 range_number_from: {{$practice ->range_number_from }},
                 range_number_to: {{$practice->range_number_to}}
-                // timer: {{$practice->timer}}
             },
-            success: function (one, two, three) {
-                toastr.success('updated successfully')
+            success: function () {
+                toastr.success('Updated successfully');
             },
-            error: function (one, two, three) {
-                toastr.error('error')
+            error: function () {
+                toastr.error('Error occurred');
             },
         });
 
@@ -280,35 +334,25 @@ nextBtn.addEventListener("click", function () {
     displayMatrix(currentIndex);
     startSlider();
     myResults.push(Number(inputResult));
-    console.log("my Result =>", myResults);
     inputELe.value = "";
     questionNumber.textContent = `Question ${currentIndex + 1}`;
   } else if (currentIndex === data.length - 1) {
     displayMatrix(currentIndex);
     startSlider();
     myResults.push(Number(inputResult));
-    console.log("my Result =>", myResults);
     inputELe.value = "";
     endResult();
-  } else {
-    console.log("dsd");
   }
-  });
+});
 
-function endResult() {
-  inputELe.disabled = true;
-  nextBtn.disabled = true;
-  numberBtn.forEach((btn) => {
-    btn.disabled = true;
-  });
-  ResultBtn.classList.remove("d-none");
-}
 ResultBtn.addEventListener("click", function () {
-  const sumResult = myResults.reduce((acc, curr) => acc + curr);
+  const sumResult = myResults.reduce((acc, curr) => acc + curr, 0);
   console.log(sumResult);
 });
+
 let commaAdded = false;
 const commaBtn = document.querySelector("#comma");
+
 function appendToInput(number) {
   var outputElement = document.getElementById("output");
   outputElement.value += number;
@@ -322,54 +366,19 @@ function appendToInput(number) {
 function deleteFromInput() {
   var textInput = document.getElementById("output");
   let currentText = textInput.value;
-  console.log("dsdasdas");
   if (currentText.at(-1) === ".") {
     commaBtn.disabled = false;
     commaAdded = false;
   }
   if (currentText.length > 0) {
-    currentText = currentText.slice(0, -1);
-    textInput.value = currentText;
+    textInput.value = currentText.slice(0, -1);
   }
 }
 
-function startSlider() {
-  var swiper = new Swiper(".number-swiper", {
-    spaceBetween: 30,
-    centeredSlides: true,
-    autoplay: {
-      delay: timeSLideDelay,
-    },
-    loop: false,
-    effect: "fade",
-  });
-  swiper.on("slideChange", function () {
-    if (swiper.isEnd) {
-      swiper.autoplay = false;
-    }
-  });
-}
-
-const startTimer = function () {
-  const tick = function () {
-    const min = String(Math.trunc(time / 60)).padStart(2, 0);
-    const sec = String(time % 60).padStart(2, 0);
-
-    document.getElementById("timer").innerHTML = `${min}:${sec}`;
-    if (time === 0) {
-      clearInterval(timer);
-      document.getElementById("timer").innerHTML = "Time's up!";
-      endResult();
-    }
-    time--;
-  };
-  let time = timerSec;
-
-  tick();
-  const timer = setInterval(tick, 1000);
-  return timer;
-};
+displayMatrix(currentIndex);
+startSlider();
 startTimer();
+
 
 </script>
 @endpush
