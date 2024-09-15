@@ -72,9 +72,11 @@
                 <div class="classCard ">
                     <div class="classOverlay">
                         <div class="classTitle">{{ $exercise->title }}</div>
-                        <div class="">{{ $exercise->book_id }}</div>
+                        <div class="">{{ $exercise->numbers }}</div>
                        code to call by: <span class="">{{ $exercise->code }}</span>
                     </div>
+                    {!! $exercise->qrCode !!}
+
                 </div>
             </a>
         </div>

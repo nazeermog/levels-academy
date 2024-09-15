@@ -9,6 +9,7 @@ use DataSource\Entities\Course\Course;
 use DataSource\Entities\Student\Student;
 use DataSource\Entities\Exercise\Exercise;
 use DataSource\Entities\Question\Question;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Contracts\Support\Renderable;
 use DataSource\Entities\Course\CourseStudent;
 use Modules\PracticeType\Http\Requests\Store;
@@ -17,8 +18,8 @@ use DataSource\Entities\PracticeType\PracticeType;
 use DataSource\Entities\StudentScore\StudentScore;
 use DataSource\Entities\ResultPractice\ResultPractice;
 use DataSource\Entities\PracticeType\PracticeTypeDetail;
-use DataSource\Repositories\DB\Course\Student\StudentCoursesRepository;
 use DataSource\Repositories\DB\Exercise\Admin\AdminExerciseRepository;
+use DataSource\Repositories\DB\Course\Student\StudentCoursesRepository;
 use DataSource\Repositories\DB\Exercise\Student\StudentExerciseRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeRepository;
 use DataSource\Repositories\DB\Practice\Student\StudentPracticeTypeRepository;
@@ -68,9 +69,18 @@ class StudentPracticeController extends Controller
   {
     $exercises = Exercise::whereRaw('SUBSTRING(book_id, 1, 1) = ?', [$class])
       ->get();
+
+    // Loop through each exercise and generate a QR code for its URL
+    foreach ($exercises as $exercise) {
+      // Assuming you have a route for the exercise like this:
+      $exerciseUrl = url('/student/practice/exercise/' . $exercise->book_id . '/types/abacus');
+
+      // Generate the QR code for this exercise's URL
+      $exercise->qrCode = QrCode::size(100)->generate($exerciseUrl);
+    }
+
     return view('practicetype::student.exercise.BookExerciseByClass', compact('exercises'));
   }
-
 
 
   public function checkExercise($exerciseCode)
@@ -213,9 +223,7 @@ class StudentPracticeController extends Controller
    * @param Request $request
    * @return Renderable
    */
-  public function store(Request $request)
-  {
-  }
+  public function store(Request $request) {}
 
   /**
    * Show the specified resource.
