@@ -76,6 +76,13 @@
                                         <label for="">Book_id</label>
                                         <input class="form-control" name="book_id" value="{{ $item->book_id }}">
                                     </div>
+                                    <div class="col-md-4 ">
+                                        <label for="">Page</label>
+                                        <input class="form-control" name="page" value="{{ $item->page }}">
+                                    </div><div class="col-md-4 ">
+                                        <label for="">row</label>
+                                        <input class="form-control" name="row" value="{{ $item->row }}">
+                                    </div>
                                     <!-- Include other fields for updating here -->
                                 </div>
                             </div>

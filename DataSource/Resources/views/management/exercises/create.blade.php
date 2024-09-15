@@ -57,6 +57,13 @@
                                         <label for="">Book_id</label>
                                         <input class="form-control" name="book_id">
                                     </div>
+                                    <div class="col-md-4 ">
+                                        <label for="">Page</label>
+                                        <input class="form-control" name="page">
+                                    </div><div class="col-md-4 ">
+                                        <label for="">row</label>
+                                        <input class="form-control" name="row">
+                                    </div>
                                     <!-- Include other fields for updating here -->
                                 </div>
                             </div>

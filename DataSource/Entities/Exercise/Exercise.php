@@ -23,5 +23,7 @@ class Exercise extends BaseModel
         'book_id',
         'col_count',
         'numbers',
+        'page',
+        'row',
     ];
 }

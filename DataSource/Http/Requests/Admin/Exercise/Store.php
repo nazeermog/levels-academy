@@ -24,6 +24,8 @@ class Store extends FormRequest
         'practice_id' => ['required', 'numeric'],
         'code' => ['required'],
         'book_id' => ['required'],
+        'row' => ['required'],
+        'page' => ['required'],
     ], $mergeArray);
         return[];
     }

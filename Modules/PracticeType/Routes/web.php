@@ -31,6 +31,8 @@ Route::group([
         Route::get('exercise', [StudentPracticeController::class, 'SearchAllExercises'])->name('student.index.exercise');
         Route::get('allBookExercise', [StudentPracticeController::class, 'showAllExercises'])->name('student.index.Bookexercise');
         Route::get('BookExerciseByClass/{class}', [StudentPracticeController::class, 'AllExercisesByClass'])->name('student.classes.Bookexercise');
+        Route::get('allBookExercise_qr/{page}', [StudentPracticeController::class, 'showAllExercisesBYQR'])->name('student.index.Bookexercise.qr');
+        Route::get('allBookExercise_pages', [StudentPracticeController::class, 'showAllExercisesBYQR_pages'])->name('student.index.Bookexercise.pages.qr');
 
         Route::get('exercise/{id}/types/{type}', [StudentPracticeController::class, 'showExercise'])->name('student.show.exercise');
         Route::get('/check-exercise/{exerciseId}', [StudentPracticeController::class, 'checkExercise'])->name('check.exercise');

@@ -65,20 +65,32 @@ class StudentPracticeController extends Controller
     // dd($availableClasses);
     return view('practicetype::student.exercise.indexBookExercise', compact('availableClasses'));
   }
+  public function showAllExercisesBYQR($page)
+  {
+      $exercises = Exercise::where('page', $page)->get();
+      foreach ($exercises as $exercise) {
+          $exerciseUrl = url('/student/practice/exercise/' . $exercise->book_id . '/types/abacus');
+          $exercise->qrCode = QrCode::size(100)->generate($exerciseUrl);
+      }
+  
+      return view('practicetype::student.exercise.BookExerciseQR', compact('exercises'));
+  }
+  
+  public function showAllExercisesBYQR_pages()
+  {
+    $exercises = Exercise::all()->groupBy('page'); 
+    $pages = $exercises->keys()->sort()->values();
+    return view('practicetype::student.exercise.BookExerciseBypages_QR', compact('pages'));
+  }
+
   public function AllExercisesByClass($class)
   {
     $exercises = Exercise::whereRaw('SUBSTRING(book_id, 1, 1) = ?', [$class])
       ->get();
-
-    // Loop through each exercise and generate a QR code for its URL
     foreach ($exercises as $exercise) {
-      // Assuming you have a route for the exercise like this:
       $exerciseUrl = url('/student/practice/exercise/' . $exercise->book_id . '/types/abacus');
-
-      // Generate the QR code for this exercise's URL
       $exercise->qrCode = QrCode::size(100)->generate($exerciseUrl);
     }
-
     return view('practicetype::student.exercise.BookExerciseByClass', compact('exercises'));
   }
 

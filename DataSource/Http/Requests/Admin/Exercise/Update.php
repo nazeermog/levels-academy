@@ -24,6 +24,8 @@ class Update extends FormRequest
         'practice_id' => ['required', 'numeric'],
         'code' => ['required'],
         'book_id' => ['required'],
+        'row' => ['required'],
+        'page' => ['required'],
         'model_id'=> ['required'],
     ], $mergeArray);
         return[];
