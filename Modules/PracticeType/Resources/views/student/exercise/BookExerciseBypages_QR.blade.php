@@ -65,19 +65,19 @@
         /* Remove default margin of the row */
     }
 </style>
-
 <div class="mdk-carousel__content row">
-    @foreach ($pages as $class)
-        <div class="col-6 classCol">
-            <a class="classLink"  href="{{ route('student.index.Bookexercise.qr',['page' => $class]) }}">
-                <div class="classCard class{{ strtoupper($class) }}">
-                    <!-- Replace the following image source with your class-specific data -->
-                    <div class="classOverlay">
-                        <span class="classTitle"> Page: {{$class }}</span>
-                    </div>
+    @foreach ($pagesWithQrCodes as $pageWithQrCode)
+    <div class="col-6 classCol">
+        <a class="classLink" href="{{ route('student.index.Bookexercise.qr', ['page' => $pageWithQrCode['page']]) }}">
+            <div class="classCard class{{ strtoupper($pageWithQrCode['page']) }}">
+                <div class="classOverlay">
+                    <span class="classTitle"> Page: {{ $pageWithQrCode['page'] }}</span>
                 </div>
-            </a>
-        </div>
+                {!! $pageWithQrCode['qrCode'] !!}
+
+            </div>
+        </a>
+    </div>
     @endforeach
 </div>
 

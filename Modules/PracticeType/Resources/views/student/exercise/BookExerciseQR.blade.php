@@ -19,13 +19,17 @@
 
     .classLink {
         text-decoration: none;
-        color: inherit; /* Ensure link text color inherits from the parent */
+        color: inherit;
+        /* Ensure link text color inherits from the parent */
     }
 
     .classCard {
-        width: 100%; /* Ensure card fits column width */
-        margin: 5px; /* Add margin for spacing */
-        height: auto; /* Adjust height to fit content */
+        width: 100%;
+        /* Ensure card fits column width */
+        margin: 5px;
+        /* Add margin for spacing */
+        height: auto;
+        /* Adjust height to fit content */
         overflow: hidden;
         position: relative;
         color: black;
@@ -40,12 +44,14 @@
 
     .classOverlay {
         text-align: center;
-        margin-bottom: 10px; /* Space between title and QR code */
+        margin-bottom: 10px;
+        /* Space between title and QR code */
     }
 
     .classTitle {
         color: black;
-        font-size: 1em; /* Adjust font size for better fit */
+        font-size: 1em;
+        /* Adjust font size for better fit */
         margin-bottom: 8px;
     }
 
@@ -57,9 +63,12 @@
     }
 
     .col {
-        flex: 0 0 14.28%; /* Approx 1/7 of the row width */
-        max-width: 14.28%; /* Ensure 7 items per row */
-        padding: 5px; /* Add padding around each column */
+        flex: 0 0 14.28%;
+        /* Approx 1/7 of the row width */
+        max-width: 14.28%;
+        /* Ensure 7 items per row */
+        padding: 5px;
+        /* Add padding around each column */
         box-sizing: border-box;
     }
 </style>
@@ -67,16 +76,21 @@
 <div class="container">
     <div class="row">
         @foreach ($exercises as $exercise)
-            <div class="col">
-                <a class="classLink" href="{{ route('student.show.exercise', ['id' => $exercise->code, 'type' => 'abacus']) }}">
-                    <div class="classCard">
-                        <div class="classOverlay">
-                            <div class="classTitle">{{ $exercise->title }}</div>
-                        </div>
-                        {!! $exercise->qrCode !!}
+        <div class="col">
+            <a class="classLink" href="{{ route('student.show.exercise', ['id' => $exercise->code, 'type' => 'abacus']) }}">
+                <div class="classCard">
+                    <div class="classOverlay">
+                        <div class="classTitle">{{ $exercise->title }}</div>
                     </div>
-                </a>
-            </div>
+                    <!-- {!! $exercise->qrCode !!} -->
+                    <div class="classTitle"> @foreach (explode(',', $exercise->numbers) as $number)
+                        {{ $number }}<br>
+                        @endforeach
+                    </div>
+
+                </div>
+            </a>
+        </div>
         @endforeach
     </div>
 </div>

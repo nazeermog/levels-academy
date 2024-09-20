@@ -67,21 +67,33 @@ class StudentPracticeController extends Controller
   }
   public function showAllExercisesBYQR($page)
   {
-      $exercises = Exercise::where('page', $page)->get();
-      foreach ($exercises as $exercise) {
-          $exerciseUrl = url('/student/practice/exercise/' . $exercise->book_id . '/types/abacus');
-          $exercise->qrCode = QrCode::size(100)->generate($exerciseUrl);
-      }
-  
-      return view('practicetype::student.exercise.BookExerciseQR', compact('exercises'));
+    $exercises = Exercise::where('page', $page)->get();
+    foreach ($exercises as $exercise) {
+      $exerciseUrl = url('/student/practice/exercise/' . $exercise->book_id . '/types/abacus');
+      $exercise->qrCode = QrCode::size(100)->generate($exerciseUrl);
+    }
+
+    return view('practicetype::student.exercise.BookExerciseQR', compact('exercises'));
   }
-  
+
   public function showAllExercisesBYQR_pages()
   {
-    $exercises = Exercise::all()->groupBy('page'); 
+    $exercises = Exercise::all()->groupBy('page');
+
     $pages = $exercises->keys()->sort()->values();
-    return view('practicetype::student.exercise.BookExerciseBypages_QR', compact('pages'));
+
+    $pagesWithQrCodes = [];
+    foreach ($pages as $page) {
+      $pageUrl = url('/student/practice/allBookExercise_qr/' . $page);
+      $qrCode = QrCode::size(100)->generate($pageUrl);
+      $pagesWithQrCodes[] = [
+        'page' => $page,
+        'qrCode' => $qrCode,
+      ];
+    }
+    return view('practicetype::student.exercise.BookExerciseBypages_QR', compact('pagesWithQrCodes'));
   }
+
 
   public function AllExercisesByClass($class)
   {
