@@ -218,7 +218,6 @@ function displayMatrix(index) {
   `;
   sliderDev.insertAdjacentHTML("beforeend", html);
 }
-
 displayMatrix(currentIndex);
 startSlider();
 
@@ -231,6 +230,49 @@ nextBtn.addEventListener("click", function () {
     console.log("false");
   }
   const inputResult = inputELe.value;
+
+  if (Number(inputResult) == correctAnswer[currentIndex]) {
+    console.log("new ajax inside");
+
+   $.ajax({
+        method: "POST",
+        url: "{{ route('student.exercise.done', ['practiceId' => $practice->practice_id])}}",
+        data: {},
+        success: function(one, two, three) {
+          toastr.success('updated successfully')
+        },
+        error: function(one, two, three) {
+          toastr.error('error')
+        },
+      });
+    }
+  $.ajax({
+            method: "POST",
+            url: "{{ route('student.practice.store')}}",
+            data: {
+                practice_id: {{$practice->practice_id}},
+                practice_type_id: {{$practice->id}},
+                level_title: '{{$practice->practiceLevel->title}}',
+                result_student: Number(inputResult) ,
+                result_true: correctAnswer[currentIndex],
+                student_id: {{auth()->user()->id}},
+                is_true:Number(inputResult) === correctAnswer[currentIndex] ,
+                seconds_speed: null,
+                card_number: null,
+                range_number_from: {{$practice ->range_number_from }},
+                range_number_to: {{$practice->range_number_to}}
+                // timer: {{$practice->timer}}
+            },
+            success: function (one, two, three) {
+                toastr.success('updated successfully')
+            },
+            error: function (one, two, three) {
+                toastr.error('error')
+            },
+        });
+
+
+
   if (currentIndex < data.length - 1) {
     currentIndex++;
     displayMatrix(currentIndex);
@@ -249,31 +291,6 @@ nextBtn.addEventListener("click", function () {
   } else {
     console.log("dsd");
   }
-
-  $.ajax({
-            method: "POST",
-            url: "{{ route('student.practice.store')}}",
-            data: {
-                practice_id: {{$practice->practice_id}},
-                practice_type_id: {{$practice->id}},
-                level_title: '{{$practice->practiceLevel->title}}',
-                result_student: Number(inputELe.value) ,///need function
-                result_true: correctAnswer[currentIndex],///need function
-                student_id: {{auth()->user()->id}},
-                is_true: Number(inputELe.value) === correctAnswer[currentIndex] ,///need function
-                seconds_speed: null,
-                card_number: null,
-                range_number_from: {{$practice->range_number_from }},
-                range_number_to: {{$practice->range_number_to}}
-                // timer: {{$practice->timer}}
-            },
-            success: function (one, two, three) {
-                toastr.success('updated successfully')
-            },
-            error: function (one, two, three) {
-                toastr.error('error')
-            },
-        });
 });
 
 function endResult() {

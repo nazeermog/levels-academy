@@ -435,6 +435,27 @@ class StudentPracticeController extends Controller
     }
     return redirect()->back()->withSuccess('practice marked as done');
   }
+  public function donePracitceForOutsideCourse($practiceId)
+  {
+    $practiceId = (int)$practiceId;
+    
+    $studentId = auth()->user()->id;
+    $coinsShouldTaken = 0;
+
+    $practice = PracticeTypeDetail::find($practiceId);
+    $coinsShouldTaken = $practice->coins_taken;
+
+    StudentScore::create(
+      [
+        'student_id' => $studentId,
+        'practice_id' => $practiceId,
+        'course_id' => 0,
+        'semester_id' => 0,
+        'coin' => $coinsShouldTaken,
+      ]
+    );
+    return redirect()->back()->withSuccess('practice marked as done and coin added');
+  }
 }
 
 function getExactLength($number, $colCount)

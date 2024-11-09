@@ -378,6 +378,26 @@
                         },
                     });
 
+                    if( sumNumber === inputValue){
+
+                    console.log("hi from inculde2");
+
+                    $.ajax({
+                        method: "POST",
+                        url: "{{ route('student.exercise.done', ['practiceId' => $practice->id])}}",
+                        data: {
+                        },
+                        success: function (one, two, three) {
+                            console.log("hi from  end inculde");
+                            toastr.success('updated successfully')
+                        },
+                        error: function (one, two, three) {
+                            console.log("hi from  errorrrr inculde");
+
+                            toastr.error('error')
+                        },
+                    });
+                    }
 
                     console.log(inputValue);
                     if (sumNumber === inputValue) {

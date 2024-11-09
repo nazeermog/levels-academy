@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('student_scores', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
-            $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('semester_id');
+            $table->unsignedBigInteger('course_id')->nullable();
+            $table->unsignedBigInteger('semester_id')->nullable();
             $table->unsignedBigInteger('practice_id');
             $table->decimal('coin', 6, 1);
             $table->timestamps();

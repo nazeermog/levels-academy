@@ -290,6 +290,21 @@ nextBtn.addEventListener("click", function () {
     console.log("false");
   }
   const inputResult = inputELe.value;
+  if (Number(inputResult) == correctAnswer[currentIndex]) {
+    console.log("new ajax inside");
+
+   $.ajax({
+        method: "POST",
+        url: "{{ route('student.exercise.done', ['practiceId' => $practice->practice_id])}}",
+        data: {},
+        success: function(one, two, three) {
+          toastr.success('updated successfully')
+        },
+        error: function(one, two, three) {
+          toastr.error('error')
+        },
+      });
+    }
   $.ajax({
             method: "POST",
             url: "{{ route('student.practice.store')}}",

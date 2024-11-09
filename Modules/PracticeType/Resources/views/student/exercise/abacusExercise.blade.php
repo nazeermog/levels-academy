@@ -523,6 +523,30 @@ function startGame(rodNumber) {
       console.log("false");
     }
   });
+  document.querySelector("#submit").addEventListener('click', function prossesResult() {
+
+const StudetntConvert = getAbacusValue(arrResult);
+console.log(StudetntConvert);
+
+const resultConvert = getAbacusValue(result);
+if (resultConvert === StudetntConvert) {
+  console.log("hi from inculde");
+
+
+  $.ajax({
+    method: "POST",
+    url: "{{ route('student.exercise.done', [ 'practiceId' => $exercise->id])}}",
+    data: {},
+    success: function(one, two, three) {
+      toastr.success('updated successfully')
+    },
+    error: function(one, two, three) {
+      toastr.error('error')
+    },
+  });
+
+}
+});
 }
 function getRowResult(row) {
   let sum = 0;
