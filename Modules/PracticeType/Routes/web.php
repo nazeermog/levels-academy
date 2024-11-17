@@ -41,6 +41,7 @@ Route::group([
 
         Route::post('donePracitce/{practiceId}/course/{courseId}', [StudentPracticeController::class, 'donePracitce'])->name('student.practice.done');
         Route::post('doneExercise/{practiceId}', [StudentPracticeController::class, 'donePracitceForOutsideCourse'])->name('student.exercise.done');
+        Route::post('doneBookExercise/{practiceId}', [StudentPracticeController::class, 'donePracitceForBookExerise'])->name('student.book.exercise.done');
 
         Route::get('/', [StudentPracticeController::class, 'index'])->name('student.practice.index');
         Route::get('/levels/{id}', [StudentPracticeController::class, 'showPracticeLevels'])->name('student.practice.levels');

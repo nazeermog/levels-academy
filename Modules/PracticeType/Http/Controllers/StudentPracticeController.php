@@ -405,6 +405,7 @@ class StudentPracticeController extends Controller
         'practice_id' => $practiceId,
         'course_id' => $courseId,
         'semester_id' => $semesterId,
+        'type'=>'course_exercise',
         'coin' => $coinsShouldTaken,
       ]
     );
@@ -438,7 +439,28 @@ class StudentPracticeController extends Controller
   public function donePracitceForOutsideCourse($practiceId)
   {
     $practiceId = (int)$practiceId;
-    
+
+    $studentId = auth()->user()->id;
+    $coinsShouldTaken = 0;
+
+    $practice = PracticeTypeDetail::find($practiceId);
+    $coinsShouldTaken = $practice->coins_taken;
+    StudentScore::create(
+      [
+        'student_id' => $studentId,
+        'practice_id' => $practiceId,
+        'course_id' => 0,
+        'semester_id' => 0,
+        'type' => 'exercise',
+        'coin' => $coinsShouldTaken,
+      ]
+    );
+    return redirect()->back()->withSuccess('practice marked as done and coin added');
+  }
+  public function donePracitceForBookExerise($practiceId)
+  {
+    $practiceId = (int)$practiceId;
+
     $studentId = auth()->user()->id;
     $coinsShouldTaken = 0;
 
@@ -451,6 +473,7 @@ class StudentPracticeController extends Controller
         'practice_id' => $practiceId,
         'course_id' => 0,
         'semester_id' => 0,
+        'type' => 'book_exercise',
         'coin' => $coinsShouldTaken,
       ]
     );

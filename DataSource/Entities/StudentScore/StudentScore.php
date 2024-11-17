@@ -16,6 +16,7 @@ class StudentScore extends Model
     'course_id',
     'practice_id',
     'semester_id',
+    'type',
     'coin'
   ];
   public function student()

@@ -117,59 +117,58 @@ class InstructorController extends Controller
       compact('list', 'route_name', 'table_name', 'totalCoins', 'courses', 'practices', 'semesters')
     );
   }
-
   public function showStudentScoreBoardByFilter(Request $request)
   {
-    $courseId = $request->input('courseId');
-    $semesterId = $request->input('semesterId');
-    $practiceId = $request->input('practiceId');
-
-    $list = StudentScore::select('student_id')
-      ->when($courseId !== null, function ($query) use ($courseId) {
-        return $query->where('course_id', $courseId);
-      })
-      ->when($semesterId !== null, function ($query) use ($semesterId) {
-        return $query->where('semester_id', $semesterId);
-      })
-      ->when($practiceId !== null, function ($query) use ($practiceId) {
-        return $query->where('practice_id', $practiceId);
-      })
-      ->selectRaw('Min(course_id) as course_id')
-      ->selectRaw('Min(semester_id) as semester_id')
-      ->selectRaw('Min(practice_id) as practice_id')
-      ->selectRaw('SUM(coin) as total_coin')
-      ->groupBy('student_id')
-      ->orderByDesc('total_coin')
-      ->get();
-
-    $courseTitles = CourseTranslation::whereIn('course_id', $list->pluck('course_id'))->where('locale', 'en')->pluck('title', 'course_id');
-    $semesterTitles = SemesterTranslation::whereIn('semester_id', $list->pluck('semester_id'))->where('locale', 'en')->pluck('title', 'semester_id');
-    $practiceTitles = PracticeTypeDetailTranslation::whereIn('practice_type_id', $list->pluck('practice_id'))->where('locale', 'en')->pluck('title', 'practice_type_id');
-    $studentAvatars = Student::whereIn('user_id', $list->pluck('student_id'))
-      ->pluck('avatar', 'user_id');
-    $studentFirstNames = Student::whereIn('user_id', $list->pluck('student_id'))
-      ->pluck('first_name', 'user_id');
-    $studentLastNames = Student::whereIn('user_id', $list->pluck('student_id'))
-      ->pluck('last_name', 'user_id');
-
-    $list = $list->map(function ($item) use ($courseTitles, $semesterTitles, $practiceTitles,
-     $studentFirstNames, $studentLastNames, $studentAvatars,$courseId,$semesterId,$practiceId) {
-      if($courseId !== null){
-        $item->course_title = $courseTitles[$item->course_id];
-      }
-      if($semesterId !== null){
-        $item->semester_title = $semesterTitles[$item->semester_id];
-      }
-      if($practiceId !== null){
-        $item->practice_title = $practiceTitles[$item->practice_id];
-      }
-      $item->student_name = $studentFirstNames[$item->student_id] . ' ' . $studentLastNames[$item->student_id] ?? 'N/A';
-      $item->student_avatar = asset($studentAvatars[$item->student_id]);
-      return $item;
-    });
-
-    return response()->json(['list' => $list], 200);
-  }
+      $courseId = $request->input('courseId');
+      $semesterId = $request->input('semesterId');
+      $practiceId = $request->input('practiceId');
+      $type = $request->input('type'); // New type filter input
+  
+      $list = StudentScore::select('student_id')
+          ->when($courseId !== null, function ($query) use ($courseId) {
+              return $query->where('course_id', $courseId);
+          })
+          ->when($semesterId !== null, function ($query) use ($semesterId) {
+              return $query->where('semester_id', $semesterId);
+          })
+          ->when($practiceId !== null, function ($query) use ($practiceId) {
+              return $query->where('practice_id', $practiceId);
+          })
+          ->when($type !== null, function ($query) use ($type) { // Filter by type
+              return $query->where('type', $type);
+          })
+          ->selectRaw('MIN(course_id) as course_id')
+          ->selectRaw('MIN(semester_id) as semester_id')
+          ->selectRaw('MIN(practice_id) as practice_id')
+          ->selectRaw('SUM(coin) as total_coin')
+          ->groupBy('student_id')
+          ->orderByDesc('total_coin')
+          ->get();
+  
+      $courseTitles = CourseTranslation::whereIn('course_id', $list->pluck('course_id'))->where('locale', 'en')->pluck('title', 'course_id');
+      $semesterTitles = SemesterTranslation::whereIn('semester_id', $list->pluck('semester_id'))->where('locale', 'en')->pluck('title', 'semester_id');
+      $practiceTitles = PracticeTypeDetailTranslation::whereIn('practice_type_id', $list->pluck('practice_id'))->where('locale', 'en')->pluck('title', 'practice_type_id');
+      $studentAvatars = Student::whereIn('user_id', $list->pluck('student_id'))->pluck('avatar', 'user_id');
+      $studentFirstNames = Student::whereIn('user_id', $list->pluck('student_id'))->pluck('first_name', 'user_id');
+      $studentLastNames = Student::whereIn('user_id', $list->pluck('student_id'))->pluck('last_name', 'user_id');
+  
+      $list = $list->map(function ($item) use ($courseTitles, $semesterTitles, $practiceTitles, $studentFirstNames, $studentLastNames, $studentAvatars, $courseId, $semesterId, $practiceId) {
+          if($courseId !== null){
+              $item->course_title = $courseTitles[$item->course_id];
+          }
+          if($semesterId !== null){
+              $item->semester_title = $semesterTitles[$item->semester_id];
+          }
+          if($practiceId !== null){
+              $item->practice_title = $practiceTitles[$item->practice_id];
+          }
+          $item->student_name = $studentFirstNames[$item->student_id] . ' ' . $studentLastNames[$item->student_id] ?? 'N/A';
+          $item->student_avatar = asset($studentAvatars[$item->student_id]);
+          return $item;
+      });
+  
+      return response()->json(['list' => $list], 200);
+  }  
   public function showProfile($instructorId){
     $instructor=Instructor::where('user_id',$instructorId)->first();
     $instructorCourses = Course::where('instructor_id', $instructorId)->get(); 

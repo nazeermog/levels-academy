@@ -535,7 +535,7 @@ if (resultConvert === StudetntConvert) {
 
   $.ajax({
     method: "POST",
-    url: "{{ route('student.exercise.done', [ 'practiceId' => $exercise->id])}}",
+    url: "{{ route('student.book.exercise.done', [ 'practiceId' => $exercise->id])}}",
     data: {},
     success: function(one, two, three) {
       toastr.success('updated successfully')

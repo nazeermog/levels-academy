@@ -46,7 +46,6 @@
             <option>Student Name</option>
           </select>
         </div>
-
       </div>
       <div class="row form-group">
         <div class="col-md-6">
@@ -57,13 +56,11 @@
           <label for="">To </label>
           <input type="date" class="form-control" placeholder="search">
         </div>
-
       </div>
       <button class="btn btn-primary form-group">Search</button>
       <div class="row">
         <div class="col-md-3 m-1">
           <select class="form-control" id="course-select">
-
             <option value="">
               @if(session('locale', config('app.locale')) == 'en')
               Select a course
@@ -85,7 +82,7 @@
           <select class="form-control" id="semester-select">
             <option value="">
               @if(session('locale', config('app.locale')) == 'en')
-              Select an semester
+              Select a semester
               @endif
               @if(session('locale', config('app.locale')) == 'ar')
               اختر فصل دراسي
@@ -104,7 +101,7 @@
           <select class="form-control" id="practice-select">
             <option value="">
               @if(session('locale', config('app.locale')) == 'en')
-              Select an practice
+              Select a practice
               @endif
               @if(session('locale', config('app.locale')) == 'ar')
               اختر تمرين
@@ -118,6 +115,27 @@
             @endforeach
           </select>
         </div>
+
+        <!-- New Type Filter Dropdown -->
+        <div class="col-md-3 m-1">
+          <select class="form-control" id="type-select">
+            <option value="">
+              @if(session('locale', config('app.locale')) == 'en')
+              Select a type
+              @endif
+              @if(session('locale', config('app.locale')) == 'ar')
+              اختر نوع
+              @endif
+              @if(session('locale', config('app.locale')) == 'de')
+              Wählen Sie einen Typ
+              @endif
+            </option>
+            <option value="book_exercise">Book Exercise</option>
+            <option value="course_exercise">Course Exercise</option>
+            <option value="exercise">Exercise</option>
+          </select>
+        </div>
+
         <button id="fetch-student-scores-button-filter" class="btn btn-primary form-group m-2">
           @if(session('locale', config('app.locale')) == 'en')
           Fetch Student Scores
@@ -135,62 +153,34 @@
           <thead>
             <tr>
               <th>#</th>
-              @if(session('locale', config('app.locale')) == 'en')
-              <th>photo</th>
+              <th>Photo</th>
               <th>Student</th>
               <th>Course</th>
               <th>Practice</th>
               <th>Semester</th>
-              <th>coins</th>
-              @endif
-              @if(session('locale', config('app.locale')) == 'ar')
-              <th>الصورة</th>
-              <th>الطالب</th>
-              <th>الدورة التدريبية</th>
-              <th>التدريب</th>
-              <th>الفصل الدراسي</th>
-              <th>عملات معدنية</th>
-              @endif
-              @if(session('locale', config('app.locale')) == 'de')
-              <th>Foto</th>
-              <th>Student</th>
-              <th>Kurs</th>
-              <th>Üben</th>
-              <th>Semester</th>
-              <th>Münzen</th>
-              @endif
+              <th>Type</th>
+              <th>Coins</th>
             </tr>
           </thead>
           <tbody id="student-score-table-body">
             @foreach($list as $item)
             <tr>
               <td class="student-rank d-flex align-items-center ">{{$loop->iteration}}
-
-                @if($loop->iteration <= 3) <i class="material-icons icon-40pt ml-2">stars</i>
-                  @endif
-
+                @if($loop->iteration <= 3)
+                  <i class="material-icons icon-40pt ml-2">stars</i>
+                @endif
               </td>
-              <td><img src="{{asset( $item->student->avatar)}}" alt="student_avatar" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;"></td>
-              <td>
-                {{$item->student->first_name .' '.$item->student->last_name}}
-              </td>
-              <td>
-                ALL
-              </td>
-              <td>
-                ALL
-              </td>
-              <td>
-                ALL
-              </td>
-              <td>
-                {{$totalCoins[$item->student->user_id]}}
-              </td>
+              <td><img src="{{ asset($item->student->avatar) }}" alt="student_avatar" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;"></td>
+              <td>{{ $item->student->first_name .' '. $item->student->last_name }}</td>
+              <td>{{ $item->course_title ?? 'ALL' }}</td>
+              <td>{{ $item->practice_title ?? 'ALL' }}</td>
+              <td>{{ $item->semester_title ?? 'ALL' }}</td>
+              <td>{{ $item->type ?? 'N/A' }}</td> <!-- Display the type -->
+              <td>{{ $item->total_coin }}</td>
             </tr>
             @endforeach
           </tbody>
         </table>
-
       </div>
       @else
       <h2>
@@ -205,7 +195,6 @@
         @endif
       </h2>
       @endif
-
     </div>
   </div>
 </div>
@@ -216,6 +205,8 @@
       var courseId = $('#course-select').val();
       var semesterId = $('#semester-select').val();
       var practiceId = $('#practice-select').val();
+      var type = $('#type-select').val(); // Get selected type
+
       $.ajax({
         url: "{{ route('studentscore.filter') }}",
         type: "GET",
@@ -223,6 +214,7 @@
           courseId: courseId,
           semesterId: semesterId,
           practiceId: practiceId,
+          type: type // Pass type to backend
         },
         success: function(response) {
           console.log(response.list);
@@ -237,22 +229,17 @@
             newRow += '</td>' +
               '<td><img src="' + item.student_avatar + '" alt="student_avatar" style="height: 60px; width: 60px; border-radius: 50%; object-fit: cover;"></td>' +
               '<td>' + item.student_name + '</td>' +
-              '<td>' + (item.course_title ?? 'ALL') + '</td>' +
-              '<td>' + (item.practice_title ?? 'ALL') + '</td>' +
-              '<td>' + (item.semester_title ?? 'ALL') + '</td>' +
+              '<td>' + (item.course_title ? item.course_title : "ALL") + '</td>' +
+              '<td>' + (item.practice_title ? item.practice_title : "ALL") + '</td>' +
+              '<td>' + (item.semester_title ? item.semester_title : "ALL") + '</td>' +
+              '<td>' + (item.type ? item.type : "ALL") + '</td>' +  // Show type in table
               '<td>' + item.total_coin + '</td>' +
               '</tr>';
             tableBody.append(newRow);
           });
-        },
-
-        error: function(xhr, status, error) {
-          console.error(error);
         }
       });
     });
   });
 </script>
-
-
 @endsection
