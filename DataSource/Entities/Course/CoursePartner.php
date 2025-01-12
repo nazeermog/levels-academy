@@ -5,7 +5,7 @@ namespace DataSource\Entities\Course;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CoursePartner extends Model
+class CourseGuest extends Model
 {
     protected $fillable = [];
 

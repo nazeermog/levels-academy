@@ -19,7 +19,7 @@ class DataSourceServiceProvider extends ServiceProvider
         'Course',
         'Instructor',
         'Lesson',
-        'Partner',
+        'Guest',
         'PracticeType',
         'Question',
         'Student',
@@ -36,6 +36,7 @@ class DataSourceServiceProvider extends ServiceProvider
         'Product',
         'CategoryProduct',
         'Order',
+        'Blog',
     ];
 
     /**

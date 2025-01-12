@@ -1,13 +1,13 @@
 <?php
 
-namespace DataSource\Entities\Partner;
+namespace DataSource\Entities\Guest;
 
 use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\Taxonomy\Taxonomy;
 
-class Partner extends Model
+class Guest extends Model
 {
-    protected $table = 'partners';
+    protected $table = 'Guests';
     protected $fillable = [
         'name',
         'is_active'
@@ -15,6 +15,6 @@ class Partner extends Model
 
     public function taxonomies()
     {
-        return $this->belongsToMany(Taxonomy::class, 'partner_taxonomies', 'partner_id', 'taxonomy_id');
+        return $this->belongsToMany(Taxonomy::class, 'Guest_taxonomies', 'Guest_id', 'taxonomy_id');
     }
 }

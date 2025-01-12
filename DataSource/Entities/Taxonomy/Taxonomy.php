@@ -5,7 +5,7 @@ namespace DataSource\Entities\Taxonomy;
 use DataSource\Entities\BaseModel;
 use DataSource\Entities\Course\Course;
 use Illuminate\Database\Eloquent\Model;
-use DataSource\Entities\Partner\Partner;
+use DataSource\Entities\Guest\Guest;
 use Astrotomic\Translatable\Translatable;
 
 
@@ -25,9 +25,9 @@ class Taxonomy extends BaseModel
         'is_active'
     ];
 
-    public function partners()
+    public function Guests()
     {
-        return $this->belongsToMany(Partner::class, 'partner_taxonomies', 'taxonomy_id', 'partner_id');
+        return $this->belongsToMany(Guest::class, 'Guest_taxonomies', 'taxonomy_id', 'Guest_id');
     }
 
     public function courses()

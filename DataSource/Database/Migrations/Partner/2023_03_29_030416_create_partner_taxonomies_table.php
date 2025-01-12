@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('partner_taxonomies', function (Blueprint $table) {
+        Schema::create('Guest_taxonomies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('taxonomy_id')->index();
-            $table->unsignedBigInteger('partner_id')->index();
+            $table->unsignedBigInteger('Guest_id')->index();
             $table->timestamps();
 
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('partner_taxonomies');
+        Schema::dropIfExists('Guest_taxonomies');
     }
 };

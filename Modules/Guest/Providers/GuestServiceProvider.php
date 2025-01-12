@@ -1,21 +1,21 @@
 <?php
 
-namespace Modules\Partner\Providers;
+namespace Modules\Guest\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
-class PartnerServiceProvider extends ServiceProvider
+class GuestServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'Partner';
+    protected $moduleName = 'Guest';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'partner';
+    protected $moduleNameLower = 'guest';
 
     /**
      * Boot the application events.

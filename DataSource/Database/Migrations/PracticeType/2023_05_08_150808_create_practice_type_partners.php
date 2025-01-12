@@ -12,9 +12,9 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('practice_type_partners', function (Blueprint $table) {
+        Schema::create('practice_type_Guests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('partner_id');
+            $table->unsignedBigInteger('Guest_id');
             $table->unsignedBigInteger('practice_type_id');
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('practice_type_partners');
+        Schema::dropIfExists('practice_type_Guests');
     }
 };

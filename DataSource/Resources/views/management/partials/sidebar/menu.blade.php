@@ -345,7 +345,7 @@
                     <a href="#" class="nav-link {{Route::is('admin.categoryProducts.*')?'active':''}}">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>
-                        Category Products
+                            Category Products
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -402,12 +402,12 @@
 
                 </li>
 
-                
+
                 <li class="nav-item {{Route::is('admin.orders.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.orders.*')?'active':''}}">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>
-                        orders
+                            orders
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -425,6 +425,32 @@
 
                 </li>
 
+                <li class="nav-item {{Route::is('admin.blogs.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.blogs.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            blogs
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.blogs.index')}}" class="nav-link  {{ Route::is('admin.blogs.index')?'active':''}}">
+
+                                <p class="ml-3">- blogs </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.blogs.create')}}" class="nav-link  {{ Route::is('admin.blogs.create')?'active':''}}">
+
+                                <p class="ml-3">- Create blogs </p>
+                            </a>
+                        </li>
+                    </ul>
+
+
+                </li>
 
                 {{-- <li class="nav-item {{$url == route('admin.customers.index')?'menu-open':''}} ">--}}
                 {{-- <a href="#"--}}
@@ -749,9 +775,9 @@
                 {{-- <li class="mt-1 mb-1 p-0 w-100" style="border-bottom: 1px solid #4b545c;">--}}
 
                 {{-- </li>--}}
-                {{-- <li class="nav-item {{$url == route('admin.transactions.index')||$url == route('admin.transactions.partnerPayout')||$url == route('admin.transactions.edit',['id'=>$param])?'menu-open':''}} ">--}}
+                {{-- <li class="nav-item {{$url == route('admin.transactions.index')||$url == route('admin.transactions.GuestPayout')||$url == route('admin.transactions.edit',['id'=>$param])?'menu-open':''}} ">--}}
                 {{-- <a href="#"--}}
-                {{-- class="nav-link {{$url == route('admin.transactions.index')||$url == route('admin.transactions.partnerPayout')||$url == route('admin.transactions.edit',['id'=>$param])?'active':''}}">--}}
+                {{-- class="nav-link {{$url == route('admin.transactions.index')||$url == route('admin.transactions.GuestPayout')||$url == route('admin.transactions.edit',['id'=>$param])?'active':''}}">--}}
                 {{-- <i class="nav-icon fas fa-money-bill"></i>--}}
                 {{-- <p>--}}
                 {{-- Payments--}}
@@ -768,10 +794,10 @@
                 {{-- </a>--}}
                 {{-- </li>--}}
                 {{-- <li class="nav-item">--}}
-                {{-- <a href="{{route('admin.transactions.partnerPayout')}}"--}}
-                {{-- class="nav-link  {{$url == route('admin.transactions.partnerPayout')?'active':''}}">--}}
+                {{-- <a href="{{route('admin.transactions.GuestPayout')}}"--}}
+                {{-- class="nav-link  {{$url == route('admin.transactions.GuestPayout')?'active':''}}">--}}
 
-                {{-- <p class="ml-3">- Partner Payout</p>--}}
+                {{-- <p class="ml-3">- Guest Payout</p>--}}
                 {{-- </a>--}}
                 {{-- </li>--}}
                 {{-- </ul>--}}

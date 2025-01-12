@@ -16,9 +16,9 @@ class StudentTaxonomyController extends Controller
         return $this->repository;
     }
 
-    public function list($partnerId)
+    public function list($GuestId)
     {
-        $response = $this->repository->getCategories($partnerId);
+        $response = $this->repository->getCategories($GuestId);
         return response()->json($response['data'], $response['code']);
     }
 }

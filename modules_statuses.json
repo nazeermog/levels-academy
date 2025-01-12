@@ -10,7 +10,7 @@
     "Auth": true,
     "Tag": true,
     "Taxonomy": true,
-    "Partner": true,
+    "Guest": true,
     "StudentActivity": true,
     "ResultPractice": true,
     "Inrollment": true,

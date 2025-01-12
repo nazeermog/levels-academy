@@ -7,12 +7,12 @@ use Modules\DataResource\Entities\Taxonomy\Taxonomy;
 
 class StudentTaxonomyRepository
 {
-    public function getCategories($partnerId)
+    public function getCategories($GuestId)
     {
         $taxonomies = Taxonomy::where('is_active', 1)
-            ->where('id', $partnerId)
-            ->whereHas('partners', function ($q) use ($partnerId) {
-                return $q->where('partner_id',$partnerId);
+            ->where('id', $GuestId)
+            ->whereHas('Guests', function ($q) use ($GuestId) {
+                return $q->where('Guest_id',$GuestId);
             })
             ->get();
         return [

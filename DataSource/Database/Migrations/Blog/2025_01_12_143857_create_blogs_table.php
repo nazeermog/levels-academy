@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,13 +13,11 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('Guests', function (Blueprint $table) {
+        Schema::create('blogs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-
-            $table->boolean('is_active')->default(1);
+            $table->string('photo');
+            $table->unsignedBigInteger('user_id')->index();
             $table->timestamps();
-
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('Guests');
+        Schema::dropIfExists('blogs');
     }
 };
