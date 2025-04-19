@@ -64,7 +64,7 @@ class AdminCoursePathRepository
         }
         $coursePath->taxonomy_id = $data['taxonomy_id'];
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('public/course_path_photos');
+            $photoPath = $request->file('photo')->store('public/photos');
             $coursePath->photo = Storage::url($photoPath);
         }
         $coursePath->save();
@@ -88,7 +88,7 @@ class AdminCoursePathRepository
         }
         $coursePath->taxonomy_id = $data['taxonomy_id'];
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('public/course_path_photos');
+            $photoPath = $request->file('photo')->store('public/photos');
             $coursePath->photo = Storage::url($photoPath);
         }
         $coursePath->save();

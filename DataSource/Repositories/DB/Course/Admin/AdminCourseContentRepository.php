@@ -35,7 +35,7 @@ class AdminCourseContentRepository
     $course->is_auto_join = 1;
 
     if ($request->hasFile('photo')) {
-      $photoPath = $request->file('photo')->store('public/course_photos');
+      $photoPath = $request->file('photo')->store('public/photos');
       $course->photo = Storage::url($photoPath);
     }
 
@@ -83,7 +83,7 @@ class AdminCourseContentRepository
     $course->is_auto_join = 1;
 
     if ($request->hasFile('photo')) {
-      $photoPath = $request->file('photo')->store('public/course_photos');
+      $photoPath = $request->file('photo')->store('public/photos');
       $course->photo = Storage::url($photoPath);
     }
 

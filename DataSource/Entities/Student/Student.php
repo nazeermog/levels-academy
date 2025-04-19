@@ -22,7 +22,14 @@ use DataSource\Entities\StudentScore\StudentScore;
 class Student extends Model
 {
     protected $primaryKey = 'user_id';
-
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'user_id',
+        'country',
+        'city',
+        'avatar',
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

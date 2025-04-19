@@ -1,6 +1,6 @@
 <?php
 
-namespace DataSource\Repositories\DB\product\Student;
+namespace DataSource\Repositories\DB\Product\Student;
 
 use DataSource\Entities\Product\Product;
 use DataSource\Traits\Admin\AdminCRUDGenericRepository;

@@ -62,7 +62,7 @@ class AdminParenttRepository
             $user = User::find($data['model_id']);
             $user->first_name = $data['first_name'];
             $user->last_name = $data['last_name'];
-            if (!empty($data['password']) && Hash::needsRehash($data['password'])) {
+            if (!empty($data['password'])) {
                 $user->password = bcrypt($data['password']);
             }
             $user->email = $data['email'];

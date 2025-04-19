@@ -31,7 +31,7 @@ class AdminBlogController  extends BaseController
             $blog->translateOrNew($locale)->desc = $request['desc-' . $locale];
         }
 
-        $photo = $request->file('photo')->store('public/blogs_photos');
+        $photo = $request->file('photo')->store('public/photos');
         $blog->photo = Storage::url($photo);
         $blog->user_id = $request->user_id;
         $blog->save();
@@ -50,7 +50,7 @@ class AdminBlogController  extends BaseController
             if ($blog->photo) {
                 Storage::delete(str_replace('/storage/', 'public/', $blog->photo));
             }
-            $photo = $request->file('photo')->store('public/blogs_photos');
+            $photo = $request->file('photo')->store('public/photos');
             $blog->photo = Storage::url($photo);
         }
         $blog->user_id = $request->user_id;

@@ -54,7 +54,7 @@ class AdminProductController extends BaseController
             $product->translateOrNew($locale)->desc = $request['desc-' . $locale];
         }
 
-        $photo = $request->file('photo')->store('public/products_photos');
+        $photo = $request->file('photo')->store('public/photos');
         $product->photo = Storage::url($photo);
         $product->category_product_id = $request->category_product_id;
         $product->price = $request->price;
@@ -75,7 +75,7 @@ class AdminProductController extends BaseController
             if ($product->photo) {
                 Storage::delete(str_replace('/storage/', 'public/', $product->photo));
             }
-            $photo = $request->file('photo')->store('public/products_photos');
+            $photo = $request->file('photo')->store('public/photos');
             $product->photo = Storage::url($photo);
         }
         $product->category_product_id = $request->category_product_id;

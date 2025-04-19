@@ -29,7 +29,7 @@ class AdminLessonRepository
 
         $lesson->time = $data['time'];
         if ($request->hasFile('attachment')) {
-            $attachmentPath = $request->file('attachment')->store('public/Lessons_attachments');
+            $attachmentPath = $request->file('attachment')->store('public/photos');
             $lesson->attachment = Storage::url($attachmentPath);
         } elseif ($request->filled('attachment')) {
             $attachmentInput = $request->input('attachment');
@@ -37,7 +37,7 @@ class AdminLessonRepository
         }
 
         if ($request->hasFile('url')) {
-            $videoPath = $request->file('url')->store('public/Lessons_video');
+            $videoPath = $request->file('url')->store('public/photos');
             $lesson->url = Storage::url($videoPath);
         } elseif ($request->filled('url')) {
             $videoUrl = $request->input('url');
@@ -64,7 +64,7 @@ class AdminLessonRepository
 
         if ($request->hasFile('attachment')) {
             // Handle attachment update logic here, similar to what you did in the store function.
-            $attachmentPath = $request->file('attachment')->store('public/Lessons_attachments');
+            $attachmentPath = $request->file('attachment')->store('public/photos');
             $lesson->attachment = Storage::url($attachmentPath);
         } elseif ($request->filled('attachment')) {
             $attachmentInput = $request->input('attachment');
@@ -73,7 +73,7 @@ class AdminLessonRepository
 
         if ($request->hasFile('url')) {
             // Handle URL update logic here, similar to what you did in the store function.
-            $videoPath = $request->file('url')->store('public/Lessons_video');
+            $videoPath = $request->file('url')->store('public/photos');
             $lesson->url = Storage::url($videoPath);
         } elseif ($request->filled('url')) {
             $videoUrl = $request->input('url');

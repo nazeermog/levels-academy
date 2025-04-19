@@ -62,7 +62,7 @@ class AdminInstructorRepository
         $instructor->last_name = $user->last_name;
         
         if ($request->hasFile('avatar')) {
-            $videoPath = $request->file('avatar')->store('public/instructors_avatars');
+            $videoPath = $request->file('avatar')->store('public/photos');
             $instructor->avatar = Storage::url($videoPath);
         }
         
@@ -85,7 +85,7 @@ class AdminInstructorRepository
         $instructor->first_name = $user->first_name;
         $instructor->last_name = $user->last_name;
         if ($request->hasFile('avatar')) {
-            $videoPath = $request->file('avatar')->store('public/instructors_avatars');
+            $videoPath = $request->file('avatar')->store('public/photos');
             $instructor->avatar = Storage::url($videoPath);
         }
         

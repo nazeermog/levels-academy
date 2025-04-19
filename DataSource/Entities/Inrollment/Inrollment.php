@@ -14,6 +14,7 @@ class Inrollment extends Model
     protected $fillable = [
         'student_id',
         'course_id',
+        'semester_id',
         'approved_at',
         'progress_practice',
         'progress_lesson',

@@ -64,11 +64,12 @@
                                     <label for="user">User</label>
                                     <select class="form-control" name="user_id">
                                         @foreach($users as $user)
-                                        <option value="{{ $user->id }}" 
-                                            @if ($item->user_id==$user->id) 
-                                            selected 
+                                        <option value="{{ $user->id }}"
+                                            @if ($item->user_id==$user->id)
+                                            selected
                                             @endif>
-                                        {{ $user->first_name.' '.$user->last_name }}</option>
+                                            {{ $user->first_name.' '.$user->last_name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>

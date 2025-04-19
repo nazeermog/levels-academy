@@ -1,5 +1,5 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="#" class="brand-link">
+    <a href="{{ route('admin.dashboard') }}" class="brand-link">
         <img src="{{asset('images/logo/Levels-logo.png')}}" alt="{{ config('app.name', 'Project Name') }} Logo" class="brand-image  " height="100" width="100" style="opacity: .8">
 
     </a>
@@ -9,7 +9,12 @@
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+                <li class="nav-item {{ Route::is('admin.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
                 <li class="nav-item {{Route::is('admin.practices.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.practices.*')?'active':''}}">
                         <i class="nav-icon fas fa-user-circle"></i>
@@ -119,6 +124,12 @@
                             <a href="{{route('admin.courseContent.index')}}" class="nav-link  {{ Route::is('admin.courseContent.index')?'active':''}}">
 
                                 <p class="ml-3">- Courses </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.inrollments.index')}}" class="nav-link  {{ Route::is('admin.inrollments.index')?'active':''}}">
+
+                                <p class="ml-3">- student Enrollment </p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -250,7 +261,40 @@
 
                 </li>
 
+                <li class="nav-item {{Route::is('admin.students.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.students.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Students
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.students2.tiles')}}" class="nav-link  {{ Route::is('admin.students2.tiles')?'active':''}}">
 
+                                <p class="ml-3">- Students Dashboard </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.students.index')}}" class="nav-link  {{ Route::is('admin.students.index')?'active':''}}">
+
+                                <p class="ml-3">- Students </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.students.create')}}" class="nav-link  {{ Route::is('admin.students.create')?'active':''}}">
+
+                                <p class="ml-3">- Create Student </p>
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+
+                </li>
                 <li class="nav-item {{Route::is('admin.semesters.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.semesters.*')?'active':''}}">
                         <i class="nav-icon fas fa-user-circle"></i>
