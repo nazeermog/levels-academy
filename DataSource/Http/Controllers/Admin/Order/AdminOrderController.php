@@ -31,7 +31,7 @@ class AdminOrderController extends BaseController
     public function acceptOrder($orderId)
     {
         $order = Order::findOrFail($orderId);
-        $order->status = 'accepted';
+        $order->status = 'approved';
         $order->save();
 
         return redirect()->back()->with('success', 'Order accepted successfully!');

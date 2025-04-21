@@ -19,7 +19,6 @@
             <div class="card-header">
                 <h3 class="card-title float-left">List of {{$table_name}}</h3>
 
-                <a href="{{route('admin.'.$route_name.'.create')}}" class="btn btn-primary float-right">+ Add New</a>
 
 
             </div>
