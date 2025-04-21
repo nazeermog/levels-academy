@@ -7,7 +7,7 @@ use DataSource\Entities\Order\Order;
 use Illuminate\Support\Facades\Auth;
 use DataSource\Entities\Product\Product;
 use DataSource\Entities\StudentScore\StudentScore;
-use DataSource\Repositories\DB\product\Student\StudentproductRepository;
+use DataSource\Repositories\DB\Product\Student\StudentproductRepository;
 use DataSource\Repositories\DB\CategoryProduct\Admin\AdminCategoryProductRepository;
 
 

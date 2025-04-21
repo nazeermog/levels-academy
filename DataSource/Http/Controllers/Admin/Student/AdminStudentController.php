@@ -20,7 +20,7 @@ class AdminStudentController extends BaseController
 {
     use AdminCRUDControllerActions;
 
-    protected string $module = 'datasource::management.Student';
+    protected string $module = 'datasource::management.student';
     protected string $table_name = 'Students';
     protected string $route_name = 'students';
     protected string $interface = AdminStudentRepository::class;

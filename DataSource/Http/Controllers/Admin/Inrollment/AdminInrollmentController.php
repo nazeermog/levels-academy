@@ -17,7 +17,7 @@ class AdminInrollmentController extends BaseController
 {
     use AdminCRUDControllerActions;
 
-    protected string $module = 'datasource::management.Inrollment';
+    protected string $module = 'datasource::management.inrollment';
     protected string $table_name = 'Inrollments';
     protected string $route_name = 'inrollments';
     protected string $interface = AdminInrollmentRepository::class;
