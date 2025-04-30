@@ -52,7 +52,7 @@
                         [
                             'title' => 'Total Lessons',
                             'value' => $lessonsCount,
-                            'icon' => 'fas fa-book-open',
+                            'icon' => 'fas fa-play',
                             'bg' => 'bg-purple',
                             'route' => route('admin.lessons.index')
                         ],
@@ -108,7 +108,7 @@
                         [
                             'title' => 'Total Blogs',
                             'value' => $blogsCount,
-                            'icon' => 'fas fa-blog',
+                            'icon' => 'fas fa-book-open',
                             'bg' => 'bg-primary',
                             'route' => route('admin.blogs.index')
                         ],
