@@ -6,6 +6,7 @@ use DataSource\Entities\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\Student\Student;
 use DataSource\Entities\PracticeType\PracticeType;
+use DataSource\Entities\PracticeType\PracticeTypeDetail;
 use DataSource\Entities\ResultPractice\ResultPracticeType;
 
 /**
@@ -38,10 +39,13 @@ class ResultPractice extends Model
     {
         return $this->hasOne(PracticeType::class, 'id', 'practice_id');
     }
-
+    public function practiceLevel()
+    {
+        return $this->belongsTo(PracticeTypeDetail::class, 'level_title', 'id');
+    }
+    
     public function resultsType()
     {
         return $this->hasOne(ResultPracticeType::class);
     }
-
 }

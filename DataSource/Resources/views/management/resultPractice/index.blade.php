@@ -10,25 +10,21 @@
         background-color: #dc35457a;
         border-color: #dc35457a;
     }
-
     .alert-success-edited {
         color: #000;
         background-color: #28a7457a;
         border-color: #28a7457a;
     }
-
     .stats-card {
         border-radius: 8px;
         padding: 15px;
         margin-bottom: 15px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-
     .stats-value {
         font-size: 1.5rem;
         font-weight: bold;
     }
-
     .progress-text {
         position: absolute;
         left: 50%;
@@ -45,20 +41,28 @@
     <div class="page-content">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
             <div class="breadcrumb-title pe-3">{{$table_name}}</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="bx bx-home-alt"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{$table_name}}</li>
+                    </ol>
+                </nav>
+            </div>
         </div>
 
-        <div class="card border-top border-0 border-4 border-primary table-responsive">
+        <div class="card border-top border-0 border-4 border-primary">
             <div class="card-header">
                 <h3 class="card-title float-left">List of {{$table_name}}</h3>
             </div>
             <div class="card-body">
                 <form method="GET" action="{{ route($route_name . '.index') }}">
                     <div class="row form-group">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>Search</label>
                             <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ request('search') }}">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>Student</label>
                             <select name="student_id" class="form-control">
                                 <option value="">All Students</option>
@@ -69,7 +73,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>Practice Type</label>
                             <select name="practice_id" class="form-control">
                                 <option value="">All Practices</option>
@@ -80,18 +84,29 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col-md-3">
+                            <label>Practice Level</label>
+                            <select name="level_id" class="form-control">
+                                <option value="">All Levels</option>
+                                @foreach($practiceLevels as $level)
+                                <option value="{{ $level->id }}" {{ request('level_id') == $level->id ? 'selected' : '' }}>
+                                    {{ $level->title }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
                     <div class="row form-group">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>From Date</label>
                             <input type="date" name="from_date" class="form-control" value="{{ request('from_date') }}">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>To Date</label>
                             <input type="date" name="to_date" class="form-control" value="{{ request('to_date') }}">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label>Status</label>
                             <select name="is_true" class="form-control">
                                 <option value="">All</option>
@@ -163,7 +178,7 @@
                                 <td>{{ $item->created_at->format('Y-m-d H:i') }}</td>
                                 <td>{{ $item->student->first_name . ' ' . $item->student->last_name }}</td>
                                 <td>{{ $item->practice->title ?? '-' }}</td>
-                                <td>{{ $item->level_title }}</td>
+                                <td>{{ $item->practiceLevel->title ?? $item->level_title }}</td>
                                 <td>{{ $item->result_true }}</td>
                                 <td>{{ $item->result_student }}</td>
                                 <td>{{ $item->resultsType->seconds_speed ?? '-' }} sec</td>

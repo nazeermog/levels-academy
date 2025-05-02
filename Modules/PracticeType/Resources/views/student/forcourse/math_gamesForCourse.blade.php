@@ -311,7 +311,7 @@ nextBtn.addEventListener("click", function () {
             data: {
                 practice_id: {{$practice->practice_id}},
                 practice_type_id: {{$practice->id}},
-                level_title: '{{$practice->practiceLevel->title}}',
+                level_title: {{$practice->id}},
                 result_student: Number(inputResult) ,
                 result_true: correctAnswer[currentIndex],
                 student_id: {{auth()->user()->id}},

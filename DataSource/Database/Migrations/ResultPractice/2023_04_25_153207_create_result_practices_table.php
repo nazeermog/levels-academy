@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->boolean('is_true');
             $table->integer('result_true');
             $table->integer('result_student');
-            $table->string('level_title');
+            $table->unsignedBigInteger('level_title');
             $table->timestamps();
         });
     }

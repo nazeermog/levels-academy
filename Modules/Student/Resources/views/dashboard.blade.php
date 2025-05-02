@@ -1,5 +1,4 @@
 @extends("student.layouts.dashboard")
-dashboard asdadadadasdads
 @section("content")
     <div class="pt-32pt">
         <div

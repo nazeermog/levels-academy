@@ -359,7 +359,7 @@
                         data: {
                             practice_id: {{$practice->practice_id}},
                             practice_type_id: {{$practice->id}},
-                            level_title: '{{$practice->practiceLevel->title}}',
+                            level_title: {{$practice->id}},
                             result_student: inputValue,
                             result_true: sumNumber,
                             student_id: {{auth()->user()->id}},
