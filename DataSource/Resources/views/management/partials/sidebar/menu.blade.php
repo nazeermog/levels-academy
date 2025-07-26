@@ -493,6 +493,25 @@
                         </li>
                     </ul>
 
+                </li>
+                <li class="nav-item {{Route::is('admin.userevents')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.userevents')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            user Events
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.userevents')}}" class="nav-link  {{ Route::is('admin.userevents')?'active':''}}">
+
+                                <p class="ml-3">- Events </p>
+                            </a>
+                        </li>
+                    </ul>
+
 
                 </li>
 

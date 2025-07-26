@@ -3,6 +3,7 @@
 namespace Modules\PracticeType\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\UserEventLogger;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use DataSource\Entities\Course\Course;
@@ -405,7 +406,7 @@ class StudentPracticeController extends Controller
         'practice_id' => $practiceId,
         'course_id' => $courseId,
         'semester_id' => $semesterId,
-        'type'=>'course_exercise',
+        'type' => 'course_exercise',
         'coin' => $coinsShouldTaken,
       ]
     );
@@ -434,6 +435,7 @@ class StudentPracticeController extends Controller
       $inrollment->progress_practice = number_format($progressPercentage, 1);
       $inrollment->update();
     }
+    UserEventLogger::log('practice solved','practice solved ' . $practice->title . ' and ' . $coinsShouldTaken . ' coins added','pracitce_done');
     return redirect()->back()->withSuccess('practice marked as done');
   }
   public function donePracitceForOutsideCourse($practiceId)
@@ -455,6 +457,8 @@ class StudentPracticeController extends Controller
         'coin' => $coinsShouldTaken,
       ]
     );
+    UserEventLogger::log('practice solved','practice solved ' . $practice->title . ' and ' . $coinsShouldTaken . ' coins added','pracitce_done');
+
     return redirect()->back()->withSuccess('practice marked as done and coin added');
   }
   public function donePracitceForBookExerise($practiceId)
@@ -477,6 +481,7 @@ class StudentPracticeController extends Controller
         'coin' => $coinsShouldTaken,
       ]
     );
+    UserEventLogger::log('practice solved','practice solved ' . $practice->title . ' and ' . $coinsShouldTaken . ' coins added','pracitce_done');
     return redirect()->back()->withSuccess('practice marked as done and coin added');
   }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\User\Http\Controllers\AdminUserEventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('user')->group(function() {
-    Route::get('/', 'UserController@index');
+Route::group([
+    'middleware' => ['auth']
+], function () {
+    Route::get('/user-events', [AdminUserEventController::class, 'eventindex'])->name('admin.userevents');
 });

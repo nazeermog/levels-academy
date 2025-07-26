@@ -26,14 +26,14 @@ class Instructor extends BaseModel
         'about',
         'spec',
         'country',
-       
+
     ];
-        protected $fillable = [
+    protected $fillable = [
         'user_id',
         'first_name',
         'last_name',
         'avatar',
-        ];
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -43,6 +43,6 @@ class Instructor extends BaseModel
     }
     public function courses()
     {
-        return $this->hasMany(Course::class);
+        return $this->hasMany(Course::class, 'instructor_id', 'id');
     }
 }

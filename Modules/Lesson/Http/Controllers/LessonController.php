@@ -3,6 +3,7 @@
 namespace Modules\Lesson\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\UserEventLogger;
 use Illuminate\Routing\Controller;
 use DataSource\Entities\Course\Course;
 use DataSource\Entities\Lesson\Lesson;
@@ -52,12 +53,12 @@ class LessonController extends Controller
         if (!$inrollment) {
             return redirect()->back()->withErrors('you should be enroll to this course');
         }
-            CourseStudent::create([
-                'student_id' => $studentId,
-                'lesson_id' => $lessonId,
-                'course_id' => $courseId,
-            ]);
-        
+        CourseStudent::create([
+            'student_id' => $studentId,
+            'lesson_id' => $lessonId,
+            'course_id' => $courseId,
+        ]);
+
         $totalWatchedTime = CourseStudent::where('student_id', $studentId)
             ->where('course_id', $courseId)
             ->join('lessons', 'course_students.lesson_id', '=', 'lessons.id')
@@ -65,12 +66,14 @@ class LessonController extends Controller
 
         $course = Course::find($courseId);
         $totalLessonTimeOld = AdminLessonRepository::SingleCoursTotalLesson($course);
+        $lesson = Lesson::find($lessonId);
 
         $progressPercentage = ($totalWatchedTime / $totalLessonTimeOld) * 100;
         if ($inrollment) {
             $inrollment->progress_lesson = number_format($progressPercentage, 1);
             $inrollment->update();
         }
+        UserEventLogger::log('lesson watched','watch lesson '.$lesson->title.' on course'.$course->title,'lesson');
         return redirect()->back()->withSuccess('Lesson marked as watched');
     }
 

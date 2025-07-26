@@ -2,6 +2,7 @@
 
 namespace Modules\Taxonomy\Http\Controllers\Student;
 
+use App\Services\UserEventLogger;
 use App\Http\Controllers\Controller;
 use DataSource\Entities\Order\Order;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class StudentProductController extends Controller
     $totalOrdersPrice = Order::where('user_id', $studentId)->sum('price');
 
     $totalCostWithNewOrder = $totalOrdersPrice + $product->price;
-    
+
     if ($totalCoins >= $totalCostWithNewOrder) {
       Order::create([
         'product_id' => $product->id,
@@ -37,7 +38,7 @@ class StudentProductController extends Controller
         'status' => 'pending',
         'price' => $product->price,
       ]);
-
+      UserEventLogger::log('create Order','order on product ' .$product->name,'create_order');
       return redirect()->back()->with('success', 'Order placed successfully!');
     } else {
       return redirect()->back()->with('error', 'You do not have enough coins to place this order.');

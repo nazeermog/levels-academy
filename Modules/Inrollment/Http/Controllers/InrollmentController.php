@@ -3,6 +3,7 @@
 namespace Modules\Inrollment\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\UserEventLogger;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use DataSource\Entities\Course\Course;
@@ -11,11 +12,11 @@ use Illuminate\Contracts\Support\Renderable;
 use DataSource\Entities\Course\CourseStudent;
 use DataSource\Entities\Inrollment\Inrollment;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
+use DataSource\Repositories\DB\StudentInrollmentRepository;
 use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
 use DataSource\Repositories\DB\Taxonomy\Admin\AdminTaxonomyRepository;
 use DataSource\Repositories\DB\Instructor\Admin\AdminInstructorRepository;
 use DataSource\Repositories\DB\Course\Student\StudentCourseRatingRepository;
-use DataSource\Repositories\DB\StudentInrollmentRepository;
 
 
 class InrollmentController extends Controller
@@ -25,31 +26,31 @@ class InrollmentController extends Controller
 
   public function index()
   {
-      $studentId = auth()->user()->id;
-      $enrollments = Inrollment::where('student_id', $studentId)->get();
-      $courses = $enrollments->map(function ($enrollment) {
-          return $enrollment->course;
-      });
-      $coursesByTaxonomy = [];
-      foreach ($courses as $course) {
-          $taxonomy = $course->taxonomy;
-          if ($taxonomy) {
-              $coursesByTaxonomy[$taxonomy->id]['taxonomy'] = $taxonomy;
-              $coursesByTaxonomy[$taxonomy->id]['courses'][] = $course;
-          }
+    $studentId = auth()->user()->id;
+    $enrollments = Inrollment::where('student_id', $studentId)->get();
+    $courses = $enrollments->map(function ($enrollment) {
+      return $enrollment->course;
+    });
+    $coursesByTaxonomy = [];
+    foreach ($courses as $course) {
+      $taxonomy = $course->taxonomy;
+      if ($taxonomy) {
+        $coursesByTaxonomy[$taxonomy->id]['taxonomy'] = $taxonomy;
+        $coursesByTaxonomy[$taxonomy->id]['courses'][] = $course;
       }
-      $courseLessons = StudentInrollmentRepository::inrollmentLessons();
-      $totalLessonTime = StudentInrollmentRepository::TotalLessonsHours($enrollments);
-      $instructors = StudentInrollmentRepository::InstructorForCourse($enrollments);
-      $courseRate = StudentInrollmentRepository::CalculateAverageRatingForAllCourses($enrollments);
-  
-      return view('inrollment::index', [
-          'coursesByTaxonomy' => $coursesByTaxonomy,
-          'courseLessons' => $courseLessons,
-          'totalLessonTime' => $totalLessonTime,
-          'instructors' => $instructors,
-          'courseRate' => $courseRate,
-      ]);
+    }
+    $courseLessons = StudentInrollmentRepository::inrollmentLessons();
+    $totalLessonTime = StudentInrollmentRepository::TotalLessonsHours($enrollments);
+    $instructors = StudentInrollmentRepository::InstructorForCourse($enrollments);
+    $courseRate = StudentInrollmentRepository::CalculateAverageRatingForAllCourses($enrollments);
+
+    return view('inrollment::index', [
+      'coursesByTaxonomy' => $coursesByTaxonomy,
+      'courseLessons' => $courseLessons,
+      'totalLessonTime' => $totalLessonTime,
+      'instructors' => $instructors,
+      'courseRate' => $courseRate,
+    ]);
   }
 
   /**
@@ -69,7 +70,8 @@ class InrollmentController extends Controller
   public function store(Request $request, $courseId)
   {
     $studentId = auth()->user()->id;
-    $semesterId= $request->semester_id;
+    $semesterId = $request->semester_id;
+    $course=Course::find($courseId);
     $inrollment = Inrollment::where('student_id', $studentId)
       ->where('course_id', $courseId)
       ->where('semester_id', $semesterId)
@@ -85,7 +87,7 @@ class InrollmentController extends Controller
     // $inrollmentNew->approved_at = now();
 
     $inrollmentNew->save();
-
+    UserEventLogger::log('couse enrolled','enroll in ' . $course->title . ' on semester id' . $inrollmentNew->semester->title,'course_enrollment');
     return redirect()->back()->withSuccess('inrollment successful');
   }
 
@@ -129,9 +131,4 @@ class InrollmentController extends Controller
   {
     //
   }
-
-
-
-
-
 }

@@ -31,7 +31,7 @@ class StudentCourseController extends Controller
     $courseRate = StudentCourseRatingRepository::CalculateAverageRatingForAllCourses($courses);
     $coursePaths = AdminCoursePathRepository::list();
     $coursesCounts = AdminCoursePathRepository::CourseCounter();
-      return view('course::student.index', [
+    return view('course::student.index', [
       'taxonomies' => $taxonomies,
       'courses' => $courses,
       'courseLessons' => $courseLessons,
@@ -68,12 +68,30 @@ class StudentCourseController extends Controller
     $instructorCoursesRate = StudentCourseRatingRepository::CalculateAverageRatingForAllCourses($instructorCourses);
     $ratingOnce = StudentCourseRatingRepository::ratingOnce($course);
     $semester = StudentSemesterRepository::semesteOnDate();
-    $isAuthInroll=StudentInrollmentRepository::isAuthInroll($course,$semester);
+    $isAuthInroll = StudentInrollmentRepository::isAuthInroll($course, $semester);
+    if (!$semester) {
+      return redirect()->back()->with('error', 'there is no semesters for that course');
+    }
     return view('course::student.show', compact(
-      'course', 'contents','contentSteps','totalLessonTime','coursestepCount',
-      'instructor','courseRate','ratingWithComments','ratingCount','instructorCourses',
-      'rating5','rating4','rating3','rating2','rating1','instructorCoursesRate','ratingOnce',
-      'semester','isAuthInroll',
+      'course',
+      'contents',
+      'contentSteps',
+      'totalLessonTime',
+      'coursestepCount',
+      'instructor',
+      'courseRate',
+      'ratingWithComments',
+      'ratingCount',
+      'instructorCourses',
+      'rating5',
+      'rating4',
+      'rating3',
+      'rating2',
+      'rating1',
+      'instructorCoursesRate',
+      'ratingOnce',
+      'semester',
+      'isAuthInroll',
     ));
   }
 }

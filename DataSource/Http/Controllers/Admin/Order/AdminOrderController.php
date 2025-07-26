@@ -3,6 +3,7 @@
 namespace DataSource\Http\Controllers\Admin\Order;
 
 use Illuminate\Http\Request;
+use App\Services\UserEventLogger;
 use DataSource\Entities\Order\Order;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\Order\Update;
@@ -33,6 +34,7 @@ class AdminOrderController extends BaseController
         $order = Order::findOrFail($orderId);
         $order->status = 'approved';
         $order->save();
+        UserEventLogger::log('approve order', 'approved order id ' . $orderId . ' on product' . $order->product->name, 'approve_order');
 
         return redirect()->back()->with('success', 'Order accepted successfully!');
     }
@@ -43,15 +45,14 @@ class AdminOrderController extends BaseController
         $order->status = 'rejected';
         $order->price = 0;
         $order->save();
+        UserEventLogger::log('rejected order', 'rejected order id ' . $orderId . ' on product' . $order->product->name, 'reject_order');
 
         return redirect()->back()->with('success', 'Order rejected successfully!');
     }
     public function update(Request $request, $orderId)
     {
-        // Find the order by ID
         $order = Order::findOrFail($orderId);
 
-        // Validate the status
         $request->validate([
             'status' => 'required|in:pending,approved,rejected',
         ]);

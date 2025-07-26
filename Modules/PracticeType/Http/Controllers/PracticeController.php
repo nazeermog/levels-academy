@@ -3,6 +3,7 @@
 namespace Modules\PracticeType\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\UserEventLogger;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Support\Renderable;
@@ -22,16 +23,16 @@ class PracticeController extends Controller
     protected string $table_name = 'practice_details';
     protected string $route_name = 'practice-details';
     protected string $interface = AdminPracticeTypeRepository::class;
-//    protected string $interface_category = AdminCategoryRepository::class;
+    //    protected string $interface_category = AdminCategoryRepository::class;
     protected string $store_request = Store::class;
     protected string $update_request = Update::class;
-//    protected $id_request = Id::class;
+    //    protected $id_request = Id::class;
     public function index()
     {
         $list  = (new AdminPracticeTypeRepository())->index();
         $route_name = 'practice-details';
         $table_name = 'Practice Type Details';
-        return view( 'practicetype::instructor.practiceTypeDetails.index', compact('list', 'route_name', 'table_name'));
+        return view('practicetype::instructor.practiceTypeDetails.index', compact('list', 'route_name', 'table_name'));
     }
 
 
@@ -45,8 +46,8 @@ class PracticeController extends Controller
         $route_name = 'practice-details';
         $table_name = 'Practice Type Details';
         $practices = AdminPracticeRepository::list();
-        $practiceLevels=AdminPracticeLevelRepository::list();
-        return view('practicetype::instructor.practiceTypeDetails.create', compact('route_name', 'table_name', 'practices','practiceLevels'));
+        $practiceLevels = AdminPracticeLevelRepository::list();
+        return view('practicetype::instructor.practiceTypeDetails.create', compact('route_name', 'table_name', 'practices', 'practiceLevels'));
     }
 
 
@@ -62,12 +63,12 @@ class PracticeController extends Controller
             DB::beginTransaction();
             (new AdminPracticeTypeRepository())->store($request->all());
             DB::commit();
-            return redirect()->route('instructor.' .$route_name . '.index')->withSuccess('created successfully');
+            UserEventLogger::log('create new a practice-details',null,'create practice');
+            return redirect()->route('instructor.' . $route_name . '.index')->withSuccess('created successfully');
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()->back()->withErrors($exception->getMessage());
         }
-
     }
     /**
      * Show the specified resource.
@@ -80,8 +81,8 @@ class PracticeController extends Controller
         $route_name = 'practice-details';
         $table_name = 'Practice Type Details';
         $practices = AdminPracticeRepository::list();
-        $practiceLevels=AdminPracticeLevelRepository::list();
-        return view('practicetype::instructor.practiceTypeDetails.show', compact('item', 'route_name', 'table_name', 'practices','practiceLevels'));
+        $practiceLevels = AdminPracticeLevelRepository::list();
+        return view('practicetype::instructor.practiceTypeDetails.show', compact('item', 'route_name', 'table_name', 'practices', 'practiceLevels'));
     }
 
     /**
@@ -99,11 +100,11 @@ class PracticeController extends Controller
             DB::beginTransaction();
             $this->getRepository()->update($this->getUpdateRequest()->validated());
             DB::commit();
+            UserEventLogger::log('update practice-details',null,'update practice');
             return redirect()->route('instructor.' . $this->route_name . '.index')->withSuccess('Update successfully');
         } catch (\Exception $exception) {
             DB::rollBack();
             return redirect()->back()->withErrors($exception->getMessage());
         }
     }
-
 }
