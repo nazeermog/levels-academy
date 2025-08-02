@@ -93,6 +93,21 @@
                         </span>
                     </a>
                 </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" href="{{ route('instructor.notes.index') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">format_shapes</span>
+
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            Instructor Notes
+                            @elseif(session('locale', config('app.locale')) == 'ar')
+                            ملاحظات المعلم
+                            @elseif(session('locale', config('app.locale')) == 'de')
+                            Anmerkungen des Dozenten
+                            @endif
+                        </span>
+                    </a>
+                </li>
 
             </ul>
             <!-- // END Sidebar Content -->

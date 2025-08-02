@@ -4,15 +4,26 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Parentt\Http\Controllers\ParenttController;
 use Modules\Instructor\Http\Controllers\InstructorController;
+use Modules\Instructor\Http\Controllers\InstructorNoteController;
 
 Route::group([
+    'prefix' => 'instructor',
     'middleware' => ['auth', 'role:instructor']
 ], function () {
-    Route::get('/instructor/dashboard', [InstructorController::class, 'index'])->name('instructor.dashboard');
-    Route::get('/instructor/courses', [InstructorController::class, 'showInrollmentCourses'])->name('instructor.InrollmentCourses.index');
-    Route::get('/instructor/studentscore', [InstructorController::class, 'showStudentScoreBoard'])->name('instructor.studentscore.index');
-    Route::get('/instructor/studentscore/bycourse', [InstructorController::class, 'showStudentScoreBoardByFilter'])->name('studentscore.filter');
-    Route::get('/instructor/enrolledStudentsEvents', [InstructorController::class, 'enrolledStudentsEvents'])->name('instructor.student.events');
+    Route::get('/dashboard', [InstructorController::class, 'index'])->name('instructor.dashboard');
+    Route::get('/courses', [InstructorController::class, 'showInrollmentCourses'])->name('instructor.InrollmentCourses.index');
+    Route::get('/studentscore', [InstructorController::class, 'showStudentScoreBoard'])->name('instructor.studentscore.index');
+    Route::get('/studentscore/bycourse', [InstructorController::class, 'showStudentScoreBoardByFilter'])->name('studentscore.filter');
+    Route::get('/enrolledStudentsEvents', [InstructorController::class, 'enrolledStudentsEvents'])->name('instructor.student.events');
+    Route::post('/notes', [InstructorNoteController::class, 'store'])->name('instructor.notes.store');
+
+    Route::get('/notes', [InstructorNoteController::class, 'index'])->name('instructor.notes.index');
+    Route::get('/notes/create', [InstructorNoteController::class, 'create'])->name('instructor.notes.create');
+    Route::get('/notes/edit/{id}', [InstructorNoteController::class, 'edit'])->name('instructor.notes.edit');
+    Route::get('/notes/destroy/{id}', [InstructorNoteController::class, 'destroy'])->name('instructor.notes.destroy');
+    Route::put('/notes/update/{id}', [InstructorNoteController::class, 'update'])->name('instructor.notes.update');
+
+    Route::post('/notes', [InstructorNoteController::class, 'store'])->name('instructor.notes.store');
 });
 
 Route::group([

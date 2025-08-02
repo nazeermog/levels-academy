@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use DataSource\Entities\User\UserEvent;
 use DataSource\Entities\Parentt\Parentt;
 use DataSource\Entities\Inrollment\Inrollment;
+use DataSource\Entities\Instructor\InstructorNote;
 
 class ParenttController extends Controller
 {
@@ -75,5 +76,40 @@ class ParenttController extends Controller
     $events = $eventsQuery->with('user')->latest()->paginate(5);
 
     return view('studentactivity::childernEvents', compact('events', 'students', 'selectedStudentId', 'types', 'roles', 'selectedTypes', 'selectedRole'));
+  }
+  public function childernNotes()
+  {
+    $userParent = Auth::user();
+    $parent = Parentt::find($userParent->id);
+
+    $studentIds = $parent->students()->pluck('id');
+
+    $notes = InstructorNote::with('student')
+      ->whereIn('student_id', $studentIds)
+      ->orderByDesc('created_at')
+      ->get();
+
+    return view('studentactivity::childernNotes', compact('notes'));
+  }
+
+  public function check($noteId)
+  {
+    $note = InstructorNote::findOrFail($noteId);
+
+    $userParent = Auth::user();
+    $parent = Parentt::find($userParent->id);
+
+    $childIds = $parent->students()->pluck('id')->toArray();
+
+    if (!in_array($note->student_id, $childIds)) {
+      abort(403);
+    }
+
+    if (!$note->is_read) {
+      $note->is_read = true;
+      $note->save();
+    }
+
+    return redirect()->route('parentt.notes.childernNotes')->with('success', 'Note marked as read.');
   }
 }

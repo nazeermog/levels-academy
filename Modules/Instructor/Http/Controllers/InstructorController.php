@@ -207,13 +207,11 @@ class InstructorController extends Controller
 
     $students = User::whereIn('id', $studentIds)->get();
 
-    // للحصول على أنواع الأحداث الخاصة بهؤلاء الطلاب، فقط الأنواع التي ظهرت لديهم
     $types = UserEvent::whereIn('user_id', $studentIds)
       ->whereNotNull('type')
       ->distinct()
       ->pluck('type');
 
-    // الحصول على الأدوار المختلفة للطلاب فقط
     $roles = UserEvent::whereIn('user_id', $studentIds)
       ->whereNotNull('role')
       ->distinct()
@@ -221,23 +219,20 @@ class InstructorController extends Controller
 
     $eventsQuery = UserEvent::query();
 
-    // فلترة حسب student_id
     if ($request->filled('student_id')) {
       if ($studentIds->contains($request->input('student_id'))) {
         $eventsQuery->where('user_id', $request->input('student_id'));
       } else {
-        $eventsQuery->whereRaw('1=0'); // لا يوجد أحداث
+        $eventsQuery->whereRaw('1=0'); 
       }
     } else {
       $eventsQuery->whereIn('user_id', $studentIds);
     }
 
-    // فلترة حسب type[] متعددة
     if ($request->filled('type') && is_array($request->input('type'))) {
       $eventsQuery->whereIn('type', $request->input('type'));
     }
 
-    // فلترة حسب role
     if ($request->filled('role')) {
       $eventsQuery->where('role', $request->input('role'));
     }

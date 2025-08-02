@@ -43,6 +43,20 @@
                             @endif
                         </span>
                     </a>
+                    <a class="sidebar-menu-button" href="{{ route('parentt.notes.childernNotes') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">note</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            View Notes
+                            @endif
+                            @if(session('locale', config('app.locale')) == 'ar')
+                            عرض الملاحظات
+                            @endif
+                            @if(session('locale', config('app.locale')) == 'de')
+                            Notizen anzeigen
+                            @endif
+                        </span>
+                    </a>
                 </li>
 
 

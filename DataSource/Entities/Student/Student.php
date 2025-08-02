@@ -9,6 +9,7 @@ use DataSource\Entities\Course\Rating;
 use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\Parentt\Parentt;
 use DataSource\Entities\Inrollment\Inrollment;
+use DataSource\Entities\Instructor\InstructorNote;
 use DataSource\Entities\StudentScore\StudentScore;
 
 /**
@@ -59,5 +60,9 @@ class Student extends Model
     public function rateing()
     {
         return $this->hasMany(Rating::class);
+    }
+    public function instructorNotes()
+    {
+        return $this->hasMany(InstructorNote::class);
     }
 }
