@@ -131,7 +131,15 @@
                       <input type="number" class="form-control" step="0.001" name="price" value="{{ old('price', $item->price) }}" placeholder="Enter Price">
                     </div>
                   </div>
-
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label for="payment_type">Payment Type</label>
+                      <select class="form-control" name="payment_type" id="payment_type">
+                        <option value="once" {{ old('payment_type', $item->payment_type) == 'once' ? 'selected' : '' }}>Once</option>
+                        <option value="monthly" {{ old('payment_type', $item->payment_type) == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                      </select>
+                    </div>
+                  </div>
                   <!-- Category -->
                   <div class="col-4">
                     <div class="form-group">

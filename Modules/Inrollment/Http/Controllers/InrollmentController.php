@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use App\Services\UserEventLogger;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use DataSource\Entities\Course\Course;
 use DataSource\Entities\Lesson\Lesson;
+use DataSource\Entities\Student\Student;
 use Illuminate\Contracts\Support\Renderable;
 use DataSource\Entities\Course\CourseStudent;
 use DataSource\Entities\Inrollment\Inrollment;
+use DataSource\Entities\Transaction\Transaction;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
 use DataSource\Repositories\DB\StudentInrollmentRepository;
 use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
@@ -69,27 +72,63 @@ class InrollmentController extends Controller
    */
   public function store(Request $request, $courseId)
   {
-    $studentId = auth()->user()->id;
-    $semesterId = $request->semester_id;
-    $course=Course::find($courseId);
-    $inrollment = Inrollment::where('student_id', $studentId)
-      ->where('course_id', $courseId)
-      ->where('semester_id', $semesterId)
-      ->first();
+    $request->validate([
+      'semester_id' => 'required|exists:semesters,id',
+    ]);
 
-    if ($inrollment) {
-      return redirect()->back()->withError('You are already enrolled in this course.');
+    DB::beginTransaction();
+
+    try {
+      $studentId = Auth::id();
+      $semesterId = $request->semester_id;
+
+      $course = Course::findOrFail($courseId);
+
+      // Check if already enrolled
+      $enrollment = Inrollment::where('student_id', $studentId)
+        ->where('course_id', $courseId)
+        ->where('semester_id', $semesterId)
+        ->first();
+
+      if ($enrollment) {
+        return redirect()->back()->withErrors('You are already enrolled in this course.');
+      }
+
+      // Create new enrollment
+      $newEnrollment = new Inrollment();
+      $newEnrollment->student_id = $studentId;
+      $newEnrollment->semester_id = $semesterId;
+      $newEnrollment->course_id = $courseId;
+      $newEnrollment->save();
+
+      // Log event
+      UserEventLogger::log(
+        'course enrolled',
+        'enrolled in ' . $course->title . ' on semester ' . $newEnrollment->semester->title,
+        'course_enrollment'
+      );
+
+      $student = Student::findOrFail($studentId);
+      $parents = $student->parentts;
+      $parent = $parents->first();
+      
+      Transaction::create([
+        'parent_id' => $parent->user_id,
+        'course_id' => $course->id,
+        'student_id' => $student->user_id,
+        'price'     => $course->price,
+        'type'      => $course->payment_type,
+        'is_credit' => 0,
+      ]);
+      DB::commit();
+      return redirect()->back()->with('success', 'Enrollment successful.');
+    } catch (\Exception $e) {
+      DB::rollBack();
+
+      return redirect()->back()->withErrors('Something went wrong: ' . $e->getMessage());
     }
-    $inrollmentNew = new Inrollment();
-    $inrollmentNew->student_id = $studentId;
-    $inrollmentNew->semester_id = $request->semester_id;
-    $inrollmentNew->course_id = $courseId;
-    // $inrollmentNew->approved_at = now();
-
-    $inrollmentNew->save();
-    UserEventLogger::log('couse enrolled','enroll in ' . $course->title . ' on semester id' . $inrollmentNew->semester->title,'course_enrollment');
-    return redirect()->back()->withSuccess('inrollment successful');
   }
+
 
   /**
    * Show the specified resource.

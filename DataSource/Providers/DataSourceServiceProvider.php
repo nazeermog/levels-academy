@@ -37,6 +37,7 @@ class DataSourceServiceProvider extends ServiceProvider
         'CategoryProduct',
         'Order',
         'Blog',
+        'Transaction'
     ];
 
     /**
@@ -74,7 +75,8 @@ class DataSourceServiceProvider extends ServiceProvider
             base_path($this->moduleName . '/Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            base_path($this->moduleName . '/Config/config.php'), $this->moduleNameLower
+            base_path($this->moduleName . '/Config/config.php'),
+            $this->moduleNameLower
         );
     }
 

@@ -57,6 +57,20 @@
                             @endif
                         </span>
                     </a>
+                    <a class="sidebar-menu-button" href="{{ route('parentt.transactions.index') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">format_shapes</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            View Transactions
+                            @endif
+                            @if(session('locale', config('app.locale')) == 'ar')
+                            عرض المعاملات
+                            @endif
+                            @if(session('locale', config('app.locale')) == 'de')
+                            Transaktionen anzeigen
+                            @endif
+                        </span>
+                    </a>
                 </li>
 
 

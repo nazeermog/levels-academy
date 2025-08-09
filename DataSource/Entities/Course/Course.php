@@ -36,6 +36,7 @@ class Course extends Model
         'is_active',
         'photo',
         'ordering',
+        'payment_type',
     ];
     public function courseContents()
     {
@@ -49,7 +50,8 @@ class Course extends Model
     {
         return $this->belongsTo(Instructor::class);
     }
-    public function ratings(){
+    public function ratings()
+    {
 
         return $this->hasMany(Rating::class);
     }
@@ -69,5 +71,4 @@ class Course extends Model
     {
         return $this->belongsToMany(Semester::class);
     }
-    
 }
