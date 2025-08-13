@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('parent_id')->constrained()->onDelete('cascade');
             $table->foreignId('course_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('student_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('price', 10, 2);
-            $table->enum('type', ['monthly', 'once']);
-            $table->boolean('is_credit')->default(0);
+            $table->text('desc')->nullable();
+            $table->enum('type', ['monthly', 'once'])->nullable();
+            $table->boolean('is_credit')->default(0); // 1 = adding money, 0 = spending money
             $table->timestamps();
         });
     }

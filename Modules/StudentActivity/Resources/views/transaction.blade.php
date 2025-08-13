@@ -1,7 +1,7 @@
 @extends('parentt.layouts.dashboard')
 
 @section('title')
-  {{ $table_name }}
+{{ $table_name }}
 @endsection
 
 @push('css')
@@ -11,11 +11,13 @@
     background-color: #dc35457a;
     border-color: #dc35457a;
   }
+
   .alert-success-edited {
     color: #000;
     background-color: #28a7457a;
     border-color: #28a7457a;
   }
+
   .table td,
   .table th {
     vertical-align: middle;
@@ -25,39 +27,14 @@
 
 @section('content')
 <div class="container py-5">
-  <div class="card border-top border-0 border-4 border-primary table-responsive">
-    <div class="card-header">
-      <h3 class="card-title float-left">List of {{ $table_name }}</h3>
+  <div class="card border-top border-0 border-4 border-primary">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="card-title mb-0">List of {{$table_name}}</h3>
+      <h5 class="mb-0 text-primary">Balance: <span class="fw-bold">{{ number_format($balance, 2) }} $</span></h5>
+
     </div>
     <div class="card-body">
       @if(isset($list) && $list->count() > 0)
-      <div class="row form-group mb-3">
-        <div class="col-md-6">
-          <label for="search-text">Text Search</label>
-          <input id="search-text" type="text" class="form-control" placeholder="Search...">
-        </div>
-        <div class="col-md-6">
-          <label for="student-name-filter">Student Name</label>
-          <select id="student-name-filter" class="form-control">
-            <option value="">All Students</option>
-            <!-- Add student options here if needed -->
-          </select>
-        </div>
-      </div>
-
-      <div class="row form-group mb-3">
-        <div class="col-md-6">
-          <label for="from-date">From</label>
-          <input id="from-date" type="date" class="form-control">
-        </div>
-        <div class="col-md-6">
-          <label for="to-date">To</label>
-          <input id="to-date" type="date" class="form-control">
-        </div>
-      </div>
-
-      <button class="btn btn-primary form-group mb-4">Search</button>
-
       <table class="table table-hover text-center">
         <thead>
           <tr>
@@ -67,6 +44,7 @@
             <th>Course</th>
             <th>Price</th>
             <th>Payment Type</th>
+            <th>description</th>
             <th>Is Credit</th>
           </tr>
         </thead>
@@ -79,7 +57,9 @@
             <td>{{ optional($transaction->course)->title ?? 'N/A' }}</td>
             <td>{{ number_format($transaction->price, 2) }}</td>
             <td>{{ ucfirst($transaction->type ?? 'N/A') }}</td>
-            <td>{{ $transaction->is_credit ? 'Yes' : 'No' }}</td>
+            <td>{{ ucfirst($transaction->desc ?? 'N/A') }}</td>
+
+            <td>{{ $transaction->is_credit }}</td>
           </tr>
           @endforeach
         </tbody>

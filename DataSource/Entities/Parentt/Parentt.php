@@ -5,6 +5,7 @@ namespace DataSource\Entities\Parentt;
 use DataSource\Entities\User\User;
 use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\Student\Student;
+use DataSource\Entities\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Parentt extends Model
@@ -24,5 +25,16 @@ class Parentt extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class, 'parentt_student', 'parentt_id', 'student_id');
+    }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'parent_id');
+    }
+    public function balance()
+    {
+        $credits = $this->transactions()->where('is_credit', 1)->sum('price');
+        $debits  = $this->transactions()->where('is_credit', 0)->sum('price');
+
+        return $credits - $debits;
     }
 }

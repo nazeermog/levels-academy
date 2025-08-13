@@ -19,13 +19,13 @@ class Transaction extends Model
         'price',
         'type',
         'is_credit',
+        'desc',
     ];
 
     public function parent()
     {
         return $this->belongsTo(Parentt::class);
     }
-
     public function course()
     {
         return $this->belongsTo(Course::class);

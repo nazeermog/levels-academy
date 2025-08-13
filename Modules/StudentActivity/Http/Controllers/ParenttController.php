@@ -113,24 +113,5 @@ class ParenttController extends Controller
 
     return redirect()->route('parentt.notes.childernNotes')->with('success', 'Note marked as read.');
   }
-  public function transactions()
-  {
-    $parentId = Auth::id();
-    $parent = Parentt::find($parentId);
-
-    if (!$parent) {
-      return redirect()->back()->withError('Parent not found.');
-    }
-
-    $childrenIds = $parent->students()->pluck('user_id'); 
-
-    $list = Transaction::with(['student', 'course'])
-      ->whereIn('student_id', $childrenIds)
-      ->orderBy('created_at', 'desc')
-      ->get();
-
-    $table_name = 'Transactions';
-
-    return view('studentactivity::transaction', compact('list', 'table_name'));
-  }
+  
 }

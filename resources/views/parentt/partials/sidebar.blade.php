@@ -71,6 +71,21 @@
                             @endif
                         </span>
                     </a>
+                    <a class="sidebar-menu-button" href="{{ route('parentt.addmoney.show') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">add_circle</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            Add Money
+                            @endif
+                            @if(session('locale', config('app.locale')) == 'ar')
+                            إضافة رصيد
+                            @endif
+                            @if(session('locale', config('app.locale')) == 'de')
+                            Geld hinzufügen
+                            @endif
+                        </span>
+                    </a>
+
                 </li>
 
 
