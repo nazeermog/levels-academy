@@ -19,12 +19,21 @@ class RoleMiddleware
     public function handle($request, Closure $next, $role)
     {
         if (Auth::guest()) {
-            throw UnauthorizedUserException::notLoggedIn();
+            // إذا المستخدم غير مسجل دخول، أعد توجيهه إلى صفحة تسجيل الدخول
+            return redirect()->route('login');
         }
 
-
         if (! Auth::user()->hasRoles($role)) {
-            throw UnauthorizedUserException::forRoles($role);
+            switch (Auth::user()->role) {
+                case 'student':
+                    return redirect()->route('student.dashboard');
+                case 'admin':
+                    return redirect()->route('admin.dashboard');
+                case 'parent':
+                    return redirect()->route('parent.dashboard');
+                default:
+                    abort(403, 'User does not have the right roles.');
+            }
         }
 
         return $next($request);

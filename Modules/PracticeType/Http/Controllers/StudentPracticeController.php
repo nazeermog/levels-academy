@@ -66,16 +66,25 @@ class StudentPracticeController extends Controller
     // dd($availableClasses);
     return view('practicetype::student.exercise.indexBookExercise', compact('availableClasses'));
   }
-  public function showAllExercisesBYQR($page)
-  {
-    $exercises = Exercise::where('page', $page)->get();
-    foreach ($exercises as $exercise) {
-      $exerciseUrl = url('/student/practice/exercise/' . $exercise->book_id . '/types/abacus');
-      $exercise->qrCode = QrCode::size(100)->generate($exerciseUrl);
+public function showAllExercisesBYQR($page)
+{
+    $exercises = Exercise::where('page', $page)
+        ->orderBy('row')
+        ->orderBy('col_count')
+        ->get();
+
+    if ($exercises->isEmpty()) {
+        return view('practicetype::student.exercise.BookExerciseQR', [
+            'grouped' => collect(),
+            'page' => $page
+        ]);
     }
 
-    return view('practicetype::student.exercise.BookExerciseQR', compact('exercises'));
-  }
+    $grouped = $exercises->groupBy('row');
+
+    return view('practicetype::student.exercise.BookExerciseQR', compact('grouped', 'page'));
+}
+
 
   public function showAllExercisesBYQR_pages()
   {

@@ -2,97 +2,69 @@
 @section("content")
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        background-color: #f2f2f2;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-    }
-
-    .container {
-        width: 100%;
-        padding: 20px;
-    }
-
-    .classLink {
-        text-decoration: none;
-        color: inherit;
-        /* Ensure link text color inherits from the parent */
-    }
-
-    .classCard {
-        width: 100%;
-        /* Ensure card fits column width */
-        margin: 5px;
-        /* Add margin for spacing */
-        height: auto;
-        /* Adjust height to fit content */
-        overflow: hidden;
-        position: relative;
-        color: black;
+    .exercise-card {
+        background: #aad8ce;
+        border: 1px solid #ddd;
         border-radius: 8px;
-        background-color: var(--blue);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         padding: 10px;
-    }
-
-    .classOverlay {
         text-align: center;
-        margin-bottom: 10px;
-        /* Space between title and QR code */
+        transition: transform 0.2s ease-in-out;
+        height: 100%;
     }
 
-    .classTitle {
-        color: black;
-        font-size: 1em;
-        /* Adjust font size for better fit */
-        margin-bottom: 8px;
+    .exercise-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .exercise-title {
+        font-weight: bold;
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    .exercise-numbers {
+        font-size: 0.85rem;
+        line-height: 1.3;
     }
 
     .row {
-        margin: 0;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        margin-bottom: 20px;
     }
 
     .col {
-        flex: 0 0 14.28%;
-        /* Approx 1/7 of the row width */
-        max-width: 14.28%;
-        /* Ensure 7 items per row */
+        flex: 0 0 11.11%;   /* 9 per row */
+        max-width: 11.11%;
         padding: 5px;
-        /* Add padding around each column */
         box-sizing: border-box;
     }
 </style>
 
 <div class="container">
-    <div class="row">
-        @foreach ($exercises as $exercise)
-        <div class="col">
-            <a class="classLink" href="{{ route('student.show.exercise', ['id' => $exercise->code, 'type' => 'abacus']) }}">
-                <div class="classCard">
-                    <div class="classOverlay">
-                        <div class="classTitle">{{ $exercise->title }}</div>
-                    </div>
-                    <!-- {!! $exercise->qrCode !!} -->
-                    <div class="classTitle"> @foreach (explode(',', $exercise->numbers) as $number)
-                        {{ $number }}<br>
-                        @endforeach
-                    </div>
+    <h3 class="mb-4 text-center">Exercises for Page {{ $page }}</h3>
 
+    @forelse ($grouped as $row => $exercises)
+        <div class="row">
+            @foreach ($exercises as $exercise)
+                <div class="col">
+                    <a class="classLink" href="{{ route('student.show.exercise', ['id' => $exercise->code, 'type' => 'abacus']) }}">
+                        <div class="exercise-card">
+                            <div class="exercise-title">{{ $exercise->title }}</div>
+                            <div class="exercise-numbers">
+                                @foreach (explode(',', $exercise->numbers) as $number)
+                                    {{ $number }}<br>
+                                @endforeach
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
+            @endforeach
         </div>
-        @endforeach
-    </div>
+    @empty
+        <p class="text-center">No exercises found for this page.</p>
+    @endforelse
 </div>
-
 @endsection

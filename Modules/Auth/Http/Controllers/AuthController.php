@@ -30,8 +30,24 @@ class AuthController extends Controller
       $request->session()->regenerate();
       UserEventLogger::log('login', null, 'auth');
 
-      return redirect()->route(auth()->user()->role . '.dashboard');
+      $intended = session()->pull('url.intended');
+
+      if ($intended) {
+        return redirect()->to($intended);
+      }
+
+      switch (auth()->user()->role) {
+        case 'student':
+          return redirect()->route('student.dashboard');
+        case 'admin':
+          return redirect()->route('admin.dashboard');
+        case 'parent':
+          return redirect()->route('parent.dashboard');
+        default:
+          return redirect()->route('login');
+      }
     }
+
     return redirect()->route('login')->withErrors([
       'email' => 'The provided credentials do not match our records.',
     ]);
