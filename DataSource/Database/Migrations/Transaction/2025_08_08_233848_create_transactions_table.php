@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parent_id')->constrained()->onDelete('cascade');
-            $table->foreignId('course_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('student_id')->nullable()->constrained()->onDelete('set null');
+            $table->unsignedBigInteger('parent_id')->index();
+            $table->unsignedBigInteger('course_id')->index();
+            $table->unsignedBigInteger('student_id')->index();
             $table->decimal('price', 10, 2);
             $table->text('desc')->nullable();
             $table->enum('type', ['monthly', 'once'])->nullable();

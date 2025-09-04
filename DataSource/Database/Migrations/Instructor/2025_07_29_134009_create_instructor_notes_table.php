@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('instructor_notes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('instructor_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            $table->unsignedBigInteger('instructor_id')->index();
+            $table->unsignedBigInteger('student_id')->index();
             $table->text('note');
             $table->boolean('is_read')->default(false);
             $table->timestamps();
