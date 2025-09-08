@@ -8,7 +8,7 @@
         border-radius: 6px;
         padding: 15px;
         text-align: center;
-        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 7px 5px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s ease-in-out, box-shadow 0.2s;
         height: 100%;
     }
