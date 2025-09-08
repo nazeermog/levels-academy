@@ -4,7 +4,7 @@
 <style>
     .exercise-card {
         background: #fff;
-        border: 4px solid var(--blue);
+        border: 3px solid var(--blue); /* #009688 */
         border-radius: 6px;
         padding: 15px;
         text-align: center;
