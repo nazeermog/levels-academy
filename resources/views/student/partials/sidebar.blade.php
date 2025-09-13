@@ -79,7 +79,7 @@
         الطالب
       </div>
       <ul class="sidebar-menu">
-        <li class="sidebar-menu-item">
+        <!-- <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.dashboard') }}">
             <span class="material-icons sidebar-menu-icon">home</span>
             <span class="sidebar-menu-text">لوحة التحكم</span>
@@ -114,19 +114,19 @@
             <span class="material-icons sidebar-menu-icon">library_books</span>
             <span class="sidebar-menu-text">جميع تمارين الكتاب</span>
           </a>
-        </li>
+        </li>-->
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.pages.qr') }}">
             <span class="material-icons sidebar-menu-icon">import_contacts</span>
-            <span class="sidebar-menu-text">جميع تمارين الكتاب بالكود</span>
+            <span class="sidebar-menu-text">جميع تمارين الكتاب</span>
           </a>
         </li>
-        <li class="sidebar-menu-item">
+        <!-- <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.products') }}">
             <span class="material-icons sidebar-menu-icon">folder</span>
             <span class="sidebar-menu-text">المنتجات</span>
           </a>
-        </li>
+        </li>  -->
       </ul>
     </div>
   </div>
@@ -141,7 +141,7 @@
         Student
       </div>
       <ul class="sidebar-menu">
-        <li class="sidebar-menu-item">
+        <!-- <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.dashboard') }}">
             <span class="material-icons sidebar-menu-icon">home</span>
             <span class="sidebar-menu-text">Dashboard</span>
@@ -176,19 +176,19 @@
             <span class="material-icons sidebar-menu-icon">library_books</span>
             <span class="sidebar-menu-text">Alle Buch Übungen</span>
           </a>
-        </li>
+        </li> -->
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.pages.qr') }}">
             <span class="material-icons sidebar-menu-icon">import_contacts</span>
-            <span class="sidebar-menu-text">Alle Buch Übungen per QR</span>
+            <span class="sidebar-menu-text">Alle Buch Übungen</span>
           </a>
         </li>
-        <li class="sidebar-menu-item">
+        <!-- <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.products') }}">
             <span class="material-icons sidebar-menu-icon">folder</span>
             <span class="sidebar-menu-text">Produkte</span>
           </a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -203,7 +203,7 @@
         Student
       </div>
       <ul class="sidebar-menu">
-        <li class="sidebar-menu-item">
+        <!-- <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.dashboard') }}">
             <span class="material-icons sidebar-menu-icon">home</span>
             <span class="sidebar-menu-text">Dashboard</span>
@@ -238,19 +238,19 @@
             <span class="material-icons sidebar-menu-icon">library_books</span>
             <span class="sidebar-menu-text">All Book Exercises</span>
           </a>
-        </li>
+        </li> -->
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.pages.qr') }}">
             <span class="material-icons sidebar-menu-icon">import_contacts</span>
-            <span class="sidebar-menu-text">All Book Exercises By QR</span>
+            <span class="sidebar-menu-text">All Book Exercises</span>
           </a>
         </li>
-        <li class="sidebar-menu-item">
+        <!-- <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.products') }}">
             <span class="material-icons sidebar-menu-icon">folder</span>
             <span class="sidebar-menu-text">Products</span>
           </a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
