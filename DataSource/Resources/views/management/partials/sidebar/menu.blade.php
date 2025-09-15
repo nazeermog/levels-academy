@@ -511,8 +511,23 @@
                             </a>
                         </li>
                     </ul>
-
-
+                </li>
+                <li class="nav-item {{ Route::is('admin.importstudents.form') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Route::is('admin.importstudents.form') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Import Students
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.importstudents.form') }}"
+                                class="nav-link {{ Route::is('admin.importstudents.form') ? 'active' : '' }}">
+                                <p class="ml-3">Import from CSV</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 {{-- <li class="nav-item {{$url == route('admin.customers.index')?'menu-open':''}} ">--}}

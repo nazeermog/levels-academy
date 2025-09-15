@@ -2,14 +2,16 @@
 
 namespace DataSource\Http\Controllers\Admin\Student;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use DataSource\Entities\User\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use DataSource\Entities\Course\Course;
 use Illuminate\Support\Facades\Storage;
+use DataSource\Entities\Parentt\Parentt;
 use DataSource\Entities\Student\Student;
 use DataSource\Entities\Inrollment\Inrollment;
-use DataSource\Entities\Parentt\Parentt;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\Student\Store;
 use DataSource\Http\Requests\Admin\Student\Update;
@@ -137,5 +139,91 @@ class AdminStudentController extends BaseController
             'completedEnrollments',
             'ongoingEnrollments'
         ));
+    }
+    public function importform()
+    {
+        return view('datasource::management.student.import');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,txt|max:2048',
+        ]);
+
+        $file = $request->file('file');
+        $allData = [];
+
+        if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+            $header = fgetcsv($handle, 1000, ",");
+            while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                $allData[] = array_combine($header, $row);
+            }
+            fclose($handle);
+        }
+
+        if (!$allData) {
+            return back()->with('error', 'CSV file is empty or invalid.');
+        }
+
+        $exportData = [];
+        DB::beginTransaction();
+        try {
+            foreach ($allData as $data) {
+                $plainPassword = Str::random(8);
+
+                // Create or update user
+                $user = User::updateOrCreate(
+                    ['email' => $data['email']], // search by email
+                    [
+                        'first_name' => $data['first_name'] ?? '',
+                        'last_name'  => $data['last_name'] ?? '',
+                        'password'   => Hash::make($plainPassword),
+                    ]
+                );
+
+                // Create or update student
+                Student::updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'first_name' => $data['first_name'] ?? '',
+                        'last_name'  => $data['last_name'] ?? '',
+                        'country'    => $data['country'] ?? '',
+                        'city'       => $data['city'] ?? '',
+                    ]
+                );
+
+                // Collect plain password for manager export
+                $exportData[] = [
+                    'email'      => $data['email'],
+                    'first_name' => $data['first_name'] ?? '',
+                    'last_name'  => $data['last_name'] ?? '',
+                    'country'    => $data['country'] ?? '',
+                    'city'       => $data['city'] ?? '',
+                    'password'   => $plainPassword,
+                ];
+            }
+
+            // Save manager CSV
+            $filename = 'students_import_' . now()->format('Y_m_d_His') . '.csv';
+            $path = storage_path("app/imports/{$filename}");
+            if (!is_dir(storage_path("app/imports"))) {
+                mkdir(storage_path("app/imports"), 0777, true);
+            }
+
+            $handle = fopen($path, 'w');
+            fputcsv($handle, array_keys($exportData[0])); // headers
+            foreach ($exportData as $row) {
+                fputcsv($handle, $row);
+            }
+            fclose($handle);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Import failed: ' . $e->getMessage());
+        }
+
+        return back()->with('success', "Students imported successfully! Manager CSV: {$filename}");
     }
 }
