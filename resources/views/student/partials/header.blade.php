@@ -13,9 +13,9 @@
 
       <!-- // END Navbar Toggler -->
 
-      <!-- Navbar Brand -->
+      <!-- Navbar Brand  {{route('student.dashboard')}}-->
 
-      <a href="{{route('student.dashboard')}}" class="navbar-brand mr-16pt">
+      <a href="" class="navbar-brand mr-16pt">
 
         <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
 
