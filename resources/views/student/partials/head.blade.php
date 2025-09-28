@@ -30,8 +30,6 @@
 @endphp
 @if(strpos($host, 'yasmine.') === 0 || strpos($host, 'yasmin.') === 0)
     <link type="text/css" href="{{ asset('css/yasmine.css') }}" rel="stylesheet">
-@elseif($host === 'nazeer-blog2.test')
-    <link type="text/css" href="{{ asset('css/apptest.css') }}" rel="stylesheet">
 @else
     <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
 @endif

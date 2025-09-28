@@ -49,9 +49,15 @@
           rel="stylesheet">
 
     <!-- App CSS -->
-    <link type="text/css"
-          href="{{asset('css/app.css')}}"
-          rel="stylesheet">
+    @php
+        $host = request()->getHost();
+        $port = request()->getPort();
+    @endphp
+    @if(strpos($host, 'yasmine.') === 0 || strpos($host, 'yasmin.') === 0)
+        <link type="text/css" href="{{ asset('css/yasmine.css') }}" rel="stylesheet">
+    @else
+        <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @endif
     <style>
         @font-face {
             font-family: myFirstFont;
