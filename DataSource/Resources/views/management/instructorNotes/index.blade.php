@@ -24,6 +24,7 @@
                                     <th>Student</th>
                                     <th>Instructor</th>
                                     <th>Note</th>
+                                    <th>Status</th>
                                     <th>Created At</th>
                                 </tr>
                                 </thead>
@@ -34,6 +35,13 @@
                                         <td>{{ trim((optional($note->student->user)->first_name ?? '').' '.(optional($note->student->user)->last_name ?? '')) ?: '—' }}</td>
                                         <td>{{ trim((optional($note->instructor)->first_name ?? '').' '.(optional($note->instructor)->last_name ?? '')) ?: '—' }}</td>
                                         <td style="white-space: pre-wrap; max-width: 600px;">{{ $note->note }}</td>
+                                        <td>
+                                            @if($note->is_read)
+                                                <span class="badge badge-success">Read</span>
+                                            @else
+                                                <span class="badge badge-warning">Unread</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $note->created_at->format('Y-m-d H:i') }}</td>
                                     </tr>
                                 @endforeach
