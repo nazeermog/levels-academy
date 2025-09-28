@@ -1,9 +1,80 @@
+<style>
+  .sidebar {
+    background-color: #424242 !important;
+    min-height: 100vh;
+  }
+
+  .sidebar-heading {
+    color: #ffffff !important;
+    padding: 20px 16px 10px !important;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .sidebar-menu {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .sidebar-menu-item {
+    margin: 0;
+    padding: 0;
+  }
+
+  .sidebar-menu-button {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: #ffffff !important;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+  }
+
+  .sidebar-menu-button:hover {
+    background-color: #555555 !important;
+    color: #ffffff !important;
+  }
+
+  .sidebar-menu-button.active {
+    background-color: #555555 !important;
+    color: #ffffff !important;
+  }
+
+  .sidebar-menu-text {
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 400;
+    flex: 1;
+  }
+
+  .sidebar-menu-icon {
+    margin-right: 12px;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff !important;
+  }
+
+  .sidebar-menu-text {
+    font-size: 14px;
+    font-weight: 400;
+    flex: 1;
+  }
+</style>
 <div class="mdk-drawer js-mdk-drawer" id="default-drawer">
     <div class="mdk-drawer__content top-navbar">
-        <div class="sidebar sidebar-dark-pickled-bluewood sidebar-left sidebar-p-t" data-perfect-scrollbar>
+        <div class="sidebar sidebar-dark sidebar-left sidebar-p-t" data-perfect-scrollbar dir="{{ session('locale', config('app.locale')) == 'ar' ? 'rtl' : 'ltr' }}">
 
             <!-- Sidebar Heading -->
-            <div class="sidebar-heading font-droid text-uppercase fw-bold py-3 px-3 border-bottom border-light">
+            <div class="sidebar-heading font-droid">
                 @if(session('locale', config('app.locale')) == 'en')
                     The Parent
                 @elseif(session('locale', config('app.locale')) == 'ar')
@@ -14,7 +85,7 @@
             </div>
 
             <!-- Sidebar Menu -->
-            <ul class="sidebar-menu list-unstyled mt-3">
+            <ul class="sidebar-menu">
                 @php
                     $menuItems = [
                         ['route' => 'parentt.progressChilderns', 'icon' => 'format_shapes', 'en' => 'Watch childrens progresses', 'ar' => 'شاهد التقدم لأطفالك', 'de' => 'Beobachten Sie die Fortschritte der Kinder'],
@@ -28,12 +99,12 @@
 
                 @foreach($menuItems as $item)
                     @php $isActive = request()->routeIs($item['route']); @endphp
-                    <li class="sidebar-menu-item mb-1">
+                    <li class="sidebar-menu-item">
                         <a
-                            class="sidebar-menu-button d-flex align-items-center px-3 py-2 rounded {{ $isActive ? 'is-active' : '' }}"
+                            class="sidebar-menu-button {{ $isActive ? 'active' : '' }}"
                             href="{{ route($item['route']) }}"
                         >
-                            <span class="material-icons sidebar-menu-icon me-3">{{ $item['icon'] }}</span>
+                            <span class="material-icons sidebar-menu-icon">{{ $item['icon'] }}</span>
                             <span class="sidebar-menu-text font-droid">
                                 {{ $item[$locale] ?? $item['en'] }}
                             </span>

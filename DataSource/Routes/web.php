@@ -20,6 +20,7 @@ use DataSource\Http\Controllers\Admin\Practice\AdminPracticeLevelController;
 use DataSource\Http\Controllers\Admin\CourseContent\AdminCourseContentController;
 use DataSource\Http\Controllers\Admin\ResultPractice\AdminResultPracticeController;
 use DataSource\Http\Controllers\Admin\CategoryProduct\AdminCategoryProductController;
+use DataSource\Http\Controllers\Admin\Instructor\AdminInstructorNoteController;
 
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
@@ -43,6 +44,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         Route::resource('inrollments', AdminInrollmentController::class);
 
         Route::get('resultPractices', [AdminResultPracticeController::class, 'index'])->name('resultPractices.index');
+        Route::get('instructor-notes', [AdminInstructorNoteController::class, 'index'])->name('instructor-notes.index');
     });
 });
 
