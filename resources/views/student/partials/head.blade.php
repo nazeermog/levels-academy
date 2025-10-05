@@ -25,14 +25,11 @@
 
 <!-- App CSS -->
 @php
-    $host = request()->getHost();
-    $port = request()->getPort();
+    $themeCss = isset($currentOrganization) && $currentOrganization && $currentOrganization->theme_css
+        ? $currentOrganization->theme_css
+        : 'css/app.css';
 @endphp
-@if(strpos($host, 'yasmine.') === 0 || strpos($host, 'yasmin.') === 0)
-    <link type="text/css" href="{{ asset('css/yasmine.css') }}" rel="stylesheet">
-@else
-    <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
-@endif
+<link type="text/css" href="{{ asset($themeCss) }}" rel="stylesheet">
 
 
 

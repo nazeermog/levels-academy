@@ -30,6 +30,19 @@ class AuthController extends Controller
       $request->session()->regenerate();
       UserEventLogger::log('login', null, 'auth');
 
+      $currentOrg = $request->attributes->get('currentOrganization');
+      if ($currentOrg) {
+        $user = auth()->user();
+        if ($user && $user->role !== 'super_admin' && (int) $user->organization_id !== (int) $currentOrg->id) {
+          Auth::logout();
+          $request->session()->invalidate();
+          $request->session()->regenerateToken();
+          return redirect()->route('login')->withErrors([
+            'email' => 'You cannot log in to this organization.',
+          ]);
+        }
+      }
+
       $intended = session()->pull('url.intended');
 
       if ($intended) {
@@ -39,8 +52,10 @@ class AuthController extends Controller
       switch (auth()->user()->role) {
         case 'student':
           return redirect()->route('student.index.Bookexercise.pages.qr');
-        case 'admin':
+        case 'super_admin':
           return redirect()->route('admin.dashboard');
+        case 'admin':
+          return redirect()->route('admin.org.dashboard');
         case 'parent':
           return redirect()->route('parent.dashboard');
         default:

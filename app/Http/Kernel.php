@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
             \App\Http\Middleware\Language::class,
+            \App\Http\Middleware\OrganizationResolver::class,
 
         ],
 
@@ -68,5 +69,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' =>\App\Http\Middleware\RoleMiddleware::class,
         'language' => \App\Http\Middleware\Language::class,
+        'org.admin' => \App\Http\Middleware\AdminOrganizationGate::class,
     ];
 }

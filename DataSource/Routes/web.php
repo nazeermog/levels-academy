@@ -21,10 +21,14 @@ use DataSource\Http\Controllers\Admin\CourseContent\AdminCourseContentController
 use DataSource\Http\Controllers\Admin\ResultPractice\AdminResultPracticeController;
 use DataSource\Http\Controllers\Admin\CategoryProduct\AdminCategoryProductController;
 use DataSource\Http\Controllers\Admin\Instructor\AdminInstructorNoteController;
+use DataSource\Http\Controllers\Admin\Organization\OrgAdminDashboardController;
+use DataSource\Http\Controllers\Admin\Organization\OrganizationController;
 
 
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+// Global admin (super_admin)
+Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function () {
     Route::group(['as' => 'admin.'], function () {
+        // Org Admin - Users listing for current organization only
         Route::resource('courseContent', AdminCourseContentController::class);
         Route::resource('practices', AdminPracticeController::class);
         Route::resource('practicesType', AdminPracticeTypeController::class);
@@ -45,10 +49,13 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
         Route::get('resultPractices', [AdminResultPracticeController::class, 'index'])->name('resultPractices.index');
         Route::get('instructor-notes', [AdminInstructorNoteController::class, 'index'])->name('instructor-notes.index');
+
+        // Manage organizations (CRUD)
+        Route::resource('organizations', OrganizationController::class)->except(['show']);
     });
 });
 
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function () {
     Route::get('students2/tiles', [AdminStudentController::class, 'tiles'])->name('admin.students2.tiles');
 
     Route::get('/students/import/form', [AdminStudentController::class, 'importform'])->name('admin.importstudents.form');
@@ -65,7 +72,14 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
 
 Route::group([
-    'middleware' => ['auth', 'role:admin']
+    'middleware' => ['auth', 'role:super_admin']
 ], function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+});
+
+// Organization admin (scoped admin)
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('organization/dashboard', [OrgAdminDashboardController::class, 'index'])->name('admin.org.dashboard');
+    Route::get('organization/users', [AdminOrganizationUsersController::class, 'index'])->name('admin.org.users.index');
+    Route::get('organization/instructor-notes', [AdminInstructorNoteController::class, 'index'])->name('admin.org.instructor-notes.index');
 });

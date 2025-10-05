@@ -19,7 +19,15 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role',['admin','student','instructor','parentt']);
+            $table->enum('role',[
+                'super_admin',
+                'admin',
+                'student',
+                'instructor',
+                'parentt'
+            ]);
+            $table->unsignedBigInteger('organization_id')->nullable()->index();
+            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });

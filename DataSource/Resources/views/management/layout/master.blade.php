@@ -16,7 +16,7 @@
 
     <!-- Main Sidebar Container -->
 
-    @include('datasource::management..partials.sidebar.menu')
+    @include('datasource::management.partials.sidebar.menu')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

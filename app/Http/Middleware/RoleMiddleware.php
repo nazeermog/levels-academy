@@ -27,8 +27,10 @@ class RoleMiddleware
             switch (Auth::user()->role) {
                 case 'student':
                     return redirect()->route('student.dashboard');
-                case 'admin':
+                case 'super_admin':
                     return redirect()->route('admin.dashboard');
+                case 'admin':
+                    return redirect()->route('admin.org.dashboard');
                 case 'parent':
                     return redirect()->route('parent.dashboard');
                 default:

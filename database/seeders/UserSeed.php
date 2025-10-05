@@ -22,7 +22,7 @@ class UserSeed extends Seeder
                 'last_name' => 'admin',
                 'email' => 'admin@admin.com',
                 'password' => Hash::make('123456789'),
-                'role' => 'admin'
+                'role' => 'super_admin'
             ],
         ]);
         DB::table('users')->insert([

@@ -9,11 +9,74 @@
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                @if(auth()->check() && auth()->user()->role === 'admin')
+                <li class="nav-item {{ Route::is('admin.org.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('admin.org.dashboard') }}" class="nav-link {{ Route::is('admin.org.dashboard') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Organization Dashboard</p>
+                    </a>
+                </li>
+                @endif
+                @if(auth()->check() && auth()->user()->role === 'admin')
+                <li class="nav-item">
+                    <a href="{{ route('admin.org.users.index') }}" class="nav-link {{ Route::is('admin.org.users.index') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Organization Users</p>
+                    </a>
+                </li>
+                @endif
+                @if(auth()->check() && auth()->user()->role === 'admin' && isset($currentOrganization) && $currentOrganization && $currentOrganization->subdomain === 'yasmine')
+                <li class="nav-item {{Route::is('admin.org.instructor-notes.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.org.instructor-notes.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Instructor notes
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.org.instructor-notes.index')}}" class="nav-link  {{ Route::is('admin.org.instructor-notes.index')?'active':''}}">
+
+                                <p class="ml-3">instructor notes </p>
+                            </a>
+                        </li>
+                    </ul>
+
+
+                </li>
+                @endif
+                @if(auth()->check() && auth()->user()->role === 'super_admin')
                 <li class="nav-item {{ Route::is('admin.dashboard') ? 'active' : '' }}">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
+                </li>
+                <li class="nav-item {{Route::is('admin.organizations.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.organizations.*')?'active':''}}">
+                        <i class="nav-icon fas fa-sitemap"></i>
+                        <p>
+                            organizations
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{route('admin.organizations.index')}}" class="nav-link  {{ Route::is('admin.organizations.index')?'active':''}}">
+
+                                <p class="ml-3">- organizations </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.organizations.create')}}" class="nav-link  {{ Route::is('admin.organizations.create')?'active':''}}">
+
+                                <p class="ml-3">- Create organizations  </p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item {{Route::is('admin.practices.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.practices.*')?'active':''}}">
@@ -549,6 +612,7 @@
 
 
                 </li>
+                @endif
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

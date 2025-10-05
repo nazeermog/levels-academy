@@ -1,0 +1,24 @@
+/* Woderhafen theme: import base app.css then override with a distinct palette */
+@import url('app.css');
+
+:root {
+    --blue: #1e293b;           /* deep slate, not used as primary */
+    --primary: #ff6b00;        /* vivid orange */
+    --secondary: #374151;      /* charcoal gray */
+    --success: #22c55e;        /* green */
+    --info: #0284c7;           /* azure */
+    --warning: #f59e0b;        /* amber */
+    --danger: #dc2626;         /* red */
+    --light: #fff7ed;          /* peach-cream */
+    --dark: #1f2937;           /* dark gray */
+    --accent: #fb7185;         /* rose */
+}
+
+[dir] .btn-primary { background-color: var(--primary); }
+[dir] .btn-primary:hover,
+[dir] .btn-primary:focus { background-color: #cc5600; }
+[dir] .bg-primary { background-color: var(--primary) !important; }
+[dir] .text-primary { color: var(--primary) !important; }
+[dir] .preloader { background: var(--primary); }
+
+

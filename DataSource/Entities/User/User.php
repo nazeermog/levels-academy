@@ -6,6 +6,7 @@ namespace DataSource\Entities\User;
 use Laravel\Sanctum\HasApiTokens;
 use DataSource\Entities\User\UserEvent;
 use Illuminate\Notifications\Notifiable;
+use DataSource\Entities\Organization\Organization;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -58,12 +59,31 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function hasRoles($role)
-    {
-        return $this->role == $role;
-    }
+	public function hasRoles($role)
+	{
+		// Super admin has access to all roles
+		if ($this->role === 'super_admin') {
+			return true;
+		}
+
+		if (is_array($role)) {
+			return in_array($this->role, $role, true);
+		}
+
+		return $this->role === $role;
+	}
     public function events()
     {
         return $this->hasMany(UserEvent::class);
     }
+
+	public function organization()
+	{
+		return $this->belongsTo(Organization::class, 'organization_id');
+	}
+
+	public function scopeInOrganization($query, $organizationId)
+	{
+		return $query->where('organization_id', $organizationId);
+	}
 }

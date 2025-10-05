@@ -18,7 +18,7 @@ Route::group([
 
 
 Route::group([
-  'middleware' => ['auth', 'role:admin'],
+  'middleware' => ['auth', 'role:super_admin'],
   'prefix' => 'admin',
 ], function () {
   Route::prefix('products')->group(function () {
