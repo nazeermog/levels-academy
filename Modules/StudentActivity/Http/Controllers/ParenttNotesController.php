@@ -10,6 +10,8 @@ use DataSource\Entities\Parentt\Parentt;
 use DataSource\Entities\Inrollment\Inrollment;
 use DataSource\Entities\Transaction\Transaction;
 use DataSource\Entities\Instructor\InstructorNote;
+use DataSource\Entities\Classroom\ClassSession;
+use DataSource\Entities\Student\Student;
 
 class ParenttNotesController extends Controller
 {
@@ -48,6 +50,26 @@ class ParenttNotesController extends Controller
     }
 
     return redirect()->route('parentt.notes.childernNotes')->with('success', 'Note marked as read.');
+  }
+
+  public function childrenClassroomSessions(Request $request)
+  {
+    $userParent = Auth::user();
+    $parent = Parentt::find($userParent->id);
+
+    // child user_ids from pivot are Student model primary keys (user_id)
+    $childUserIds = $parent->students()->pluck('students.user_id');
+
+    // sessions for classrooms where student is enrolled: via classroom_student (student_id references users.id)
+    // map student user_ids to users.id (same value)
+    $sessions = ClassSession::with(['classroom', 'instructor'])
+      ->whereHas('classroom.students', function ($q) use ($childUserIds) {
+        $q->whereIn('users.id', $childUserIds);
+      })
+      ->orderByDesc('held_at')
+      ->paginate(20);
+
+    return view('studentactivity::childrenClassroomSessions', compact('sessions'));
   }
   
 }

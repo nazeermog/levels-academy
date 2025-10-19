@@ -22,6 +22,10 @@ use DataSource\Http\Controllers\Admin\ResultPractice\AdminResultPracticeControll
 use DataSource\Http\Controllers\Admin\CategoryProduct\AdminCategoryProductController;
 use DataSource\Http\Controllers\Admin\Instructor\AdminInstructorNoteController;
 use DataSource\Http\Controllers\Admin\Organization\OrgAdminDashboardController;
+use DataSource\Http\Controllers\Admin\Classroom\AdminClassroomController;
+use DataSource\Http\Controllers\Admin\Classroom\AdminClassSessionTypeController;
+use DataSource\Http\Controllers\Admin\Classroom\AdminClassroomReportController;
+use DataSource\Http\Controllers\Admin\Organization\AdminOrganizationUsersController;
 use DataSource\Http\Controllers\Admin\Organization\OrganizationController;
 
 
@@ -82,4 +86,26 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('organization/dashboard', [OrgAdminDashboardController::class, 'index'])->name('admin.org.dashboard');
     Route::get('organization/users', [AdminOrganizationUsersController::class, 'index'])->name('admin.org.users.index');
     Route::get('organization/instructor-notes', [AdminInstructorNoteController::class, 'index'])->name('admin.org.instructor-notes.index');
+    Route::resource('organization/classrooms', AdminClassroomController::class)->names([
+        'index' => 'admin.org.classrooms.index',
+        'create' => 'admin.org.classrooms.create',
+        'store' => 'admin.org.classrooms.store',
+        'edit' => 'admin.org.classrooms.edit',
+        'update' => 'admin.org.classrooms.update',
+        'destroy' => 'admin.org.classrooms.destroy',
+        'show' => 'admin.org.classrooms.show',
+    ]);
+    Route::resource('organization/class-session-types', AdminClassSessionTypeController::class)->names([
+        'index' => 'admin.org.class_session_types.index',
+        'create' => 'admin.org.class_session_types.create',
+        'store' => 'admin.org.class_session_types.store',
+        'edit' => 'admin.org.class_session_types.edit',
+        'update' => 'admin.org.class_session_types.update',
+        'destroy' => 'admin.org.class_session_types.destroy',
+        'show' => 'admin.org.class_session_types.show',
+    ])->parameters(['class-session-types' => 'class_session_type']);
+
+    Route::prefix('organization/classrooms/reports')->name('admin.org.classrooms.reports.')->group(function () {
+        Route::get('instructors', [AdminClassroomReportController::class, 'instructorTotals'])->name('instructors');
+    });
 });

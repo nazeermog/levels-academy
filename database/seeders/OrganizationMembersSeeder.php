@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use DataSource\Entities\User\User;
 use DataSource\Entities\Student\Student;
@@ -79,7 +80,22 @@ class OrganizationMembersSeeder extends Seeder
             // Link parents to students (1-to-1 mapping for sample data)
             for ($i = 0; $i < 3; $i++) {
                 if (isset($parents[$i]) && isset($students[$i])) {
-                    $parents[$i]->students()->syncWithoutDetaching([$students[$i]->user_id]);
+                    // Parentt primary key is user_id; Student primary key is user_id
+                    $parentUserId = (int) $parents[$i]->user_id;
+                    $studentUserId = (int) $students[$i]->user_id;
+
+                    // Insert pivot if not exists to avoid duplicates
+                    $exists = DB::table('parentt_student')
+                        ->where('parentt_id', $parentUserId)
+                        ->where('student_id', $studentUserId)
+                        ->exists();
+
+                    if (! $exists) {
+                        DB::table('parentt_student')->insert([
+                            'parentt_id' => $parentUserId,
+                            'student_id' => $studentUserId,
+                        ]);
+                    }
                 }
             }
 

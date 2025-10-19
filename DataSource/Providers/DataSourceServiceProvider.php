@@ -39,6 +39,7 @@ class DataSourceServiceProvider extends ServiceProvider
         'Blog',
         'Transaction',
         'Organization',
+        'Classroom',
     ];
 
     /**

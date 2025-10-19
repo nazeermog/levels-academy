@@ -91,6 +91,7 @@
                         ['route' => 'parentt.progressChilderns', 'icon' => 'format_shapes', 'en' => 'Watch childrens progresses', 'ar' => 'شاهد التقدم لأطفالك', 'de' => 'Beobachten Sie die Fortschritte der Kinder'],
                         ['route' => 'parentt.childrenEvents', 'icon' => 'event', 'en' => 'Watch childrens events', 'ar' => 'شاهد فعاليات أطفالك', 'de' => 'Sehen Sie sich die Veranstaltungen Ihrer Kinder an'],
                         ['route' => 'parentt.notes.childernNotes', 'icon' => 'note', 'en' => 'View Notes', 'ar' => 'عرض الملاحظات', 'de' => 'Notizen anzeigen'],
+                        ['route' => 'parentt.classrooms.sessions', 'icon' => 'event_note', 'en' => 'Classroom Sessions', 'ar' => 'جلسات الصف', 'de' => 'Unterrichtssitzungen'],
                         ['route' => 'parentt.transactions.index', 'icon' => 'format_shapes', 'en' => 'View Transactions', 'ar' => 'عرض المعاملات', 'de' => 'Transaktionen anzeigen'],
                         ['route' => 'parentt.addmoney.show', 'icon' => 'add_circle', 'en' => 'Add Money', 'ar' => 'إضافة رصيد', 'de' => 'Geld hinzufügen'],
                     ];

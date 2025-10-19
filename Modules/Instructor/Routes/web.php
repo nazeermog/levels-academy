@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Parentt\Http\Controllers\ParenttController;
 use Modules\Instructor\Http\Controllers\InstructorController;
 use Modules\Instructor\Http\Controllers\InstructorNoteController;
+use Modules\Instructor\Http\Controllers\ClassSessionController;
 
 Route::group([
     'prefix' => 'instructor',
@@ -24,6 +25,11 @@ Route::group([
     Route::put('/notes/update/{id}', [InstructorNoteController::class, 'update'])->name('instructor.notes.update');
 
     Route::post('/notes', [InstructorNoteController::class, 'store'])->name('instructor.notes.store');
+
+    // Classroom sessions
+    Route::get('/sessions', [ClassSessionController::class, 'index'])->name('instructor.sessions.index');
+    Route::get('/sessions/create', [ClassSessionController::class, 'create'])->name('instructor.sessions.create');
+    Route::post('/sessions', [ClassSessionController::class, 'store'])->name('instructor.sessions.store');
 });
 
 Route::group([

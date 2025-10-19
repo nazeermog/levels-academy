@@ -179,6 +179,20 @@
                         </span>
                     </a>
                 </li>
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" href="{{ route('instructor.sessions.index') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">event_note</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            Class Sessions
+                            @elseif(session('locale', config('app.locale')) == 'ar')
+                            جلسات الصف
+                            @elseif(session('locale', config('app.locale')) == 'de')
+                            Unterrichtssitzungen
+                            @endif
+                        </span>
+                    </a>
+                </li>
 
             </ul>
             <!-- // END Sidebar Content -->

@@ -46,6 +46,54 @@
 
 
                 </li>
+                <li class="nav-item {{Route::is('admin.org.classrooms.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.org.classrooms.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Classrooms
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.org.classrooms.index')}}" class="nav-link  {{ Route::is('admin.org.classrooms.index')?'active':''}}">
+                                <p class="ml-3">Classrooms</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item {{Route::is('admin.org.classrooms.report.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.org.classrooms.report.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Classroom Reports
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.org.classrooms.reports.instructors')}}" class="nav-link  {{ Route::is('admin.org.classrooms.reports.instructors')?'active':''}}">
+                                <p class="ml-3">Instructor Totals</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item {{Route::is('admin.org.class_session_types.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.org.class_session_types.*')?'active':''}}">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Session Types
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.org.class_session_types.index')}}" class="nav-link  {{ Route::is('admin.org.class_session_types.index')?'active':''}}">
+                                <p class="ml-3">Session Types</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @endif
                 @if(auth()->check() && auth()->user()->role === 'super_admin')
                 <li class="nav-item {{ Route::is('admin.dashboard') ? 'active' : '' }}">
