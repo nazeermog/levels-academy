@@ -36,7 +36,7 @@ class AdminClassroomReportController extends BaseController
                 'instructor' => optional($group->first())->instructor,
                 'sessions_count' => $group->count(),
                 'amount' => $group->sum(function ($s) {
-                    return optional($s->type)->price ?? 0;
+                    return optional($s->type)->teacher_payout ?? 0;
                 }),
             ];
         })->values();

@@ -27,6 +27,8 @@ use DataSource\Http\Controllers\Admin\Classroom\AdminClassSessionTypeController;
 use DataSource\Http\Controllers\Admin\Classroom\AdminClassroomReportController;
 use DataSource\Http\Controllers\Admin\Organization\AdminOrganizationUsersController;
 use DataSource\Http\Controllers\Admin\Organization\OrganizationController;
+use DataSource\Http\Controllers\Admin\Absence\AdminAbsenceController;
+use DataSource\Http\Controllers\Admin\Organization\OrgSettingsController;
 
 
 // Global admin (super_admin)
@@ -104,6 +106,13 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
         'destroy' => 'admin.org.class_session_types.destroy',
         'show' => 'admin.org.class_session_types.show',
     ])->parameters(['class-session-types' => 'class_session_type']);
+
+    // Absences
+    Route::get('organization/absences', [AdminAbsenceController::class, 'index'])->name('admin.org.absences.index');
+
+    // Org settings (org admin only)
+    Route::get('organization/settings', [OrgSettingsController::class, 'edit'])->name('admin.org.settings.edit');
+    Route::put('organization/settings', [OrgSettingsController::class, 'update'])->name('admin.org.settings.update');
 
     Route::prefix('organization/classrooms/reports')->name('admin.org.classrooms.reports.')->group(function () {
         Route::get('instructors', [AdminClassroomReportController::class, 'instructorTotals'])->name('instructors');

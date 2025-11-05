@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "astrotomic/laravel-translatable": "^11.12",
+        "doctrine/dbal": "^4.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/passport": "^11.3",

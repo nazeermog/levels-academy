@@ -94,6 +94,7 @@
                         ['route' => 'parentt.classrooms.sessions', 'icon' => 'event_note', 'en' => 'Classroom Sessions', 'ar' => 'جلسات الصف', 'de' => 'Unterrichtssitzungen'],
                         ['route' => 'parentt.transactions.index', 'icon' => 'format_shapes', 'en' => 'View Transactions', 'ar' => 'عرض المعاملات', 'de' => 'Transaktionen anzeigen'],
                         ['route' => 'parentt.addmoney.show', 'icon' => 'add_circle', 'en' => 'Add Money', 'ar' => 'إضافة رصيد', 'de' => 'Geld hinzufügen'],
+                        ['route' => 'parentt.absences.index', 'icon' => 'event_busy', 'en' => 'Absence Requests', 'ar' => 'طلبات الغياب', 'de' => 'Fehlzeitenanträge'],
                     ];
                     $locale = session('locale', config('app.locale'));
                 @endphp

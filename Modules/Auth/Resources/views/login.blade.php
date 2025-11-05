@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Levels Academy - تسجيل الدخول</title>
+    <title>Levels Academy - Login</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -47,7 +47,7 @@
             flex-direction: column;
             align-items: flex-start;
             justify-content: center;
-            padding-right: 4rem;
+            padding-left: 4rem;
             max-width: 50%;
         }
 
@@ -282,6 +282,22 @@
             box-shadow: 0 4px 15px rgba(18, 163, 187, 0.4);
         }
 
+        .login-logo {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .login-logo img {
+            max-width: 240px;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+
         .forgot-password {
             text-align: center;
             margin-top: 1rem;
@@ -492,7 +508,7 @@
         </div>
         <div class="levels-academy">ACADEMY</div>
         <div class="background-description">
-            منصة تعليمية متطورة تهدف إلى تطوير مهاراتك وتحقيق أهدافك الأكاديمية والمهنية
+            An advanced learning platform to develop your skills and achieve your academic and professional goals
         </div>
     </div>
 
@@ -504,37 +520,40 @@
     
     <form action="{{route('users.login')}}" method="POST">
         @csrf
+        <div class="login-logo">
+            <img src="{{ asset('images/logo/woderhafen.jpg') }}" alt="Wonderhafen logo">
+        </div>
         <div class="form-group">
             <label class="form-label" for="email">
-                البريد الالكتروني
+                Email
             </label>
             <input id="email"
                    name="email"
                    type="email"
                    class="form-control"
-                   placeholder="أدخل بريدك الإلكتروني"
+                   placeholder="Enter your email"
                    required>
         </div>
         
         <div class="form-group">
             <label class="form-label" for="password">
-                كلمة السر
+                Password
             </label>
             <input id="password"
                    name="password"
                    type="password"
                    class="form-control"
-                   placeholder="أدخل كلمة السر"
+                   placeholder="Enter your password"
                    required>
         </div>
         
         <button class="btn-login" type="submit">
-            تسجيل الدخول
+            Login
         </button>
         
         <div class="forgot-password">
             <a href="#" style="color: #12a3bb; text-decoration: none;">
-                هل نسيت كلمة السر؟
+                Forgot your password?
             </a>
         </div>
     </form>

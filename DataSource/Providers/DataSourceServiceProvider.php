@@ -40,6 +40,7 @@ class DataSourceServiceProvider extends ServiceProvider
         'Transaction',
         'Organization',
         'Classroom',
+        'Absence',
     ];
 
     /**

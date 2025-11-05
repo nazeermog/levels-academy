@@ -94,6 +94,20 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.org.absences.index') }}" class="nav-link {{ Route::is('admin.org.absences.index') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-times"></i>
+                        <p>Absence Requests</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.org.settings.edit') }}" class="nav-link {{ Route::is('admin.org.settings.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>Organization Settings</p>
+                    </a>
+                </li>
                 @endif
                 @if(auth()->check() && auth()->user()->role === 'super_admin')
                 <li class="nav-item {{ Route::is('admin.dashboard') ? 'active' : '' }}">
@@ -463,6 +477,13 @@
                     </ul>
 
 
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.org.absences.index') }}" class="nav-link {{ Route::is('admin.org.absences.index') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-times"></i>
+                        <p>Absence Requests</p>
+                    </a>
                 </li>
 
 

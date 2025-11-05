@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             // UserSeed::class,
             // PracticeTypeSeed::class,
             // ParenttSeed::class,
-           //OrganizationSeeder::class,
-           //OrganizationAdminsSeeder::class,
+           OrganizationSeeder::class,
+           OrganizationAdminsSeeder::class,
             OrganizationMembersSeeder::class,
 
         ]);

@@ -116,7 +116,7 @@
           </a>
         </li>-->
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.pages.qr') }}">
+          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.books.qr') }}">
             <span class="material-icons sidebar-menu-icon">import_contacts</span>
             <span class="sidebar-menu-text">جميع تمارين الكتاب</span>
           </a>
@@ -178,7 +178,7 @@
           </a>
         </li> -->
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.pages.qr') }}">
+          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.books.qr') }}">
             <span class="material-icons sidebar-menu-icon">import_contacts</span>
             <span class="sidebar-menu-text">Alle Buch Übungen</span>
           </a>
@@ -240,7 +240,7 @@
           </a>
         </li> -->
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.pages.qr') }}">
+          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.books.qr') }}">
             <span class="material-icons sidebar-menu-icon">import_contacts</span>
             <span class="sidebar-menu-text">All Book Exercises</span>
           </a>

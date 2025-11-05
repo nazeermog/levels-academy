@@ -27,7 +27,6 @@ return new class extends Migration {
                 'parentt'
             ]);
             $table->unsignedBigInteger('organization_id')->nullable()->index();
-            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });

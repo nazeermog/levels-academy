@@ -30,6 +30,8 @@ Route::group([
     Route::get('/sessions', [ClassSessionController::class, 'index'])->name('instructor.sessions.index');
     Route::get('/sessions/create', [ClassSessionController::class, 'create'])->name('instructor.sessions.create');
     Route::post('/sessions', [ClassSessionController::class, 'store'])->name('instructor.sessions.store');
+    Route::get('/sessions/{session}/edit', [ClassSessionController::class, 'edit'])->name('instructor.sessions.edit');
+    Route::put('/sessions/{session}', [ClassSessionController::class, 'update'])->name('instructor.sessions.update');
 });
 
 Route::group([

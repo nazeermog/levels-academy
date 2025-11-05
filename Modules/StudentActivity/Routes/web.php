@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\StudentActivity\Http\Controllers\ParenttController;
 use Modules\StudentActivity\Http\Controllers\ParenttNotesController;
 use Modules\StudentActivity\Http\Controllers\ParenttTransactionController;
+use Modules\StudentActivity\Http\Controllers\ParenttAbsenceController;
 
 Route::group([
     'middleware' => ['auth', 'role:parentt'],
@@ -18,4 +19,9 @@ Route::group([
     Route::get('/transactions', [ParenttTransactionController::class, 'transactions'])->name('parentt.transactions.index');
     Route::get('addmoney', [ParenttTransactionController::class, 'showAddMoney'])->name('parentt.addmoney.show');
     Route::post('/add-money', [ParenttTransactionController::class, 'addMoney'])->name('parentt.addmoney');
+
+    // Absences
+    Route::get('/absences', [ParenttAbsenceController::class, 'index'])->name('parentt.absences.index');
+    Route::get('/absences/create', [ParenttAbsenceController::class, 'create'])->name('parentt.absences.create');
+    Route::post('/absences', [ParenttAbsenceController::class, 'store'])->name('parentt.absences.store');
 });

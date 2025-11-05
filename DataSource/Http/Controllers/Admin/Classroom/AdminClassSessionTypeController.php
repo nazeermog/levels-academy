@@ -29,10 +29,12 @@ class AdminClassSessionTypeController extends BaseController
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'teacher_payout' => 'required|numeric|min:0|lte:price',
         ]);
         ClassSessionType::create([
             'name' => $data['name'],
             'price' => $data['price'],
+            'teacher_payout' => $data['teacher_payout'],
             'organization_id' => $currentOrg ? $currentOrg->id : null,
         ]);
         return redirect()->route('admin.org.class_session_types.index')->with('success', 'Type created.');
@@ -59,6 +61,7 @@ class AdminClassSessionTypeController extends BaseController
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'teacher_payout' => 'required|numeric|min:0|lte:price',
         ]);
         $class_session_type->update($data);
         return redirect()->route('admin.org.class_session_types.index')->with('success', 'Type updated.');

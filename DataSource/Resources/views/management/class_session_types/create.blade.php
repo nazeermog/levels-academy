@@ -15,8 +15,12 @@
                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="price">Price</label>
+                            <label for="price">Full Price</label>
                             <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ old('price', '0.00') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="teacher_payout">Teacher Payout</label>
+                            <input type="number" step="0.01" class="form-control" id="teacher_payout" name="teacher_payout" value="{{ old('teacher_payout', '0.00') }}" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                         <a href="{{ route('admin.org.class_session_types.index') }}" class="btn btn-secondary">Cancel</a>

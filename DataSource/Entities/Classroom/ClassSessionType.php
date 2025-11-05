@@ -9,6 +9,7 @@ class ClassSessionType extends Model
     protected $fillable = [
         'name',
         'price',
+        'teacher_payout',
         'organization_id',
     ];
 

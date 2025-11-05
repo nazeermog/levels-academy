@@ -16,6 +16,7 @@
             <th>Held At</th>
             <th>Price</th>
             <th>Content</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@
             <td>{{ $session->held_at }}</td>
             <td>{{ optional($session->type)->name ?? '-' }}</td>
             <td>{{ Str::limit($session->content, 120) }}</td>
+            <td>
+              <a href="{{ route('instructor.sessions.edit', $session->id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+            </td>
           </tr>
           @empty
           <tr>

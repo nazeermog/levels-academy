@@ -51,7 +51,7 @@ class AuthController extends Controller
 
       switch (auth()->user()->role) {
         case 'student':
-          return redirect()->route('student.index.Bookexercise.pages.qr');
+          return redirect()->route('student.index.Bookexercise.books.qr');
         case 'super_admin':
           return redirect()->route('admin.dashboard');
         case 'admin':

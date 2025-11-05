@@ -27,7 +27,7 @@
           <select id="class_session_type_id" name="class_session_type_id" class="form-control" required>
             <option value="">Select Type</option>
             @foreach($types as $t)
-              <option value="{{ $t->id }}">{{ $t->name }} ({{ number_format($t->price, 2) }})</option>
+              <option value="{{ $t->id }}">{{ $t->name }}</option>
             @endforeach
           </select>
         </div>

@@ -68,10 +68,14 @@ class StudentPracticeController extends Controller
   }
 public function showAllExercisesBYQR($page)
 {
-    $exercises = Exercise::where('page', $page)
+    $bookId = request('book_id');
+    $query = Exercise::where('page', $page)
         ->orderBy('row')
-        ->orderBy('col_count')
-        ->get();
+        ->orderBy('col_count');
+    if ($bookId) {
+        $query->where('book_id', $bookId);
+    }
+    $exercises = $query->get();
 
     if ($exercises->isEmpty()) {
         return view('practicetype::student.exercise.BookExerciseQR', [
@@ -102,6 +106,40 @@ public function showAllExercisesBYQR($page)
       ];
     }
     return view('practicetype::student.exercise.BookExerciseBypages_QR', compact('pagesWithQrCodes'));
+  }
+
+  public function showAllExercisesBYQR_pagesByBook($book)
+  {
+    $pages = Exercise::where('book_id', $book)
+      ->pluck('page')
+      ->unique()
+      ->sort()
+      ->values();
+
+    $pagesWithQrCodes = [];
+    foreach ($pages as $page) {
+      $pageUrl = url('/student/practice/allBookExercise_qr/' . $page) . '?book_id=' . urlencode($book);
+      $qrCode = QrCode::size(100)->generate($pageUrl);
+      $pagesWithQrCodes[] = [
+        'page' => $page,
+        'qrCode' => $qrCode,
+        'book' => $book,
+      ];
+    }
+    return view('practicetype::student.exercise.BookExerciseBypagesForBook_QR', compact('pagesWithQrCodes', 'book'));
+  }
+
+  public function showAllExercisesBYQR_books()
+  {
+    $books = Exercise::query()
+      ->select('book_id')
+      ->whereNotNull('book_id')
+      ->where('book_id', '!=', '')
+      ->distinct()
+      ->orderBy('book_id')
+      ->pluck('book_id');
+
+    return view('practicetype::student.exercise.BookExerciseByBooks_QR', compact('books'));
   }
 
 
