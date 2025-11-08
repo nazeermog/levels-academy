@@ -10,9 +10,7 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        /* Set minimum height to 100% of viewport height */
         background-color: #f2f2f2;
-        /* Set a background color for the body */
     }
 
     .classLink {
@@ -20,18 +18,22 @@
     }
 
     .classCard {
-        width: 35vw;
-        margin: 10px;
-        /* Adjusted to 45% of viewport width to leave some space between cards */
-        height: 50vh;
-        /* Set height to 50% of viewport height */
+        width: 280px;
+        margin: 0;
+        height: 280px;
         overflow: hidden;
         position: relative;
         color: black;
-        border-radius: 8px;
-        /* Add a border-radius for rounded corners */
+        border-radius: 12px;
         background-color: var(--blue);
-        /* Set a background color for the class card */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .classCard:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .classOverlay {
@@ -41,33 +43,43 @@
         transform: translate(-50%, -50%);
         text-align: center;
         width: 100%;
-        /* Remove transition property for opacity */
+        padding: 20px;
+        box-sizing: border-box;
     }
 
     .classCol {
-        padding: 8px;
-        /* Add padding to each column */
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .classTitle {
         color: black;
-        font-size: 3em;
-        /* Adjusted font size for title */
+        font-size: 2.2em;
         margin-bottom: 8px;
-    }
-
-    .classDate {
-        font-size: 1em;
+        font-weight: 600;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        letter-spacing: 0.5px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        display: block;
+        line-height: 1.2;
     }
 
     .row {
         margin: 0;
-        /* Remove default margin of the row */
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 20px);
     }
 </style>
 <div class="mdk-carousel__content row">
     @foreach ($pagesWithQrCodes as $pageWithQrCode)
-    <div class="col-6 classCol">
+    <div class="col-4 classCol">
         <a class="classLink" href="{{ route('student.index.Bookexercise.qr', ['page' => $pageWithQrCode['page']]) }}?book_id={{ urlencode($pageWithQrCode['book']) }}">
             <div class="classCard class{{ strtoupper($pageWithQrCode['page']) }}">
                 <div class="classOverlay">
