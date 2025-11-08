@@ -136,8 +136,12 @@ public function showAllExercisesBYQR($page)
       ->whereNotNull('book_id')
       ->where('book_id', '!=', '')
       ->distinct()
-      ->orderBy('book_id')
-      ->pluck('book_id');
+      ->pluck('book_id')
+      ->toArray();
+    
+    // Use natural sort to order book1, book2, book3, book10, etc. correctly
+    natsort($books);
+    $books = array_values($books);
 
     return view('practicetype::student.exercise.BookExerciseByBooks_QR', compact('books'));
   }
