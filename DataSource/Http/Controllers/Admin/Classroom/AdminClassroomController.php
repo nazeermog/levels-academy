@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use DataSource\Entities\User\User;
 use DataSource\Entities\Classroom\Classroom;
+use DataSource\Entities\Classroom\ClassSessionType;
 
 class AdminClassroomController extends BaseController
 {
@@ -32,7 +33,8 @@ class AdminClassroomController extends BaseController
             ->when($currentOrg, fn($q) => $q->where('organization_id', $currentOrg->id))
             ->orderBy('first_name')
             ->get(['id','first_name','last_name']);
-        return view('datasource::management.classrooms.create', compact('currentOrg', 'instructors', 'students'));
+        $types = $currentOrg ? ClassSessionType::inOrganization($currentOrg->id)->orderBy('name')->get(['id','name']) : collect();
+        return view('datasource::management.classrooms.create', compact('currentOrg', 'instructors', 'students', 'types'));
     }
 
     public function store(Request $request)
@@ -42,17 +44,25 @@ class AdminClassroomController extends BaseController
             'name' => 'required|string|max:255',
             'repeats_per_week' => 'required|integer|min:1|max:14',
             'instructor_id' => 'required|exists:users,id',
+            'class_session_type_id' => 'required|exists:class_session_types,id',
+            'days_of_week' => 'array',
+            'days_of_week.*' => 'in:1,2,3,4,5,6,7',
+            'session_time' => 'nullable|date_format:H:i',
             'student_ids' => 'array',
             'student_ids.*' => 'exists:users,id',
         ]);
 
         DB::beginTransaction();
         try {
+            $daysCsv = isset($data['days_of_week']) ? implode(',', $data['days_of_week']) : null;
             $classroom = Classroom::create([
                 'name' => $data['name'],
                 'repeats_per_week' => $data['repeats_per_week'],
                 'instructor_id' => $data['instructor_id'],
                 'organization_id' => $currentOrg ? $currentOrg->id : null,
+                'class_session_type_id' => $data['class_session_type_id'] ?? null,
+                'days_of_week' => $daysCsv,
+                'session_time' => $data['session_time'] ?? null,
             ]);
 
             $classroom->students()->sync($data['student_ids'] ?? []);
@@ -80,7 +90,8 @@ class AdminClassroomController extends BaseController
             ->orderBy('first_name')
             ->get(['id','first_name','last_name']);
         $selectedStudents = $classroom->students()->pluck('users.id')->toArray();
-        return view('datasource::management.classrooms.edit', compact('classroom', 'currentOrg', 'instructors', 'students', 'selectedStudents'));
+        $types = $currentOrg ? ClassSessionType::inOrganization($currentOrg->id)->orderBy('name')->get(['id','name']) : collect();
+        return view('datasource::management.classrooms.edit', compact('classroom', 'currentOrg', 'instructors', 'students', 'selectedStudents', 'types'));
     }
 
     public function update(Request $request, Classroom $classroom)
@@ -93,16 +104,24 @@ class AdminClassroomController extends BaseController
             'name' => 'required|string|max:255',
             'repeats_per_week' => 'required|integer|min:1|max:14',
             'instructor_id' => 'required|exists:users,id',
+            'class_session_type_id' => 'required|exists:class_session_types,id',
+            'days_of_week' => 'array',
+            'days_of_week.*' => 'in:1,2,3,4,5,6,7',
+            'session_time' => 'nullable|date_format:H:i',
             'student_ids' => 'array',
             'student_ids.*' => 'exists:users,id',
         ]);
 
         DB::beginTransaction();
         try {
+            $daysCsv = isset($data['days_of_week']) ? implode(',', $data['days_of_week']) : null;
             $classroom->update([
                 'name' => $data['name'],
                 'repeats_per_week' => $data['repeats_per_week'],
                 'instructor_id' => $data['instructor_id'],
+                'class_session_type_id' => $data['class_session_type_id'] ?? null,
+                'days_of_week' => $daysCsv,
+                'session_time' => $data['session_time'] ?? null,
             ]);
             $classroom->students()->sync($data['student_ids'] ?? []);
 

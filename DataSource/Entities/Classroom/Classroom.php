@@ -4,6 +4,7 @@ namespace DataSource\Entities\Classroom;
 
 use Illuminate\Database\Eloquent\Model;
 use DataSource\Entities\User\User;
+use DataSource\Entities\Classroom\ClassSessionType;
 
 class Classroom extends Model
 {
@@ -12,6 +13,9 @@ class Classroom extends Model
         'repeats_per_week',
         'organization_id',
         'instructor_id',
+        'class_session_type_id',
+        'days_of_week',
+        'session_time',
     ];
 
     public function scopeInOrganization($query, int $organizationId)
@@ -33,6 +37,11 @@ class Classroom extends Model
     public function sessions()
     {
         return $this->hasMany(ClassSession::class);
+    }
+
+    public function defaultSessionType()
+    {
+        return $this->belongsTo(ClassSessionType::class, 'class_session_type_id');
     }
 }
 
