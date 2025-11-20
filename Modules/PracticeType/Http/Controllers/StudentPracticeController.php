@@ -543,6 +543,24 @@ class StudentPracticeController extends Controller
     UserEventLogger::log('practice solved', $description, 'pracitce_done');
     return redirect()->back()->withSuccess('practice marked as done and coin added');
   }
+
+  public function wrongBookExercise($practiceId, Request $request)
+  {
+    $practiceId = (int) $practiceId;
+    $studentId = auth()->user()->id;
+    $exercise = Exercise::find($practiceId);
+    $exerciseCode = $exercise ? $exercise->code : null;
+    $studentValue = $request->input('student_value');
+    $expectedValue = $request->input('expected_value');
+    $desc = $exerciseCode
+      ? ('wrong answer for ' . $exerciseCode)
+      : ('wrong answer for practice id ' . $practiceId);
+    if (!is_null($studentValue) || !is_null($expectedValue)) {
+      $desc .= ' (got: ' . $studentValue . ', expected: ' . $expectedValue . ')';
+    }
+    UserEventLogger::log('practice wrong answer', $desc, 'practice_wrong');
+    return response()->json(['status' => true]);
+  }
 }
 
 function getExactLength($number, $colCount)

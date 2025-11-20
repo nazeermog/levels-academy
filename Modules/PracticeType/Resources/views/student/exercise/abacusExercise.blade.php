@@ -545,6 +545,21 @@ if (resultConvert === StudetntConvert) {
     },
   });
 
+} else {
+  $.ajax({
+    method: "POST",
+    url: "{{ route('student.book.exercise.wrong', [ 'practiceId' => $exercise->id])}}",
+    data: {
+      student_value: StudetntConvert,
+      expected_value: resultConvert
+    },
+    success: function() {
+      // no toast needed for wrong log
+    },
+    error: function() {
+      // silent
+    },
+  });
 }
 });
 }
