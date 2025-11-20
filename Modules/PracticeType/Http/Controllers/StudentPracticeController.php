@@ -66,28 +66,28 @@ class StudentPracticeController extends Controller
     // dd($availableClasses);
     return view('practicetype::student.exercise.indexBookExercise', compact('availableClasses'));
   }
-public function showAllExercisesBYQR($page)
-{
+  public function showAllExercisesBYQR($page)
+  {
     $bookId = request('book_id');
     $query = Exercise::where('page', $page)
-        ->orderBy('row')
-        ->orderBy('col_count');
+      ->orderBy('row')
+      ->orderBy('col_count');
     if ($bookId) {
-        $query->where('book_id', $bookId);
+      $query->where('book_id', $bookId);
     }
     $exercises = $query->get();
 
     if ($exercises->isEmpty()) {
-        return view('practicetype::student.exercise.BookExerciseQR', [
-            'grouped' => collect(),
-            'page' => $page
-        ]);
+      return view('practicetype::student.exercise.BookExerciseQR', [
+        'grouped' => collect(),
+        'page' => $page
+      ]);
     }
 
     $grouped = $exercises->groupBy('row');
 
     return view('practicetype::student.exercise.BookExerciseQR', compact('grouped', 'page'));
-}
+  }
 
 
   public function showAllExercisesBYQR_pages()
@@ -138,7 +138,7 @@ public function showAllExercisesBYQR($page)
       ->distinct()
       ->pluck('book_id')
       ->toArray();
-    
+
     // Use natural sort to order book1, book2, book3, book10, etc. correctly
     natsort($books);
     $books = array_values($books);
@@ -174,6 +174,11 @@ public function showAllExercisesBYQR($page)
     $colCount = 0;
     $results = 0;
     $exercise = StudentExerciseRepository::findByCode($code);
+    // Log when student opens an exercise page
+    $openedDescription = $code
+      ? ('practice opened ' . $code . ' (' . $type . ')')
+      : ('practice opened (' . $type . ')');
+    UserEventLogger::log('practice opened', $openedDescription, 'practice_opened');
     if ($type == 'numbers_sum') {
       $card_number = $exercise->card_number;
       $seconds_speed = $exercise->seconds_speed;
@@ -486,7 +491,7 @@ public function showAllExercisesBYQR($page)
       $inrollment->progress_practice = number_format($progressPercentage, 1);
       $inrollment->update();
     }
-    UserEventLogger::log('practice solved','practice solved ' . $practice->title . ' and ' . $coinsShouldTaken . ' coins added','pracitce_done');
+    UserEventLogger::log('practice solved', 'practice solved ' . $practice->title . ' and ' . $coinsShouldTaken . ' coins added', 'pracitce_done');
     return redirect()->back()->withSuccess('practice marked as done');
   }
   public function donePracitceForOutsideCourse($practiceId)
@@ -508,7 +513,7 @@ public function showAllExercisesBYQR($page)
         'coin' => $coinsShouldTaken,
       ]
     );
-    UserEventLogger::log('practice solved','practice solved ' . $practice->title . ' and ' . $coinsShouldTaken . ' coins added','pracitce_done');
+    UserEventLogger::log('practice solved', 'practice solved ' . $practice->title . ' and ' . $coinsShouldTaken . ' coins added', 'pracitce_done');
 
     return redirect()->back()->withSuccess('practice marked as done and coin added');
   }
@@ -517,10 +522,10 @@ public function showAllExercisesBYQR($page)
     $practiceId = (int)$practiceId;
 
     $studentId = auth()->user()->id;
-    $coinsShouldTaken = 0;
+    $coinsShouldTaken = 10;
 
-    $practice = PracticeTypeDetail::find($practiceId);
-    $coinsShouldTaken = $practice->coins_taken;
+    $exercise = Exercise::find($practiceId);
+    $exerciseCode = $exercise ? $exercise->code : null;
 
     StudentScore::create(
       [
@@ -532,7 +537,10 @@ public function showAllExercisesBYQR($page)
         'coin' => $coinsShouldTaken,
       ]
     );
-    UserEventLogger::log('practice solved','practice solved ' . $practice->title . ' and ' . $coinsShouldTaken . ' coins added','pracitce_done');
+    $description = $exerciseCode
+      ? ('practice solved ' . $exerciseCode . ' and ' . $coinsShouldTaken . ' coins added')
+      : ('practice solved by student id ' . $studentId . ' and ' . $coinsShouldTaken . ' coins added');
+    UserEventLogger::log('practice solved', $description, 'pracitce_done');
     return redirect()->back()->withSuccess('practice marked as done and coin added');
   }
 }
