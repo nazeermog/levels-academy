@@ -46,8 +46,8 @@
 
 
                 </li>
-                <li class="nav-item {{Route::is('admin.org.classrooms.*')?'menu-open':''}} ">
-                    <a href="#" class="nav-link {{Route::is('admin.org.classrooms.*')?'active':''}}">
+                <li class="nav-item {{ (Route::is('admin.org.classrooms.*') && !Route::is('admin.org.classrooms.reports.*')) ? 'menu-open' : '' }} ">
+                    <a href="#" class="nav-link {{ (Route::is('admin.org.classrooms.*') && !Route::is('admin.org.classrooms.reports.*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>
                             Classrooms
@@ -58,22 +58,6 @@
                         <li class="nav-item">
                             <a href="{{route('admin.org.classrooms.index')}}" class="nav-link  {{ Route::is('admin.org.classrooms.index')?'active':''}}">
                                 <p class="ml-3">Classrooms</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item {{Route::is('admin.org.classrooms.report.*')?'menu-open':''}} ">
-                    <a href="#" class="nav-link {{Route::is('admin.org.classrooms.report.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
-                        <p>
-                            Classroom Reports
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('admin.org.classrooms.reports.instructors')}}" class="nav-link  {{ Route::is('admin.org.classrooms.reports.instructors')?'active':''}}">
-                                <p class="ml-3">Instructor Totals</p>
                             </a>
                         </li>
                     </ul>
@@ -95,18 +79,40 @@
                     </ul>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('admin.org.absences.index') }}" class="nav-link {{ Route::is('admin.org.absences.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user-times"></i>
-                        <p>Absence Requests</p>
-                    </a>
-                </li>
+                
 
                 <li class="nav-item">
                     <a href="{{ route('admin.org.settings.edit') }}" class="nav-link {{ Route::is('admin.org.settings.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>Organization Settings</p>
                     </a>
+                </li>
+
+                <li class="nav-item {{Route::is('admin.org.classrooms.reports.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.org.classrooms.reports.*')?'active':''}}">
+                        <i class="nav-icon fas fa-chart-line"></i>
+                        <p>
+                            Reports
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.org.classrooms.reports.instructors') }}" class="nav-link  {{ Route::is('admin.org.classrooms.reports.instructors')?'active':''}}">
+                                <p class="ml-3">- Instructors</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.org.classrooms.reports.student_dues') }}" class="nav-link  {{ Route::is('admin.org.classrooms.reports.student_dues')?'active':''}}">
+                                <p class="ml-3">- Student Dues</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.org.classrooms.reports.profit') }}" class="nav-link  {{ Route::is('admin.org.classrooms.reports.profit')?'active':''}}">
+                                <p class="ml-3">- Profit</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 @endif
                 @if(auth()->check() && auth()->user()->role === 'super_admin')
@@ -479,12 +485,7 @@
 
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('admin.org.absences.index') }}" class="nav-link {{ Route::is('admin.org.absences.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user-times"></i>
-                        <p>Absence Requests</p>
-                    </a>
-                </li>
+                
 
 
 

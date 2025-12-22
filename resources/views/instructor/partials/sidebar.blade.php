@@ -194,6 +194,21 @@
                     </a>
                 </li>
 
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" href="{{ route('instructor.reports.per_student') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">attach_money</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            Students Payout
+                            @elseif(session('locale', config('app.locale')) == 'ar')
+                            مستحقات لكل طالب
+                            @elseif(session('locale', config('app.locale')) == 'de')
+                            Auszahlung pro Schüler
+                            @endif
+                        </span>
+                    </a>
+                </li>
+
             </ul>
             <!-- // END Sidebar Content -->
         </div>

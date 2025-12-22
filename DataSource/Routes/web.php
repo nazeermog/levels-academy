@@ -116,5 +116,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
     Route::prefix('organization/classrooms/reports')->name('admin.org.classrooms.reports.')->group(function () {
         Route::get('instructors', [AdminClassroomReportController::class, 'instructorTotals'])->name('instructors');
+        Route::get('profit', [AdminClassroomReportController::class, 'profit'])->name('profit');
+        Route::get('student-dues', [AdminClassroomReportController::class, 'studentDues'])->name('student_dues');
     });
 });

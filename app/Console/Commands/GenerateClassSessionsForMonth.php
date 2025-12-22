@@ -8,6 +8,9 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DataSource\Entities\Classroom\Classroom;
 use DataSource\Entities\Classroom\ClassSession;
+use DataSource\Entities\Classroom\ClassSessionType;
+use DataSource\Entities\Student\Student;
+use DataSource\Entities\Transaction\Transaction;
 
 class GenerateClassSessionsForMonth extends Command
 {
@@ -73,7 +76,7 @@ class GenerateClassSessionsForMonth extends Command
             DB::beginTransaction();
             try {
                 foreach ($datesToCreate as $dt) {
-                    ClassSession::create([
+                    $session = ClassSession::create([
                         'classroom_id' => $classroom->id,
                         'instructor_id' => $classroom->instructor_id,
                         'held_at' => $dt,
@@ -81,6 +84,35 @@ class GenerateClassSessionsForMonth extends Command
                         'class_session_type_id' => $classroom->class_session_type_id,
                     ]);
                     $generatedCount++;
+
+                    // Create parent transactions for this session (charge per student)
+                    $type = $classroom->defaultSessionType ?? ClassSessionType::find($classroom->class_session_type_id);
+                    $perStudentPrice = $type ? (float) $type->price : 0.0;
+                    $typeName = $type ? $type->name : 'Session';
+
+                    // Get enrolled students in this classroom (users.id)
+                    $studentUserIds = $classroom->students()->pluck('users.id')->toArray();
+                    if (!empty($studentUserIds) && $perStudentPrice > 0) {
+                        foreach ($studentUserIds as $studentUserId) {
+                            $student = Student::find($studentUserId);
+                            if (!$student) {
+                                continue;
+                            }
+                            $parent = $student->parentts()->first();
+                            if (!$parent) {
+                                continue;
+                            }
+                            Transaction::create([
+                                'parent_id' => $parent->user_id,
+                                'course_id' => 0,
+                                'student_id' => $student->user_id,
+                                'price' => $perStudentPrice,
+                                'type' => 'once',
+                                'is_credit' => 0,
+                                'desc' => 'Class session #'.$session->id.' charge: '.$typeName,
+                            ]);
+                        }
+                    }
                 }
                 DB::commit();
                 $this->info("Created ".count($datesToCreate)." sessions for classroom #{$classroom->id}");

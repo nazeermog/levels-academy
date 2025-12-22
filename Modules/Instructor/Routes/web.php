@@ -6,6 +6,7 @@ use Modules\Parentt\Http\Controllers\ParenttController;
 use Modules\Instructor\Http\Controllers\InstructorController;
 use Modules\Instructor\Http\Controllers\InstructorNoteController;
 use Modules\Instructor\Http\Controllers\ClassSessionController;
+use Modules\Instructor\Http\Controllers\InstructorPayoutReportController;
 
 Route::group([
     'prefix' => 'instructor',
@@ -32,6 +33,9 @@ Route::group([
     Route::post('/sessions', [ClassSessionController::class, 'store'])->name('instructor.sessions.store');
     Route::get('/sessions/{session}/edit', [ClassSessionController::class, 'edit'])->name('instructor.sessions.edit');
     Route::put('/sessions/{session}', [ClassSessionController::class, 'update'])->name('instructor.sessions.update');
+
+    // Reports
+    Route::get('/reports/per-student-payout', [InstructorPayoutReportController::class, 'perStudent'])->name('instructor.reports.per_student');
 });
 
 Route::group([
