@@ -43,24 +43,17 @@ class AuthController extends Controller
         }
       }
 
-      $intended = session()->pull('url.intended');
-
-      if ($intended) {
-        return redirect()->to($intended);
-      }
-
-      switch (auth()->user()->role) {
-        case 'student':
-          return redirect()->route('student.index.Bookexercise.books.qr');
-        case 'super_admin':
-          return redirect()->route('admin.dashboard');
-        case 'admin':
-          return redirect()->route('admin.org.dashboard');
-        case 'parent':
-          return redirect()->route('parent.dashboard');
-        default:
-          return redirect()->route('login');
-      }
+      // Redirect to intended URL if present, otherwise role-based fallback
+      $role = auth()->user()->role;
+      $fallback = match ($role) {
+        'student' => route('student.index.Bookexercise.books.qr'),
+        'super_admin' => route('admin.dashboard'),
+        'admin' => route('admin.org.dashboard'),
+        'parent' => route('parent.dashboard'),
+        'instructor' => route('instructor.dashboard'),
+        default => route('login'),
+      };
+      return redirect()->intended($fallback);
     }
 
     return redirect()->route('login')->withErrors([

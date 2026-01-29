@@ -11,8 +11,14 @@ class ClassSession extends Model
         'classroom_id',
         'instructor_id',
         'held_at',
+        'end_at',
         'content',
         'class_session_type_id',
+    ];
+
+    protected $casts = [
+        'held_at' => 'datetime',
+        'end_at' => 'datetime',
     ];
 
     public function classroom()

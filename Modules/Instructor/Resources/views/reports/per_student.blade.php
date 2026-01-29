@@ -8,8 +8,9 @@
     <div class="col-lg-10">
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="card-title">{{ $table_name }}</h3>
-            <form method="GET" action="{{ route('instructor.reports.per_student') }}" class="form-inline flex-wrap justify-content-end">
+            <h3 class="card-title mb-0">{{ $table_name }}</h3>
+            <div class="d-flex align-items-center">
+              <form method="GET" action="{{ route('instructor.reports.per_student') }}" class="form-inline flex-wrap justify-content-end mr-2 d-print-none">
               <div class="form-inline flex-wrap">
                 <div class="form-group mb-2 mr-2">
                   <label for="month" class="sr-only">Month</label>
@@ -57,9 +58,25 @@
                 <button type="submit" class="btn btn-sm btn-primary mb-2">Apply</button>
                 <a href="{{ route('instructor.reports.per_student') }}" class="btn btn-sm btn-outline-secondary mb-2 ml-2">Reset</a>
               </div>
-            </form>
+              </form>
+              <form method="GET" action="{{ route('instructor.reports.per_student.pdf') }}" class="d-print-none">
+                <input type="hidden" name="month" value="{{ $month ?? '' }}">
+                <input type="hidden" name="student_id" value="{{ $studentFilterId ?? '' }}">
+                <input type="hidden" name="classroom_id" value="{{ $classroomFilterId ?? '' }}">
+                <input type="hidden" name="class_session_type_id" value="{{ $typeFilterId ?? '' }}">
+                <button type="submit" class="btn btn-sm btn-danger ml-2">Export as PDF</button>
+              </form>
+            </div>
           </div>
-      <div class="card-body table-responsive p-0">
+      <div class="card-body table p-0">
+        <style>
+          @media print {
+            .d-print-none { display: none !important; }
+            .card, .card-body { border: none !important; box-shadow: none !important; }
+            .table th, .table td { padding: 6px 8px !important; }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          }
+        </style>
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="alert alert-info">
@@ -72,7 +89,7 @@
             </div>
           </div>
         </div>
-        @if(isset($rows) && $rows->count() && (isset($filtersApplied) && $filtersApplied))
+        @if(isset($rows) && $rows->count())
           <table class="table table-hover text-nowrap">
             <thead>
               <tr>
@@ -98,7 +115,7 @@
               </tr>
             </tfoot>
           </table>
-        @elseif(isset($filtersApplied) && $filtersApplied)
+        @else
           <p class="p-3 mb-0">No data found for the selected month.</p>
         @endif
       </div>
@@ -109,7 +126,7 @@
           <h5 class="card-title mb-0">Sessions</h5>
         </div>
         <div class="card-body table-responsive p-0">
-          @if(isset($filtersApplied) && $filtersApplied && isset($sessionsDetailed) && $sessionsDetailed->count())
+          @if(isset($sessionsDetailed) && $sessionsDetailed->count())
             <table class="table table-hover text-nowrap">
               <thead>
                 <tr>
@@ -126,7 +143,12 @@
                 @foreach($sessionsDetailed as $s)
                 <tr>
                   <td>{{ $s['id'] }}</td>
-                  <td>{{ $s['held_at'] }}</td>
+                  <td>
+                    <time class="utc-dt"
+                          data-utc="{{ !empty($s['held_at']) ? \Illuminate\Support\Carbon::parse($s['held_at'])->toIso8601String() : '' }}">
+                      —
+                    </time>
+                  </td>
                   <td>{{ $s['classroom'] ?? '—' }}</td>
                   <td>{{ $s['type'] ?? '—' }}</td>
                   <td>{{ number_format($s['teacher_payout'], 2) }}</td>
@@ -136,10 +158,25 @@
                 @endforeach
               </tbody>
             </table>
-          @elseif(isset($filtersApplied) && $filtersApplied)
+          @else
             <p class="p-3 mb-0">No sessions found for the selected month.</p>
           @endif
         </div>
+        <script>
+          (function () {
+            var nodes = document.querySelectorAll('.utc-dt[data-utc]');
+            nodes.forEach(function(el){
+              var iso = el.getAttribute('data-utc');
+              var d = new Date(iso);
+              if (!isNaN(d)) {
+                el.textContent = d.toLocaleString([], {
+                  year:'numeric', month:'2-digit', day:'2-digit',
+                  hour:'2-digit', minute:'2-digit'
+                });
+              }
+            });
+          })();
+        </script>
       </div>
     </div>
   </div>

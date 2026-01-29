@@ -36,6 +36,7 @@ Route::group([
 
     // Reports
     Route::get('/reports/per-student-payout', [InstructorPayoutReportController::class, 'perStudent'])->name('instructor.reports.per_student');
+    Route::get('/reports/per-student-payout/pdf', [InstructorPayoutReportController::class, 'perStudentPdf'])->name('instructor.reports.per_student.pdf');
 });
 
 Route::group([

@@ -24,7 +24,7 @@
           <tr>
             <td>{{ $session->id }}</td>
             <td>{{ optional($session->classroom)->name }}</td>
-            <td>{{ $session->held_at }}</td>
+            <td><time class="utc-dt" data-utc="{{ $session->held_at->toIso8601String() }}">—</time></td>
             <td>{{ optional($session->type)->name ?? '-' }}</td>
             <td>{{ Str::limit($session->content, 120) }}</td>
             <td>
@@ -45,5 +45,20 @@
     </div>
     @endif
   </div>
+  <script>
+    (function () {
+      var nodes = document.querySelectorAll('.utc-dt[data-utc]');
+      nodes.forEach(function(el){
+        var iso = el.getAttribute('data-utc');
+        var d = new Date(iso);
+        if (!isNaN(d)) {
+          el.textContent = d.toLocaleString([], {
+            year:'numeric', month:'2-digit', day:'2-digit',
+            hour:'2-digit', minute:'2-digit'
+          });
+        }
+      });
+    })();
+  </script>
 </div>
 @endsection

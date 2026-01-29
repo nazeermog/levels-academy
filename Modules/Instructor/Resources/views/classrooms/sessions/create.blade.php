@@ -9,6 +9,7 @@
     <div class="card-body">
       <form method="POST" action="{{ route('instructor.sessions.store') }}">
         @csrf
+        <input type="hidden" name="tz" id="tz">
         <div class="form-group">
           <label for="classroom_id">Classroom</label>
           <select id="classroom_id" name="classroom_id" class="form-control" required>
@@ -21,6 +22,10 @@
         <div class="form-group">
           <label for="held_at">Held At</label>
           <input type="datetime-local" id="held_at" name="held_at" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="end_at">End At</label>
+          <input type="datetime-local" id="end_at" name="end_at" class="form-control" required>
         </div>
         <div class="form-group">
           <label for="class_session_type_id">Session Type</label>
@@ -41,6 +46,66 @@
     </div>
   </div>
 </div>
+<script>
+  (function() {
+    var held = document.getElementById('held_at');
+    var endAt = document.getElementById('end_at');
+    var tzInput = document.getElementById('tz');
+    if (!held || !endAt) { return; }
+
+    // Detect browser timezone and set hidden input
+    try {
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+      if (tzInput) tzInput.value = tz;
+      console.log('[TZ] detected browser time zone:', tz);
+    } catch (e) {
+      if (tzInput) tzInput.value = 'UTC';
+      console.log('[TZ] timezone detection failed; defaulting to UTC');
+    }
+
+    var endTouched = false;
+    endAt.addEventListener('input', function() { endTouched = true; logTimes(); });
+
+    function toLocalDatetimeValue(d) {
+      var pad = function(n) { return String(n).padStart(2, '0'); };
+      return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+        'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    }
+
+    function logTimes() {
+      var hv = held.value ? new Date(held.value) : null;
+      var ev = endAt.value ? new Date(endAt.value) : null;
+      if (hv) console.log('[TZ] held_at local:', held.value, '→ ISO:', hv.toISOString());
+      if (ev) console.log('[TZ] end_at  local:', endAt.value,  '→ ISO:', ev.toISOString());
+    }
+
+    function updateEnd() {
+      if (endTouched) { return; }
+      if (!held.value) { return; }
+      var start = new Date(held.value);
+      if (isNaN(start.getTime())) { return; }
+      start.setHours(start.getHours() + 1);
+      endAt.value = toLocalDatetimeValue(start);
+      logTimes();
+    }
+
+    held.addEventListener('change', updateEnd);
+    held.addEventListener('input', function(){ updateEnd(); logTimes(); });
+
+    if (held.value && !endAt.value) {
+      updateEnd();
+    }
+
+    // Log on submit to verify values being sent
+    var form = held.closest('form');
+    if (form) {
+      form.addEventListener('submit', function() {
+        console.log('[TZ] submitting',
+          { tz: (tzInput && tzInput.value) || '', held_at: held.value, end_at: endAt.value });
+      });
+    }
+  })();
+  </script>
 @endsection
 
 

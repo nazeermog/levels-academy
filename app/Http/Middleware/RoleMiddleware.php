@@ -24,6 +24,7 @@ class RoleMiddleware
         }
 
         if (! Auth::user()->hasRoles($role)) {
+            // Redirect to the user's correct dashboard instead of 403
             switch (Auth::user()->role) {
                 case 'student':
                     return redirect()->route('student.dashboard');
@@ -33,8 +34,10 @@ class RoleMiddleware
                     return redirect()->route('admin.org.dashboard');
                 case 'parent':
                     return redirect()->route('parent.dashboard');
+                case 'instructor':
+                    return redirect()->route('instructor.dashboard');
                 default:
-                    abort(403, 'User does not have the right roles.');
+                    return redirect()->route('login');
             }
         }
 
