@@ -7,6 +7,7 @@ use Modules\Instructor\Http\Controllers\InstructorController;
 use Modules\Instructor\Http\Controllers\InstructorNoteController;
 use Modules\Instructor\Http\Controllers\ClassSessionController;
 use Modules\Instructor\Http\Controllers\InstructorPayoutReportController;
+use Modules\Instructor\Http\Controllers\ExpectedEarningsReportController;
 
 Route::group([
     'prefix' => 'instructor',
@@ -37,6 +38,7 @@ Route::group([
     // Reports
     Route::get('/reports/per-student-payout', [InstructorPayoutReportController::class, 'perStudent'])->name('instructor.reports.per_student');
     Route::get('/reports/per-student-payout/pdf', [InstructorPayoutReportController::class, 'perStudentPdf'])->name('instructor.reports.per_student.pdf');
+    Route::get('/reports/expected-earnings', [ExpectedEarningsReportController::class, 'index'])->name('instructor.reports.expected_earnings');
 });
 
 Route::group([

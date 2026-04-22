@@ -209,6 +209,21 @@
                     </a>
                 </li>
 
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" href="{{ route('instructor.reports.expected_earnings') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">trending_up</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            Expected Earnings
+                            @elseif(session('locale', config('app.locale')) == 'ar')
+                            الأرباح المتوقعة
+                            @elseif(session('locale', config('app.locale')) == 'de')
+                            Erwartete Einnahmen
+                            @endif
+                        </span>
+                    </a>
+                </li>
+
             </ul>
             <!-- // END Sidebar Content -->
         </div>

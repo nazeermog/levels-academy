@@ -112,6 +112,11 @@
                                 <p class="ml-3">- Profit</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.org.classrooms.reports.expected_earnings') }}" class="nav-link  {{ Route::is('admin.org.classrooms.reports.expected_earnings')?'active':''}}">
+                                <p class="ml-3">- Expected Earnings</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @endif

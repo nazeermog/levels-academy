@@ -125,18 +125,11 @@ class AdminClassroomReportController extends BaseController
 
         // Pull all transactions for month and match those referencing our sessions (by description)
         $monthlyTx = Transaction::whereBetween('created_at', [$startOfMonth, $endOfMonth])->get();
-        $txBySession = $monthlyTx->mapWithKeys(function ($t) {
-            if (!is_string($t->desc)) {
-                return [null => null];
-            }
-            if (preg_match('/Class session #(\d+)/i', $t->desc, $m)) {
-                return [(int) $m[1] => $t];
-            }
-            return [null => null];
-        })->filter(function ($v, $k) {
-            return $k !== null;
-        })->groupBy(function ($t, $sid) {
-            return $sid;
+        $txBySession = $monthlyTx->filter(function ($t) {
+            return is_string($t->desc) && preg_match('/Class session #(\d+)/i', $t->desc);
+        })->groupBy(function ($t) {
+            preg_match('/Class session #(\d+)/i', $t->desc, $m);
+            return (int) $m[1];
         });
 
         // Revenue: sum of charges (is_credit = 0) on transactions linked to our sessions
@@ -340,6 +333,160 @@ class AdminClassroomReportController extends BaseController
             'parentsList'
         ));
     }
+
+    /**
+     * Expected Earnings report — projects revenue, instructor payouts, and
+     * profit from the classroom schedule (repeats_per_week / days_of_week)
+     * so it works even for months with no sessions created yet.
+     */
+    public function expectedEarnings(Request $request)
+    {
+        $currentOrg   = $request->attributes->get('currentOrganization');
+        $month        = $request->input('month', Carbon::now()->format('Y-m'));
+        $instructorId = $request->input('instructor_id');
+        $classroomId  = $request->input('classroom_id');
+        $typeId       = $request->input('class_session_type_id');
+        $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+        $endOfMonth   = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
+
+        // ── Fetch classrooms with schedule data ──
+        $classrooms = Classroom::with(['defaultSessionType', 'instructor', 'students'])
+            ->whereNotNull('instructor_id')
+            ->whereNotNull('class_session_type_id')
+            ->when($currentOrg, fn ($q) => $q->where('organization_id', $currentOrg->id))
+            ->when(!empty($instructorId), fn ($q) => $q->where('instructor_id', $instructorId))
+            ->when(!empty($classroomId), fn ($q) => $q->where('id', $classroomId))
+            ->when(!empty($typeId), fn ($q) => $q->where('class_session_type_id', $typeId))
+            ->orderBy('name')
+            ->get();
+
+        // ── Build projection per classroom ──
+        $rows = $classrooms->map(function ($classroom) use ($startOfMonth, $endOfMonth) {
+            $sessionType        = $classroom->defaultSessionType;
+            $pricePerSession    = (float) (optional($sessionType)->price ?? 0);
+            $payoutPerSession   = (float) (optional($sessionType)->teacher_payout ?? 0);
+            $enrolledStudents   = $classroom->students->count();
+            $projectedSessions  = $this->countProjectedSessions($classroom, $startOfMonth, $endOfMonth);
+
+            $expectedRevenue = $pricePerSession * $enrolledStudents * $projectedSessions;
+            $expectedPayout  = $payoutPerSession * $enrolledStudents * $projectedSessions;
+
+            return [
+                'classroom'          => $classroom,
+                'instructor'         => $classroom->instructor,
+                'session_type'       => $sessionType,
+                'enrolled_students'  => $enrolledStudents,
+                'sessions_count'     => $projectedSessions,
+                'price_per_session'  => $pricePerSession,
+                'payout_per_session' => $payoutPerSession,
+                'expected_revenue'   => $expectedRevenue,
+                'expected_payout'    => $expectedPayout,
+                'expected_profit'    => $expectedRevenue - $expectedPayout,
+            ];
+        })->values();
+
+        // ── Totals ──
+        $totalSessions = $rows->sum('sessions_count');
+        $totalRevenue  = $rows->sum('expected_revenue');
+        $totalPayout   = $rows->sum('expected_payout');
+        $totalProfit   = $rows->sum('expected_profit');
+
+        // ── Per-student breakdown (how much comes from each student) ──
+        $studentRows = collect();
+        foreach ($classrooms as $classroom) {
+            $sessionType       = $classroom->defaultSessionType;
+            $pricePerSession   = (float) (optional($sessionType)->price ?? 0);
+            $projectedSessions = $this->countProjectedSessions($classroom, $startOfMonth, $endOfMonth);
+            $perStudentTotal   = $pricePerSession * $projectedSessions;
+
+            foreach ($classroom->students as $studentUser) {
+                $student = Student::where('user_id', $studentUser->id)->first();
+                $key = $studentUser->id;
+
+                if ($studentRows->has($key)) {
+                    $existing = $studentRows->get($key);
+                    $existing['expected_amount'] += $perStudentTotal;
+                    $existing['classrooms_count'] += 1;
+                    $studentRows->put($key, $existing);
+                } else {
+                    $studentRows->put($key, [
+                        'student'          => $student,
+                        'student_user'     => $studentUser,
+                        'expected_amount'  => $perStudentTotal,
+                        'classrooms_count' => 1,
+                    ]);
+                }
+            }
+        }
+        $studentRows = $studentRows->sortByDesc('expected_amount')->values();
+
+        // ── Dropdown data ──
+        $instructorIds = Classroom::when($currentOrg, fn ($q) => $q->where('organization_id', $currentOrg->id))
+            ->whereNotNull('instructor_id')
+            ->distinct()
+            ->pluck('instructor_id')
+            ->filter()
+            ->values();
+        $instructors = User::whereIn('id', $instructorIds)->orderBy('first_name')->get();
+
+        $classroomsForFilter = Classroom::when($currentOrg, fn ($q) => $q->where('organization_id', $currentOrg->id))
+            ->orderBy('name')
+            ->get();
+
+        $types = ClassSessionType::when($currentOrg, fn ($q) => $q->where('organization_id', $currentOrg->id))
+            ->orderBy('name')
+            ->get();
+
+        return view('datasource::management.classrooms.report.expected_earnings', compact(
+            'currentOrg',
+            'month',
+            'instructorId',
+            'classroomId',
+            'typeId',
+            'rows',
+            'studentRows',
+            'totalSessions',
+            'totalRevenue',
+            'totalPayout',
+            'totalProfit',
+            'instructors',
+            'classroomsForFilter',
+            'types'
+        ));
+    }
+
+    /**
+     * Count how many sessions are projected for a classroom in the given month,
+     * based on its days_of_week and repeats_per_week configuration.
+     */
+    private function countProjectedSessions(Classroom $classroom, Carbon $startOfMonth, Carbon $endOfMonth): int
+    {
+        $perWeek = (int) $classroom->repeats_per_week;
+        if ($perWeek <= 0) {
+            return 0;
+        }
+
+        $daysCsv = (string) $classroom->days_of_week;
+        $days    = array_values(array_filter(
+            array_map('intval', explode(',', $daysCsv)),
+            fn ($v) => $v >= 1 && $v <= 7
+        ));
+
+        // If specific weekdays are configured, count how many fall in the month
+        if (!empty($days)) {
+            $count  = 0;
+            $cursor = $startOfMonth->copy();
+            while ($cursor->lte($endOfMonth)) {
+                if (in_array($cursor->dayOfWeekIso, $days, true)) {
+                    $count++;
+                }
+                $cursor->addDay();
+            }
+            return $count;
+        }
+
+        // Fallback: repeats_per_week × full weeks in month
+        $weeksInMonth = $startOfMonth->diffInWeeks($endOfMonth->copy()->addDay());
+        return $perWeek * max(1, (int) $weeksInMonth);
+    }
 }
-
-
