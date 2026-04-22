@@ -20,10 +20,13 @@ class ParenttNotesController extends Controller
   {
     $userParent = Auth::user();
     $parent = Parentt::find($userParent->id);
+    if (!$parent) {
+      return view('studentactivity::childernNotes', ['notes' => collect()]);
+    }
 
-    $studentIds = $parent->students()->pluck('id');
+    $studentIds = $parent->students()->pluck('students.user_id');
 
-    $notes = InstructorNote::with('student')
+    $notes = InstructorNote::with('student.user')
       ->whereIn('student_id', $studentIds)
       ->orderByDesc('created_at')
       ->get();
@@ -37,8 +40,11 @@ class ParenttNotesController extends Controller
 
     $userParent = Auth::user();
     $parent = Parentt::find($userParent->id);
+    if (!$parent) {
+      abort(403);
+    }
 
-    $childIds = $parent->students()->pluck('id')->toArray();
+    $childIds = $parent->students()->pluck('students.user_id')->toArray();
 
     if (!in_array($note->student_id, $childIds)) {
       abort(403);

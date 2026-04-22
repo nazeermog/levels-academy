@@ -69,7 +69,7 @@ class UserSeed extends Seeder
                 'last_name' => 'instructor',
             ],
         ]);
-        DB::table('instructors_translations')->insert([
+        DB::table('instructor_translations')->insert([
             [
                 'spec' => 'اختصاص ويب',
                 'about' => 'خبرة 10 سنين',

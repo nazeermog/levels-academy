@@ -6,13 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 use Illuminate\Support\Facades\Auth;
-use DataSource\Entities\Course\Course;
 use DataSource\Entities\Student\Student;
 use Modules\Instructor\Http\Requests\Store;
 use Modules\Instructor\Http\Requests\Update;
-use DataSource\Entities\Inrollment\Inrollment;
-use DataSource\Entities\Instructor\Instructor;
 use DataSource\Entities\Instructor\InstructorNote;
+use DataSource\Entities\Classroom\Classroom;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
 use DataSource\Repositories\DB\Instructor\Student\InstructorNoteRepository;
 
@@ -39,13 +37,14 @@ class InstructorNoteController extends Controller
 
     public function create()
     {
-        $instructor = Auth::user();
-
-        $courseIds = Course::where('instructor_id', $instructor->id)->pluck('id');
-
-        $studentIds = Inrollment::whereIn('course_id', $courseIds)
-            ->pluck('student_id')
-            ->unique();
+        $studentIds = Classroom::where('instructor_id', Auth::id())
+            ->with('students:id')
+            ->get()
+            ->pluck('students')
+            ->flatten()
+            ->pluck('id')
+            ->unique()
+            ->values();
 
         $students = Student::whereIn('user_id', $studentIds)->get();
         return view('instructor::notes.create', compact('students'));
@@ -59,6 +58,7 @@ class InstructorNoteController extends Controller
                 'instructor_id' => Auth::id(),
                 'student_id'    => $request->student_id,
                 'note'          => $request->note,
+                'rating'        => $request->rating,
                 'is_read'       => false,
             ]);
 
@@ -88,6 +88,7 @@ class InstructorNoteController extends Controller
         $note->update([
             'student_id' => $request->student_id,
             'note'       => $request->note,
+            'rating'     => $request->rating,
         ]);
 
         return redirect()->route('instructor.notes.index')->with('success', 'Note updated successfully.');

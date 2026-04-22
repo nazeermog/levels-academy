@@ -42,6 +42,7 @@
               <th>#</th>
               <th>Student</th>
               <th>Note</th>
+              <th>Rating</th>
               <th>Is Read</th>
               <th>Date</th>
               <th>Actions</th>
@@ -53,6 +54,17 @@
               <td>{{ $index + 1 }}</td>
               <td>{{ $note->student->first_name }} {{ $note->student->last_name }}</td>
               <td class="text-left">{{ Str::limit($note->note, 100) }}</td>
+              <td>
+                <div class="rating d-inline-flex">
+                  @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= (int) $note->rating)
+                      <span class="rating__item"><span class="material-icons">star</span></span>
+                    @else
+                      <span class="rating__item"><span class="material-icons">star_border</span></span>
+                    @endif
+                  @endfor
+                </div>
+              </td>
               <td>{{ $note->is_read ? 'true' : 'false' }}</td>
               <td>{{ $note->created_at->format('Y-m-d') }}</td>
               <td>

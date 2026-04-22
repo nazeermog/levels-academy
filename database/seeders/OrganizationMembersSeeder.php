@@ -15,7 +15,10 @@ class OrganizationMembersSeeder extends Seeder
 {
     public function run()
     {
-        $organizations = Organization::query()->get();
+        // This seeder is intentionally scoped to yasmine org.
+        $organizations = Organization::query()
+            ->where('subdomain', 'yasmine')
+            ->get();
 
         foreach ($organizations as $org) {
             $sub = $org->subdomain;
@@ -78,24 +81,25 @@ class OrganizationMembersSeeder extends Seeder
             }
 
             // Link parents to students (1-to-1 mapping for sample data)
+            $parentUserIds = collect($parents)->pluck('user_id')->map(fn($id) => (int) $id)->all();
+            $studentUserIds = collect($students)->pluck('user_id')->map(fn($id) => (int) $id)->all();
+
+            // Reset links for this org's generated parents/students to keep deterministic mapping.
+            DB::table('parentt_student')
+                ->whereIn('parentt_id', $parentUserIds)
+                ->orWhereIn('student_id', $studentUserIds)
+                ->delete();
+
             for ($i = 0; $i < 3; $i++) {
                 if (isset($parents[$i]) && isset($students[$i])) {
-                    // Parentt primary key is user_id; Student primary key is user_id
+                    // Parent i -> Student i (user_id based keys)
                     $parentUserId = (int) $parents[$i]->user_id;
                     $studentUserId = (int) $students[$i]->user_id;
 
-                    // Insert pivot if not exists to avoid duplicates
-                    $exists = DB::table('parentt_student')
-                        ->where('parentt_id', $parentUserId)
-                        ->where('student_id', $studentUserId)
-                        ->exists();
-
-                    if (! $exists) {
-                        DB::table('parentt_student')->insert([
-                            'parentt_id' => $parentUserId,
-                            'student_id' => $studentUserId,
-                        ]);
-                    }
+                    DB::table('parentt_student')->insert([
+                        'parentt_id' => $parentUserId,
+                        'student_id' => $studentUserId,
+                    ]);
                 }
             }
 

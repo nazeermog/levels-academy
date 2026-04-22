@@ -24,6 +24,7 @@
                                     <th>Student</th>
                                     <th>Instructor</th>
                                     <th>Note</th>
+                                    <th>Rating</th>
                                     <th>Status</th>
                                     <th>Created At</th>
                                 </tr>
@@ -35,6 +36,17 @@
                                         <td>{{ trim((optional($note->student->user)->first_name ?? '').' '.(optional($note->student->user)->last_name ?? '')) ?: '—' }}</td>
                                         <td>{{ trim((optional($note->instructor)->first_name ?? '').' '.(optional($note->instructor)->last_name ?? '')) ?: '—' }}</td>
                                         <td style="white-space: pre-wrap; max-width: 600px;">{{ $note->note }}</td>
+                                        <td>
+                                            <div class="d-inline-flex" style="font-size: 16px; color: #f5b301; letter-spacing: 1px;">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= (int) $note->rating)
+                                                        <span>★</span>
+                                                    @else
+                                                        <span style="color: #c7c7c7;">☆</span>
+                                                    @endif
+                                                @endfor
+                                            </div>
+                                        </td>
                                         <td>
                                             @if($note->is_read)
                                                 <span class="badge badge-success">Read</span>

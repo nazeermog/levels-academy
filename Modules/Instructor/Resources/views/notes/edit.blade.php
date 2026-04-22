@@ -4,6 +4,36 @@
 {{ __('Edit Note') }}
 @endsection
 
+@push('css')
+<style>
+  .star-rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    gap: 4px;
+  }
+
+  .star-rating input {
+    display: none;
+  }
+
+  .star-rating label {
+    color: #c7c7c7;
+    cursor: pointer;
+    margin-bottom: 0;
+  }
+
+  .star-rating label .material-icons {
+    font-size: 28px;
+  }
+
+  .star-rating label:hover,
+  .star-rating label:hover ~ label,
+  .star-rating input:checked ~ label {
+    color: #f5b301;
+  }
+</style>
+@endpush
+
 @section('content')
 <div class="container py-5">
   <div class="card border-top border-0 border-4 border-warning">
@@ -38,6 +68,25 @@
         <div class="form-group mb-3">
           <label for="note">{{ __('Note') }}</label>
           <textarea name="note" id="note" rows="5" class="form-control" required>{{ old('note', $note->note) }}</textarea>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="rating">{{ __('Rating') }}</label>
+          <div class="star-rating">
+            @for($i = 5; $i >= 1; $i--)
+              <input
+                type="radio"
+                id="rating-{{ $i }}"
+                name="rating"
+                value="{{ $i }}"
+                {{ (int) old('rating', $note->rating) === $i ? 'checked' : '' }}
+                required
+              >
+              <label for="rating-{{ $i }}" title="{{ $i }}">
+                <span class="material-icons">star</span>
+              </label>
+            @endfor
+          </div>
         </div>
 
         <button type="submit" class="btn btn-warning">{{ __('Update Note') }}</button>

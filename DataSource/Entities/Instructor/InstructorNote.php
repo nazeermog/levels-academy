@@ -15,7 +15,13 @@ class InstructorNote extends Model
         'instructor_id',
         'student_id',
         'note',
+        'rating',
         'is_read'
+    ];
+
+    protected $casts = [
+        'rating' => 'integer',
+        'is_read' => 'boolean',
     ];
 
     public function instructor()

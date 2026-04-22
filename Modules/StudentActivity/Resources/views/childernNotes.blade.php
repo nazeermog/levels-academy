@@ -28,6 +28,7 @@
               <th>#</th>
               <th>Student</th>
               <th>Note</th>
+              <th>Rating</th>
               <th>Is Read</th>
               <th>Date</th>
               <th>Action</th>
@@ -39,6 +40,17 @@
               <td>{{ $index + 1 }}</td>
               <td>{{ $note->student->first_name }} {{ $note->student->last_name }}</td>
               <td class="text-left">{{ Str::limit($note->note, 100) }}</td>
+              <td>
+                <div class="d-inline-flex" style="font-size: 16px; color: #f5b301; letter-spacing: 1px;">
+                  @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= (int) $note->rating)
+                      <span>★</span>
+                    @else
+                      <span style="color: #c7c7c7;">☆</span>
+                    @endif
+                  @endfor
+                </div>
+              </td>
               <td>
                 <span class="badge {{ $note->is_read ? 'bg-success' : 'bg-warning' }}">
                   {{ $note->is_read ? 'true' : 'false' }}
