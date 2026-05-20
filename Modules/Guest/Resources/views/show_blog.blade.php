@@ -16,7 +16,7 @@
       <div class="flex">
         <h1 class="h2 measure-lead-max mb-16pt">{{$blog->title}}</h1>
         <div class="d-flex align-items-center">
-          <a href="teacher-profile.html"
+          <a href="#"
             class="avatar avatar-sm mr-12pt">
             <img src="{{ asset('images/people/50/guy-6.jpg') }}"
               width="40"
@@ -24,7 +24,7 @@
               class="rounded-circle">
           </a>
           <div class="mr-16pt">
-            <a href="teacher-profile.html"
+            <a href="#"
               class="card-title">{{$blog->user->first_name.' '.$blog->user->last_name}}</a>
             <div class="d-flex align-items-center">
               <small class="text-50 mr-2">{{ $blog->created_at->diffForHumans() }}</small>
@@ -88,12 +88,12 @@
           </span>
           <div class="media-body">
             <a class="card-title m-0"
-              href="teacher-profile.html">{{$blog->user->first_name.' '.$blog->user->last_name}}</a>
+              href="#">{{$blog->user->first_name.' '.$blog->user->last_name}}</a>
             <p class="text-50 lh-1 mb-0">{{$blog->user->role}}</p>
           </div>
         </div>
 
-        <a href="teacher-profile.html"
+        <a href="#"
           class="btn btn-white mb-24pt">Follow</a>
       </div>
 
@@ -120,14 +120,14 @@
           </div>
           <div class="media ml-12pt">
             <div class="media-left mr-12pt">
-              <a href="student-profile.html"
+              <a href="#"
                 class="avatar avatar-sm">
                 <!-- <img src="public/images/people/110/guy-.jpg" width="40" alt="avatar" class="rounded-circle"> -->
                 <span class="avatar-title rounded-circle">UK</span>
               </a>
             </div>
             <div class="media-body media-middle">
-              <a href="student-profile.html"
+              <a href="#"
                 class="card-title">Umberto Kass</a>
               <div class="rating mt-4pt">
                 <span class="rating__item"><span class="material-icons">star</span></span>
@@ -150,14 +150,14 @@
           </div>
           <div class="media ml-12pt">
             <div class="media-left mr-12pt">
-              <a href="student-profile.html"
+              <a href="#"
                 class="avatar avatar-sm">
                 <!-- <img src="public/images/people/110/guy-.jpg" width="40" alt="avatar" class="rounded-circle"> -->
                 <span class="avatar-title rounded-circle">UK</span>
               </a>
             </div>
             <div class="media-body media-middle">
-              <a href="student-profile.html"
+              <a href="#"
                 class="card-title">Umberto Kass</a>
               <div class="rating mt-4pt">
                 <span class="rating__item"><span class="material-icons">star</span></span>
@@ -180,14 +180,14 @@
           </div>
           <div class="media ml-12pt">
             <div class="media-left mr-12pt">
-              <a href="student-profile.html"
+              <a href="#"
                 class="avatar avatar-sm">
                 <!-- <img src="public/images/people/110/guy-.jpg" width="40" alt="avatar" class="rounded-circle"> -->
                 <span class="avatar-title rounded-circle">UK</span>
               </a>
             </div>
             <div class="media-body media-middle">
-              <a href="student-profile.html"
+              <a href="#"
                 class="card-title">Umberto Kass</a>
               <div class="rating mt-4pt">
                 <span class="rating__item"><span class="material-icons">star</span></span>

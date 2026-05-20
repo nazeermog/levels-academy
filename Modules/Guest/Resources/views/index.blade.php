@@ -17,7 +17,7 @@
       <h1 class="text-white text-shadow">Learn to Code</h1>
       <p class="lead measure-hero-lead mx-auto text-white text-shadow mb-48pt">Business, Technology and Creative Skills taught by industry experts. Explore a wide range of skills with our professional tutorials.</p>
 
-      <a href="courses.html"
+      <a href="#"
         class="btn btn-lg btn-white btn--raised mb-16pt">Browse Courses</a>
 
       <p class="mb-0"><a href="{{ route('login') }}"
@@ -399,14 +399,14 @@
             </div>
             <div class="media ml-12pt">
               <div class="media-left mr-12pt">
-                <a href="student-profile.html"
+                <a href="#"
                   class="avatar avatar-sm">
                   <!-- <img src="../../public/images/people/110/guy-.jpg" width="40" alt="avatar" class="rounded-circle"> -->
                   <span class="avatar-title rounded-circle">UK</span>
                 </a>
               </div>
               <div class="media-body media-middle">
-                <a href="student-profile.html"
+                <a href="#"
                   class="card-title">Umberto Kass</a>
                 <div class="rating mt-4pt">
                   <span class="rating__item"><span class="material-icons">star</span></span>
@@ -429,14 +429,14 @@
             </div>
             <div class="media ml-12pt">
               <div class="media-left mr-12pt">
-                <a href="student-profile.html"
+                <a href="#"
                   class="avatar avatar-sm">
                   <!-- <img src="../../public/images/people/110/guy-.jpg" width="40" alt="avatar" class="rounded-circle"> -->
                   <span class="avatar-title rounded-circle">UK</span>
                 </a>
               </div>
               <div class="media-body media-middle">
-                <a href="student-profile.html"
+                <a href="#"
                   class="card-title">Umberto Kass</a>
                 <div class="rating mt-4pt">
                   <span class="rating__item"><span class="material-icons">star</span></span>
@@ -459,14 +459,14 @@
             </div>
             <div class="media ml-12pt">
               <div class="media-left mr-12pt">
-                <a href="student-profile.html"
+                <a href="#"
                   class="avatar avatar-sm">
                   <!-- <img src="../../public/images/people/110/guy-.jpg" width="40" alt="avatar" class="rounded-circle"> -->
                   <span class="avatar-title rounded-circle">UK</span>
                 </a>
               </div>
               <div class="media-body media-middle">
-                <a href="student-profile.html"
+                <a href="#"
                   class="card-title">Umberto Kass</a>
                 <div class="rating mt-4pt">
                   <span class="rating__item"><span class="material-icons">star</span></span>

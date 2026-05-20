@@ -76,7 +76,7 @@
                 </button>
 
                 <!-- Navbar Brand -->
-                <a href="index.html"
+                <a href="#"
                     class="navbar-brand mr-16pt d-lg-none">
                     <!-- <img class="navbar-brand-icon" src="../../public/images/logo/white-100@2x.png" width="30" alt="Luma"> -->
 
@@ -102,27 +102,27 @@
                             data-toggle="dropdown"
                             data-caret="false">Courses</a>
                         <div class="dropdown-menu">
-                            <a href="courses.html"
+                            <a href="#"
                                 class="dropdown-item">Browse Courses</a>
-                            <a href="student-course.html"
+                            <a href="#"
                                 class="dropdown-item">Preview Course</a>
-                            <a href="student-lesson.html"
+                            <a href="#"
                                 class="dropdown-item">Preview Lesson</a>
-                            <a href="student-take-course.html"
+                            <a href="#"
                                 class="dropdown-item"><span class="mr-16pt">Take Course</span> <span class="badge badge-notifications badge-accent text-uppercase ml-auto">Pro</span></a>
-                            <a href="student-take-lesson.html"
+                            <a href="#"
                                 class="dropdown-item">Take Lesson</a>
-                            <a href="student-take-quiz.html"
+                            <a href="#"
                                 class="dropdown-item">Take Quiz</a>
-                            <a href="student-quiz-result-details.html"
+                            <a href="#"
                                 class="dropdown-item">Quiz Result</a>
-                            <a href="student-dashboard.html"
+                            <a href="#"
                                 class="dropdown-item">Student Dashboard</a>
-                            <a href="student-my-courses.html"
+                            <a href="#"
                                 class="dropdown-item">My Courses</a>
-                            <a href="student-quiz-results.html"
+                            <a href="#"
                                 class="dropdown-item">My Quizzes</a>
-                            <a href="help-center.html"
+                            <a href="#"
                                 class="dropdown-item">Help Center</a>
                         </div>
                     </li>
@@ -132,20 +132,20 @@
                             data-toggle="dropdown"
                             data-caret="false">Paths</a>
                         <div class="dropdown-menu">
-                            <a href="paths.html"
+                            <a href="#"
                                 class="dropdown-item">Browse Paths</a>
-                            <a href="student-path.html"
+                            <a href="#"
                                 class="dropdown-item">Path Details</a>
-                            <a href="student-path-assessment.html"
+                            <a href="#"
                                 class="dropdown-item">Skill Assessment</a>
-                            <a href="student-path-assessment-result.html"
+                            <a href="#"
                                 class="dropdown-item">Skill Result</a>
-                            <a href="student-paths.html"
+                            <a href="#"
                                 class="dropdown-item">My Paths</a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="pricing.html"
+                        <a href="#"
                             class="nav-link">Pricing</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -154,19 +154,19 @@
                             data-toggle="dropdown"
                             data-caret="false">Teachers</a>
                         <div class="dropdown-menu">
-                            <a href="instructor-dashboard.html"
+                            <a href="#"
                                 class="dropdown-item">Instructor Dashboard</a>
-                            <a href="instructor-courses.html"
+                            <a href="#"
                                 class="dropdown-item">Manage Courses</a>
-                            <a href="instructor-quizzes.html"
+                            <a href="#"
                                 class="dropdown-item">Manage Quizzes</a>
-                            <a href="instructor-earnings.html"
+                            <a href="#"
                                 class="dropdown-item">Earnings</a>
-                            <a href="instructor-statement.html"
+                            <a href="#"
                                 class="dropdown-item">Statement</a>
-                            <a href="instructor-edit-course.html"
+                            <a href="#"
                                 class="dropdown-item">Edit Course</a>
-                            <a href="instructor-edit-quiz.html"
+                            <a href="#"
                                 class="dropdown-item">Edit Quiz</a>
                         </div>
                     </li>
@@ -182,25 +182,25 @@
                             <i class="material-icons">people_outline</i>
                         </a>
                         <div class="dropdown-menu">
-                            <a href="teachers.html"
+                            <a href="#"
                                 class="dropdown-item">Browse Teachers</a>
-                            <a href="student-profile.html"
+                            <a href="#"
                                 class="dropdown-item">Student Profile</a>
-                            <a href="teacher-profile.html"
+                            <a href="#"
                                 class="dropdown-item">Instructor Profile</a>
-                            <a href="blog.html"
+                            <a href="#"
                                 class="dropdown-item">Blog</a>
-                            <a href="blog-post.html"
+                            <a href="#"
                                 class="dropdown-item">Blog Post</a>
-                            <a href="faq.html"
+                            <a href="#"
                                 class="dropdown-item">FAQ</a>
-                            <a href="help-center.html"
+                            <a href="#"
                                 class="dropdown-item">Help Center</a>
-                            <a href="discussions.html"
+                            <a href="#"
                                 class="dropdown-item">Discussions</a>
-                            <a href="discussion.html"
+                            <a href="#"
                                 class="dropdown-item">Discussion Details</a>
-                            <a href="discussions-ask.html"
+                            <a href="#"
                                 class="dropdown-item">Ask Question</a>
                         </div>
                     </li>

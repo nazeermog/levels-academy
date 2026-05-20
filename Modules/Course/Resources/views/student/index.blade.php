@@ -34,7 +34,7 @@
 
       <div class="row" role="tablist">
         <div class="col-auto">
-          <a href="student-paths.html" class="btn btn-outline-secondary">
+          <a href="#" class="btn btn-outline-secondary">
             @if(session('locale', config('app.locale')) == 'en')
             Educational path
             @endif
@@ -72,7 +72,7 @@
               </div>
             </div>
             <div class="d-flex align-items-center justify-content-center">
-              <a href="student-take-lesson.html" class="btn btn-white mr-8pt">
+              <a href="#" class="btn btn-white mr-8pt">
                 @if(session('locale', config('app.locale')) == 'en')
                 Resumption
                 @endif
@@ -83,7 +83,7 @@
                 Wiederaufnahme
                 @endif
               </a>
-              <a href="student-take-course.html" class="btn btn-outline-white ml-0">
+              <a href="#" class="btn btn-outline-white ml-0">
                 @if(session('locale', config('app.locale')) == 'en')
                 Start from the beginning
                 @endif
@@ -101,11 +101,11 @@
 
       <div class="d-flex flex-wrap align-items-start">
         <div class="d-flex align-items-center mr-24pt">
-          <a href="student-take-course.html" class="mr-12pt">
+          <a href="#" class="mr-12pt">
             <img src="{{asset('/images/paths/woderhafen.jpeg')}}" width="40" alt="Angular" class="rounded">
           </a>
           <div class="flex">
-            <a class="card-title" href="student-take-course.html">Wunderhafen</a>
+            <a class="card-title" href="#">Wunderhafen</a>
             <p class="lh-1 mb-0">
               <span class="text-50 small">Elijah Murray</span>
             </p>
@@ -169,7 +169,7 @@
                   <a href="{{ route('student.courses.show', ['CourseId' => $course->id]) }}" class="card-title">{{$course->title}}</a>
                   <small class="text-50 font-weight-bold mb-4pt">{{ $instructor[$course->id]->first_name.' '.$instructor[$course->id]->last_name}}</small>
                 </div>
-                <a href="student-take-course.html" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+                <a href="#" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
               </div>
               <div class="d-flex">
 

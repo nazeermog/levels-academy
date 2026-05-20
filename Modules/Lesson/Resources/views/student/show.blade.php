@@ -15,10 +15,10 @@
   <div class="container page__container">
     <div class="media flex-nowrap">
       <div class="media-left mr-16pt">
-        <a href="student-course.html"><img src="{{asset($course->photo)}}" width="80" alt="{{$course->title}}" class="rounded"></a>
+        <a href="#"><img src="{{asset($course->photo)}}" width="80" alt="{{$course->title}}" class="rounded"></a>
       </div>
       <div class="media-body">
-        <a href="student-course.html" class="card-title text-body mb-0">{{$course->title}}</a>
+        <a href="#" class="card-title text-body mb-0">{{$course->title}}</a>
         <p class="lh-1 d-flex align-items-center mb-0">
           <span class="text-50 small font-weight-bold mr-8pt">{{ $instructor->first_name.' '.$instructor->last_name}}</span>
           <span class="text-50 small">{{$instructor->spec}}</span>
@@ -127,7 +127,7 @@
             <img src="{{asset($instructor->avatar)}}" width="40" alt="avatar" class="rounded-circle">
           </span>
           <div class="media-body">
-            <a class="card-title m-0" href="teacher-profile.html">{{ $instructor->first_name.' '.$instructor->last_name}}</a>
+            <a class="card-title m-0" href="#">{{ $instructor->first_name.' '.$instructor->last_name}}</a>
             <p class="text-50 lh-1 mb-0">Instructor</p>
           </div>
         </div>

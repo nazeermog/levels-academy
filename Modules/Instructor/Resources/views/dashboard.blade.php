@@ -9,7 +9,7 @@
                     <h2 class="mb-0">Dashboard</h2>
 
                     <ol class="breadcrumb p-0 m-0">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
 
                         <li class="breadcrumb-item active">
 
@@ -25,7 +25,7 @@
             <div class="row"
                  role="tablist">
                 <div class="col-auto">
-                    <a href="instructor-earnings.html"
+                    <a href="#"
                        class="btn btn-outline-secondary">Earnings</a>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                             <tr>
                                 <td>
                                     <div class="d-flex flex-nowrap align-items-center">
-                                        <a href="instructor-edit-course.html"
+                                        <a href="#"
                                            class="avatar avatar-4by3 overlay overlay--primary mr-12pt">
                                             <img src="../../public/images/paths/angular_routing_200x168.png"
                                                  alt="course"
@@ -135,10 +135,10 @@
                                         </a>
                                         <div class="flex">
                                             <a class="card-title js-lists-values-course"
-                                               href="instructor-edit-course.html">Angular Routing In-Depth</a>
+                                               href="#">Angular Routing In-Depth</a>
                                             <small class="text-muted mr-1">
                                                 Invoice
-                                                <a href="invoice.html"
+                                                <a href="#"
                                                    style="color: inherit;"
                                                    class="js-lists-values-document">#8734</a> -
                                                 &dollar;<span class="js-lists-values-amount">89</span> USD
@@ -154,7 +154,7 @@
                             <tr>
                                 <td>
                                     <div class="d-flex flex-nowrap align-items-center">
-                                        <a href="instructor-edit-course.html"
+                                        <a href="#"
                                            class="avatar avatar-4by3 overlay overlay--primary mr-12pt">
                                             <img src="../../public/images/paths/angular_testing_200x168.png"
                                                  alt="course"
@@ -163,10 +163,10 @@
                                         </a>
                                         <div class="flex">
                                             <a class="card-title js-lists-values-course"
-                                               href="instructor-edit-course.html">Angular Unit Testing</a>
+                                               href="#">Angular Unit Testing</a>
                                             <small class="text-muted mr-1">
                                                 Invoice
-                                                <a href="invoice.html"
+                                                <a href="#"
                                                    style="color: inherit;"
                                                    class="js-lists-values-document">#8735</a> -
                                                 &dollar;<span class="js-lists-values-amount">89</span> USD
@@ -182,7 +182,7 @@
                             <tr>
                                 <td>
                                     <div class="d-flex flex-nowrap align-items-center">
-                                        <a href="instructor-edit-course.html"
+                                        <a href="#"
                                            class="avatar avatar-4by3 overlay overlay--primary mr-12pt">
                                             <img src="../../public/images/paths/typescript_200x168.png"
                                                  alt="course"
@@ -191,10 +191,10 @@
                                         </a>
                                         <div class="flex">
                                             <a class="card-title js-lists-values-course"
-                                               href="instructor-edit-course.html">Introduction to TypeScript</a>
+                                               href="#">Introduction to TypeScript</a>
                                             <small class="text-muted mr-1">
                                                 Invoice
-                                                <a href="invoice.html"
+                                                <a href="#"
                                                    style="color: inherit;"
                                                    class="js-lists-values-document">#8736</a> -
                                                 &dollar;<span class="js-lists-values-amount">89</span> USD
@@ -210,7 +210,7 @@
                             <tr>
                                 <td>
                                     <div class="d-flex flex-nowrap align-items-center">
-                                        <a href="instructor-edit-course.html"
+                                        <a href="#"
                                            class="avatar avatar-4by3 overlay overlay--primary mr-12pt">
                                             <img src="../../public/images/paths/angular_200x168.png"
                                                  alt="course"
@@ -219,10 +219,10 @@
                                         </a>
                                         <div class="flex">
                                             <a class="card-title js-lists-values-course"
-                                               href="instructor-edit-course.html">Learn Angular Fundamentals</a>
+                                               href="#">Learn Angular Fundamentals</a>
                                             <small class="text-muted mr-1">
                                                 Invoice
-                                                <a href="invoice.html"
+                                                <a href="#"
                                                    style="color: inherit;"
                                                    class="js-lists-values-document">#8737</a> -
                                                 &dollar;<span class="js-lists-values-amount">89</span> USD
@@ -258,11 +258,11 @@
                             </div>
                             <div class="media-body d-flex flex-column">
                                 <div class="d-flex align-items-center">
-                                    <a href="profile.html"
+                                    <a href="#"
                                        class="card-title">Laza Bogdan</a>
                                     <small class="ml-auto text-muted">27 min ago</small><br>
                                 </div>
-                                <span class="text-muted">on <a href="instructor-edit-course.html"
+                                <span class="text-muted">on <a href="#"
                                                                class="text-50"
                                                                style="text-decoration: underline;">Data Visualization With Chart.js</a></span>
                                 <p class="mt-1 mb-0 text-70">How can I load Charts on a page?</p>
@@ -278,7 +278,7 @@
                             </div>
                             <div class="media-body">
                                 <div class="d-flex align-items-center">
-                                    <a href="profile.html"
+                                    <a href="#"
                                        class="card-title">FrontendMatter</a>
                                     <small class="ml-auto text-muted">just now</small>
                                 </div>

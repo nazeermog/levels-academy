@@ -15,7 +15,7 @@
 
       <!-- Navbar Brand -->
 
-      <a href="index.html" class="navbar-brand mr-16pt">
+      <a href="#" class="navbar-brand mr-16pt">
 
         <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
 

@@ -74,59 +74,76 @@
 <div class="mdk-drawer js-mdk-drawer" id="default-drawer" data-position="left">
   <div class="mdk-drawer__content top-navbar">
     <div class="sidebar sidebar-dark sidebar-left sidebar-p-t" data-perfect-scrollbar dir="rtl">
-      <!-- Sidebar Content -->
+
       <div class="sidebar-heading font-droid">
         الطالب
       </div>
+
       <ul class="sidebar-menu">
-        <!-- <li class="sidebar-menu-item">
+
+        <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.dashboard') }}">
             <span class="material-icons sidebar-menu-icon">home</span>
             <span class="sidebar-menu-text">لوحة التحكم</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{ route('student.inrollment.index') }}">
+          <a class="sidebar-menu-button" href="{{ route('student.courses.index') }}">
             <span class="material-icons sidebar-menu-icon">school</span>
-            <span class="sidebar-menu-text">الدورات المشتراة</span>
+            <span class="sidebar-menu-text">الدورات</span>
           </a>
         </li>
+
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.inrollment.index') }}">
+            <span class="material-icons sidebar-menu-icon">assignment_ind</span>
+            <span class="sidebar-menu-text">التسجيلات</span>
+          </a>
+        </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.paths.index') }}">
             <span class="material-icons sidebar-menu-icon">timeline</span>
             <span class="sidebar-menu-text">مسارات التعليم</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.practice.index') }}">
             <span class="material-icons sidebar-menu-icon">assignment</span>
             <span class="sidebar-menu-text">تمارين</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.exercise') }}">
             <span class="material-icons sidebar-menu-icon">menu_book</span>
             <span class="sidebar-menu-text">تمارين الكتاب</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise') }}">
             <span class="material-icons sidebar-menu-icon">library_books</span>
             <span class="sidebar-menu-text">جميع تمارين الكتاب</span>
           </a>
-        </li>-->
+        </li>
+
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.books.qr') }}">
+          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.pages.qr') }}">
             <span class="material-icons sidebar-menu-icon">import_contacts</span>
-            <span class="sidebar-menu-text">جميع تمارين الكتاب</span>
+            <span class="sidebar-menu-text">جميع تمارين الكتاب بالكود</span>
           </a>
         </li>
-        <!-- <li class="sidebar-menu-item">
+
+        <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.products') }}">
             <span class="material-icons sidebar-menu-icon">folder</span>
             <span class="sidebar-menu-text">المنتجات</span>
           </a>
-        </li>  -->
+        </li>
+
       </ul>
     </div>
   </div>
@@ -136,59 +153,76 @@
 <div class="mdk-drawer js-mdk-drawer" id="default-drawer" data-position="left">
   <div class="mdk-drawer__content top-navbar">
     <div class="sidebar sidebar-dark sidebar-left sidebar-p-t" data-perfect-scrollbar dir="ltr">
-      <!-- Sidebar Content -->
+
       <div class="sidebar-heading font-droid">
         Student
       </div>
+
       <ul class="sidebar-menu">
-        <!-- <li class="sidebar-menu-item">
+
+        <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.dashboard') }}">
             <span class="material-icons sidebar-menu-icon">home</span>
             <span class="sidebar-menu-text">Dashboard</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{ route('student.inrollment.index') }}">
+          <a class="sidebar-menu-button" href="{{ route('student.courses.index') }}">
             <span class="material-icons sidebar-menu-icon">school</span>
-            <span class="sidebar-menu-text">Gekaufte Kurse</span>
+            <span class="sidebar-menu-text">Kurse</span>
           </a>
         </li>
+
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.inrollment.index') }}">
+            <span class="material-icons sidebar-menu-icon">assignment_ind</span>
+            <span class="sidebar-menu-text">Einschreibungen</span>
+          </a>
+        </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.paths.index') }}">
             <span class="material-icons sidebar-menu-icon">timeline</span>
             <span class="sidebar-menu-text">Bildungswege</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.practice.index') }}">
             <span class="material-icons sidebar-menu-icon">assignment</span>
             <span class="sidebar-menu-text">Übungen</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.exercise') }}">
             <span class="material-icons sidebar-menu-icon">menu_book</span>
             <span class="sidebar-menu-text">Buch Übungen</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise') }}">
             <span class="material-icons sidebar-menu-icon">library_books</span>
             <span class="sidebar-menu-text">Alle Buch Übungen</span>
           </a>
-        </li> -->
+        </li>
+
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.books.qr') }}">
+          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.pages.qr') }}">
             <span class="material-icons sidebar-menu-icon">import_contacts</span>
-            <span class="sidebar-menu-text">Alle Buch Übungen</span>
+            <span class="sidebar-menu-text">Alle Buch Übungen per QR</span>
           </a>
         </li>
-        <!-- <li class="sidebar-menu-item">
+
+        <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.products') }}">
             <span class="material-icons sidebar-menu-icon">folder</span>
             <span class="sidebar-menu-text">Produkte</span>
           </a>
-        </li> -->
+        </li>
+
       </ul>
     </div>
   </div>
@@ -198,59 +232,76 @@
 <div class="mdk-drawer js-mdk-drawer" id="default-drawer" data-position="left">
   <div class="mdk-drawer__content top-navbar">
     <div class="sidebar sidebar-dark sidebar-left sidebar-p-t" data-perfect-scrollbar dir="ltr">
-      <!-- Sidebar Content -->
+
       <div class="sidebar-heading font-droid">
         Student
       </div>
+
       <ul class="sidebar-menu">
-        <!-- <li class="sidebar-menu-item">
+
+        <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.dashboard') }}">
             <span class="material-icons sidebar-menu-icon">home</span>
             <span class="sidebar-menu-text">Dashboard</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{ route('student.inrollment.index') }}">
+          <a class="sidebar-menu-button" href="{{ route('student.courses.index') }}">
             <span class="material-icons sidebar-menu-icon">school</span>
-            <span class="sidebar-menu-text">Bower Courses</span>
+            <span class="sidebar-menu-text">Courses</span>
           </a>
         </li>
+
+        <li class="sidebar-menu-item">
+          <a class="sidebar-menu-button" href="{{ route('student.inrollment.index') }}">
+            <span class="material-icons sidebar-menu-icon">assignment_ind</span>
+            <span class="sidebar-menu-text">Enrollments</span>
+          </a>
+        </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.paths.index') }}">
             <span class="material-icons sidebar-menu-icon">timeline</span>
             <span class="sidebar-menu-text">Education Paths</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.practice.index') }}">
             <span class="material-icons sidebar-menu-icon">assignment</span>
             <span class="sidebar-menu-text">Exercises</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.exercise') }}">
             <span class="material-icons sidebar-menu-icon">menu_book</span>
             <span class="sidebar-menu-text">Book Exercises</span>
           </a>
         </li>
+
         <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise') }}">
             <span class="material-icons sidebar-menu-icon">library_books</span>
             <span class="sidebar-menu-text">All Book Exercises</span>
           </a>
-        </li> -->
+        </li>
+
         <li class="sidebar-menu-item">
-          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.books.qr') }}">
+          <a class="sidebar-menu-button" href="{{ route('student.index.Bookexercise.pages.qr') }}">
             <span class="material-icons sidebar-menu-icon">import_contacts</span>
-            <span class="sidebar-menu-text">All Book Exercises</span>
+            <span class="sidebar-menu-text">All Book Exercises By QR</span>
           </a>
         </li>
-        <!-- <li class="sidebar-menu-item">
+
+        <li class="sidebar-menu-item">
           <a class="sidebar-menu-button" href="{{ route('student.index.products') }}">
             <span class="material-icons sidebar-menu-icon">folder</span>
             <span class="sidebar-menu-text">Products</span>
           </a>
-        </li> -->
+        </li>
+
       </ul>
     </div>
   </div>

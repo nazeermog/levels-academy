@@ -88,6 +88,9 @@ class AdminLessonRepository
         $lesson->save();
     }
 
+
+
+    
     public static function TotalLessonsHours($courses)
     {
 

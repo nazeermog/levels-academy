@@ -9,7 +9,7 @@
                 <h2 class="mb-0">Dashboard</h2>
 
                 <ol class="breadcrumb p-0 m-0">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
 
                     <li class="breadcrumb-item active">
 
@@ -25,7 +25,7 @@
         <div class="row"
             role="tablist">
             <div class="col-auto">
-                <a href="student-my-courses.html"
+                <a href="#"
                     class="btn btn-outline-secondary">My Courses</a>
             </div>
         </div>
@@ -257,7 +257,7 @@
                                     </div>
                                 </div>
 
-                                <a href="student-path.html"
+                                <a href="#"
                                    class="ml-4pt btn btn-sm btn-link text-secondary">Resume</a>
 
                             </div>
@@ -295,9 +295,9 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-center">
-                                <a href="student-path.html"
+                                <a href="#"
                                    class="btn btn-primary mr-8pt">Resume</a>
-                                <a href="student-path.html"
+                                <a href="#"
                                    class="btn btn-outline-secondary ml-0">Start over</a>
                             </div>
                         </div>
@@ -346,7 +346,7 @@
                                     </div>
                                 </div>
 
-                                <a href="student-path.html"
+                                <a href="#"
                                    class="ml-4pt btn btn-sm btn-link text-secondary border-1 border-secondary">Resume</a>
 
                             </div>
@@ -384,9 +384,9 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-center">
-                                <a href="student-path.html"
+                                <a href="#"
                                    class="btn btn-primary mr-8pt">Resume</a>
-                                <a href="student-path.html"
+                                <a href="#"
                                    class="btn btn-outline-secondary ml-0">Start over</a>
                             </div>
                         </div>
@@ -435,7 +435,7 @@
                                     </div>
                                 </div>
 
-                                <a href="student-path.html"
+                                <a href="#"
                                    class="ml-4pt btn btn-sm btn-link text-secondary">Resume</a>
 
                             </div>
@@ -473,9 +473,9 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-center">
-                                <a href="student-path.html"
+                                <a href="#"
                                    class="btn btn-primary mr-8pt">Resume</a>
-                                <a href="student-path.html"
+                                <a href="#"
                                    class="btn btn-outline-secondary ml-0">Start over</a>
                             </div>
                         </div>
@@ -523,7 +523,7 @@
                                         data-toggle="popover"
                                         data-trigger="click">
 
-                                        <a href="student-take-course.html"
+                                        <a href="#"
                                            class="js-image"
                                            data-position="">
                                             <img src="../../public/images/paths/angular_430x168.png"
@@ -546,12 +546,12 @@
                                                 <div class="d-flex">
                                                     <div class="flex">
                                                         <a class="card-title"
-                                                           href="student-take-course.html">Learn Angular
+                                                           href="#">Learn Angular
                                                             fundamentals</a>
                                                         <small class="text-50 font-weight-bold mb-4pt">Elijah
                                                             Murray</small>
                                                     </div>
-                                                    <a href="student-take-course.html"
+                                                    <a href="#"
                                                        data-toggle="tooltip"
                                                        data-title="Add Favorite"
                                                        data-placement="top"
@@ -637,9 +637,9 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-center">
-                                                <a href="student-take-lesson.html"
+                                                <a href="#"
                                                    class="btn btn-primary mr-8pt">Resume</a>
-                                                <a href="student-take-course.html"
+                                                <a href="#"
                                                    class="btn btn-outline-secondary ml-0">Start over</a>
                                             </div>
                                         </div>
@@ -668,7 +668,7 @@
                                         data-toggle="popover"
                                         data-trigger="click">
 
-                                        <a href="student-take-course.html"
+                                        <a href="#"
                                            class="js-image"
                                            data-position="">
                                             <img src="../../public/images/paths/swift_430x168.png"
@@ -688,12 +688,12 @@
                                                 <div class="d-flex">
                                                     <div class="flex">
                                                         <a class="card-title"
-                                                           href="student-take-course.html">Build an iOS Application in
+                                                           href="#">Build an iOS Application in
                                                             Swift</a>
                                                         <small class="text-50 font-weight-bold mb-4pt">Elijah
                                                             Murray</small>
                                                     </div>
-                                                    <a href="student-take-course.html"
+                                                    <a href="#"
                                                        data-toggle="tooltip"
                                                        data-title="Remove Favorite"
                                                        data-placement="top"
@@ -779,9 +779,9 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-center">
-                                                <a href="student-take-lesson.html"
+                                                <a href="#"
                                                    class="btn btn-primary mr-8pt">Resume</a>
-                                                <a href="student-take-course.html"
+                                                <a href="#"
                                                    class="btn btn-outline-secondary ml-0">Start over</a>
                                             </div>
                                         </div>
@@ -810,7 +810,7 @@
                                         data-toggle="popover"
                                         data-trigger="click">
 
-                                        <a href="student-take-course.html"
+                                        <a href="#"
                                            class="js-image"
                                            data-position="">
                                             <img src="../../public/images/paths/wordpress_430x168.png"
@@ -830,11 +830,11 @@
                                                 <div class="d-flex">
                                                     <div class="flex">
                                                         <a class="card-title"
-                                                           href="student-take-course.html">Build a WordPress Website</a>
+                                                           href="#">Build a WordPress Website</a>
                                                         <small class="text-50 font-weight-bold mb-4pt">Elijah
                                                             Murray</small>
                                                     </div>
-                                                    <a href="student-take-course.html"
+                                                    <a href="#"
                                                        data-toggle="tooltip"
                                                        data-title="Add Favorite"
                                                        data-placement="top"
@@ -920,9 +920,9 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-center">
-                                                <a href="student-take-lesson.html"
+                                                <a href="#"
                                                    class="btn btn-primary mr-8pt">Resume</a>
-                                                <a href="student-take-course.html"
+                                                <a href="#"
                                                    class="btn btn-outline-secondary ml-0">Start over</a>
                                             </div>
                                         </div>
@@ -951,7 +951,7 @@
                                         data-toggle="popover"
                                         data-trigger="click">
 
-                                        <a href="student-take-course.html"
+                                        <a href="#"
                                            class="js-image"
                                            data-position="left">
                                             <img src="../../public/images/paths/react_430x168.png"
@@ -971,12 +971,12 @@
                                                 <div class="d-flex">
                                                     <div class="flex">
                                                         <a class="card-title"
-                                                           href="student-take-course.html">Become a React Native
+                                                           href="#">Become a React Native
                                                             Developer</a>
                                                         <small class="text-50 font-weight-bold mb-4pt">Elijah
                                                             Murray</small>
                                                     </div>
-                                                    <a href="student-take-course.html"
+                                                    <a href="#"
                                                        data-toggle="tooltip"
                                                        data-title="Add Favorite"
                                                        data-placement="top"
@@ -1062,9 +1062,9 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-center">
-                                                <a href="student-take-lesson.html"
+                                                <a href="#"
                                                    class="btn btn-primary mr-8pt">Resume</a>
-                                                <a href="student-take-course.html"
+                                                <a href="#"
                                                    class="btn btn-outline-secondary ml-0">Start over</a>
                                             </div>
                                         </div>
@@ -1118,11 +1118,11 @@
                                 </div>
                             </div>
                             <div class="col mb-8pt mb-md-0">
-                                <p class="mb-8pt"><a href="discussion.html"
+                                <p class="mb-8pt"><a href="#"
                                                      class="text-body"><strong>Using Angular HttpClientModule instead of
                                             HttpModule</strong></a></p>
 
-                                <a href="discussion.html"
+                                <a href="#"
                                    class="chip chip-outline-secondary">Angular fundamentals</a>
 
                             </div>
@@ -1151,7 +1151,7 @@
                                 </div>
                             </div>
                             <div class="col mb-8pt mb-md-0">
-                                <p class="mb-0"><a href="discussion.html"
+                                <p class="mb-0"><a href="#"
                                                    class="text-body"><strong>Why am I getting an error when trying to
                                             install angular/http@2.4.2</strong></a></p>
 
@@ -1215,7 +1215,7 @@
 
                     <div class="card card-group-row__card card-sm">
                         <div class="card-body d-flex align-items-center">
-                            <a href="student-take-quiz.html"
+                            <a href="#"
                                class="avatar overlay overlay--primary avatar-4by3 mr-12pt">
                                 <img src="../../public/images/paths/typescript_200x168.png"
                                      alt="Introduction to TypeScript"
@@ -1224,7 +1224,7 @@
                             </a>
                             <div class="flex mr-12pt">
                                 <a class="card-title"
-                                   href="student-take-quiz.html">Introduction to TypeScript</a>
+                                   href="#">Introduction to TypeScript</a>
                                 <div class="card-subtitle text-50">3 days ago</div>
                             </div>
                             <div class="d-flex flex-column align-items-center">
@@ -1246,7 +1246,7 @@
                         <div class="card-footer">
                             <div class="d-flex align-items-center">
                                 <div class="flex mr-2">
-                                    <a href="student-take-quiz.html"
+                                    <a href="#"
                                        class="btn btn-light btn-sm">
 
                                         <i class="material-icons icon--left">refresh</i> Continue
@@ -1260,12 +1260,12 @@
                                        data-caret="false"
                                        class="text-muted"><i class="material-icons">more_horiz</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="student-take-quiz.html"
+                                        <a href="#"
                                            class="dropdown-item">Continue</a>
-                                        <a href="student-quiz-result-details.html"
+                                        <a href="#"
                                            class="dropdown-item">View Result</a>
                                         <div class="dropdown-divider"></div>
-                                        <a href="student-take-quiz.html"
+                                        <a href="#"
                                            class="dropdown-item text-danger">Reset Quiz</a>
                                     </div>
                                 </div>
@@ -1280,7 +1280,7 @@
 
                     <div class="card card-group-row__card card-sm">
                         <div class="card-body d-flex align-items-center">
-                            <a href="student-take-quiz.html"
+                            <a href="#"
                                class="avatar overlay overlay--primary avatar-4by3 mr-12pt">
                                 <img src="../../public/images/paths/angular_200x168.png"
                                      alt="Angular Fundamentals"
@@ -1289,7 +1289,7 @@
                             </a>
                             <div class="flex mr-12pt">
                                 <a class="card-title"
-                                   href="student-take-quiz.html">Angular Fundamentals</a>
+                                   href="#">Angular Fundamentals</a>
                                 <div class="card-subtitle text-50">3 days ago</div>
                             </div>
                             <div class="d-flex flex-column align-items-center">
@@ -1301,7 +1301,7 @@
                         <div class="card-footer">
                             <div class="d-flex align-items-center">
                                 <div class="flex mr-2">
-                                    <a href="student-take-quiz.html"
+                                    <a href="#"
                                        class="btn btn-light btn-sm">
 
                                         <i class="material-icons icon--left">playlist_add_check</i> Reset
@@ -1316,12 +1316,12 @@
                                        data-caret="false"
                                        class="text-muted"><i class="material-icons">more_horiz</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="student-take-quiz.html"
+                                        <a href="#"
                                            class="dropdown-item">Continue</a>
-                                        <a href="student-quiz-result-details.html"
+                                        <a href="#"
                                            class="dropdown-item">View Result</a>
                                         <div class="dropdown-divider"></div>
-                                        <a href="student-take-quiz.html"
+                                        <a href="#"
                                            class="dropdown-item text-danger">Reset Quiz</a>
                                     </div>
                                 </div>

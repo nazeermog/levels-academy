@@ -7,19 +7,19 @@
                     <div class="container-fluid page__container">
                         <nav class="nav navbar-nav">
                             <div class="nav-item navbar-list__item">
-                                <a href="student-take-course.html"
+                                <a href="#"
                                    class="nav-link h-auto"><i class="material-icons icon--left">keyboard_backspace</i> Back to Course</a>
                             </div>
                             <div class="nav-item navbar-list__item">
                                 <div class="d-flex align-items-center flex-nowrap">
                                     <div class="mr-16pt">
-                                        <a href="student-take-course.html"><img src="../../public/images/paths/angular_64x64.png"
+                                        <a href="#"><img src="../../public/images/paths/angular_64x64.png"
                                                  width="40"
                                                  alt="Angular"
                                                  class="rounded"></a>
                                     </div>
                                     <div class="flex">
-                                        <a href="student-take-course.html"
+                                        <a href="#"
                                            class="card-title text-body mb-0">Angular Fundamentals</a>
                                         <p class="lh-1 d-flex align-items-center mb-0">
                                             <span class="text-50 small font-weight-bold mr-8pt">Elijah Murray</span>
@@ -38,7 +38,7 @@
                             <div class="container d-flex flex-column justify-content-center align-items-center">
                                 <p class="lead text-white-50 measure-lead-max mb-0">Submited on 02 Jan 2019</p>
                                 <h1 class="text-white mb-24pt">Your Score: 350</h1>
-                                <a href="student-take-quiz.html"
+                                <a href="#"
                                    class="btn btn-outline-white">Restart quiz</a>
                             </div>
                         </div>

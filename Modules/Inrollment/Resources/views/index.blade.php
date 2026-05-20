@@ -26,7 +26,7 @@
                       <small class="text-50 font-weight-bold mb-4pt">Instructor not found</small>
                     @endif
                   </div>
-                  <a href="student-take-course.html" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+                  <a href="#" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
                 </div>
                 <div class="d-flex">
                   <div class="rating rating-24">

@@ -572,7 +572,7 @@
         </a>
         <div class="flex">
           <p class="small text-muted m-0">{{Carbon\Carbon::parse($oneRating->created_at)->format('Y-m-d')}}</p>
-          <a href="student-profile.html" class="card-title">{{$oneRating->user_name}}</a>
+          <a href="#" class="card-title">{{$oneRating->user_name}}</a>
         </div>
       </div>
     </div>
@@ -632,7 +632,7 @@
 
             <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal " data-partial-height="44" data-toggle="popover" data-trigger="click">
 
-              <a href="student-course.html" class="js-image" data-position="">
+              <a href="#" class="js-image" data-position="">
                 <img src="{{asset('/images/paths/angular_430x168.png')}}" alt="course">
                 <span class="overlay__content align-items-start justify-content-start">
                   <span class="overlay__action card-body d-flex align-items-center">
@@ -648,10 +648,10 @@
                 <div class="card-body">
                   <div class="d-flex">
                     <div class="flex">
-                      <a class="card-title" href="student-course.html">Learn Angular fundamentals</a>
+                      <a class="card-title" href="#">Learn Angular fundamentals</a>
                       <small class="text-50 font-weight-bold mb-4pt">Elijah Murray</small>
                     </div>
-                    <a href="student-course.html" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+                    <a href="#" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
                   </div>
                   <div class="d-flex">
                     <div class="rating flex">
@@ -726,7 +726,7 @@
                   </div>
                 </div>
                 <div class="col text-right">
-                  <a href="student-course.html" class="btn btn-primary">Watch trailer</a>
+                  <a href="#" class="btn btn-primary">Watch trailer</a>
                 </div>
               </div>
 
@@ -738,7 +738,7 @@
 
             <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal " data-partial-height="44" data-toggle="popover" data-trigger="click">
 
-              <a href="student-course.html" class="js-image" data-position="">
+              <a href="#" class="js-image" data-position="">
                 <img src="{{asset('/images/paths/swift_430x168.png')}}" alt="course">
                 <span class="overlay__content align-items-start justify-content-start">
                   <span class="overlay__action card-body d-flex align-items-center">
@@ -752,10 +752,10 @@
                 <div class="card-body">
                   <div class="d-flex">
                     <div class="flex">
-                      <a class="card-title" href="student-course.html">Build an iOS Application in Swift</a>
+                      <a class="card-title" href="#">Build an iOS Application in Swift</a>
                       <small class="text-50 font-weight-bold mb-4pt">Elijah Murray</small>
                     </div>
-                    <a href="student-course.html" data-toggle="tooltip" data-title="Remove Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
+                    <a href="#" data-toggle="tooltip" data-title="Remove Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
                   </div>
                   <div class="d-flex">
                     <div class="rating flex">
@@ -830,7 +830,7 @@
                   </div>
                 </div>
                 <div class="col text-right">
-                  <a href="student-course.html" class="btn btn-primary">Watch trailer</a>
+                  <a href="#" class="btn btn-primary">Watch trailer</a>
                 </div>
               </div>
 
@@ -842,7 +842,7 @@
 
             <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal " data-partial-height="44" data-toggle="popover" data-trigger="click">
 
-              <a href="student-course.html" class="js-image" data-position="">
+              <a href="#" class="js-image" data-position="">
                 <img src="{{asset('/images/paths/wordpress_430x168.png')}}" alt="course">
                 <span class="overlay__content align-items-start justify-content-start">
                   <span class="overlay__action card-body d-flex align-items-center">
@@ -856,10 +856,10 @@
                 <div class="card-body">
                   <div class="d-flex">
                     <div class="flex">
-                      <a class="card-title" href="student-course.html">Build a WordPress Website</a>
+                      <a class="card-title" href="#">Build a WordPress Website</a>
                       <small class="text-50 font-weight-bold mb-4pt">Elijah Murray</small>
                     </div>
-                    <a href="student-course.html" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+                    <a href="#" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
                   </div>
                   <div class="d-flex">
                     <div class="rating flex">
@@ -934,7 +934,7 @@
                   </div>
                 </div>
                 <div class="col text-right">
-                  <a href="student-course.html" class="btn btn-primary">Watch trailer</a>
+                  <a href="#" class="btn btn-primary">Watch trailer</a>
                 </div>
               </div>
 
@@ -946,7 +946,7 @@
 
             <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary-dodger-blue js-overlay mdk-reveal js-mdk-reveal " data-partial-height="44" data-toggle="popover" data-trigger="click">
 
-              <a href="student-course.html" class="js-image" data-position="left">
+              <a href="#" class="js-image" data-position="left">
                 <img src="{{asset('/images/paths/react_430x168.png')}}" alt="course">
                 <span class="overlay__content align-items-start justify-content-start">
                   <span class="overlay__action card-body d-flex align-items-center">
@@ -960,10 +960,10 @@
                 <div class="card-body">
                   <div class="d-flex">
                     <div class="flex">
-                      <a class="card-title" href="student-course.html">Become a React Native Developer</a>
+                      <a class="card-title" href="#">Become a React Native Developer</a>
                       <small class="text-50 font-weight-bold mb-4pt">Elijah Murray</small>
                     </div>
-                    <a href="student-course.html" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
+                    <a href="#" data-toggle="tooltip" data-title="Add Favorite" data-placement="top" data-boundary="window" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite_border</a>
                   </div>
                   <div class="d-flex">
                     <div class="rating flex">
@@ -1038,7 +1038,7 @@
                   </div>
                 </div>
                 <div class="col text-right">
-                  <a href="student-course.html" class="btn btn-primary">Watch trailer</a>
+                  <a href="#" class="btn btn-primary">Watch trailer</a>
                 </div>
               </div>
 

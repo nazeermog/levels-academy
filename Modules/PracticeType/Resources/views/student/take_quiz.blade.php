@@ -22,7 +22,7 @@
         <div class="container page__container">
             <nav class="nav navbar-nav">
                 <div class="nav-item navbar-list__item">
-                    <a href="student-take-course.html"
+                    <a href="#"
                        class="nav-link h-auto"><i class="material-icons icon--left">keyboard_backspace</i>
                         العودة إلى الدرس
                     </a>
@@ -30,13 +30,13 @@
                 <div class="nav-item navbar-list__item">
                     <div class="d-flex align-items-center flex-nowrap">
                         <div class="mr-16pt">
-                            {{--                            <a href="student-take-course.html"><img src="../../public/images/paths/angular_64x64.png"--}}
+                            {{--                            <a href="#"><img src="../../public/images/paths/angular_64x64.png"--}}
                             {{--                                                                    width="40"--}}
                             {{--                                                                    alt="Angular"--}}
                             {{--                                                                    class="rounded"></a>--}}
                         </div>
                         <div class="flex">
-                            <a href="student-take-course.html"
+                            <a href="#"
                                class="card-title text-body mb-0">
                                 الاختبار الأول
                             </a>
