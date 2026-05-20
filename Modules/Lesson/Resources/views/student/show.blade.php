@@ -1,16 +1,16 @@
 @extends("student.layouts.dashboard")
 @section('content')
 @if(session('success'))
-          <div class="alert alert-success">
-              {{ session('success') }}
-          </div>
-      @endif
+<div class="alert alert-success">
+  {{ session('success') }}
+</div>
+@endif
 
-      @if(session('error'))
-          <div class="alert alert-danger">
-              {{ session('error') }}
-          </div>
-      @endif
+@if(session('error'))
+<div class="alert alert-danger">
+  {{ session('error') }}
+</div>
+@endif
 <div class="navbar navbar-light border-0 navbar-expand">
   <div class="container page__container">
     <div class="media flex-nowrap">
@@ -29,12 +29,6 @@
 </div>
 <div class="bg-primary pb-lg-64pt py-32pt">
   <div class="container page__container">
-    <nav class="course-nav">
-      <a data-toggle="tooltip" data-placement="bottom" data-title="Getting Started with Angular: Introduction" href=""><span class="material-icons">lock</span></a>
-      <a data-toggle="tooltip" data-placement="bottom" data-title="Getting Started with Angular: Introduction to TypeScript" href=""><span class="material-icons text-primary">account_circle</span></a>
-      <a data-toggle="tooltip" data-placement="bottom" data-title="Getting Started with Angular: Comparing Angular to AngularJS" href=""><span class="material-icons">lock</span></a>
-      <a data-toggle="tooltip" data-placement="bottom" data-title="Getting Started with Angular: Lesson 4" href=""><span class="material-icons">lock</span></a>
-    </nav>
     <div class="js-player embed-responsive embed-responsive-16by9 mb-32pt">
       <div class="player embed-responsive-item">
         <div class="player__content">
@@ -46,7 +40,7 @@
         <div class="player__embed ">
           @if (Str::startsWith($lesson->url, 'https://www.youtube.com/'))
           <iframe class="embed-responsive-item" src="{{ $lesson->url }}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-          @elseif (Str::startsWith($lesson->url, 'https://player.vimeo.com/'))
+          @elseif (Str::contains($lesson->url, 'vimeo.com'))
           <iframe src="{{ $lesson->url }}" width="640" height="564" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
           @else
           <video class="embed-responsive-item" controls>
@@ -65,52 +59,54 @@
       </div>
     </div>
     <p class="hero__lead measure-hero-lead text-white-50 mb-24pt">{{$lesson->desc}}</p>
+    @if($lesson->attachment_name)
     <div class="col-md-6">
       <h3>
-      @if(session('locale', config('app.locale')) == 'en')
-      Attachment:
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      مرفق:
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Anhang:
-      @endif
-      {{$lesson->attachment_name}}</h3>
+        @if(session('locale', config('app.locale')) == 'en')
+        Attachment:
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        مرفق:
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Anhang:
+        @endif
+        {{$lesson->attachment_name}}
+      </h3>
     </div>
     <div class="col-md-10">
       @if (Str::startsWith($lesson->attachment, '/storage/'))
       <a class="hero__lead measure-hero-lead text-white-50 mb-24p" href="{{ asset($lesson->attachment) }}" download="{{ $lesson->attachment_name }}">
-      @if(session('locale', config('app.locale')) == 'en')
-      Download File
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      تحميل الملف
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Download-Datei
-      @endif
+        @if(session('locale', config('app.locale')) == 'en')
+        Download File
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        تحميل الملف
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Download-Datei
+        @endif
       </a>
       @else
       <p class="hero__lead measure-hero-lead text-white-50 mb-24p" style="word-wrap: break-word;">{{ $lesson->attachment }}</p>
       @endif
-
     </div>
+    @endif
     <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
       @if (!$watched)
       <form method="POST" action="{{ route('student.lesson.watched', ['courseId' => $course->id, 'lessonId' => $lesson->id]) }}">
-        @csrf 
+        @csrf
         <button type="submit" class="btn btn-white">
-      @if(session('locale', config('app.locale')) == 'en')
-      Mark as Watched
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      تمت مشاهدته
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Als beobachtet markieren
-      @endif
-      </button>
+          @if(session('locale', config('app.locale')) == 'en')
+          Mark as Watched
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          تمت مشاهدته
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Als beobachtet markieren
+          @endif
+        </button>
       </form>
       @else
       <button class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt" disabled>Watched</button>
@@ -150,7 +146,7 @@
   </div>
   <p class="text-muted mb-0">{{$ratingCount}}<small>
       @if(session('locale', config('app.locale')) == 'en')
-         ratings
+      ratings
       @endif
       @if(session('locale', config('app.locale')) == 'ar')
       التقييمات
@@ -158,8 +154,8 @@
       @if(session('locale', config('app.locale')) == 'de')
       Bewertungen
       @endif
-      </small></p>
-      </li>
+    </small></p>
+  </li>
   </ul>
 </div>
 </div>

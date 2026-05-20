@@ -17,10 +17,10 @@ class AdminLessonController  extends BaseController
     protected string $table_name = 'lessons';
     protected string $route_name = 'lessons';
     protected string $interface = AdminLessonRepository::class;
-//    protected string $interface_category = AdminCategoryRepository::class;
+    //    protected string $interface_category = AdminCategoryRepository::class;
     protected string $store_request = Store::class;
-//    protected string $update_request = Update::class;
-//    protected $id_request = Id::class;
+    //    protected string $update_request = Update::class;
+    //    protected $id_request = Id::class;
 
     public function store(Request $request)
     {
@@ -31,18 +31,18 @@ class AdminLessonController  extends BaseController
 
 
         //dd($data);
-        $course = $lessonRepo->store($request,$data);
+        $course = $lessonRepo->store($request, $data);
 
         return redirect()->route('admin.lessons.index')->withSuccess('Course created successfully');
     }
+
     public function update(Request $request)
     {
         $storeRequest = new Update();
         $data = $request->validate($storeRequest->rules());
         $lessonRepo = $this->getRepository();
-        $lessonRepo->update($request,$data);
-        
+        $lessonRepo->update($request, $data);
+
         return redirect()->route('admin.lessons.index')->withSuccess('Course created successfully');
     }
-
 }

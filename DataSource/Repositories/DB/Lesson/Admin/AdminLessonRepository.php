@@ -18,6 +18,7 @@ class AdminLessonRepository
     {
         return Lesson::all();
     }
+
     public function store($request, $data)
     {
         $lesson = $this->getModel();
@@ -44,16 +45,18 @@ class AdminLessonRepository
             if (strpos($videoUrl, 'https://www.youtube.com') === 0) {
                 $videoId = getYoutubeVideoId($videoUrl);
                 $lesson->url = 'https://www.youtube.com/embed/' . $videoId;
-            } else if (strpos($videoUrl, 'https://player.vimeo.com') === 0) {
-                $lesson->url = $videoUrl;
+            } elseif (str_contains($videoUrl, 'vimeo.com')) {
+                $videoId = getVimeoVideoId($videoUrl);
+                $lesson->url = 'https://player.vimeo.com/video/' . $videoId;
             }
         }
 
         $lesson->save();
     }
+
     public function update($request, $data)
     {
-        $lesson=Lesson::find($data['model_id']);
+        $lesson = Lesson::find($data['model_id']);
         foreach (localeSupported() as $locale) {
             $lesson->translateOrNew($locale)->title = $data['title-' . $locale];
             $lesson->translateOrNew($locale)->desc = $data['desc-' . $locale];
@@ -72,7 +75,6 @@ class AdminLessonRepository
         }
 
         if ($request->hasFile('url')) {
-            // Handle URL update logic here, similar to what you did in the store function.
             $videoPath = $request->file('url')->store('public/photos');
             $lesson->url = Storage::url($videoPath);
         } elseif ($request->filled('url')) {
@@ -80,17 +82,15 @@ class AdminLessonRepository
             if (strpos($videoUrl, 'https://www.youtube.com') === 0) {
                 $videoId = getYoutubeVideoId($videoUrl);
                 $lesson->url = 'https://www.youtube.com/embed/' . $videoId;
-            } elseif (strpos($videoUrl, 'https://player.vimeo.com') === 0) {
-                $lesson->url = $videoUrl;
+            } elseif (str_contains($videoUrl, 'vimeo.com')) {
+                $videoId = getVimeoVideoId($videoUrl);
+                $lesson->url = 'https://player.vimeo.com/video/' . $videoId;
             }
         }
 
         $lesson->save();
     }
 
-
-
-    
     public static function TotalLessonsHours($courses)
     {
 
@@ -149,4 +149,11 @@ function getYoutubeVideoId($url)
         return $params['v'];
     }
     return null;
+}
+
+function getVimeoVideoId($url)
+{
+    $path = parse_url($url, PHP_URL_PATH);
+    $segments = explode('/', trim($path, '/'));
+    return $segments[0] ?? null;
 }
