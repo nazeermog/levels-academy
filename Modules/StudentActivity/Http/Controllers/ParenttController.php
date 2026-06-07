@@ -23,7 +23,10 @@ class ParenttController extends Controller
     $userParent = Auth::user();
     $parent = Parentt::find($userParent->id);
     $children = $parent->students;
-    $list = Inrollment::whereIn('student_id', $children->pluck('user_id')->toArray())->get();
+    // Eager-load student + course (with translations for course->title) to avoid N+1 in the view.
+    $list = Inrollment::with(['student', 'course.translations'])
+      ->whereIn('student_id', $children->pluck('user_id')->toArray())
+      ->get();
     $route_name = 'inrollments';
     $table_name = 'childern progress';
     return view('studentactivity::progressChilderns', compact('list', 'route_name', 'table_name'));

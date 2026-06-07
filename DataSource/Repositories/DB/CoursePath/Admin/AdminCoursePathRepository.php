@@ -15,7 +15,8 @@ class AdminCoursePathRepository
 
     public static function list()
     {
-        return CoursePath::all();
+        // Eager-load courses to avoid an N+1 when callers loop $coursePath->courses.
+        return CoursePath::with('courses')->get();
     }
     public static function find($pathId)
     {
@@ -23,13 +24,10 @@ class AdminCoursePathRepository
     }
     public static function CourseCounter()
     {
-        $coursePaths = CoursePath::all();
-        $totalLessons = 0;
+        // withCount avoids one COUNT query per course path (N+1).
         $courseLessons = [];
-        foreach ($coursePaths as $coursePath) {
-            $totalLessons = 0;
-            $totalLessons += $coursePath->courses()->count();
-            $courseLessons[$coursePath->id] = $totalLessons;
+        foreach (CoursePath::withCount('courses')->get() as $coursePath) {
+            $courseLessons[$coursePath->id] = $coursePath->courses_count;
         }
         return $courseLessons;
     }

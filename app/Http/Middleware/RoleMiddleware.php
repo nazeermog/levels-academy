@@ -13,17 +13,17 @@ class RoleMiddleware
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  String $role
+     * @param  string  ...$roles  One or more allowed roles, e.g. role:super_admin,admin
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$roles)
     {
         if (Auth::guest()) {
             // إذا المستخدم غير مسجل دخول، أعد توجيهه إلى صفحة تسجيل الدخول
             return redirect()->route('login');
         }
 
-        if (! Auth::user()->hasRoles($role)) {
+        if (! Auth::user()->hasRoles($roles)) {
             // Redirect to the user's correct dashboard instead of 403
             switch (Auth::user()->role) {
                 case 'student':
@@ -31,7 +31,9 @@ class RoleMiddleware
                 case 'super_admin':
                     return redirect()->route('admin.dashboard');
                 case 'admin':
-                    return redirect()->route('admin.org.dashboard');
+                    return redirect()->route(
+                        config('features.organizations') ? 'admin.org.dashboard' : 'admin.dashboard'
+                    );
                 case 'parent':
                     return redirect()->route('parent.dashboard');
                 case 'instructor':

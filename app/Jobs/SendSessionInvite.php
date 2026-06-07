@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Mail\SessionInvite;
 
 class SendSessionInvite implements ShouldQueue
@@ -24,9 +25,17 @@ class SendSessionInvite implements ShouldQueue
 
     public function handle(): void
     {
-        Mail::to($this->toEmail)->send(
-            new SessionInvite($this->subjectLine, $this->htmlBody, $this->icsContent)
-        );
+        try {
+            Mail::to($this->toEmail)->send(
+                new SessionInvite($this->subjectLine, $this->htmlBody, $this->icsContent)
+            );
+        } catch (\Throwable $e) {
+            // Never let a mail/transport failure crash the request or the queue worker.
+            Log::error('[SessionInvite] send failed', [
+                'to'    => $this->toEmail,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 }
 

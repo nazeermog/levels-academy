@@ -195,6 +195,36 @@
                 </li>
 
                 <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" href="{{ route('instructor.availability.index') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">schedule</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            My Availability
+                            @elseif(session('locale', config('app.locale')) == 'ar')
+                            أوقات تواجدي
+                            @elseif(session('locale', config('app.locale')) == 'de')
+                            Meine Verfügbarkeit
+                            @endif
+                        </span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" href="{{ route('instructor.free-sessions.index') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">card_giftcard</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            Free Sessions
+                            @elseif(session('locale', config('app.locale')) == 'ar')
+                            الجلسات المجانية
+                            @elseif(session('locale', config('app.locale')) == 'de')
+                            Kostenlose Sitzungen
+                            @endif
+                        </span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button" href="{{ route('instructor.reports.per_student') }}">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">attach_money</span>
                         <span class="sidebar-menu-text font-droid">
@@ -224,6 +254,32 @@
                     </a>
                 </li>
 
+                {{-- Organization group (hidden until config('features.organizations') is true). --}}
+                @if(config('features.organizations'))
+                <li class="sidebar-menu-item">
+                    <details>
+                        <summary class="sidebar-menu-button font-droid" style="cursor:pointer; list-style:none;">
+                            <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">business</span>
+                            <span class="sidebar-menu-text font-droid">
+                                @if(session('locale', config('app.locale')) == 'ar') المؤسسة
+                                @elseif(session('locale', config('app.locale')) == 'de') Organisation
+                                @else Organization @endif
+                            </span>
+                        </summary>
+                        <ul class="sidebar-menu" style="padding-left:1rem;">
+                            <li class="sidebar-menu-item">
+                                <span class="sidebar-menu-button" style="opacity:.6;">
+                                    <span class="sidebar-menu-text font-droid">
+                                        @if(session('locale', config('app.locale')) == 'ar') لا توجد عناصر بعد
+                                        @elseif(session('locale', config('app.locale')) == 'de') Noch keine Einträge
+                                        @else No organization items yet @endif
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </details>
+                </li>
+                @endif
             </ul>
             <!-- // END Sidebar Content -->
         </div>

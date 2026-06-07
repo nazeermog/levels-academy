@@ -18,19 +18,18 @@ class AdminCourseRepository
 
     public static function courseLessons()
     {
-            $courses = Course::all();
+        // Eager-load contents + steps so we don't run a query per course/content (N+1).
+        $courses = Course::with('courseContents.courseSteps')->get();
         $courseLessons = [];
-            foreach ($courses as $course) {
-                $totalLessons = 0;
-                $contents = $course->courseContents;
-                foreach ($contents as $content) {
-                    $totalLessons += $content->courseSteps()->where('stepable_type', 'Lessons')->count();
-                }
-                $courseLessons[$course->id] = $totalLessons;
+        foreach ($courses as $course) {
+            $totalLessons = 0;
+            foreach ($course->courseContents as $content) {
+                $totalLessons += $content->courseSteps->where('stepable_type', 'Lessons')->count();
             }
-
-            return  $courseLessons;
-            
+            $courseLessons[$course->id] = $totalLessons;
         }
+
+        return $courseLessons;
+    }
 
 }

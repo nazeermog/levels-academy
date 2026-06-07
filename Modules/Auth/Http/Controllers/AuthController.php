@@ -48,7 +48,9 @@ class AuthController extends Controller
       $fallback = match ($role) {
         'student' => route('student.index.Bookexercise.books.qr'),
         'super_admin' => route('admin.dashboard'),
-        'admin' => route('admin.org.dashboard'),
+        // When organizations are active, admins land on their Organization Dashboard;
+        // otherwise (merged mode) they land on the global Dashboard.
+        'admin' => config('features.organizations') ? route('admin.org.dashboard') : route('admin.dashboard'),
         'parent' => route('parent.dashboard'),
         'instructor' => route('instructor.dashboard'),
         default => route('login'),

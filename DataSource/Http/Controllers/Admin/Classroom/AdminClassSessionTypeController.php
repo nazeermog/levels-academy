@@ -35,6 +35,7 @@ class AdminClassSessionTypeController extends BaseController
             'name' => $data['name'],
             'price' => $data['price'],
             'teacher_payout' => $data['teacher_payout'],
+            // No current org when organizations are off → NULL (column is nullable).
             'organization_id' => $currentOrg ? $currentOrg->id : null,
         ]);
         return redirect()->route('admin.org.class_session_types.index')->with('success', 'Type created.');

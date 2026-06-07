@@ -9,42 +9,78 @@
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                @if(auth()->check() && auth()->user()->role === 'admin')
-                <li class="nav-item {{ Route::is('admin.org.dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('admin.org.dashboard') }}" class="nav-link {{ Route::is('admin.org.dashboard') ? 'active' : '' }}">
+                @php
+                $sidebarUser = auth()->user();
+                $orgsOn = (bool) config('features.organizations');
+                // Global catalog/dashboard: super_admin always; admin only when organizations are OFF (merged "sees everything" mode).
+                $showCatalog = $sidebarUser && ($sidebarUser->role === 'super_admin' || ($sidebarUser->role === 'admin' && ! $orgsOn));
+                @endphp
+                @if(auth()->check() && in_array(auth()->user()->role, ['admin','super_admin']))
+                {{-- Dashboard (global) is the first item — only when the global catalog is available. --}}
+                @if($showCatalog)
+                <li class="nav-item {{ Route::is('admin.dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Organization Dashboard</p>
+                        <p>Dashboard</p>
                     </a>
                 </li>
                 @endif
-                @if(auth()->check() && auth()->user()->role === 'admin')
-                <li class="nav-item">
-                    <a href="{{ route('admin.org.users.index') }}" class="nav-link {{ Route::is('admin.org.users.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>Organization Users</p>
-                    </a>
-                </li>
-                @endif
-                @if(auth()->check() && auth()->user()->role === 'admin' && isset($currentOrganization) && $currentOrganization && $currentOrganization->subdomain === 'yasmine')
-                <li class="nav-item {{Route::is('admin.org.instructor-notes.*')?'menu-open':''}} ">
-                    <a href="#" class="nav-link {{Route::is('admin.org.instructor-notes.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+
+                {{-- All organization features grouped in one tab. Hidden until config('features.organizations') is true. --}}
+                @if(config('features.organizations'))
+                <li class="nav-item {{ (Route::is('admin.org.dashboard') || Route::is('admin.org.users.*') || Route::is('admin.org.settings.*') || Route::is('admin.org.instructor-notes.*') || Route::is('admin.organizations.*')) ? 'menu-open' : '' }} ">
+                    <a href="#" class="nav-link {{ (Route::is('admin.org.dashboard') || Route::is('admin.org.users.*') || Route::is('admin.org.settings.*') || Route::is('admin.org.instructor-notes.*') || Route::is('admin.organizations.*')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-sitemap"></i>
                         <p>
-                            Instructor notes
+                            Organization
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-
                         <li class="nav-item">
-                            <a href="{{route('admin.org.instructor-notes.index')}}" class="nav-link  {{ Route::is('admin.org.instructor-notes.index')?'active':''}}">
-
-                                <p class="ml-3">instructor notes </p>
+                            <a href="{{ route('admin.org.dashboard') }}" class="nav-link {{ Route::is('admin.org.dashboard') ? 'active' : '' }}">
+                                <p class="ml-3">- Organization Dashboard</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.org.users.index') }}" class="nav-link {{ Route::is('admin.org.users.index') ? 'active' : '' }}">
+                                <p class="ml-3">- Organization Users</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.org.settings.edit') }}" class="nav-link {{ Route::is('admin.org.settings.*') ? 'active' : '' }}">
+                                <p class="ml-3">- Organization Settings</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.org.instructor-notes.index') }}" class="nav-link {{ Route::is('admin.org.instructor-notes.*') ? 'active' : '' }}">
+                                <p class="ml-3">- Instructor Notes</p>
+                            </a>
+                        </li>
+                        @if(auth()->user()->role === 'super_admin')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.organizations.index') }}" class="nav-link {{ Route::is('admin.organizations.index') ? 'active' : '' }}">
+                                <p class="ml-3">- Organizations</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.organizations.create') }}" class="nav-link {{ Route::is('admin.organizations.create') ? 'active' : '' }}">
+                                <p class="ml-3">- Create Organization</p>
+                            </a>
+                        </li>
+                        @endif
                     </ul>
+                </li>
+                @endif
+                @endif
 
-
+                {{-- Classrooms / Session Types / Reports: kept available to admin & super_admin, now organization-agnostic. --}}
+                @if(auth()->check() && in_array(auth()->user()->role, ['admin','super_admin']))
+                <li class="nav-item {{ Route::is('admin.free-sessions.*') ? 'menu-open' : '' }} ">
+                    <a href="{{ route('admin.free-sessions.index') }}" class="nav-link {{ Route::is('admin.free-sessions.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-gift"></i>
+                        <p>Free Sessions</p>
+                    </a>
                 </li>
                 <li class="nav-item {{ (Route::is('admin.org.classrooms.*') && !Route::is('admin.org.classrooms.reports.*')) ? 'menu-open' : '' }} ">
                     <a href="#" class="nav-link {{ (Route::is('admin.org.classrooms.*') && !Route::is('admin.org.classrooms.reports.*')) ? 'active' : '' }}">
@@ -79,14 +115,7 @@
                     </ul>
                 </li>
 
-                
 
-                <li class="nav-item">
-                    <a href="{{ route('admin.org.settings.edit') }}" class="nav-link {{ Route::is('admin.org.settings.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-cog"></i>
-                        <p>Organization Settings</p>
-                    </a>
-                </li>
 
                 <li class="nav-item {{Route::is('admin.org.classrooms.reports.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.org.classrooms.reports.*')?'active':''}}">
@@ -120,37 +149,8 @@
                     </ul>
                 </li>
                 @endif
-                @if(auth()->check() && auth()->user()->role === 'super_admin')
-                <li class="nav-item {{ Route::is('admin.dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="nav-item {{Route::is('admin.organizations.*')?'menu-open':''}} ">
-                    <a href="#" class="nav-link {{Route::is('admin.organizations.*')?'active':''}}">
-                        <i class="nav-icon fas fa-sitemap"></i>
-                        <p>
-                            organizations
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-
-                        <li class="nav-item">
-                            <a href="{{route('admin.organizations.index')}}" class="nav-link  {{ Route::is('admin.organizations.index')?'active':''}}">
-
-                                <p class="ml-3">- organizations </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('admin.organizations.create')}}" class="nav-link  {{ Route::is('admin.organizations.create')?'active':''}}">
-
-                                <p class="ml-3">- Create organizations  </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                {{-- Global catalog: super_admin always; admin only when organizations are OFF. --}}
+                @if($showCatalog)
                 <li class="nav-item {{Route::is('admin.practices.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.practices.*')?'active':''}}">
                         <i class="nav-icon fas fa-user-circle"></i>
@@ -490,7 +490,7 @@
 
                 </li>
 
-                
+
 
 
 

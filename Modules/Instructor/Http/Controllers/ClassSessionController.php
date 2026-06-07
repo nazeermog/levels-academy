@@ -24,7 +24,8 @@ class ClassSessionController extends Controller
     public function index()
     {
         $instructorId = Auth::id();
-        $sessions = ClassSession::with(['classroom', 'type'])
+        $sessions = ClassSession::normal()
+            ->with(['classroom', 'type'])
             ->where('instructor_id', $instructorId)
             ->orderByDesc('held_at')
             ->paginate(20);

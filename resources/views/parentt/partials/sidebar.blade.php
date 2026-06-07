@@ -113,6 +113,33 @@
                         </a>
                     </li>
                 @endforeach
+
+                {{-- Organization group (hidden until config('features.organizations') is true). --}}
+                @if(config('features.organizations'))
+                <li class="sidebar-menu-item">
+                    <details>
+                        <summary class="sidebar-menu-button font-droid" style="cursor:pointer; list-style:none;">
+                            <span class="material-icons sidebar-menu-icon">business</span>
+                            <span class="sidebar-menu-text font-droid">
+                                @if($locale == 'ar') المؤسسة
+                                @elseif($locale == 'de') Organisation
+                                @else Organization @endif
+                            </span>
+                        </summary>
+                        <ul class="sidebar-menu" style="padding-left:1rem;">
+                            <li class="sidebar-menu-item">
+                                <span class="sidebar-menu-button" style="opacity:.6;">
+                                    <span class="sidebar-menu-text font-droid">
+                                        @if($locale == 'ar') لا توجد عناصر بعد
+                                        @elseif($locale == 'de') Noch keine Einträge
+                                        @else No organization items yet @endif
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </details>
+                </li>
+                @endif
             </ul>
 
         </div>

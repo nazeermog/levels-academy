@@ -8,6 +8,8 @@ use Modules\Instructor\Http\Controllers\InstructorNoteController;
 use Modules\Instructor\Http\Controllers\ClassSessionController;
 use Modules\Instructor\Http\Controllers\InstructorPayoutReportController;
 use Modules\Instructor\Http\Controllers\ExpectedEarningsReportController;
+use Modules\Instructor\Http\Controllers\InstructorAvailabilityController;
+use Modules\Instructor\Http\Controllers\InstructorFreeSessionController;
 
 Route::group([
     'prefix' => 'instructor',
@@ -27,6 +29,14 @@ Route::group([
     Route::put('/notes/update/{id}', [InstructorNoteController::class, 'update'])->name('instructor.notes.update');
 
     Route::post('/notes', [InstructorNoteController::class, 'store'])->name('instructor.notes.store');
+
+    // Free-session availability (the instructor's open time slots)
+    Route::get('/availability', [InstructorAvailabilityController::class, 'index'])->name('instructor.availability.index');
+    Route::post('/availability', [InstructorAvailabilityController::class, 'store'])->name('instructor.availability.store');
+    Route::delete('/availability/{availability}', [InstructorAvailabilityController::class, 'destroy'])->name('instructor.availability.destroy');
+
+    // Free sessions assigned to this instructor
+    Route::get('/free-sessions', [InstructorFreeSessionController::class, 'index'])->name('instructor.free-sessions.index');
 
     // Classroom sessions
     Route::get('/sessions', [ClassSessionController::class, 'index'])->name('instructor.sessions.index');

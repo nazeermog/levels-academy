@@ -3,7 +3,7 @@
 namespace DataSource\Entities\User;
 
 
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 use DataSource\Entities\User\UserEvent;
 use Illuminate\Notifications\Notifiable;
 use DataSource\Entities\Organization\Organization;
@@ -58,6 +58,26 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Profile photo URL. Returns the stored photo when a profile_photo_path
+     * column/file exists, otherwise a generated default avatar (Jetstream-style).
+     * This accessor backs the `profile_photo_url` append used in API responses.
+     */
+    public function getProfilePhotoUrlAttribute()
+    {
+        $path = $this->attributes['profile_photo_path'] ?? null;
+        if ($path) {
+            return \Illuminate\Support\Facades\Storage::url($path);
+        }
+
+        $name = trim(($this->first_name ?? '') . ' ' . ($this->last_name ?? ''));
+        if ($name === '') {
+            $name = (string) ($this->email ?? 'User');
+        }
+
+        return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=7F9CF5&background=EBF4FF';
+    }
 
 	public function hasRoles($role)
 	{

@@ -28,16 +28,17 @@ class AdminInstructorRepository
     }
 
     public static function InstructorForCourse($courses){
-        
+
+         // Batch-load all instructors in one query instead of one query per course (N+1).
+         $instructorIds = collect($courses)->pluck('instructor_id')->filter()->unique()->all();
+         $instructorsByUserId = Instructor::whereIn('user_id', $instructorIds)->get()->keyBy('user_id');
+
          $instructors = [];
-    
          foreach ($courses as $course) {
-         $instructorId=$course->instructor_id;
-         $instructor=Instructor::where('user_id',$instructorId)->first();
-         $instructors[$course->id] =$instructor;
-            }         
+             $instructors[$course->id] = $instructorsByUserId->get($course->instructor_id);
+            }
          return $instructors;
-        }  
+        }
         public static function InstructorForOneCourse($course){
             $instructorId=$course->instructor_id;
             $instructor=Instructor::where('user_id',$instructorId)->first();

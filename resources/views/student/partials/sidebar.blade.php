@@ -144,6 +144,33 @@
           </a>
         </li>
 
+        {{-- Organization group (hidden until config('features.organizations') is true). --}}
+        @if(config('features.organizations'))
+        <li class="sidebar-menu-item">
+          <details>
+            <summary class="sidebar-menu-button" style="cursor:pointer; list-style:none;">
+              <span class="material-icons sidebar-menu-icon">business</span>
+              <span class="sidebar-menu-text">
+                @if(session('locale', config('app.locale')) == 'ar') المؤسسة
+                @elseif(session('locale', config('app.locale')) == 'de') Organisation
+                @else Organization @endif
+              </span>
+            </summary>
+            <ul class="sidebar-menu" style="padding-left:1rem;">
+              <li class="sidebar-menu-item">
+                <span class="sidebar-menu-button" style="opacity:.6;">
+                  <span class="sidebar-menu-text">
+                    @if(session('locale', config('app.locale')) == 'ar') لا توجد عناصر بعد
+                    @elseif(session('locale', config('app.locale')) == 'de') Noch keine Einträge
+                    @else No organization items yet @endif
+                  </span>
+                </span>
+              </li>
+            </ul>
+          </details>
+        </li>
+        @endif
+
       </ul>
     </div>
   </div>
@@ -223,6 +250,33 @@
           </a>
         </li>
 
+        {{-- Organization group (hidden until config('features.organizations') is true). --}}
+        @if(config('features.organizations'))
+        <li class="sidebar-menu-item">
+          <details>
+            <summary class="sidebar-menu-button" style="cursor:pointer; list-style:none;">
+              <span class="material-icons sidebar-menu-icon">business</span>
+              <span class="sidebar-menu-text">
+                @if(session('locale', config('app.locale')) == 'ar') المؤسسة
+                @elseif(session('locale', config('app.locale')) == 'de') Organisation
+                @else Organization @endif
+              </span>
+            </summary>
+            <ul class="sidebar-menu" style="padding-left:1rem;">
+              <li class="sidebar-menu-item">
+                <span class="sidebar-menu-button" style="opacity:.6;">
+                  <span class="sidebar-menu-text">
+                    @if(session('locale', config('app.locale')) == 'ar') لا توجد عناصر بعد
+                    @elseif(session('locale', config('app.locale')) == 'de') Noch keine Einträge
+                    @else No organization items yet @endif
+                  </span>
+                </span>
+              </li>
+            </ul>
+          </details>
+        </li>
+        @endif
+
       </ul>
     </div>
   </div>
@@ -301,6 +355,33 @@
             <span class="sidebar-menu-text">Products</span>
           </a>
         </li>
+
+        {{-- Organization group (hidden until config('features.organizations') is true). --}}
+        @if(config('features.organizations'))
+        <li class="sidebar-menu-item">
+          <details>
+            <summary class="sidebar-menu-button" style="cursor:pointer; list-style:none;">
+              <span class="material-icons sidebar-menu-icon">business</span>
+              <span class="sidebar-menu-text">
+                @if(session('locale', config('app.locale')) == 'ar') المؤسسة
+                @elseif(session('locale', config('app.locale')) == 'de') Organisation
+                @else Organization @endif
+              </span>
+            </summary>
+            <ul class="sidebar-menu" style="padding-left:1rem;">
+              <li class="sidebar-menu-item">
+                <span class="sidebar-menu-button" style="opacity:.6;">
+                  <span class="sidebar-menu-text">
+                    @if(session('locale', config('app.locale')) == 'ar') لا توجد عناصر بعد
+                    @elseif(session('locale', config('app.locale')) == 'de') Noch keine Einträge
+                    @else No organization items yet @endif
+                  </span>
+                </span>
+              </li>
+            </ul>
+          </details>
+        </li>
+        @endif
 
       </ul>
     </div>

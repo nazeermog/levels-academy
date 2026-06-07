@@ -29,10 +29,16 @@ use DataSource\Http\Controllers\Admin\Organization\AdminOrganizationUsersControl
 use DataSource\Http\Controllers\Admin\Organization\OrganizationController;
 use DataSource\Http\Controllers\Admin\Absence\AdminAbsenceController;
 use DataSource\Http\Controllers\Admin\Organization\OrgSettingsController;
+use DataSource\Http\Controllers\Admin\FreeSession\AdminFreeSessionController;
 
 
-// Global admin (super_admin)
-Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function () {
+// Master switch: when organizations are OFF, admins get the full global catalog
+// ("sees everything" mode). When ON, the global catalog is super_admin-only and
+// admins are scoped to their organization screens (original behaviour).
+$catalogGuard = config('features.organizations') ? 'role:super_admin' : 'role:super_admin,admin';
+
+// Global admin catalog/content management
+Route::prefix('admin')->middleware(['auth', $catalogGuard])->group(function () {
     Route::group(['as' => 'admin.'], function () {
         // Org Admin - Users listing for current organization only
         Route::resource('courseContent', AdminCourseContentController::class);
@@ -55,13 +61,25 @@ Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function
 
         Route::get('resultPractices', [AdminResultPracticeController::class, 'index'])->name('resultPractices.index');
         Route::get('instructor-notes', [AdminInstructorNoteController::class, 'index'])->name('instructor-notes.index');
+    });
+});
 
-        // Manage organizations (CRUD)
+// Organization management (super_admin only). Hidden from the UI for now via
+// the `features.organizations` flag, but kept registered so it can be restored.
+Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function () {
+    Route::group(['as' => 'admin.'], function () {
         Route::resource('organizations', OrganizationController::class)->except(['show']);
     });
 });
 
-Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function () {
+// Free session waiting list + assignment (super_admin + admin)
+Route::prefix('admin')->middleware(['auth', 'role:super_admin,admin'])->group(function () {
+    Route::get('free-sessions', [AdminFreeSessionController::class, 'index'])->name('admin.free-sessions.index');
+    Route::get('free-sessions/{freeSession}/assign', [AdminFreeSessionController::class, 'assignForm'])->name('admin.free-sessions.assign.form');
+    Route::post('free-sessions/{freeSession}/assign', [AdminFreeSessionController::class, 'assign'])->name('admin.free-sessions.assign');
+});
+
+Route::prefix('admin')->middleware(['auth', $catalogGuard])->group(function () {
     Route::get('students2/tiles', [AdminStudentController::class, 'tiles'])->name('admin.students2.tiles');
 
     Route::get('/students/import/form', [AdminStudentController::class, 'importform'])->name('admin.importstudents.form');
@@ -78,7 +96,7 @@ Route::prefix('admin')->middleware(['auth', 'role:super_admin'])->group(function
 
 
 Route::group([
-    'middleware' => ['auth', 'role:super_admin']
+    'middleware' => ['auth', $catalogGuard]
 ], function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 });

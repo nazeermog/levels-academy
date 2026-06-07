@@ -26,7 +26,7 @@ class AdminClassroomReportController extends BaseController
         $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
         $baseQuery = function () use ($currentOrg, $startOfMonth, $endOfMonth, $instructorId, $classroomId, $typeId) {
-            return ClassSession::with(['instructor', 'type', 'classroom'])
+            return ClassSession::normal()->with(['instructor', 'type', 'classroom'])
                 ->when($currentOrg, function ($q) use ($currentOrg) {
                     $q->whereHas('classroom', function ($cq) use ($currentOrg) {
                         $cq->where('organization_id', $currentOrg->id);
@@ -61,7 +61,7 @@ class AdminClassroomReportController extends BaseController
         $grandTotal = $totals->sum('amount');
 
         // Dropdown data
-        $instructorIds = ClassSession::when($currentOrg, function ($q) use ($currentOrg) {
+        $instructorIds = ClassSession::normal()->when($currentOrg, function ($q) use ($currentOrg) {
                 $q->whereHas('classroom', function ($cq) use ($currentOrg) {
                     $cq->where('organization_id', $currentOrg->id);
                 });
@@ -103,7 +103,7 @@ class AdminClassroomReportController extends BaseController
         $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
         $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
-        $sessions = ClassSession::with(['type', 'classroom', 'instructor'])
+        $sessions = ClassSession::normal()->with(['type', 'classroom', 'instructor'])
             ->when($currentOrg, function ($q) use ($currentOrg) {
                 $q->whereHas('classroom', function ($cq) use ($currentOrg) {
                     $cq->where('organization_id', $currentOrg->id);
@@ -184,7 +184,7 @@ class AdminClassroomReportController extends BaseController
         })->values();
 
         // Dropdown data
-        $instructorIds = ClassSession::when($currentOrg, function ($q) use ($currentOrg) {
+        $instructorIds = ClassSession::normal()->when($currentOrg, function ($q) use ($currentOrg) {
                 $q->whereHas('classroom', function ($cq) use ($currentOrg) {
                     $cq->where('organization_id', $currentOrg->id);
                 });
@@ -229,7 +229,7 @@ class AdminClassroomReportController extends BaseController
         $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
         $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
-        $sessions = ClassSession::with(['classroom'])
+        $sessions = ClassSession::normal()->with(['classroom'])
             ->when($currentOrg, function ($q) use ($currentOrg) {
                 $q->whereHas('classroom', function ($cq) use ($currentOrg) {
                     $cq->where('organization_id', $currentOrg->id);

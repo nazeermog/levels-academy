@@ -41,6 +41,7 @@ class DataSourceServiceProvider extends ServiceProvider
         'Organization',
         'Classroom',
         'Absence',
+        'FreeSession',
     ];
 
     /**

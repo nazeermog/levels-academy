@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,7 +64,7 @@
             font-size: 5rem;
             font-weight: 700;
             color: #12a3bb;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
             margin-bottom: 0.5rem;
             text-align: left;
             line-height: 1.2;
@@ -136,9 +137,19 @@
         }
 
         @keyframes drawLine {
-            0% { width: 0; opacity: 0; }
-            50% { opacity: 1; }
-            100% { width: 300px; opacity: 0.7; }
+            0% {
+                width: 0;
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                width: 300px;
+                opacity: 0.7;
+            }
         }
 
         .floating-circle {
@@ -173,8 +184,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-30px) scale(1.1); }
+
+            0%,
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+
+            50% {
+                transform: translateY(-30px) scale(1.1);
+            }
         }
 
         .login-form-container {
@@ -186,7 +204,7 @@
             backdrop-filter: blur(15px);
             padding: 3.5rem;
             border-radius: 25px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
             width: 90%;
             max-width: 420px;
             z-index: 10;
@@ -211,7 +229,7 @@
             font-weight: 700;
             margin-bottom: 2.5rem;
             color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             background: linear-gradient(135deg, #12a3bb, #667eea);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -228,7 +246,7 @@
             font-weight: 500;
             color: #fff;
             font-size: 0.9rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
 
         .form-control {
@@ -242,13 +260,13 @@
             min-height: 50px;
             box-sizing: border-box;
             color: #333;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .form-control:focus {
             outline: none;
             border-color: #12a3bb;
-            box-shadow: 0 0 0 4px rgba(18, 163, 187, 0.15), 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 0 0 4px rgba(18, 163, 187, 0.15), 0 8px 25px rgba(0, 0, 0, 0.15);
             transform: translateY(-2px);
         }
 
@@ -264,7 +282,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 1.5rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             min-height: 50px;
             box-shadow: 0 6px 20px rgba(18, 163, 187, 0.4);
             position: relative;
@@ -295,7 +313,7 @@
             height: auto;
             display: block;
             border-radius: 8px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         }
 
         .forgot-password {
@@ -307,7 +325,7 @@
             color: #fff;
             text-decoration: none;
             font-size: 0.9rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
 
         .forgot-password a:hover {
@@ -323,7 +341,7 @@
                 align-items: center;
                 padding: 1rem;
             }
-            
+
             .logo-section {
                 flex: 1;
                 max-width: 100%;
@@ -334,28 +352,28 @@
                 display: flex;
                 flex-direction: column;
             }
-            
+
             .levels-subtitle {
                 text-align: center;
                 font-size: 1.2rem;
             }
-            
+
             .levels-logo {
                 text-align: center;
                 font-size: 3.5rem;
             }
-            
+
             .levels-academy {
                 text-align: center;
                 font-size: 1.3rem;
             }
-            
+
             .background-description {
                 text-align: center;
                 font-size: 0.9rem;
                 max-width: 400px;
             }
-            
+
             .login-form-container {
                 width: 95%;
                 max-width: 380px;
@@ -370,35 +388,35 @@
             .background-container {
                 padding: 0.5rem;
             }
-            
+
             .logo-section {
                 margin-bottom: 0;
             }
-            
+
             .levels-logo {
                 font-size: 2.8rem;
             }
-            
+
             .levels-subtitle {
                 font-size: 1rem;
             }
-            
+
             .levels-academy {
                 font-size: 1.1rem;
             }
-            
+
             .background-description {
                 font-size: 0.8rem;
                 max-width: 350px;
             }
-            
+
             .login-form-container {
                 width: 98%;
                 max-width: 340px;
                 padding: 2rem 1.5rem;
                 margin: 0 auto 0.5rem auto;
             }
-            
+
             .form-title {
                 font-size: 1.8rem;
             }
@@ -408,40 +426,41 @@
             .background-container {
                 padding: 0.5rem;
             }
-            
+
             .logo-section {
                 margin-bottom: 0;
             }
-            
+
             .levels-logo {
                 font-size: 2.2rem;
             }
-            
+
             .levels-subtitle {
                 font-size: 0.9rem;
             }
-            
+
             .levels-academy {
                 font-size: 0.9rem;
             }
-            
+
             .background-description {
                 font-size: 0.7rem;
                 max-width: 300px;
             }
-            
+
             .login-form-container {
                 width: 98%;
                 max-width: 320px;
                 padding: 1.8rem 1.2rem;
                 margin: 0 auto 0.5rem auto;
             }
-            
+
             .form-title {
                 font-size: 1.6rem;
             }
-            
-            .form-control, .btn-login {
+
+            .form-control,
+            .btn-login {
                 font-size: 0.9rem;
                 padding: 0.8rem;
             }
@@ -451,114 +470,116 @@
             .background-container {
                 padding: 0.3rem;
             }
-            
+
             .logo-section {
                 margin-bottom: 0;
             }
-            
+
             .levels-logo {
                 font-size: 1.8rem;
             }
-            
+
             .levels-subtitle {
                 font-size: 0.8rem;
             }
-            
+
             .levels-academy {
                 font-size: 0.8rem;
             }
-            
+
             .background-description {
                 font-size: 0.6rem;
                 max-width: 280px;
             }
-            
+
             .login-form-container {
                 width: 98%;
                 max-width: 300px;
                 padding: 1.5rem 1rem;
                 margin: 0 auto 0.3rem auto;
             }
-            
+
             .form-title {
                 font-size: 1.4rem;
             }
         }
     </style>
 </head>
+
 <body>
 
-<div class="background-container">
-    <div class="decorative-elements">
-        <div class="chart-line"></div>
-        <div class="chart-line"></div>
-        <div class="chart-line"></div>
-        <div class="chart-line"></div>
-        <div class="floating-circle"></div>
-        <div class="floating-circle"></div>
-        <div class="floating-circle"></div>
-    </div>
-    
-    <div class="logo-section">
-        <div class="levels-subtitle">We will take you to the next</div>
-        <div class="levels-logo">
-            L<span style="color: #b0b0b0;">E</span>V<span style="color: #b0b0b0; position: relative;">
-                <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); color: #12a3bb; font-size: 0.3em;">▲</span>
-            </span>E<span style="color: #b0b0b0;">L</span>S
+    <div class="background-container">
+        <div class="decorative-elements">
+            <div class="chart-line"></div>
+            <div class="chart-line"></div>
+            <div class="chart-line"></div>
+            <div class="chart-line"></div>
+            <div class="floating-circle"></div>
+            <div class="floating-circle"></div>
+            <div class="floating-circle"></div>
         </div>
-        <div class="levels-academy">ACADEMY</div>
-        <div class="background-description">
-            An advanced learning platform to develop your skills and achieve your academic and professional goals
-        </div>
-    </div>
 
-    <!-- Login Form Container -->
-    <div class="login-form-container">
-    
-    @include('auth::notification.error')
-    @include('auth::notification.success')
-    
-    <form action="{{route('users.login')}}" method="POST">
-        @csrf
-        <div class="login-logo">
-            <img src="{{ asset('images/logo/woderhafen.jpg') }}" alt="Wonderhafen logo">
+        <div class="logo-section">
+            <div class="levels-subtitle">We will take you to the next</div>
+            <div class="levels-logo">
+                L<span style="color: #b0b0b0;">E</span>V<span style="color: #b0b0b0; position: relative;">
+                    <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); color: #12a3bb; font-size: 0.3em;">▲</span>
+                </span>E<span style="color: #b0b0b0;">L</span>S
+            </div>
+            <div class="levels-academy">ACADEMY</div>
+            <div class="background-description">
+                An advanced learning platform to develop your skills and achieve your academic and professional goals
+            </div>
         </div>
-        <div class="form-group">
-            <label class="form-label" for="email">
-                Email
-            </label>
-            <input id="email"
-                   name="email"
-                   type="email"
-                   class="form-control"
-                   placeholder="Enter your email"
-                   required>
+
+        <!-- Login Form Container -->
+        <div class="login-form-container">
+
+            @include('auth::notification.error')
+            @include('auth::notification.success')
+
+            <form action="{{route('users.login')}}" method="POST">
+                @csrf
+                <div class="login-logo">
+                    <!-- <img src="{{ asset('images/logo/woderhafen.jpg') }}" alt="Wonderhafen logo"> -->
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">
+                        Email
+                    </label>
+                    <input id="email"
+                        name="email"
+                        type="email"
+                        class="form-control"
+                        placeholder="Enter your email"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">
+                        Password
+                    </label>
+                    <input id="password"
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        placeholder="Enter your password"
+                        required>
+                </div>
+
+                <button class="btn-login" type="submit">
+                    Login
+                </button>
+
+                <div class="forgot-password">
+                    <a href="#" style="color: #12a3bb; text-decoration: none;">
+                        Forgot your password?
+                    </a>
+                </div>
+            </form>
         </div>
-        
-        <div class="form-group">
-            <label class="form-label" for="password">
-                Password
-            </label>
-            <input id="password"
-                   name="password"
-                   type="password"
-                   class="form-control"
-                   placeholder="Enter your password"
-                   required>
-        </div>
-        
-        <button class="btn-login" type="submit">
-            Login
-        </button>
-        
-        <div class="forgot-password">
-            <a href="#" style="color: #12a3bb; text-decoration: none;">
-                Forgot your password?
-            </a>
-        </div>
-    </form>
     </div>
-</div>
 
 </body>
+
 </html>

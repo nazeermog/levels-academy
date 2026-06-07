@@ -30,7 +30,8 @@ class InrollmentController extends Controller
   public function index()
   {
     $studentId = auth()->user()->id;
-    $enrollments = Inrollment::where('student_id', $studentId)->get();
+    // Eager-load course + taxonomy to avoid N+1 when mapping/grouping below.
+    $enrollments = Inrollment::with('course.taxonomy')->where('student_id', $studentId)->get();
     $courses = $enrollments->map(function ($enrollment) {
       return $enrollment->course;
     });

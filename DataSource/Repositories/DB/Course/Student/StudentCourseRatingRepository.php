@@ -110,17 +110,21 @@ class StudentCourseRatingRepository
 
   public static function CalculateAverageRatingForAllCourses($courses)
   {
-    $averageRatings = [];
+    // One aggregate query instead of one per course (N+1).
+    $courseIds = collect($courses)->pluck('id')->all();
+    $avgByCourse = Rating::whereIn('course_id', $courseIds)
+      ->selectRaw('course_id, SUM(rate) as sum_rate, COUNT(*) as cnt')
+      ->groupBy('course_id')
+      ->get()
+      ->keyBy('course_id');
 
+    $averageRatings = [];
     foreach ($courses as $course) {
-      $totalRatings = $course->ratings()->get();
-      $ratingsCount = $totalRatings->count();
-      if ($ratingsCount == 0) {
+      $row = $avgByCourse->get($course->id);
+      if (!$row || (int) $row->cnt === 0) {
         $averageRatings[$course->id] = 0;
       } else {
-        $sumRatings = $totalRatings->sum('rate');
-        $averageRating = $sumRatings / $ratingsCount;
-        $averageRatings[$course->id] = $averageRating;
+        $averageRatings[$course->id] = $row->sum_rate / $row->cnt;
       }
     }
 

@@ -4,6 +4,8 @@ namespace  DataSource\Repositories\DB;
 
 use DataSource\Entities\Inrollment\Inrollment;
 use DataSource\Entities\Instructor\Instructor;
+use DataSource\Entities\Course\Course;
+use DataSource\Entities\Course\Rating;
 use DataSource\Traits\Admin\AdminCRUDGenericRepository;
 
 class StudentInrollmentRepository
@@ -32,17 +34,16 @@ class StudentInrollmentRepository
 
   public static function inrollmentLessons()
   {
-    $inrollments = Inrollment::all();
+    // Eager-load course + contents + steps to avoid an N+1 per enrollment/content.
+    $inrollments = Inrollment::with('course.courseContents.courseSteps')->get();
     $courseLessons = [];
     foreach ($inrollments as $inrollment) {
       $course = $inrollment->course;
+      if (!$course) { continue; }
       $totalLessons = 0;
-
-      $contents = $course->courseContents;
-      foreach ($contents as $content) {
-        $totalLessons += $content->courseSteps()->where('stepable_type', 'Lessons')->count();
+      foreach ($course->courseContents as $content) {
+        $totalLessons += $content->courseSteps->where('stepable_type', 'Lessons')->count();
       }
-
       $courseLessons[$course->id] = $totalLessons;
     }
 
@@ -50,15 +51,17 @@ class StudentInrollmentRepository
   }
   public static function InstructorForCourse($inrollments)
   {
+    // Batch-load instructors in one query instead of one per enrollment (N+1).
+    $courseIds = collect($inrollments)->pluck('course_id')->filter()->unique()->all();
+    $coursesById = Course::whereIn('id', $courseIds)->get()->keyBy('id');
+    $instructorIds = $coursesById->pluck('instructor_id')->filter()->unique()->all();
+    $instructorsByUserId = Instructor::whereIn('user_id', $instructorIds)->get()->keyBy('user_id');
 
     $instructors = [];
-
     foreach ($inrollments as $inrollment) {
-      $course = $inrollment->course;
-
-      $instructorId = $course->instructor_id;
-      $instructor = Instructor::where('user_id', $instructorId)->first();
-      $instructors[$course->id] = $instructor;
+      $course = $coursesById->get($inrollment->course_id);
+      if (!$course) { continue; }
+      $instructors[$course->id] = $instructorsByUserId->get($course->instructor_id);
     }
     return $instructors;
   }
@@ -71,15 +74,16 @@ class StudentInrollmentRepository
 
   public static function TotalLessonsHours($inrollments)
   {
+    // Load all needed contents/steps/lessons in one batch instead of per enrollment (N+1).
+    $courseIds = collect($inrollments)->pluck('course_id')->filter()->unique()->all();
+    $eagerCourses = Course::whereIn('id', $courseIds)
+      ->with('courseContents.courseSteps.lesson')
+      ->get();
 
     $totalLessonTimes = [];
-
-    foreach ($inrollments as $inrollment) {
-      $course = $inrollment->course;
-
+    foreach ($eagerCourses as $course) {
       $totalLessonTime = 0;
-      $courseContents = $course->courseContents()->with('courseSteps.lesson')->get();
-      foreach ($courseContents as $courseContent) {
+      foreach ($course->courseContents as $courseContent) {
         foreach ($courseContent->courseSteps as $step) {
           if ($step->stepable_type === 'Lessons' && $step->lesson) {
             $totalLessonTime += $step->lesson->time;
@@ -94,18 +98,22 @@ class StudentInrollmentRepository
 
   public static function CalculateAverageRatingForAllCourses($inrollments)
   {
-    $averageRatings = [];
+    // One aggregate query instead of one per enrollment (N+1).
+    $courseIds = collect($inrollments)->pluck('course_id')->filter()->unique()->all();
+    $byCourse = Rating::whereIn('course_id', $courseIds)
+      ->selectRaw('course_id, SUM(rate) as sum_rate, COUNT(*) as cnt')
+      ->groupBy('course_id')
+      ->get()
+      ->keyBy('course_id');
 
+    $averageRatings = [];
     foreach ($inrollments as $inrollment) {
-      $course = $inrollment->course;
-      $totalRatings = $course->ratings()->get();
-      $ratingsCount = $totalRatings->count();
-      if ($ratingsCount == 0) {
-        $averageRatings[$course->id] = 0;
+      $courseId = $inrollment->course_id;
+      $row = $byCourse->get($courseId);
+      if (!$row || (int) $row->cnt === 0) {
+        $averageRatings[$courseId] = 0;
       } else {
-        $sumRatings = $totalRatings->sum('rate');
-        $averageRating = $sumRatings / $ratingsCount;
-        $averageRatings[$course->id] = $averageRating;
+        $averageRatings[$courseId] = $row->sum_rate / $row->cnt;
       }
     }
 

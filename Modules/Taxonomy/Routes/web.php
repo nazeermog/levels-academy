@@ -17,8 +17,9 @@ Route::group([
 });
 
 
+// Follows the organizations master switch: admin manages orders only when orgs are OFF.
 Route::group([
-  'middleware' => ['auth', 'role:super_admin'],
+  'middleware' => ['auth', config('features.organizations') ? 'role:super_admin' : 'role:super_admin,admin'],
   'prefix' => 'admin',
 ], function () {
   Route::prefix('products')->group(function () {

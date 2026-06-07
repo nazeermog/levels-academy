@@ -1,18 +1,26 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Modules\Auth\Http\Controllers\ApiAuthController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Auth API Routes  (prefix: /api)
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Passport-based JSON authentication for external applications.
 |
 */
 
-Route::middleware('auth:api')->get('/auth', function (Request $request) {
-    return $request->user();
+Route::prefix('auth')->group(function () {
+    // Public endpoints
+    Route::post('/register', [ApiAuthController::class, 'register'])->name('api.auth.register');
+    Route::post('/login', [ApiAuthController::class, 'login'])->name('api.auth.login');
+
+    // Protected endpoints (require a valid Passport access token)
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/me', [ApiAuthController::class, 'me'])->name('api.auth.me');
+        Route::post('/logout', [ApiAuthController::class, 'logout'])->name('api.auth.logout');
+    });
 });

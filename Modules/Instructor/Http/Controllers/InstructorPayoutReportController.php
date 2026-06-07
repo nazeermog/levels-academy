@@ -25,7 +25,7 @@ class InstructorPayoutReportController extends Controller
         $filtersApplied = $request->hasAny(['month', 'student_id', 'classroom_id', 'class_session_type_id']);
 
         // Sessions taught by this instructor in the month
-        $sessions = ClassSession::with(['type', 'classroom'])
+        $sessions = ClassSession::normal()->with(['type', 'classroom'])
             ->where('instructor_id', $instructorId)
             ->when(!empty($classroomFilterId), function ($q) use ($classroomFilterId) {
                 $q->where('classroom_id', $classroomFilterId);
@@ -218,7 +218,7 @@ class InstructorPayoutReportController extends Controller
         $typeFilterId = $request->input('class_session_type_id');
         $classroomFilterId = $request->input('classroom_id');
 
-        $sessions = ClassSession::with(['type', 'classroom'])
+        $sessions = ClassSession::normal()->with(['type', 'classroom'])
             ->where('instructor_id', $instructorId)
             ->when(!empty($classroomFilterId), fn($q) => $q->where('classroom_id', $classroomFilterId))
             ->when(!empty($typeFilterId), fn($q) => $q->where('class_session_type_id', $typeFilterId))

@@ -93,13 +93,16 @@ class AdminLessonRepository
 
     public static function TotalLessonsHours($courses)
     {
+        // Load all needed contents/steps/lessons in one batch instead of per course (N+1).
+        $courseIds = collect($courses)->pluck('id')->all();
+        $eagerCourses = Course::whereIn('id', $courseIds)
+            ->with('courseContents.courseSteps.lesson')
+            ->get();
 
         $totalLessonTimes = [];
-
-        foreach ($courses as $course) {
+        foreach ($eagerCourses as $course) {
             $totalLessonTime = 0;
-            $courseContents = $course->courseContents()->with('courseSteps.lesson')->get();
-            foreach ($courseContents as $courseContent) {
+            foreach ($course->courseContents as $courseContent) {
                 foreach ($courseContent->courseSteps as $step) {
                     if ($step->stepable_type === 'Lessons' && $step->lesson) {
                         $totalLessonTime += $step->lesson->time;
