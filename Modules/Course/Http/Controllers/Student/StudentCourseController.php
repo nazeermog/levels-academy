@@ -3,9 +3,12 @@
 namespace Modules\Course\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use DataSource\Entities\Course\Course;
 use DataSource\Entities\Course\CourseStep;
 use DataSource\Entities\Course\CourseContent;
+use DataSource\Entities\Classroom\ClassSessionStudent;
 use DataSource\Repositories\DB\StudentInrollmentRepository;
 use DataSource\Repositories\DB\Course\Admin\AdminCourseRepository;
 use DataSource\Repositories\DB\Lesson\Admin\AdminLessonRepository;
@@ -43,17 +46,52 @@ class StudentCourseController extends Controller
     ]);
   }
 
-  public function show($courseId)
+  public function show($courseId, \App\Services\CourseProgressService $progress)
   {
     $course = Course::findOrFail($courseId);
     $contents = CourseContent::where('course_id', $course->id)->get();
     $contentSteps = [];
 
+    // The logged-in student's own step-based progress for this course.
+    $myProgress = $progress->report($course, (int) Auth::id());
+
+    // Classrooms the logged-in student belongs to (used to limit classroom-step sessions to their own).
+    $studentClassroomIds = DB::table('classroom_student')
+      ->where('student_id', Auth::id())
+      ->pluck('classroom_id')
+      ->all();
+
     foreach ($contents as $content) {
-      $steps = $content->courseSteps()->with('practiceType')->get();
+      $steps = $content->courseSteps()
+        ->with(['practiceType', 'classSession.classroom'])
+        ->get()
+        ->filter(function ($step) use ($studentClassroomIds) {
+          // Only class-session steps are restricted; other step types are always shown.
+          if ($step->stepable_type !== 'ClassSessions') {
+            return true;
+          }
+          $session = $step->classSession;
+          return $session && in_array($session->classroom_id, $studentClassroomIds);
+        })
+        ->values();
       $contentSteps[$content->id] = $steps;
       $coursestepCount[$content->id] = $steps->count();
     }
+
+    // The logged-in student's per-session participation (given + notes), keyed by session id.
+    $sessionStepIds = [];
+    foreach ($contentSteps as $stepsCol) {
+      foreach ($stepsCol as $st) {
+        if ($st->stepable_type === 'ClassSessions') {
+          $sessionStepIds[] = (int) $st->stepable_id;
+        }
+      }
+    }
+    $myAttendance = ClassSessionStudent::where('student_id', Auth::id())
+      ->whereIn('class_session_id', $sessionStepIds)
+      ->get()
+      ->keyBy('class_session_id');
+
     $instructor = AdminInstructorRepository::InstructorForOneCourse($course);
     $totalLessonTime = AdminLessonRepository::SingleCoursTotalLesson($course);
     $courseRate = StudentCourseRatingRepository::CalculateAverageRatingForCourse($course);
@@ -76,6 +114,8 @@ class StudentCourseController extends Controller
       'course',
       'contents',
       'contentSteps',
+      'myProgress',
+      'myAttendance',
       'totalLessonTime',
       'coursestepCount',
       'instructor',

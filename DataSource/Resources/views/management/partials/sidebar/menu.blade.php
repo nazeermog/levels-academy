@@ -246,8 +246,8 @@
 
 
                 </li>
-                <li class="nav-item {{Route::is('admin.courseContent.*')?'menu-open':''}} ">
-                    <a href="#" class="nav-link {{Route::is('admin.courseContent.*')?'active':''}}">
+                <li class="nav-item {{ (Route::is('admin.courseContent.*') || Route::is('admin.course-progress.*')) ?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{ (Route::is('admin.courseContent.*') || Route::is('admin.course-progress.*')) ?'active':''}}">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>
                             Courses
@@ -266,6 +266,12 @@
                             <a href="{{route('admin.inrollments.index')}}" class="nav-link  {{ Route::is('admin.inrollments.index')?'active':''}}">
 
                                 <p class="ml-3">- student Enrollment </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.course-progress.index')}}" class="nav-link  {{ Route::is('admin.course-progress.*')?'active':''}}">
+
+                                <p class="ml-3">- Course Progress </p>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -135,6 +135,7 @@
 </div>
 <!-- // END Header Layout -->
 @include('parentt.partials.script')
+@include('partials.localtime')
 
 </body>
 

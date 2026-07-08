@@ -45,7 +45,9 @@
                                         <span>
                                             <strong>{{ optional($slot->instructor)->first_name }} {{ optional($slot->instructor)->last_name }}</strong>
                                             &mdash;
-                                            {{ $slot->start_at->format('Y-m-d H:i') }} to {{ $slot->end_at->format('H:i') }} (UTC)
+                                            <span data-localtime="{{ $slot->start_at->toIso8601String() }}">{{ $slot->start_at->format('Y-m-d H:i') }} UTC</span>
+                                            to
+                                            <span data-localtime="{{ $slot->end_at->toIso8601String() }}">{{ $slot->end_at->format('H:i') }} UTC</span>
                                         </span>
                                     </label>
                                 @endforeach

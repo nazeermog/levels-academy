@@ -27,6 +27,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'timezone',
     ];
 
     /**
@@ -79,6 +80,15 @@ class User extends Authenticatable
         return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=7F9CF5&background=EBF4FF';
     }
 
+	/**
+	 * A self-registered trial student, awaiting an admin upgrade to a full student.
+	 * Trial students are blocked from all role:student features (see RoleMiddleware).
+	 */
+	public function isTrial(): bool
+	{
+		return $this->role === 'trial_student';
+	}
+
 	public function hasRoles($role)
 	{
 		// Super admin has access to all roles
@@ -95,6 +105,19 @@ class User extends Authenticatable
     public function events()
     {
         return $this->hasMany(UserEvent::class);
+    }
+
+    /**
+     * The user's IANA timezone, falling back to the app timezone (UTC) when unknown.
+     * Use for server-side rendering (emails, ICS, PDFs).
+     */
+    public function tz(): string
+    {
+        $tz = $this->timezone;
+
+        return ($tz && in_array($tz, timezone_identifiers_list(), true))
+            ? $tz
+            : config('app.timezone', 'UTC');
     }
 
 	public function organization()

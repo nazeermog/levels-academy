@@ -30,8 +30,17 @@ class CourseContent extends Model
     protected $fillable = [
         'course_id',
         'ordering',
-   
+        'step_type',
     ];
+
+    public const TYPE_NORMAL = 'normal';
+    public const TYPE_CLASSROOM = 'classroom';
+
+    public function isClassroom(): bool
+    {
+        return $this->step_type === self::TYPE_CLASSROOM;
+    }
+
     public function courseSteps()
     {
         return $this->hasMany(CourseStep::class);

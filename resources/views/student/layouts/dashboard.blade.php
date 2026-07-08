@@ -74,6 +74,7 @@
 </div>
 <!-- // END Header Layout -->
 @include('student.partials.script')
+@include('partials.localtime')
 </body>
 
 </html>

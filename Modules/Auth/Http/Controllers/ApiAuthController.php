@@ -5,9 +5,11 @@ namespace Modules\Auth\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use DataSource\Entities\User\User;
+use DataSource\Entities\Student\Student;
 
 /**
  * Passport-based JSON authentication for external apps.
@@ -30,16 +32,31 @@ class ApiAuthController extends Controller
             'last_name'  => ['required', 'string', 'max:255'],
             'email'      => ['required', 'email', 'max:255', 'unique:users,email'],
             'password'   => ['required', 'string', 'min:6', 'confirmed'],
+            'country'    => ['required', 'string', 'max:255'],
+            'city'       => ['required', 'string', 'max:255'],
         ]);
 
-        $user = new User();
-        $user->first_name = $data['first_name'];
-        $user->last_name  = $data['last_name'];
-        $user->email      = $data['email'];
-        $user->password   = Hash::make($data['password']);
-        // External self-registration always creates a plain student account.
-        $user->role = 'student';
-        $user->save();
+        // External self-registration creates a User + Student, starting as a
+        // TRIAL student. An admin later upgrades the role to a full 'student'.
+        $user = DB::transaction(function () use ($data) {
+            $user = new User();
+            $user->first_name = $data['first_name'];
+            $user->last_name  = $data['last_name'];
+            $user->email      = $data['email'];
+            $user->password   = Hash::make($data['password']);
+            $user->role       = 'trial_student';
+            $user->save();
+
+            $student = new Student();
+            $student->user_id    = $user->id;
+            $student->first_name = $data['first_name'];
+            $student->last_name  = $data['last_name'];
+            $student->country    = $data['country'];
+            $student->city       = $data['city'];
+            $student->save();
+
+            return $user;
+        });
 
         $token = $user->createToken('api')->accessToken;
 

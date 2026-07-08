@@ -1,6 +1,7 @@
 @extends('datasource::management.layout.master')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 <div class="page-wrapper">
     <div class="page-content">
         <div class="container-fluid py-4">
@@ -40,98 +41,4 @@
         </div>
     </div>
 </div>
-
-<style>
-    .bg-gray {
-        background-color: #636E72;
-    }
-
-    .bg-green {
-        background-color: #00B894;
-    }
-
-    .bg-blue {
-        background-color: #0984E3;
-    }
-
-    .metric-card {
-        position: relative;
-        border-radius: 8px;
-        color: white;
-        padding: 15px;
-        height: 120px;
-        transition: all 0.3s ease;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-    }
-
-    .metric-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .metric-title {
-        font-size: 18px;
-        font-weight: 500;
-        color: white;
-    }
-
-    .metric-value {
-        font-size: 28px;
-        font-weight: 700;
-        color: white;
-    }
-
-    .icon-wrapper-right {
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-50%);
-        width: 48px;
-        height: 48px;
-    }
-
-    .metric-icon-img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        border-radius: 8px;
-        opacity: 0.9;
-    }
-
-    @media (max-width: 768px) {
-        .metric-title {
-            font-size: 16px;
-        }
-
-        .metric-value {
-            font-size: 24px;
-        }
-
-        .icon-wrapper-right {
-            width: 40px;
-            height: 40px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .metric-card {
-            height: 100px;
-        }
-
-        .icon-wrapper-right {
-            width: 32px;
-            height: 32px;
-        }
-
-        .metric-title {
-            font-size: 16px;
-        }
-
-        .metric-value {
-            font-size: 20px;
-        }
-    }
-</style>
 @endsection

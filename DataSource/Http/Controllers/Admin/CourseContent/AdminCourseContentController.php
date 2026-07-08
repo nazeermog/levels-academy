@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataSource\Entities\Course\CourseStep;
 use DataSource\Entities\Course\CourseContent;
+use DataSource\Entities\Classroom\ClassSession;
 use DataSource\Entities\Instructor\Instructor;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\CourseContent\Store;
@@ -38,10 +39,11 @@ class AdminCourseContentController extends BaseController
         $practices = AdminPracticeTypeRepository::list();
         $taxonomies = AdminTaxonomyRepository::list();
         $instructors = Instructor::all();
+        $sessions = $this->classSessionsForBuilder();
 
         $route_name = $this->route_name;
         $table_name = $this->table_name;
-        return view($this->module . '.create', compact('route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors'));
+        return view($this->module . '.create', compact('route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors','sessions'));
     }
     
     public function show($courseId)
@@ -50,11 +52,23 @@ class AdminCourseContentController extends BaseController
         $practices = AdminPracticeTypeRepository::list();
         $taxonomies = AdminTaxonomyRepository::list();
         $instructors = Instructor::all();
+        $sessions = $this->classSessionsForBuilder();
         $item=$this->getRepository()->find($courseId);
-       
+
         $route_name = $this->route_name;
         $table_name = $this->table_name;
-        return view($this->module . '.show', compact('item','route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors'));
+        return view($this->module . '.show', compact('item','route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors','sessions'));
+    }
+
+    /**
+     * Class sessions offered as a source list for classroom-type steps in the builder.
+     */
+    private function classSessionsForBuilder()
+    {
+        return ClassSession::normal()
+            ->with(['classroom', 'instructor', 'sessionType'])
+            ->orderByDesc('held_at')
+            ->get();
     }
     public function update(Request $request,$courseId)
     {

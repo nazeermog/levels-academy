@@ -29,7 +29,11 @@ class AdminFreeSessionController extends BaseController
             ->latest('id')
             ->get();
 
-        $scheduled = FreeSessionRequest::where('status', FreeSessionRequest::STATUS_SCHEDULED)
+        // Scheduled + given so the admin sees the full lifecycle of every assignment.
+        $scheduled = FreeSessionRequest::whereIn('status', [
+                FreeSessionRequest::STATUS_SCHEDULED,
+                FreeSessionRequest::STATUS_GIVEN,
+            ])
             ->with(['user:id,first_name,last_name,email', 'instructor:id,first_name,last_name'])
             ->latest('scheduled_at')
             ->limit(50)
@@ -160,8 +164,15 @@ class AdminFreeSessionController extends BaseController
                 'method'          => 'REQUEST',
             ]);
 
-            $startUtcText  = $startUtc->format('Y-m-d H:i') . ' UTC';
-            $endUtcText    = $endUtc->format('Y-m-d H:i') . ' UTC';
+            // Render in the attendee's timezone when we know it (auto-detected at login).
+            $attendeeTz = ($attendeeUser->timezone && in_array($attendeeUser->timezone, timezone_identifiers_list(), true))
+                ? $attendeeUser->timezone : null;
+            $startUtcText  = $attendeeTz
+                ? $startUtc->copy()->setTimezone($attendeeTz)->format('Y-m-d H:i') . ' (' . $attendeeTz . ')'
+                : $startUtc->format('Y-m-d H:i') . ' UTC';
+            $endUtcText    = $attendeeTz
+                ? $endUtc->copy()->setTimezone($attendeeTz)->format('Y-m-d H:i') . ' (' . $attendeeTz . ')'
+                : $endUtc->format('Y-m-d H:i') . ' UTC';
             $startIsoParam = $startUtc->format('Ymd\THis\Z');
             $endIsoParam   = $endUtc->format('Ymd\THis\Z');
             $startLocalLink = 'https://www.timeanddate.com/worldclock/fixedtime.html?iso=' . $startIsoParam;

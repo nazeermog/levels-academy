@@ -49,6 +49,7 @@ class AdminCourseContentRepository
       }
       $content->ordering = $item['ordering'];
       $content->course_id = $course->id;
+      $content->step_type = $item['step_type'] ?? 'normal';
       $content->save();
 
       //todo::add steps
@@ -96,6 +97,7 @@ class AdminCourseContentRepository
         // $content->title = $item['title'];
         // $content->desc = $item['desc'];
         $content->course_id = $course->id;
+        $content->step_type = $item['step_type'] ?? 'normal';
 
         foreach (localeSupported() as $locale) {
           $content->translateOrNew($locale)->title = $item['title'];

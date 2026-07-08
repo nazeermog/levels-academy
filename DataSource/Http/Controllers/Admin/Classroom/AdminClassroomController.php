@@ -33,7 +33,9 @@ class AdminClassroomController extends BaseController
             ->when($currentOrg, fn($q) => $q->where('organization_id', $currentOrg->id))
             ->orderBy('first_name')
             ->get(['id','first_name','last_name']);
-        $types = $currentOrg ? ClassSessionType::inOrganization($currentOrg->id)->orderBy('name')->get(['id','name']) : collect();
+        $types = ClassSessionType::when($currentOrg, fn($q) => $q->inOrganization($currentOrg->id))
+            ->orderBy('name')
+            ->get(['id','name']);
         return view('datasource::management.classrooms.create', compact('currentOrg', 'instructors', 'students', 'types'));
     }
 
@@ -90,7 +92,9 @@ class AdminClassroomController extends BaseController
             ->orderBy('first_name')
             ->get(['id','first_name','last_name']);
         $selectedStudents = $classroom->students()->pluck('users.id')->toArray();
-        $types = $currentOrg ? ClassSessionType::inOrganization($currentOrg->id)->orderBy('name')->get(['id','name']) : collect();
+        $types = ClassSessionType::when($currentOrg, fn($q) => $q->inOrganization($currentOrg->id))
+            ->orderBy('name')
+            ->get(['id','name']);
         return view('datasource::management.classrooms.edit', compact('classroom', 'currentOrg', 'instructors', 'students', 'selectedStudents', 'types'));
     }
 

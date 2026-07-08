@@ -6,6 +6,7 @@ use DataSource\Entities\Lesson\Lesson;
 use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use DataSource\Entities\Course\CourseContent;
+use DataSource\Entities\Classroom\ClassSession;
 use DataSource\Entities\PracticeType\PracticeType;
 use DataSource\Entities\PracticeType\PracticeTypeDetail;
 
@@ -44,6 +45,14 @@ class CourseStep extends Model
     public function practiceTypeDetail()
     {
         return $this->belongsTo(PracticeTypeDetail::class,'stepable_id');
+    }
+
+    /**
+     * The class session this step points to (when stepable_type === 'ClassSessions').
+     */
+    public function classSession()
+    {
+        return $this->belongsTo(ClassSession::class, 'stepable_id');
     }
 
 

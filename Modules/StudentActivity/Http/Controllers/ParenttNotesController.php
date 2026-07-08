@@ -11,6 +11,7 @@ use DataSource\Entities\Inrollment\Inrollment;
 use DataSource\Entities\Transaction\Transaction;
 use DataSource\Entities\Instructor\InstructorNote;
 use DataSource\Entities\Classroom\ClassSession;
+use DataSource\Entities\Classroom\ClassSessionStudent;
 use DataSource\Entities\Student\Student;
 
 class ParenttNotesController extends Controller
@@ -66,16 +67,18 @@ class ParenttNotesController extends Controller
     // child user_ids from pivot are Student model primary keys (user_id)
     $childUserIds = $parent->students()->pluck('students.user_id');
 
-    // sessions for classrooms where student is enrolled: via classroom_student (student_id references users.id)
-    // map student user_ids to users.id (same value)
-    $sessions = ClassSession::with(['classroom', 'instructor'])
-      ->whereHas('classroom.students', function ($q) use ($childUserIds) {
-        $q->whereIn('users.id', $childUserIds);
-      })
-      ->orderByDesc('held_at')
+    // One row per (child, session): shows the session time, whether it was given
+    // to THAT child, and the instructor's note of what they learned.
+    $records = ClassSessionStudent::query()
+      ->join('class_sessions', 'class_session_student.class_session_id', '=', 'class_sessions.id')
+      ->whereIn('class_session_student.student_id', $childUserIds)
+      ->where('class_sessions.type', ClassSession::TYPE_NORMAL)
+      ->with(['session.classroom', 'session.instructor', 'studentUser'])
+      ->orderByDesc('class_sessions.held_at')
+      ->select('class_session_student.*')
       ->paginate(20);
 
-    return view('studentactivity::childrenClassroomSessions', compact('sessions'));
+    return view('studentactivity::childrenClassroomSessions', compact('records'));
   }
   
 }

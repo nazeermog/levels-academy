@@ -26,7 +26,7 @@ class AdminClassroomReportController extends BaseController
         $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
         $baseQuery = function () use ($currentOrg, $startOfMonth, $endOfMonth, $instructorId, $classroomId, $typeId) {
-            return ClassSession::normal()->with(['instructor', 'type', 'classroom'])
+            return ClassSession::normal()->with(['instructor', 'sessionType', 'classroom', 'classroom.students'])
                 ->when($currentOrg, function ($q) use ($currentOrg) {
                     $q->whereHas('classroom', function ($cq) use ($currentOrg) {
                         $cq->where('organization_id', $currentOrg->id);
@@ -49,12 +49,33 @@ class AdminClassroomReportController extends BaseController
 
         // Totals by instructor + grand total
         $all = $baseQuery()->get();
-        $totals = $all->groupBy('instructor_id')->map(function ($group) {
+
+        // Instructor payout is per-student (teacher_payout × number of students
+        // billed for the session), mirroring revenue which charges full price per
+        // student. Billed count comes from this month's charge transactions, with
+        // a fallback to the classroom's currently-enrolled students.
+        $billedCountBySession = $this->billedStudentCountBySession($startOfMonth, $endOfMonth);
+        $payoutForSession = function ($s) use ($billedCountBySession) {
+            $rate = (float) (optional($s->sessionType)->teacher_payout ?? 0);
+            $students = (int) $billedCountBySession->get($s->id, 0);
+            if ($students <= 0) {
+                $students = $s->classroom ? $s->classroom->students->count() : 0;
+            }
+            return $rate * $students;
+        };
+
+        // Attach the computed payout to each paginated session for the view.
+        $sessions->getCollection()->transform(function ($s) use ($payoutForSession) {
+            $s->session_payout = $payoutForSession($s);
+            return $s;
+        });
+
+        $totals = $all->groupBy('instructor_id')->map(function ($group) use ($payoutForSession) {
             return [
                 'instructor' => optional($group->first())->instructor,
                 'sessions_count' => $group->count(),
-                'amount' => $group->sum(function ($s) {
-                    return optional($s->type)->teacher_payout ?? 0;
+                'amount' => $group->sum(function ($s) use ($payoutForSession) {
+                    return $payoutForSession($s);
                 }),
             ];
         })->values();
@@ -103,7 +124,7 @@ class AdminClassroomReportController extends BaseController
         $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
         $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
-        $sessions = ClassSession::normal()->with(['type', 'classroom', 'instructor'])
+        $sessions = ClassSession::normal()->with(['sessionType', 'classroom', 'classroom.students', 'instructor'])
             ->when($currentOrg, function ($q) use ($currentOrg) {
                 $q->whereHas('classroom', function ($cq) use ($currentOrg) {
                     $cq->where('organization_id', $currentOrg->id);
@@ -138,22 +159,35 @@ class AdminClassroomReportController extends BaseController
             return $list->where('is_credit', 0)->sum('price');
         });
 
-        // Payouts: sum teacher_payout for the sessions
-        $payouts = $sessions->sum(function ($s) {
-            return optional($s->type)->teacher_payout ?? 0;
+        // Payout is per-student: teacher_payout × number of students billed for the
+        // session (mirrors revenue, which charges full price per student). Billed
+        // count comes from this session's charge transactions, falling back to the
+        // classroom's currently-enrolled students when no charges exist.
+        $payoutForSession = function ($s) use ($txBySession) {
+            $rate = (float) (optional($s->sessionType)->teacher_payout ?? 0);
+            $students = $txBySession->get($s->id, collect())->where('is_credit', 0)->count();
+            if ($students <= 0) {
+                $students = $s->classroom ? $s->classroom->students->count() : 0;
+            }
+            return $rate * $students;
+        };
+
+        // Payouts: sum per-student teacher payout for the sessions
+        $payouts = $sessions->sum(function ($s) use ($payoutForSession) {
+            return $payoutForSession($s);
         });
 
         $profit = $revenue - $payouts;
 
         // Breakdown by classroom
-        $byClassroom = $sessions->groupBy('classroom_id')->map(function ($group, $classroomId) use ($txBySession) {
+        $byClassroom = $sessions->groupBy('classroom_id')->map(function ($group) use ($txBySession, $payoutForSession) {
             $sessionIds = $group->pluck('id');
             $revenue = $sessionIds->sum(function ($sid) use ($txBySession) {
                 $list = $txBySession->get($sid, collect());
                 return $list->where('is_credit', 0)->sum('price');
             });
-            $payouts = $group->sum(function ($s) {
-                return optional($s->type)->teacher_payout ?? 0;
+            $payouts = $group->sum(function ($s) use ($payoutForSession) {
+                return $payoutForSession($s);
             });
             return [
                 'classroom' => optional($group->first())->classroom,
@@ -165,17 +199,17 @@ class AdminClassroomReportController extends BaseController
         })->values();
 
         // Breakdown by type
-        $byType = $sessions->groupBy('class_session_type_id')->map(function ($group, $typeId) use ($txBySession) {
+        $byType = $sessions->groupBy('class_session_type_id')->map(function ($group) use ($txBySession, $payoutForSession) {
             $sessionIds = $group->pluck('id');
             $revenue = $sessionIds->sum(function ($sid) use ($txBySession) {
                 $list = $txBySession->get($sid, collect());
                 return $list->where('is_credit', 0)->sum('price');
             });
-            $payouts = $group->sum(function ($s) {
-                return optional($s->type)->teacher_payout ?? 0;
+            $payouts = $group->sum(function ($s) use ($payoutForSession) {
+                return $payoutForSession($s);
             });
             return [
-                'type' => optional($group->first())->type,
+                'type' => optional($group->first())->sessionType,
                 'sessions_count' => $group->count(),
                 'revenue' => $revenue,
                 'payouts' => $payouts,
@@ -392,6 +426,13 @@ class AdminClassroomReportController extends BaseController
         $totalProfit   = $rows->sum('expected_profit');
 
         // ── Per-student breakdown (how much comes from each student) ──
+        // Preload every enrolled student's record in one query so the loop below
+        // doesn't run a Student query per student per classroom (N+1).
+        $studentsById = Student::whereIn(
+            'user_id',
+            $classrooms->flatMap(fn ($c) => $c->students->pluck('id'))->unique()->values()
+        )->get()->keyBy('user_id');
+
         $studentRows = collect();
         foreach ($classrooms as $classroom) {
             $sessionType       = $classroom->defaultSessionType;
@@ -400,7 +441,7 @@ class AdminClassroomReportController extends BaseController
             $perStudentTotal   = $pricePerSession * $projectedSessions;
 
             foreach ($classroom->students as $studentUser) {
-                $student = Student::where('user_id', $studentUser->id)->first();
+                $student = $studentsById->get($studentUser->id);
                 $key = $studentUser->id;
 
                 if ($studentRows->has($key)) {
@@ -453,6 +494,27 @@ class AdminClassroomReportController extends BaseController
             'classroomsForFilter',
             'types'
         ));
+    }
+
+    /**
+     * Map of [session_id => number of students billed] for the month, derived
+     * from charge transactions whose description references "Class session #<id>".
+     */
+    private function billedStudentCountBySession(Carbon $startOfMonth, Carbon $endOfMonth)
+    {
+        return Transaction::whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->where('is_credit', 0)
+            ->get()
+            ->filter(function ($t) {
+                return is_string($t->desc) && preg_match('/Class session #(\d+)/i', $t->desc);
+            })
+            ->groupBy(function ($t) {
+                preg_match('/Class session #(\d+)/i', $t->desc, $m);
+                return (int) $m[1];
+            })
+            ->map(function ($group) {
+                return $group->count();
+            });
     }
 
     /**

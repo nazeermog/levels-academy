@@ -32,6 +32,7 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Type</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -44,12 +45,26 @@
                 <td>{{$item->user->email}}</td>
 
                 <td>
+                  @if(optional($item->user)->role === 'trial_student')
+                    <span class="badge badge-warning">Trial</span>
+                  @else
+                    <span class="badge badge-success">Student</span>
+                  @endif
+                </td>
+
+                <td>
                   <input type="checkbox" name="my-checkbox" data-bootstrap-switch {{($item->is_active)?'checked':''}} value="{{$item->user_id}}" data-off-color="danger" data-on-color="success">
                 </td>
                 <td>
                   <div class="row">
                     <div class="ml-1">
                       <a href="{{route('admin.'.$route_name.'.show',$item->user_id)}}" class="btn btn-outline-primary ">Edit</a>
+                      @if(optional($item->user)->role === 'trial_student')
+                      <form action="{{ route('admin.students.promote', $item->user_id) }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-success">Promote to student</button>
+                      </form>
+                      @endif
                       <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal{{$item->user_id}}">
                         Delete
                       </button>

@@ -109,11 +109,11 @@
               <td>{{ $item->created_at->format('Y-m-d')}}</td>
               <td>
 
-                {{$item->student->first_name .' '.$item->student->last_name}}
+                {{ optional($item->student)->first_name .' '. optional($item->student)->last_name }}
               </td>
 
               <td>
-                {{$item->course->title}}
+                {{ optional($item->course)->title ?? '—' }}
               </td>
               <td>
                 {{$item->progress_lesson}}%

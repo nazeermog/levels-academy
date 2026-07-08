@@ -195,6 +195,21 @@
                 </li>
 
                 <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" href="{{ route('instructor.sessions.history') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">history</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            Given Sessions
+                            @elseif(session('locale', config('app.locale')) == 'ar')
+                            الجلسات المُقدمة
+                            @elseif(session('locale', config('app.locale')) == 'de')
+                            Gegebene Sitzungen
+                            @endif
+                        </span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
                     <a class="sidebar-menu-button" href="{{ route('instructor.availability.index') }}">
                         <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">schedule</span>
                         <span class="sidebar-menu-text font-droid">
@@ -219,6 +234,21 @@
                             الجلسات المجانية
                             @elseif(session('locale', config('app.locale')) == 'de')
                             Kostenlose Sitzungen
+                            @endif
+                        </span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item">
+                    <a class="sidebar-menu-button" href="{{ route('instructor.progress.index') }}">
+                        <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">bar_chart</span>
+                        <span class="sidebar-menu-text font-droid">
+                            @if(session('locale', config('app.locale')) == 'en')
+                            Course Progress
+                            @elseif(session('locale', config('app.locale')) == 'ar')
+                            تقدم الطلاب
+                            @elseif(session('locale', config('app.locale')) == 'de')
+                            Kursfortschritt
                             @endif
                         </span>
                     </a>

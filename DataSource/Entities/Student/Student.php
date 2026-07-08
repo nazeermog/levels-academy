@@ -30,6 +30,7 @@ class Student extends Model
         'country',
         'city',
         'avatar',
+        'phone_number',
     ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

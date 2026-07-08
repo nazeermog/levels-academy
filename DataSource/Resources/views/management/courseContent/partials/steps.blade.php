@@ -122,6 +122,45 @@
                         </div>
                     </div>
                 </div>
+                <!-- Class Sessions source (used by classroom-type steps) -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSessions">
+                        <span class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseSessions" aria-expanded="false" aria-controls="collapseSessions">
+                            Class Sessions
+                        </span>
+                    </h2>
+                    <div id="collapseSessions" class="accordion-collapse collapse" aria-labelledby="headingSessions">
+                        <div class="accordion-body">
+                            <div class="p-2">
+                                <select id="sessionInstructorFilter" class="form-select form-select-sm mb-2">
+                                    <option value="">All instructors</option>
+                                    @foreach ($instructors as $ins)
+                                        <option value="{{ $ins->user_id }}">{{ $ins->first_name }} {{ $ins->last_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <ul class="list-unstyled connected-sortable droppable-area1 mb-0" id="sessionsList">
+                                @foreach ($sessions as $session)
+                                    <li class="draggable-item cursor-pointer session-item" data-id="{{ $session->id }}"
+                                        id="session-{{ $session->id }}" data-type="ClassSessions"
+                                        data-instructor-id="{{ $session->instructor_id }}">
+                                        <div class="d-flex align-items-center justify-content-between border px-3 py-2">
+                                            <h4>
+                                                {{ optional($session->classroom)->name ?? 'Session' }}@if($session->content) — {{ Str::limit($session->content, 40) }}@endif
+                                                <small class="text-muted d-block">
+                                                    @if($session->held_at)<span data-localtime="{{ $session->held_at->toIso8601String() }}">{{ $session->held_at->format('Y-m-d H:i') }} UTC</span>@endif ·
+                                                    {{ optional($session->instructor)->first_name }} {{ optional($session->instructor)->last_name }}
+                                                </small>
+                                            </h4>
+                                            <i class="bi bi-chevron-double-right move-btn"></i>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-md-7">
@@ -175,7 +214,12 @@
             </div>
             <div class="modal-body">
                 <input type="text" placeholder="title" class="form-control mb-3" id="title" />
-                <textarea placeholder="Description" class="form-control" id="description"></textarea>
+                <textarea placeholder="Description" class="form-control mb-3" id="description"></textarea>
+                <label class="form-label">Step type</label>
+                <select id="stepType" class="form-select">
+                    <option value="normal">Normal (lessons / practices)</option>
+                    <option value="classroom">Classroom (class sessions)</option>
+                </select>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -199,7 +243,12 @@
             </div>
             <div class="modal-body">
                 <input type="text" placeholder="title" class="form-control mb-3" id="editTitle" />
-                <textarea placeholder="Description" class="form-control" id="editDescription"></textarea>
+                <textarea placeholder="Description" class="form-control mb-3" id="editDescription"></textarea>
+                <label class="form-label">Step type</label>
+                <select id="editStepType" class="form-select">
+                    <option value="normal">Normal (lessons / practices)</option>
+                    <option value="classroom">Classroom (class sessions)</option>
+                </select>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -243,6 +292,16 @@
                     var itemSelect = $(" .droppable-area1 li.selected");
 
                     if (selectBox.length) {
+                        var boxType = $(".box.selected").attr('data-step-type') || 'normal';
+                        var isSession = itemSelect.attr('data-type') === 'ClassSessions';
+                        if (boxType === 'classroom' && !isSession) {
+                            alert('Classroom steps can only contain class sessions.');
+                            return;
+                        }
+                        if (boxType !== 'classroom' && isSession) {
+                            alert('Class sessions can only be added to classroom steps.');
+                            return;
+                        }
                         itemSelect.clone().appendTo(selectBox);
                         var itemCopyed = $(".droppable-area2 li.selected");
                         var btnIcon = $(" .droppable-area2 li.selected i");
@@ -295,6 +354,7 @@
         function addBoxs() {
             const title = document.getElementById("title");
             const description = document.getElementById("description");
+            const stepType = document.getElementById("stepType");
             myCards.innerHTML += `
                 <div class="card box mb-3" onclick="selectBox()">
                     <div class="card-body">
@@ -317,9 +377,12 @@
                     </div>
                     </div>
       `;
+            const newBox = myCards.lastElementChild;
+            if (newBox) { setBoxStepType(newBox, stepType.value); }
             // updateModal();
             title.value = "";
             description.value = "";
+            stepType.value = "normal";
         }
 
         let modalsEidt = [];
@@ -353,6 +416,8 @@
                 );
                 editTitle.value = titleValue.innerHTML;
                 editDescription.value = descriptionValue.innerHTML;
+                const selectedBox = document.querySelector(".box.selected");
+                document.getElementById("editStepType").value = getBoxStepType(selectedBox);
             }, 200);
         }
 
@@ -368,6 +433,8 @@
                 );
                 titleValue.textContent = editTitle.value;
                 descriptionValue.textContent = editDescription.value;
+                const selectedBox = document.querySelector(".box.selected");
+                setBoxStepType(selectedBox, document.getElementById("editStepType").value);
             }, 200);
         }
 
@@ -386,6 +453,45 @@
             updateInformation();
             modaledit.hide();
         });
+        // --- Classroom step helpers ---------------------------------------
+        function getBoxStepType(card) {
+            return (card && card.getAttribute('data-step-type') === 'classroom') ? 'classroom' : 'normal';
+        }
+
+        function setBoxStepType(card, type) {
+            if (!card) { return; }
+            type = (type === 'classroom') ? 'classroom' : 'normal';
+            card.setAttribute('data-step-type', type);
+            const info = card.querySelector('.box-information');
+            if (!info) { return; }
+            let badge = info.querySelector('.step-type-badge');
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'badge step-type-badge';
+                info.appendChild(badge);
+            }
+            badge.textContent = (type === 'classroom') ? 'Classroom' : 'Normal';
+            badge.classList.toggle('bg-warning', type === 'classroom');
+            badge.classList.toggle('bg-secondary', type !== 'classroom');
+        }
+
+        // Show a badge on every box already on the page.
+        document.querySelectorAll('.cards .box').forEach(function (card) {
+            setBoxStepType(card, getBoxStepType(card));
+        });
+
+        // Filter the Class Sessions source list by instructor.
+        const sessionFilter = document.getElementById('sessionInstructorFilter');
+        if (sessionFilter) {
+            sessionFilter.addEventListener('change', function () {
+                const val = this.value;
+                document.querySelectorAll('#sessionsList .session-item').forEach(function (li) {
+                    const match = !val || li.getAttribute('data-instructor-id') === val;
+                    li.style.display = match ? '' : 'none';
+                });
+            });
+        }
+
         submit.addEventListener('click', function() {
             const boxArr = [];
             const card = document.querySelectorAll('.card');
@@ -399,6 +505,7 @@
                 const boxData = {
                     'title': title.innerHTML,
                     'desc': desc.innerHTML,
+                    'step_type': item.getAttribute('data-step-type') || 'normal',
                     'type': [],
                     'ordering': index + 1,
                 };
@@ -406,7 +513,7 @@
                 tasks.forEach((task, i) => {
                     const taskId = task.getAttribute('data-id');
                     const taskType = task.getAttribute('data-type');
-                    const taskTitle = task.querySelector('h4').innerHTML;
+                    const taskTitle = (task.querySelector('h4').textContent || '').replace(/\s+/g, ' ').trim();
                     const taskOrdering = task.getAttribute('ordering');
 
                     boxData.type.push({

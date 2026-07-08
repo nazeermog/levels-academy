@@ -18,6 +18,7 @@ use DataSource\Http\Controllers\Admin\Instructor\AdminInstructorController;
 use DataSource\Http\Controllers\Admin\Practice\AdminPracticeTypeController;
 use DataSource\Http\Controllers\Admin\Practice\AdminPracticeLevelController;
 use DataSource\Http\Controllers\Admin\CourseContent\AdminCourseContentController;
+use DataSource\Http\Controllers\Admin\Course\AdminCourseProgressController;
 use DataSource\Http\Controllers\Admin\ResultPractice\AdminResultPracticeController;
 use DataSource\Http\Controllers\Admin\CategoryProduct\AdminCategoryProductController;
 use DataSource\Http\Controllers\Admin\Instructor\AdminInstructorNoteController;
@@ -51,6 +52,8 @@ Route::prefix('admin')->middleware(['auth', $catalogGuard])->group(function () {
         Route::resource('instructors', AdminInstructorController::class);
         Route::resource('semesters', AdminSemesterController::class);
         Route::resource('students', AdminStudentController::class);
+        // Upgrade a trial student (self-registered via API) to a full student.
+        Route::post('students/{user}/promote', [AdminStudentController::class, 'promote'])->name('students.promote');
         Route::resource('parentts', AdminParenttController::class);
         Route::resource('exercises', AdminExerciseController::class);
         Route::resource('products', AdminProductController::class);
@@ -58,6 +61,9 @@ Route::prefix('admin')->middleware(['auth', $catalogGuard])->group(function () {
         Route::resource('orders', AdminOrderController::class);
         Route::resource('blogs', AdminBlogController::class);
         Route::resource('inrollments', AdminInrollmentController::class);
+
+        Route::get('course-progress', [AdminCourseProgressController::class, 'index'])->name('course-progress.index');
+        Route::get('course-progress/{course}', [AdminCourseProgressController::class, 'show'])->name('course-progress.show');
 
         Route::get('resultPractices', [AdminResultPracticeController::class, 'index'])->name('resultPractices.index');
         Route::get('instructor-notes', [AdminInstructorNoteController::class, 'index'])->name('instructor-notes.index');

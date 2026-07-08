@@ -94,7 +94,8 @@ class AdminStudentController extends BaseController
             $user->first_name = $request->input('first_name');
             $user->last_name = $request->input('last_name');
             $user->email = $request->input('email');
-            $user->role = 'student';
+            // Don't change role on edit — trial students are promoted only via the
+            // explicit "Promote to student" action, not by editing their details.
 
             if (!empty($request->input('password'))) {
                 $user->password = bcrypt($request->input('password'));
@@ -122,6 +123,23 @@ class AdminStudentController extends BaseController
             return back()->withErrors(['error' => 'Something went wrong during update!']);
         }
     }
+    /**
+     * Upgrade a trial student (created via the register API) to a full student.
+     */
+    public function promote($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        if ($user->role !== 'trial_student') {
+            return back()->withErrors(['error' => 'This account is not a trial student.']);
+        }
+
+        $user->role = 'student';
+        $user->save();
+
+        return back()->withSuccess('Trial student upgraded to a full student.');
+    }
+
     public function tiles()
     {
         $studentsCount = Student::count();

@@ -15,7 +15,7 @@
           <select id="classroom_id" name="classroom_id" class="form-control" required>
             <option value="">Select Classroom</option>
             @foreach($classrooms as $c)
-              <option value="{{ $c->id }}">{{ $c->name }}</option>
+              <option value="{{ $c->id }}" data-session-time="{{ $c->session_time }}">{{ $c->name }}</option>
             @endforeach
           </select>
         </div>
@@ -35,6 +35,18 @@
               <option value="{{ $t->id }}">{{ $t->name }}</option>
             @endforeach
           </select>
+        </div>
+        <div class="form-group">
+          <label for="is_given">Session Given</label>
+          <select id="is_given" name="is_given" class="form-control">
+            <option value="1" {{ old('is_given', '1') == '1' ? 'selected' : '' }}>Yes</option>
+            <option value="0" {{ old('is_given') === '0' ? 'selected' : '' }}>No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="zoom_url">Meeting Link (Zoom)</label>
+          <input type="url" id="zoom_url" name="zoom_url" class="form-control" placeholder="https://zoom.us/j/..." value="{{ old('zoom_url') }}">
+          <small class="form-text text-muted">Students enrolled in this classroom can join from their course.</small>
         </div>
         <div class="form-group">
           <label for="content">Content Presented</label>
@@ -91,6 +103,46 @@
 
     held.addEventListener('change', updateEnd);
     held.addEventListener('input', function(){ updateEnd(); logTimes(); });
+
+    var classroomSelect = document.getElementById('classroom_id');
+    var DEFAULT_TIME = '10:00';
+
+    // The selected classroom's configured start time (HH:mm), if any.
+    function selectedSessionTime() {
+      if (!classroomSelect) { return ''; }
+      var opt = classroomSelect.options[classroomSelect.selectedIndex];
+      var t = opt ? (opt.getAttribute('data-session-time') || '') : '';
+      return t ? t.substring(0, 5) : '';
+    }
+
+    function currentDatePart() {
+      return (held.value && held.value.length >= 10) ? held.value.substring(0, 10) : '';
+    }
+
+    // Set held_at to <date>T<classroom time | default>, keeping the chosen date.
+    // The instructor can still freely edit the time afterwards.
+    function applySessionTime(forceDate) {
+      var datePart = forceDate || currentDatePart();
+      if (!datePart) { return; }
+      held.value = datePart + 'T' + (selectedSessionTime() || DEFAULT_TIME);
+      updateEnd();
+      logTimes();
+    }
+
+    // When a classroom is picked, snap the time to that classroom's session_time.
+    if (classroomSelect) {
+      classroomSelect.addEventListener('change', function () { applySessionTime(); });
+    }
+
+    // Prefill the date when arriving from a calendar day click (?date=YYYY-MM-DD).
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var presetDate = params.get('date');
+      if (presetDate && !held.value) {
+        var datePart = presetDate.length >= 10 ? presetDate.substring(0, 10) : presetDate;
+        applySessionTime(datePart);
+      }
+    } catch (e) {}
 
     if (held.value && !endAt.value) {
       updateEnd();

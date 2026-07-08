@@ -540,6 +540,11 @@
 
             <form action="{{route('users.login')}}" method="POST">
                 @csrf
+                {{-- Auto-detected browser timezone, stored on the user for server-side rendering (emails/ICS). --}}
+                <input type="hidden" name="tz" id="tz">
+                <script>
+                    try { document.getElementById('tz').value = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+                </script>
                 <div class="login-logo">
                     <!-- <img src="{{ asset('images/logo/woderhafen.jpg') }}" alt="Wonderhafen logo"> -->
                 </div>

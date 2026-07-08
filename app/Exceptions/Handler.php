@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -45,6 +46,14 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        // A stale CSRF token (expired session) should send the user back to a fresh
+        // login page — not the "419 Page Expired" wall.
+        $this->renderable(function (TokenMismatchException $e, $request) {
+            return redirect()->route('login')->withErrors([
+                'email' => 'Your session expired — please sign in again.',
+            ]);
         });
     }
 }

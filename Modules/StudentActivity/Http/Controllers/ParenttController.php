@@ -5,6 +5,7 @@ namespace Modules\StudentActivity\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\CourseProgressService;
 use DataSource\Entities\User\UserEvent;
 use DataSource\Entities\Parentt\Parentt;
 use DataSource\Entities\Inrollment\Inrollment;
@@ -18,7 +19,7 @@ class ParenttController extends Controller
     return view('studentactivity::dashboard');
   }
 
-  public function progressChilderns()
+  public function progressChilderns(CourseProgressService $progress)
   {
     $userParent = Auth::user();
     $parent = Parentt::find($userParent->id);
@@ -27,9 +28,23 @@ class ParenttController extends Controller
     $list = Inrollment::with(['student', 'course.translations'])
       ->whereIn('student_id', $children->pluck('user_id')->toArray())
       ->get();
-    $route_name = 'inrollments';
+
+    // Step-based progress per enrolment, batched per course to avoid N+1.
+    $reports = []; // [inrollmentId] => report
+    foreach ($list->groupBy('course_id') as $rows) {
+      $course = optional($rows->first())->course;
+      if (!$course) {
+        continue;
+      }
+      $studentIds = $rows->pluck('student_id')->map(fn ($v) => (int) $v)->unique()->values()->all();
+      $courseReports = $progress->reports($course, $studentIds);
+      foreach ($rows as $row) {
+        $reports[$row->id] = $courseReports[(int) $row->student_id] ?? null;
+      }
+    }
+
     $table_name = 'childern progress';
-    return view('studentactivity::progressChilderns', compact('list', 'route_name', 'table_name'));
+    return view('studentactivity::progressChilderns', compact('list', 'reports', 'table_name'));
   }
   public function childrenEvents(Request $request)
   {

@@ -71,8 +71,8 @@
                                 <td>{{ $s->held_at }}</td>
                                 <td>{{ optional($s->classroom)->name }}</td>
                                 <td>{{ optional($s->instructor)->first_name }} {{ optional($s->instructor)->last_name }}</td>
-                                <td>{{ optional($s->type)->name }}</td>
-                                <td>{{ number_format(optional($s->type)->teacher_payout ?? 0, 2) }}</td>
+                                <td>{{ optional($s->sessionType)->name }}</td>
+                                <td>{{ number_format($s->session_payout ?? 0, 2) }}</td>
                             </tr>
                         @empty
                             <tr>

@@ -109,6 +109,7 @@ class InstructorController extends Controller
       ->selectRaw('SUM(coin) as total_coin')
       ->groupBy('student_id')
       ->orderByDesc('total_coin')
+      ->with('student') // eager-load names in one query (the view reads $item->student)
       ->get();
     $courses = AdminCourseRepository::list();
     $practices = AdminPracticeTypeRepository::list();

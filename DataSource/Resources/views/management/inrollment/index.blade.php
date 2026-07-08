@@ -29,9 +29,11 @@
                 <th>Semester Name</th>
                 <th>Semester start</th>
                 <th>Semester end</th>
+                {{-- Old progress system — hidden from admin panel (kept for reference)
                 <th>Progress Practice (%)</th>
                 <th>Progress Lesson (%)</th>
                 <th>Progress Quiz (%)</th>
+                --}}
                 <th>created at</th>
               </tr>
             </thead>
@@ -44,6 +46,7 @@
                 <td>{{ $item->semester->title ?? '-' }}</td>
                 <td>{{ $item->semester->start_date ?? '-' }}</td>
                 <td>{{ $item->semester->end_date ?? '-' }}</td>
+                {{-- Old progress system — hidden from admin panel (kept for reference)
                 <td>
                   <div class="progress" style="height: 25px;">
                     <div class="progress-bar bg-{{ $item->progress_practice >= 80 ? 'success' : ($item->progress_practice >= 50 ? 'warning' : 'danger') }}"
@@ -80,6 +83,7 @@
                     </div>
                   </div>
                 </td>
+                --}}
                 <td>{{ $item->created_at ? $item->created_at->format('Y-m-d') : '-' }}</td>
               </tr>
               @endforeach

@@ -57,8 +57,8 @@
       <table class="table table-hover text-nowrap">
         <thead>
           <tr>
-            <th>Start (UTC)</th>
-            <th>End (UTC)</th>
+            <th>Start (your local time)</th>
+            <th>End (your local time)</th>
             <th>Status</th>
             <th></th>
           </tr>
@@ -66,8 +66,8 @@
         <tbody>
           @forelse($availabilities as $a)
             <tr>
-              <td>{{ $a->start_at->format('Y-m-d H:i') }}</td>
-              <td>{{ $a->end_at->format('Y-m-d H:i') }}</td>
+              <td><span data-localtime="{{ $a->start_at->toIso8601String() }}">{{ $a->start_at->format('Y-m-d H:i') }} UTC</span></td>
+              <td><span data-localtime="{{ $a->end_at->toIso8601String() }}">{{ $a->end_at->format('Y-m-d H:i') }} UTC</span></td>
               <td>
                 @if($a->status === 'booked')
                   <span class="badge badge-secondary">Booked</span>

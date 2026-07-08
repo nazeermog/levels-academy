@@ -23,7 +23,7 @@
           <select id="class_session_id" name="class_session_id" class="form-control" required>
             <option value="">Choose a session</option>
             @foreach(($sessions ?? []) as $s)
-              <option value="{{ $s->id }}">Session #{{ $s->id }} - {{ optional($s->type)->name }} - {{ $s->held_at }} @if($s->classroom) ({{ $s->classroom->name }}) @endif</option>
+              <option value="{{ $s->id }}">Session #{{ $s->id }} - {{ optional($s->sessionType)->name }} - {{ $s->held_at }} @if($s->classroom) ({{ $s->classroom->name }}) @endif</option>
             @endforeach
           </select>
         </div>

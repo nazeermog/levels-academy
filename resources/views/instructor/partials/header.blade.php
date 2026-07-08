@@ -30,41 +30,6 @@
 
       <!-- // END Navbar Brand -->
 
-      <span class="d-none d-md-flex align-items-center mr-16pt">
-
-        <span class="avatar avatar-sm mr-12pt">
-
-          <span class="avatar-title rounded navbar-avatar"><i class="material-icons">trending_up</i></span>
-
-        </span>
-
-        <small class="flex d-flex flex-column">
-          <strong class="navbar-text-100">Earnings</strong>
-          <span class="navbar-text-50">&dollar;12.3k</span>
-        </small>
-      </span>
-      <span class="d-none d-md-flex align-items-center mr-16pt">
-
-        <span class="avatar avatar-sm mr-12pt">
-
-          <span class="avatar-title rounded navbar-avatar"><i class="material-icons">receipt</i></span>
-
-        </span>
-
-        <small class="flex d-flex flex-column">
-          <strong class="navbar-text-100">Sales</strong>
-          <span class="navbar-text-50">264</span>
-        </small>
-      </span>
-
-      <!-- Navbar Search -->
-
-      <form class="search-form navbar-search d-none d-md-flex mr-16pt" action="index.html">
-        <button class="btn" type="submit"><i class="material-icons">search</i></button>
-        <input type="text" class="form-control" placeholder="Search ...">
-      </form>
-
-      <!-- // END Navbar Search -->
 
       <div class="flex"></div>
 
@@ -192,10 +157,7 @@
             <!-- <a class="dropdown-item" href="edit-account.html">Edit Account</a>
             <a class="dropdown-item" href="billing.html">Billing</a>
             <a class="dropdown-item" href="billing-history.html">Payments</a> -->
-            <form method="POST" action="{{ route('users.logout') }}">
-              @csrf
-              <button type="submit" class="dropdown-item">Logout</button>
-            </form>
+            <a href="{{ route('users.logout') }}" class="dropdown-item">Logout</a>
           </div>
         </div>
       </div>

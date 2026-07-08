@@ -37,6 +37,9 @@ class InrollmentController extends Controller
     });
     $coursesByTaxonomy = [];
     foreach ($courses as $course) {
+      if (!$course) {
+        continue; // skip orphaned enrolments whose course was deleted
+      }
       $taxonomy = $course->taxonomy;
       if ($taxonomy) {
         $coursesByTaxonomy[$taxonomy->id]['taxonomy'] = $taxonomy;

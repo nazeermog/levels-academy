@@ -67,32 +67,21 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            @if(session('locale', config('app.locale')) == 'en')
-            <th>#</th>
-            <th>Date</th>
-            <th>Student</th>
-            <th>Course</th>
-            <th>Lessons Progress</th>
-            <th>Practices Progress</th>
-            <th>Quizes Progress</th>
-            @endif
             @if(session('locale', config('app.locale')) == 'ar')
             <th>#</th>
-            <th>التاريخ</th>
             <th>الطالب</th>
             <th>الدورة التدريبية</th>
-            <th>تقدم الدروس</th>
-            <th>تقدم الممارسات</th>
-            <th>تقدم الاختبارات</th>
-            @endif
-            @if(session('locale', config('app.locale')) == 'de')
+            <th>التقدم</th>
+            @elseif(session('locale', config('app.locale')) == 'de')
             <th>#</th>
-            <th>Datum</th>
             <th>Student</th>
             <th>Kurs</th>
-            <th>Lektionsfortschritt</th>
-            <th>Praxisfortschritt</th>
-            <th>Quiz-Fortschritt</th>
+            <th>Fortschritt</th>
+            @else
+            <th>#</th>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Progress</th>
             @endif
           </tr>
         </thead>
@@ -100,26 +89,15 @@
           @foreach($list as $item)
           <tr>
             <td>{{ $item->id}}</td>
-            <td>{{ $item->created_at->format('Y-m-d')}}</td>
             <td>
-
-              {{$item->student->first_name .' '.$item->student->last_name}}
-            </td>
-
-            <td>
-              {{$item->course->title}}
+              {{ optional($item->student)->first_name .' '. optional($item->student)->last_name }}
             </td>
             <td>
-              {{$item->progress_lesson}}%
+              {{ optional($item->course)->title ?? '—' }}
             </td>
-            <td>
-              {{$item->progress_practice}}%
+            <td style="min-width:280px;">
+              @include('progress._report', ['report' => $reports[$item->id] ?? null])
             </td>
-            <td>
-              {{$item->progress_quiz}}%
-            </td>
-
-
           </tr>
           @endforeach
         </tbody>

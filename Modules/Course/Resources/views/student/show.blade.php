@@ -123,16 +123,16 @@
               @endfor
         </div>
         <p class="text-muted mb-0">{{$ratingCount}}<small>
-      @if(session('locale', config('app.locale')) == 'en')
-         ratings
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      التقييمات
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Bewertungen
-      @endif
-      </small></p>
+            @if(session('locale', config('app.locale')) == 'en')
+            ratings
+            @endif
+            @if(session('locale', config('app.locale')) == 'ar')
+            التقييمات
+            @endif
+            @if(session('locale', config('app.locale')) == 'de')
+            Bewertungen
+            @endif
+          </small></p>
         </li>
 
         </ul>
@@ -144,7 +144,19 @@
   <div class="row">
     <div class="col-lg-7">
       <div class="border-left-2 page-section pl-32pt">
-       @if ($isAuthInroll)
+        @if ($isAuthInroll)
+        <div class="card mb-32pt">
+          <div class="card-body">
+            <div class="page-separator mb-2">
+              <div class="page-separator__text">
+                @if(session('locale', config('app.locale')) == 'ar') تقدمك
+                @elseif(session('locale', config('app.locale')) == 'de') Ihr Fortschritt
+                @else Your progress @endif
+              </div>
+            </div>
+            @include('progress._report', ['report' => $myProgress, 'open' => true])
+          </div>
+        </div>
         @foreach ($contents as $content)
         <div class="d-flex align-items-center page-num-container">
           <div class="page-num">{{ $content->ordering }}</div>
@@ -158,15 +170,15 @@
             <li class="accordion__item">
               <a class="accordion__toggle" data-toggle="collapse" href="#toc-content-{{ $content->id }}">
                 <span class="flex"> {{$coursestepCount[$content->id]}}
-                @if(session('locale', config('app.locale')) == 'en')
-                Steps
-                @endif
-                @if(session('locale', config('app.locale')) == 'ar')
-                مراحل
-                @endif
-                @if(session('locale', config('app.locale')) == 'de')
-                Schritte
-                @endif    
+                  @if(session('locale', config('app.locale')) == 'en')
+                  Steps
+                  @endif
+                  @if(session('locale', config('app.locale')) == 'ar')
+                  مراحل
+                  @endif
+                  @if(session('locale', config('app.locale')) == 'de')
+                  Schritte
+                  @endif
                 </span>
                 <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
               </a>
@@ -180,10 +192,34 @@
                     @elseif ($step->stepable_type === 'Practices')
                     <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
                     <a class="flex" href="{{ route('student.practice.forcourse', ['id' => $step->stepable_id, 'type' => $step->practiceTypeDetail->practice->blade_name, 'course' => $course->id]) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
+                    @elseif ($step->stepable_type === 'ClassSessions')
+                    @php($session = $step->classSession)
+                    <span class="material-icons icon-16pt icon--left text-50">videocam</span>
+                    <span class="flex">
+                      {{ optional($session->classroom)->name ?? 'Session' }}
+                      @if($session && $session->held_at)
+                      <small class="text-muted">— <span data-localtime="{{ $session->held_at->toIso8601String() }}">{{ $session->held_at->format('Y-m-d H:i') }} UTC</span></small>
+                      @endif
+                    </span>
+                    @if($session && $session->zoom_url)
+                    <a href="{{ $session->zoom_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-success ml-2">Join meeting</a>
+                    @else
+                    <span class="badge badge-secondary ml-2">Link not posted yet</span>
+                    @endif
+                    @php($att = $session ? ($myAttendance[$session->id] ?? null) : null)
+                    @if($att)
+                    @if($att->is_given)
+                    <span class="badge badge-success ml-2">Given</span>
+                    @endif
+                    @if($att->notes)
+                    <div class="text-70 mt-1" style="width:100%;"><small><strong>Note:</strong> {{ $att->notes }}</small></div>
+                    @endif
+                    @endif
                     @elseif ($step->stepable_type === 'Quizzes')
                     <span class="material-icons icon-16pt icon--left text-50">question_answer</span>
                     @endif
-                    @endforeach
+                  </li>
+                  @endforeach
                 </ul>
               </div>
             </li>
@@ -200,15 +236,15 @@
         <div class="page-nav__content">
           <div class="page-separator">
             <div class="page-separator__text">
-            @if(session('locale', config('app.locale')) == 'en')
-            Table of contents
-            @endif
-            @if(session('locale', config('app.locale')) == 'ar')
-            جدول المحتويات
-            @endif
-            @if(session('locale', config('app.locale')) == 'de')
-            Inhaltsverzeichnis
-            @endif
+              @if(session('locale', config('app.locale')) == 'en')
+              Table of contents
+              @endif
+              @if(session('locale', config('app.locale')) == 'ar')
+              جدول المحتويات
+              @endif
+              @if(session('locale', config('app.locale')) == 'de')
+              Inhaltsverzeichnis
+              @endif
             </div>
           </div>
           <!-- <h4 class="mb-16pt">Table of contents</h4> -->
@@ -230,15 +266,15 @@
       <div class="col-md-7">
         <div class="page-separator">
           <div class="page-separator__text">
-          @if(session('locale', config('app.locale')) == 'en')
-          About this course
-          @endif
-          @if(session('locale', config('app.locale')) == 'ar')
-          حول هذه الدورة
-          @endif
-          @if(session('locale', config('app.locale')) == 'de')
-          Über diesen Kurs
-          @endif
+            @if(session('locale', config('app.locale')) == 'en')
+            About this course
+            @endif
+            @if(session('locale', config('app.locale')) == 'ar')
+            حول هذه الدورة
+            @endif
+            @if(session('locale', config('app.locale')) == 'de')
+            Über diesen Kurs
+            @endif
           </div>
         </div>
         <p class="text-70">{{$course->about}}</p>
@@ -246,17 +282,17 @@
       <div class="col-md-5">
         <div class="page-separator">
           <div class="page-separator__text bg-white">
-          @if(session('locale', config('app.locale')) == 'en')
-          What you’ll learn
-          @endif
-          @if(session('locale', config('app.locale')) == 'ar')
-          ما ستتعلمه 
-          @endif
-          @if(session('locale', config('app.locale')) == 'de')
-          Was Sie lernen werden
-          @endif
-          
-          
+            @if(session('locale', config('app.locale')) == 'en')
+            What you’ll learn
+            @endif
+            @if(session('locale', config('app.locale')) == 'ar')
+            ما ستتعلمه
+            @endif
+            @if(session('locale', config('app.locale')) == 'de')
+            Was Sie lernen werden
+            @endif
+
+
           </div>
         </div>
         <ul class="list-unstyled">
@@ -279,7 +315,7 @@
     <div class="row">
       <div class="col-md-7 mb-24pt mb-md-0">
         <h4>
-        @if(session('locale', config('app.locale')) == 'en')
+          @if(session('locale', config('app.locale')) == 'en')
           About the author
           @endif
           @if(session('locale', config('app.locale')) == 'ar')
@@ -293,15 +329,15 @@
 
         <div class="page-separator">
           <div class="page-separator__text bg-white">
-          @if(session('locale', config('app.locale')) == 'en')
-          More from the author
-          @endif
-          @if(session('locale', config('app.locale')) == 'ar')
-          المزيد من المؤلف
-          @endif
-          @if(session('locale', config('app.locale')) == 'de')
-          Mehr vom Autor
-          @endif
+            @if(session('locale', config('app.locale')) == 'en')
+            More from the author
+            @endif
+            @if(session('locale', config('app.locale')) == 'ar')
+            المزيد من المؤلف
+            @endif
+            @if(session('locale', config('app.locale')) == 'de')
+            Mehr vom Autor
+            @endif
           </div>
         </div>
         @foreach ($instructorCourses as $instructorCourse)
@@ -340,15 +376,15 @@
           </p>
           <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
             <a href="{{ route('instructor.profile', ['instructorId' => $instructor->user_id]) }}" class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">
-          @if(session('locale', config('app.locale')) == 'en')
-          View Profile
-          @endif
-          @if(session('locale', config('app.locale')) == 'ar')
-          عرض الصفحة الشخصية
-          @endif
-          @if(session('locale', config('app.locale')) == 'de')
-          Profil anzeigen
-          @endif</a>
+              @if(session('locale', config('app.locale')) == 'en')
+              View Profile
+              @endif
+              @if(session('locale', config('app.locale')) == 'ar')
+              عرض الصفحة الشخصية
+              @endif
+              @if(session('locale', config('app.locale')) == 'de')
+              Profil anzeigen
+              @endif</a>
           </div>
         </div>
       </div>
@@ -361,26 +397,26 @@
   <div class="container">
     <div class="page-headline text-center">
       <h2>
-      @if(session('locale', config('app.locale')) == 'en')
-      Your Feedback Matters
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      ملاحظاتك مهمة
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Ihr Feedback ist wichtig
-      @endif
+        @if(session('locale', config('app.locale')) == 'en')
+        Your Feedback Matters
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        ملاحظاتك مهمة
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Ihr Feedback ist wichtig
+        @endif
       </h2>
       <p class="lead text-70 measure-lead mx-auto">
-      @if(session('locale', config('app.locale')) == 'en')
-      Help us enhance your experience by providing your feedback. Rate the course and share your thoughts with us.
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      ساعدنا في تعزيز تجربتك من خلال تقديم ملاحظاتك. قيم الدورة وشاركنا أفكارك.
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Helfen Sie uns, Ihr Erlebnis zu verbessern, indem Sie uns Ihr Feedback geben. Bewerten Sie den Kurs und teilen Sie uns Ihre Gedanken mit.
-      @endif
+        @if(session('locale', config('app.locale')) == 'en')
+        Help us enhance your experience by providing your feedback. Rate the course and share your thoughts with us.
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        ساعدنا في تعزيز تجربتك من خلال تقديم ملاحظاتك. قيم الدورة وشاركنا أفكارك.
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Helfen Sie uns, Ihr Erlebnis zu verbessern, indem Sie uns Ihr Feedback geben. Bewerten Sie den Kurs und teilen Sie uns Ihre Gedanken mit.
+        @endif
       </p>
     </div>
     <div class="text-center">
@@ -396,43 +432,43 @@
     <form id="commentForm" class="ui form">
       <div class="field">
         <label>
-        @if(session('locale', config('app.locale')) == 'en')
-        Your Comment:
-        @endif
-        @if(session('locale', config('app.locale')) == 'ar')
-        تعليقك:
-        @endif
-        @if(session('locale', config('app.locale')) == 'de')
-        Dein Kommentar:
-        @endif
+          @if(session('locale', config('app.locale')) == 'en')
+          Your Comment:
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          تعليقك:
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Dein Kommentar:
+          @endif
         </label>
         <textarea id="commentInput" style="height: 100px;"></textarea>
       </div>
       <div class="text-center"> <!-- Center-align the button -->
         <button class="ui button" type="submit" style="background-color: #fea11f; color: white;">
-        @if(session('locale', config('app.locale')) == 'en')
-        Submit
-        @endif
-        @if(session('locale', config('app.locale')) == 'ar')
-        ارسال
-        @endif
-        @if(session('locale', config('app.locale')) == 'de')
-        Einreichen
-        @endif
+          @if(session('locale', config('app.locale')) == 'en')
+          Submit
+          @endif
+          @if(session('locale', config('app.locale')) == 'ar')
+          ارسال
+          @endif
+          @if(session('locale', config('app.locale')) == 'de')
+          Einreichen
+          @endif
         </button>
       </div>
     </form>
     <div class="text-center" id="thankYouSection" style="display: none;">
       <p class="lead text-100 measure-lead mx-auto" style="font-size: 24px;">
-      @if(session('locale', config('app.locale')) == 'en')
-      Thank you for your feedback!
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      !شكرا لك على ملاحظاتك
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Danke für Ihre Rückmeldung!
-      @endif  
+        @if(session('locale', config('app.locale')) == 'en')
+        Thank you for your feedback!
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        !شكرا لك على ملاحظاتك
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Danke für Ihre Rückmeldung!
+        @endif
       </p>
     </div>
   </div>
@@ -445,16 +481,16 @@
   <div class="container page__container">
     <div class="page-separator">
       <div class="page-separator__text">
-      @if(session('locale', config('app.locale')) == 'en')
-      Student Feedback
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      ردود فعل الطلاب
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Feedback der Studierenden
-      @endif
-    </div>
+        @if(session('locale', config('app.locale')) == 'en')
+        Student Feedback
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        ردود فعل الطلاب
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Feedback der Studierenden
+        @endif
+      </div>
     </div>
     <div class="row mb-32pt">
       <div class="col-md-3 mb-32pt mb-md-0">
@@ -467,16 +503,16 @@
         @endfor
       </div>
       <p class="text-muted mb-0">{{$ratingCount}}
-      @if(session('locale', config('app.locale')) == 'en')
-         ratings
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      التقييمات
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Bewertungen
-      @endif
-        </p>
+        @if(session('locale', config('app.locale')) == 'en')
+        ratings
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        التقييمات
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Bewertungen
+        @endif
+      </p>
     </div>
     <div class="col-md-9">
       <div class="row align-items-center mb-8pt" data-toggle="tooltip" data-title="{{number_format($rating5,1)}}%" data-placement="top">
@@ -607,15 +643,15 @@
   <div class="container page__container">
     <div class="page-heading">
       <h4>
-      @if(session('locale', config('app.locale')) == 'en')
-      Top Courses
-      @endif
-      @if(session('locale', config('app.locale')) == 'ar')
-      أعلى الدورات
-      @endif
-      @if(session('locale', config('app.locale')) == 'de')
-      Top-Kurse
-      @endif
+        @if(session('locale', config('app.locale')) == 'en')
+        Top Courses
+        @endif
+        @if(session('locale', config('app.locale')) == 'ar')
+        أعلى الدورات
+        @endif
+        @if(session('locale', config('app.locale')) == 'de')
+        Top-Kurse
+        @endif
       </h4>
     </div>
     <div class="position-relative carousel-card">
@@ -1057,58 +1093,62 @@
 <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
 <script>
   $('.ui.rating')
-      .rating({
-          maxRating: 5,
-      });
+    .rating({
+      maxRating: 5,
+    });
 
   var rate = ['hate it', 'bad', 'just ok', 'like it', 'love it'];
   var selectedRating = 0; // Initialize with default value
 
-  $(document).ready(function () {
-      $.each($('#rating > i.icon'), function (index, item) {
-          $(item).attr('data-ratetext', rate[index]);
+  $(document).ready(function() {
+    $.each($('#rating > i.icon'), function(index, item) {
+      $(item).attr('data-ratetext', rate[index]);
+    });
+
+    // $(document).on('mouseenter', '#rating > i.icon', function () {
+    //     $(this)
+    //         .popup({
+    //             title: $(this).attr('data-ratetext'),
+    //             on: 'hover'
+    //         })
+    //         .popup('show');
+    // });
+
+    $('#rating > i.icon').on('click', function() {
+      selectedRating = $(this).data('value');
+      console.log(selectedRating);
+    });
+
+    $('#commentForm').on('submit', function(e) {
+      e.preventDefault();
+
+      const comment = $('#commentInput').val();
+      console.log(comment);
+      console.log(selectedRating);
+
+      $.ajax({
+        type: 'POST',
+        url: '/student/courses/rateCourse/' + {
+          {
+            $course - > id
+          }
+        },
+        data: {
+          rate: selectedRating,
+          user_review: comment,
+          _token: '{{ csrf_token() }}'
+        },
+        success: function(response) {
+          console.log("success");
+          $('#ratingSection').hide();
+          $('#commentForm').hide();
+          $('#thankYouSection').show();
+        },
+        error: function(error) {
+          console.error(error);
+        }
       });
-
-      // $(document).on('mouseenter', '#rating > i.icon', function () {
-      //     $(this)
-      //         .popup({
-      //             title: $(this).attr('data-ratetext'),
-      //             on: 'hover'
-      //         })
-      //         .popup('show');
-      // });
-
-      $('#rating > i.icon').on('click', function () {
-          selectedRating = $(this).data('value');
-          console.log(selectedRating);
-      });
-
-      $('#commentForm').on('submit', function (e) {
-          e.preventDefault();
-          
-          const comment = $('#commentInput').val();
-          console.log(comment);
-          console.log(selectedRating);
-
-          $.ajax({
-              type: 'POST',
-              url: '/student/courses/rateCourse/' + {{$course->id}},
-              data: {
-                  rate: selectedRating,
-                  user_review: comment,
-                  _token: '{{ csrf_token() }}'
-              },
-              success: function (response) {
-                  console.log("success");
-                  $('#ratingSection').hide();
-                  $('#commentForm').hide();
-                  $('#thankYouSection').show();
-              },
-              error: function (error) {
-                  console.error(error);
-              }
-          });
-      });
+    });
   });
 </script>
 </div>

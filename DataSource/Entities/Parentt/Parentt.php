@@ -16,6 +16,7 @@ class Parentt extends Model
         'first_name',
         'last_name',
         'user_id',
+        'phone_number',
     ];
 
     public function user()

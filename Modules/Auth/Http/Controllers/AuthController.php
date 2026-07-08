@@ -13,10 +13,33 @@ class AuthController extends Controller
 {
   public function index()
   {
-    if (\auth()->user())
-      return redirect()->route(\auth()->user()->role . '.dashboard');
+    $user = \auth()->user();
+    if ($user) {
+      $target = $this->dashboardRouteForRole($user->role);
+      // Don't redirect back to the login page (would loop for unknown roles).
+      if ($target !== route('login')) {
+        return redirect($target);
+      }
+    }
 
     return view('auth::login');
+  }
+
+  /**
+   * The landing route for a given role. super_admin shares the admin dashboard.
+   */
+  private function dashboardRouteForRole(string $role): string
+  {
+    return match ($role) {
+      'student' => route('student.dashboard'),
+      'super_admin' => route('admin.dashboard'),
+      // When organizations are active, admins land on their Organization Dashboard;
+      // otherwise (merged mode) they land on the global Dashboard.
+      'admin' => config('features.organizations') ? route('admin.org.dashboard') : route('admin.dashboard'),
+      'parentt' => route('parentt.dashboard'),
+      'instructor' => route('instructor.dashboard'),
+      default => route('login'),
+    };
   }
 
   public function login(Login $request)
@@ -29,6 +52,17 @@ class AuthController extends Controller
     if (Auth::attempt($credentials)) {
       $request->session()->regenerate();
       UserEventLogger::log('login', null, 'auth');
+
+      // Remember the user's browser timezone (auto-detected) for server-side
+      // rendering of emails / calendar invites in their local time.
+      $tz = (string) $request->input('tz');
+      if ($tz !== '' && in_array($tz, timezone_identifiers_list(), true)) {
+        $user = auth()->user();
+        if ($user && $user->timezone !== $tz) {
+          $user->timezone = $tz;
+          $user->save();
+        }
+      }
 
       $currentOrg = $request->attributes->get('currentOrganization');
       if ($currentOrg) {
@@ -44,17 +78,7 @@ class AuthController extends Controller
       }
 
       // Redirect to intended URL if present, otherwise role-based fallback
-      $role = auth()->user()->role;
-      $fallback = match ($role) {
-        'student' => route('student.index.Bookexercise.books.qr'),
-        'super_admin' => route('admin.dashboard'),
-        // When organizations are active, admins land on their Organization Dashboard;
-        // otherwise (merged mode) they land on the global Dashboard.
-        'admin' => config('features.organizations') ? route('admin.org.dashboard') : route('admin.dashboard'),
-        'parent' => route('parent.dashboard'),
-        'instructor' => route('instructor.dashboard'),
-        default => route('login'),
-      };
+      $fallback = $this->dashboardRouteForRole(auth()->user()->role);
       return redirect()->intended($fallback);
     }
 

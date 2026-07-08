@@ -10,6 +10,7 @@ use Modules\Instructor\Http\Controllers\InstructorPayoutReportController;
 use Modules\Instructor\Http\Controllers\ExpectedEarningsReportController;
 use Modules\Instructor\Http\Controllers\InstructorAvailabilityController;
 use Modules\Instructor\Http\Controllers\InstructorFreeSessionController;
+use Modules\Instructor\Http\Controllers\InstructorCourseProgressController;
 
 Route::group([
     'prefix' => 'instructor',
@@ -37,13 +38,26 @@ Route::group([
 
     // Free sessions assigned to this instructor
     Route::get('/free-sessions', [InstructorFreeSessionController::class, 'index'])->name('instructor.free-sessions.index');
+    Route::post('/free-sessions/{freeSession}/given', [InstructorFreeSessionController::class, 'markGiven'])->name('instructor.free-sessions.given');
 
     // Classroom sessions
     Route::get('/sessions', [ClassSessionController::class, 'index'])->name('instructor.sessions.index');
+    Route::get('/sessions/events', [ClassSessionController::class, 'events'])->name('instructor.sessions.events');
     Route::get('/sessions/create', [ClassSessionController::class, 'create'])->name('instructor.sessions.create');
     Route::post('/sessions', [ClassSessionController::class, 'store'])->name('instructor.sessions.store');
     Route::get('/sessions/{session}/edit', [ClassSessionController::class, 'edit'])->name('instructor.sessions.edit');
     Route::put('/sessions/{session}', [ClassSessionController::class, 'update'])->name('instructor.sessions.update');
+
+    // Given history: every session this instructor delivered, per student, with earnings
+    Route::get('/sessions/history', [ClassSessionController::class, 'history'])->name('instructor.sessions.history');
+
+    // Per-student attendance: mark each student's session given (+ note) → charges parent, credits instructor
+    Route::get('/sessions/{session}/attendance', [ClassSessionController::class, 'attendance'])->name('instructor.sessions.attendance');
+    Route::post('/sessions/{session}/students/{student}/given', [ClassSessionController::class, 'markStudentGiven'])->name('instructor.sessions.student.given');
+
+    // Course progress (per-student, per-step)
+    Route::get('/progress', [InstructorCourseProgressController::class, 'index'])->name('instructor.progress.index');
+    Route::get('/progress/{course}', [InstructorCourseProgressController::class, 'show'])->name('instructor.progress.show');
 
     // Reports
     Route::get('/reports/per-student-payout', [InstructorPayoutReportController::class, 'perStudent'])->name('instructor.reports.per_student');

@@ -68,14 +68,7 @@
         </small>
       </span>
 
-      <!-- Navbar Search -->
 
-      <form class="search-form navbar-search d-none d-md-flex mr-16pt" action="index.html">
-        <button class="btn" type="submit"><i class="material-icons">search</i></button>
-        <input type="text" class="form-control" placeholder="Search ...">
-      </form>
-
-      <!-- // END Navbar Search -->
 
 
       <div class="flex"></div>
@@ -143,20 +136,17 @@
             <!-- <a class="dropdown-item" href="edit-account.html">Edit Account</a>
             <a class="dropdown-item" href="billing.html">Billing</a>
             <a class="dropdown-item" href="billing-history.html">Payments</a> -->
-            <form method="POST" action="{{ route('users.logout') }}">
-              @csrf
-              <button type="submit" class="dropdown-item">
-                @if(session('locale', config('app.locale')) == 'en')
-                Logout
-                @endif
-                @if(session('locale', config('app.locale')) == 'ar')
-                تسجيل خروج
-                @endif
-                @if(session('locale', config('app.locale')) == 'de')
-                Ausloggen
-                @endif
-              </button>
-            </form>
+            <a href="{{ route('users.logout') }}" class="dropdown-item">
+              @if(session('locale', config('app.locale')) == 'en')
+              Logout
+              @endif
+              @if(session('locale', config('app.locale')) == 'ar')
+              تسجيل خروج
+              @endif
+              @if(session('locale', config('app.locale')) == 'de')
+              Ausloggen
+              @endif
+            </a>
           </div>
         </div>
       </div>

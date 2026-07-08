@@ -61,5 +61,6 @@
 </div>
 <!-- ./wrapper -->
 @include('datasource::management.partials.footer.js')
+@include('partials.localtime')
 </body>
 </html>
