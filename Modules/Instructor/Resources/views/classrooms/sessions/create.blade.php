@@ -37,13 +37,6 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="is_given">Session Given</label>
-          <select id="is_given" name="is_given" class="form-control">
-            <option value="1" {{ old('is_given', '1') == '1' ? 'selected' : '' }}>Yes</option>
-            <option value="0" {{ old('is_given') === '0' ? 'selected' : '' }}>No</option>
-          </select>
-        </div>
-        <div class="form-group">
           <label for="zoom_url">Meeting Link (Zoom)</label>
           <input type="url" id="zoom_url" name="zoom_url" class="form-control" placeholder="https://zoom.us/j/..." value="{{ old('zoom_url') }}">
           <small class="form-text text-muted">Students enrolled in this classroom can join from their course.</small>

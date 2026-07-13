@@ -293,7 +293,6 @@ class ClassSessionController extends Controller
             'end_at' => 'required|date|after:held_at',
             'content' => 'nullable|string',
             'class_session_type_id' => 'required|exists:class_session_types,id',
-            'is_given' => 'nullable|boolean',
             'zoom_url' => 'nullable|url',
         ]);
     }
@@ -307,8 +306,10 @@ class ClassSessionController extends Controller
             'end_at' => $this->toUtc($data['end_at'], $tz),
             'content' => $data['content'] ?? null,
             'class_session_type_id' => $data['class_session_type_id'],
-            // Instructor-added sessions are "given" by default.
-            'is_given' => (bool) ($data['is_given'] ?? true),
+            // "Given" is tracked per student (class_session_student), so a new
+            // session starts not-given; the instructor marks each student on the
+            // attendance page.
+            'is_given' => false,
             'zoom_url' => $data['zoom_url'] ?? null,
         ]);
     }

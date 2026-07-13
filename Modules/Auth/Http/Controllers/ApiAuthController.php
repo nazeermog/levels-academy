@@ -32,8 +32,8 @@ class ApiAuthController extends Controller
             'last_name'  => ['required', 'string', 'max:255'],
             'email'      => ['required', 'email', 'max:255', 'unique:users,email'],
             'password'   => ['required', 'string', 'min:6', 'confirmed'],
-            'country'    => ['required', 'string', 'max:255'],
-            'city'       => ['required', 'string', 'max:255'],
+            'country'    => ['nullable', 'string', 'max:255'],
+            'city'       => ['nullable', 'string', 'max:255'],
         ]);
 
         // External self-registration creates a User + Student, starting as a
@@ -51,8 +51,8 @@ class ApiAuthController extends Controller
             $student->user_id    = $user->id;
             $student->first_name = $data['first_name'];
             $student->last_name  = $data['last_name'];
-            $student->country    = $data['country'];
-            $student->city       = $data['city'];
+            $student->country    = $data['country'] ?? null;
+            $student->city       = $data['city'] ?? null;
             $student->save();
 
             return $user;
