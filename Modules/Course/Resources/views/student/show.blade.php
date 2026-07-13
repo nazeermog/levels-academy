@@ -194,26 +194,34 @@
                     <a class="flex" href="{{ route('student.practice.forcourse', ['id' => $step->stepable_id, 'type' => $step->practiceTypeDetail->practice->blade_name, 'course' => $course->id]) }}">{{ $step->stepable_type }}: {{ $step->title }}</a>
                     @elseif ($step->stepable_type === 'ClassSessions')
                     @php($session = $step->classSession)
+                    @php($att = $session ? $myAttendance->get($session->id) : null)
+                    @php($given = $att && $att->is_given)
                     <span class="material-icons icon-16pt icon--left text-50">videocam</span>
-                    <span class="flex">
-                      {{ optional($session->classroom)->name ?? 'Session' }}
-                      @if($session && $session->held_at)
-                      <small class="text-muted">— <span data-localtime="{{ $session->held_at->toIso8601String() }}">{{ $session->held_at->format('Y-m-d H:i') }} UTC</span></small>
+                    <span class="flex" style="display:block;">
+                      <div>
+                        {{ optional($session->classroom)->name ?? 'Session' }}@if($session && $session->content) — {{ $session->content }}@endif
+                        @if($session && $session->held_at)
+                        <small class="text-muted">— <span data-localtime="{{ $session->held_at->toIso8601String() }}">{{ $session->held_at->format('Y-m-d H:i') }} UTC</span></small>
+                        @endif
+                      </div>
+                      @if($given)
+                      <div class="mt-1">
+                        <span class="badge badge-success">&#10003; Given</span>
+                        @if($att->given_at)
+                        <small class="text-muted ml-1"><span data-localtime="{{ $att->given_at->toIso8601String() }}">{{ $att->given_at->format('Y-m-d H:i') }} UTC</span></small>
+                        @endif
+                      </div>
+                      @if($att->notes)
+                      <div class="text-70 mt-1"><small><strong>Note:</strong> {{ $att->notes }}</small></div>
+                      @endif
                       @endif
                     </span>
-                    @if($session && $session->zoom_url)
-                    <a href="{{ $session->zoom_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-success ml-2">Join meeting</a>
-                    @else
-                    <span class="badge badge-secondary ml-2">Link not posted yet</span>
-                    @endif
-                    @php($att = $session ? ($myAttendance[$session->id] ?? null) : null)
-                    @if($att)
-                    @if($att->is_given)
-                    <span class="badge badge-success ml-2">Given</span>
-                    @endif
-                    @if($att->notes)
-                    <div class="text-70 mt-1" style="width:100%;"><small><strong>Note:</strong> {{ $att->notes }}</small></div>
-                    @endif
+                    @if(!$given)
+                      @if($session && $session->zoom_url)
+                      <a href="{{ $session->zoom_url }}" target="_blank" rel="noopener" class="btn btn-sm btn-success ml-2">Join</a>
+                      @else
+                      <span class="badge badge-secondary ml-2">Link not posted yet</span>
+                      @endif
                     @endif
                     @elseif ($step->stepable_type === 'Quizzes')
                     <span class="material-icons icon-16pt icon--left text-50">question_answer</span>

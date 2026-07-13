@@ -4,10 +4,12 @@
 <div class="container-fluid">
 
   @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
+  <div class="alert alert-success">{{ session('success') }}</div>
   @endif
   @if($errors->any())
-    <div class="alert alert-danger"><ul class="mb-0">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul></div>
+  <div class="alert alert-danger">
+    <ul class="mb-0">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
+  </div>
   @endif
 
   <div class="card">
@@ -21,14 +23,14 @@
       <p class="mb-1">
         <strong>When:</strong>
         @if($session->held_at)
-          <span data-localtime="{{ $session->held_at->toIso8601String() }}">{{ $session->held_at->format('Y-m-d H:i') }} UTC</span>
+        <span data-localtime="{{ $session->held_at->toIso8601String() }}">{{ $session->held_at->format('Y-m-d H:i') }} UTC</span>
         @endif
         &nbsp;|&nbsp;
         <strong>Type:</strong> {{ optional($session->sessionType)->name ?? '—' }}
         @if($session->sessionType)
-          &nbsp;|&nbsp;
-          <strong>You earn per student:</strong>
-          <span class="badge badge-success" style="font-size:.9rem;">{{ $session->sessionType->teacher_payout }}</span>
+        &nbsp;|&nbsp;
+        <strong>You earn per student:</strong>
+        <span class="badge badge-success" style="font-size:.9rem;">{{ $session->sessionType->teacher_payout }}</span>
         @endif
       </p>
       <p class="text-muted" style="font-size:.85rem;">
@@ -47,38 +49,40 @@
         </thead>
         <tbody>
           @forelse($rows as $row)
-            @php($u = $students->get($row->student_id))
-            <tr>
-              <td>{{ optional($u)->first_name }} {{ optional($u)->last_name }}</td>
-              <td>
-                @if($row->is_given)
-                  <span class="badge badge-success">Given</span>
-                  @if($row->charged)<span class="badge badge-info">Charged</span>@endif
-                @else
-                  <span class="badge badge-warning">Pending</span>
-                @endif
-              </td>
-              <td>
-                @if($row->given_at)
-                  <span data-localtime="{{ $row->given_at->toIso8601String() }}">{{ $row->given_at->format('Y-m-d H:i') }} UTC</span>
-                @endif
-              </td>
-              <td style="white-space:normal;max-width:260px;">{{ $row->notes }}</td>
-              <td>
-                <button type="button"
-                  class="btn btn-sm {{ $row->is_given ? 'btn-outline-secondary' : 'btn-success' }}"
-                  data-toggle="modal" data-target="#attendanceModal"
-                  data-action="{{ route('instructor.sessions.student.given', ['session' => $session->id, 'student' => $row->student_id]) }}"
-                  data-name="{{ trim(optional($u)->first_name . ' ' . optional($u)->last_name) }}"
-                  data-notes="{{ $row->notes }}"
-                  data-given="{{ $row->is_given ? '1' : '0' }}">
-                  <i class="material-icons" style="font-size:1rem;vertical-align:middle;">{{ $row->is_given ? 'edit_note' : 'check_circle' }}</i>
-                  {{ $row->is_given ? 'Update note' : 'Mark given' }}
-                </button>
-              </td>
-            </tr>
+          @php($u = $students->get($row->student_id))
+          <tr>
+            <td>{{ optional($u)->first_name }} {{ optional($u)->last_name }}</td>
+            <td>
+              @if($row->is_given)
+              <span class="badge badge-success">Given</span>
+              @if($row->charged)<span class="badge badge-info">Charged</span>@endif
+              @else
+              <span class="badge badge-warning">Pending</span>
+              @endif
+            </td>
+            <td>
+              @if($row->given_at)
+              <span data-localtime="{{ $row->given_at->toIso8601String() }}">{{ $row->given_at->format('Y-m-d H:i') }} UTC</span>
+              @endif
+            </td>
+            <td style="white-space:normal;max-width:260px;">{{ $row->notes }}</td>
+            <td>
+              <button type="button"
+                class="btn btn-sm {{ $row->is_given ? 'btn-outline-secondary' : 'btn-success' }}"
+                data-toggle="modal" data-target="#attendanceModal"
+                data-action="{{ route('instructor.sessions.student.given', ['session' => $session->id, 'student' => $row->student_id]) }}"
+                data-name="{{ trim(optional($u)->first_name . ' ' . optional($u)->last_name) }}"
+                data-notes="{{ $row->notes }}"
+                data-given="{{ $row->is_given ? '1' : '0' }}">
+                <i class="material-icons" style="font-size:1rem;vertical-align:middle;">{{ $row->is_given ? 'edit_note' : 'check_circle' }}</i>
+                {{ $row->is_given ? 'Update note' : 'Mark given' }}
+              </button>
+            </td>
+          </tr>
           @empty
-            <tr><td colspan="5" class="text-center">No students enrolled in this classroom yet.</td></tr>
+          <tr>
+            <td colspan="5" class="text-center">No students enrolled in this classroom yet.</td>
+          </tr>
           @endforelse
         </tbody>
       </table>
@@ -100,8 +104,7 @@
           <p class="mb-2">Student: <strong id="attStudent"></strong></p>
           <div class="form-group mb-1">
             <label for="attNotes">Note — what did this student learn?</label>
-            <textarea id="attNotes" name="notes" class="form-control" rows="4"
-              placeholder="e.g. Practiced letter A; needs review on numbers 1–10"></textarea>
+            <textarea id="attNotes" name="notes" class="form-control" rows="4"></textarea>
           </div>
           <small class="text-muted">Confirming charges the parent and credits you for this session (once per student).</small>
         </div>
@@ -117,12 +120,23 @@
 
 @push('js')
 <script>
-  (function () {
-    var $modal = window.jQuery ? jQuery('#attendanceModal') : null;
-    if (!$modal || !$modal.length) { return; }
-    $modal.on('show.bs.modal', function (event) {
+  (function() {
+    var modalEl = document.getElementById('attendanceModal');
+    if (!modalEl) {
+      return;
+    }
+    // The drawer layout uses CSS transforms, which trap a fixed-position modal
+    // BEHIND the body-level backdrop. Re-parent the modal to <body> to fix it.
+    document.body.appendChild(modalEl);
+
+    if (!window.jQuery) {
+      return;
+    }
+    jQuery(modalEl).on('show.bs.modal', function(event) {
       var btn = event.relatedTarget;
-      if (!btn) { return; }
+      if (!btn) {
+        return;
+      }
       var given = btn.getAttribute('data-given') === '1';
       document.getElementById('attForm').setAttribute('action', btn.getAttribute('data-action'));
       document.getElementById('attStudent').textContent = btn.getAttribute('data-name') || '';
