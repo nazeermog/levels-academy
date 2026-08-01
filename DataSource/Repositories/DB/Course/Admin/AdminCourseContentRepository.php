@@ -7,6 +7,7 @@ use DataSource\Entities\Course\Course;
 use Illuminate\Support\Facades\Storage;
 use DataSource\Entities\Course\CourseStep;
 use DataSource\Entities\Course\CourseContent;
+use DataSource\Entities\Link\Link;
 use DataSource\Traits\Admin\AdminCRUDGenericRepository;
 
 class AdminCourseContentRepository
@@ -56,7 +57,7 @@ class AdminCourseContentRepository
       foreach ($item['type'] as $typeItem) {
         $step = new CourseStep();
         $step->stepable_type = $typeItem['type'];
-        $step->stepable_id = $typeItem['id'];
+        $step->stepable_id = $this->resolveStepableId($typeItem);
         foreach (localeSupported() as $locale) {
           $step->translateOrNew($locale)->title = $typeItem['title'];
         }
@@ -110,7 +111,7 @@ class AdminCourseContentRepository
           // $step = CourseStep::find($typeItem['id']); // Assuming you have a step ID
           $step = new CourseStep();
           $step->stepable_type = $typeItem['type'];
-          $step->stepable_id = $typeItem['id'];
+          $step->stepable_id = $this->resolveStepableId($typeItem);
 
           foreach (localeSupported() as $locale) {
             $step->translateOrNew($locale)->title = $typeItem['title'];
@@ -122,5 +123,33 @@ class AdminCourseContentRepository
       }
     }
     return $course;
+  }
+
+  /**
+   * Resolve a step's stepable_id. A "Links" step is either a saved link (dragged
+   * from the source list — referenced by id, managed in the Links admin screen)
+   * or an inline "Add Link" with no id yet, which is created here from title+URL.
+   * Everything else already has a real id from its source list.
+   */
+  private function resolveStepableId($typeItem)
+  {
+    if (($typeItem['type'] ?? null) !== 'Links') {
+      return $typeItem['id'];
+    }
+
+    // Saved link — reference as-is (don't overwrite what the admin manages).
+    $id = $typeItem['id'] ?? null;
+    if (is_numeric($id) && (int) $id > 0 && Link::whereKey((int) $id)->exists()) {
+      return (int) $id;
+    }
+
+    // Inline "Add Link" — create the link from the typed title + URL.
+    $title = trim((string) ($typeItem['title'] ?? ''));
+    $link = Link::create([
+      'title' => $title !== '' ? $title : 'Link',
+      'url'   => trim((string) ($typeItem['url'] ?? '')),
+    ]);
+
+    return $link->id;
   }
 }

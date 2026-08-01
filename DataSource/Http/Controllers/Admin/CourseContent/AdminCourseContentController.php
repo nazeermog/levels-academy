@@ -8,6 +8,8 @@ use DataSource\Entities\Course\CourseStep;
 use DataSource\Entities\Course\CourseContent;
 use DataSource\Entities\Classroom\ClassSession;
 use DataSource\Entities\Instructor\Instructor;
+use DataSource\Entities\Worksheet\Worksheet;
+use DataSource\Entities\Link\Link;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\CourseContent\Store;
 use DataSource\Traits\Admin\AdminCRUDControllerActions;
@@ -40,10 +42,12 @@ class AdminCourseContentController extends BaseController
         $taxonomies = AdminTaxonomyRepository::list();
         $instructors = Instructor::all();
         $sessions = $this->classSessionsForBuilder();
+        $worksheets = $this->worksheetsForBuilder();
+        $links = $this->linksForBuilder();
 
         $route_name = $this->route_name;
         $table_name = $this->table_name;
-        return view($this->module . '.create', compact('route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors','sessions'));
+        return view($this->module . '.create', compact('route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors','sessions','worksheets','links'));
     }
     
     public function show($courseId)
@@ -53,16 +57,34 @@ class AdminCourseContentController extends BaseController
         $taxonomies = AdminTaxonomyRepository::list();
         $instructors = Instructor::all();
         $sessions = $this->classSessionsForBuilder();
+        $worksheets = $this->worksheetsForBuilder();
+        $links = $this->linksForBuilder();
         $item=$this->getRepository()->find($courseId);
 
         $route_name = $this->route_name;
         $table_name = $this->table_name;
-        return view($this->module . '.show', compact('item','route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors','sessions'));
+        return view($this->module . '.show', compact('item','route_name', 'table_name','taxonomies', 'lessons', 'practices','instructors','sessions','worksheets','links'));
     }
 
     /**
      * Class sessions offered as a source list for classroom-type steps in the builder.
      */
+    /**
+     * Active worksheets offered as a source list for any step in the builder.
+     */
+    private function worksheetsForBuilder()
+    {
+        return Worksheet::active()->orderBy('title')->get();
+    }
+
+    /**
+     * Saved links offered as a source list for any step in the builder.
+     */
+    private function linksForBuilder()
+    {
+        return Link::orderBy('title')->get();
+    }
+
     private function classSessionsForBuilder()
     {
         return ClassSession::normal()

@@ -4,7 +4,6 @@ namespace Modules\Course\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use DataSource\Entities\Course\Course;
 use DataSource\Entities\Course\CourseStep;
 use DataSource\Entities\Course\CourseContent;
@@ -49,29 +48,26 @@ class StudentCourseController extends Controller
   public function show($courseId, \App\Services\CourseProgressService $progress)
   {
     $course = Course::findOrFail($courseId);
-    $contents = CourseContent::where('course_id', $course->id)->get();
+    $contents = CourseContent::where('course_id', $course->id)->orderBy('ordering')->get();
     $contentSteps = [];
 
     // The logged-in student's own step-based progress for this course.
     $myProgress = $progress->report($course, (int) Auth::id());
 
-    // Classrooms the logged-in student belongs to (used to limit classroom-step sessions to their own).
-    $studentClassroomIds = DB::table('classroom_student')
-      ->where('student_id', Auth::id())
-      ->pluck('classroom_id')
-      ->all();
-
     foreach ($contents as $content) {
       $steps = $content->courseSteps()
-        ->with(['practiceType', 'classSession.classroom'])
+        ->with(['practiceType', 'classSession.classroom', 'worksheet', 'link'])
+        ->orderBy('ordering')
         ->get()
-        ->filter(function ($step) use ($studentClassroomIds) {
-          // Only class-session steps are restricted; other step types are always shown.
+        ->filter(function ($step) {
+          // Class-session steps are shown to every enrolled student, just like
+          // lessons/worksheets/links — the student no longer has to belong to the
+          // session's classroom. We only hide a step whose session row was deleted.
+          // Per-student "given"/notes still come from the student's own attendance row.
           if ($step->stepable_type !== 'ClassSessions') {
             return true;
           }
-          $session = $step->classSession;
-          return $session && in_array($session->classroom_id, $studentClassroomIds);
+          return (bool) $step->classSession;
         })
         ->values();
       $contentSteps[$content->id] = $steps;
@@ -91,6 +87,22 @@ class StudentCourseController extends Controller
       ->whereIn('class_session_id', $sessionStepIds)
       ->get()
       ->keyBy('class_session_id');
+
+    // Worksheets this student has already opened (read) in this course.
+    $myWorksheetReads = \DataSource\Entities\Course\CourseStudent::where('student_id', Auth::id())
+      ->where('course_id', $course->id)
+      ->whereNotNull('worksheet_id')
+      ->pluck('worksheet_id')
+      ->map(fn ($v) => (int) $v)
+      ->all();
+
+    // Links this student has already clicked in this course.
+    $myLinkReads = \DataSource\Entities\Course\CourseStudent::where('student_id', Auth::id())
+      ->where('course_id', $course->id)
+      ->whereNotNull('link_id')
+      ->pluck('link_id')
+      ->map(fn ($v) => (int) $v)
+      ->all();
 
     $instructor = AdminInstructorRepository::InstructorForOneCourse($course);
     $totalLessonTime = AdminLessonRepository::SingleCoursTotalLesson($course);
@@ -116,6 +128,8 @@ class StudentCourseController extends Controller
       'contentSteps',
       'myProgress',
       'myAttendance',
+      'myWorksheetReads',
+      'myLinkReads',
       'totalLessonTime',
       'coursestepCount',
       'instructor',

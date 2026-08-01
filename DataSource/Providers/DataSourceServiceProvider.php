@@ -42,6 +42,8 @@ class DataSourceServiceProvider extends ServiceProvider
         'Classroom',
         'Absence',
         'FreeSession',
+        'Worksheet',
+        'Link',
     ];
 
     /**

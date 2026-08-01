@@ -79,7 +79,9 @@
             <a href="#blog">{{ __('landing.nav_blog') }}</a>
         @endif
         <a href="#how">{{ __('landing.nav_how') }}</a>
-        <a href="{{ route('login') }}" class="btn btn-primary btn-block">{{ __('landing.nav_login') }}</a>
+        <a href="{{ route('locale.setting', ['locale' => $altLocale]) }}">{{ __('landing.lang_switch') }}</a>
+        <a href="{{ route('login') }}" class="btn btn-ghost btn-block">{{ __('landing.nav_login') }}</a>
+        <a href="{{ route('login') }}" class="btn btn-primary btn-block">{{ __('landing.nav_get_started') }}</a>
     </div>
 
     {{-- ============================ HERO ============================ --}}

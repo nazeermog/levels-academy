@@ -48,6 +48,17 @@
   .dropdown:hover .dropbtn {
     background-color: #aad8ce;
   }
+
+  /* Worksheet description: wrap to two lines, then ellipsis. */
+  .worksheet-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
+    line-height: 1.3;
+  }
 </style>
 <div class="mdk-drawer-layout__content page-content">
 
@@ -197,7 +208,7 @@
                     @php($att = $session ? $myAttendance->get($session->id) : null)
                     @php($given = $att && $att->is_given)
                     <span class="material-icons icon-16pt icon--left text-50">videocam</span>
-                    <span class="flex" style="display:block;">
+                    <span class="flex" style="display:block; min-width:0;">
                       <div>
                         {{ optional($session->classroom)->name ?? 'Session' }}@if($session && $session->content) — {{ $session->content }}@endif
                         @if($session && $session->held_at)
@@ -222,6 +233,46 @@
                       @else
                       <span class="badge badge-secondary ml-2">Link not posted yet</span>
                       @endif
+                    @endif
+                    @elseif ($step->stepable_type === 'Worksheets')
+                    @php($ws = $step->worksheet)
+                    @php($wsRead = $ws && in_array((int) $ws->id, $myWorksheetReads, true))
+                    <span class="material-icons icon-16pt icon--left text-50">description</span>
+                    <span class="flex" style="display:block; min-width:0;">
+                      <div class="text-truncate">{{ $ws ? $ws->title : 'Worksheet' }}</div>
+                      @if($ws && $ws->description)
+                      <small class="text-muted worksheet-desc" title="{{ $ws->description }}">{{ $ws->description }}</small>
+                      @endif
+                      @if($wsRead)
+                      <div class="mt-1"><span class="badge badge-success">&#10003; Read</span></div>
+                      @endif
+                    </span>
+                    @if($ws)
+                    <a href="{{ route('student.worksheet.open', ['worksheetId' => $ws->id, 'courseId' => $course->id]) }}"
+                       class="btn btn-sm {{ $wsRead ? 'btn-outline-secondary' : 'btn-primary' }} ml-2 d-inline-flex align-items-center"
+                       style="flex-shrink:0; white-space:nowrap;">
+                      <span class="material-icons" style="font-size:1rem;margin-right:4px;">file_download</span>
+                      {{ $wsRead ? 'Download again' : 'Download' }}
+                    </a>
+                    @endif
+                    @elseif ($step->stepable_type === 'Links')
+                    @php($lnk = $step->link)
+                    @php($lnkDone = $lnk && in_array((int) $lnk->id, $myLinkReads, true))
+                    <span class="material-icons icon-16pt icon--left text-50">link</span>
+                    <span class="flex" style="display:block; min-width:0;">
+                      <div class="text-truncate">{{ $lnk ? $lnk->title : 'Link' }}</div>
+                      @if($lnkDone)
+                      <div class="mt-1"><span class="badge badge-success">&#10003; Done</span></div>
+                      @endif
+                    </span>
+                    @if($lnk)
+                    <a href="{{ route('student.link.open', ['linkId' => $lnk->id, 'courseId' => $course->id]) }}"
+                       target="_blank" rel="noopener"
+                       class="btn btn-sm {{ $lnkDone ? 'btn-outline-secondary' : 'btn-primary' }} ml-2 d-inline-flex align-items-center"
+                       style="flex-shrink:0; white-space:nowrap;">
+                      <span class="material-icons" style="font-size:1rem;margin-right:4px;">open_in_new</span>
+                      {{ $lnkDone ? 'Open again' : 'Open' }}
+                    </a>
                     @endif
                     @elseif ($step->stepable_type === 'Quizzes')
                     <span class="material-icons icon-16pt icon--left text-50">question_answer</span>

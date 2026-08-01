@@ -34,6 +34,7 @@
   --r: 20px;
   --r-lg: 28px;
   --container: 1180px;
+  --nav-h: 80px;
   --font-head: 'Plus Jakarta Sans', system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, "Segoe UI", sans-serif;
 }
@@ -122,7 +123,7 @@ p { margin: 0 0 1rem; }
   transition: box-shadow .25s ease, border-color .25s ease, background .25s ease;
 }
 .nav.scrolled { box-shadow: 0 8px 30px rgba(20,50,70,.08); border-color: var(--border); background: rgba(255,255,255,.88); }
-.nav__inner { display: flex; align-items: center; justify-content: space-between; height: 80px; gap: 18px; }
+.nav__inner { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); gap: 18px; }
 .nav__brand img { height: 48px; width: auto; transition: transform .2s ease; }
 .nav__brand:hover img { transform: scale(1.03); }
 .nav__links { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
@@ -433,7 +434,7 @@ p { margin: 0 0 1rem; }
 /* Mobile menu                                                        */
 /* ------------------------------------------------------------------ */
 .mobile-menu {
-  display: none; position: fixed; inset: 80px 0 auto 0; background: #fff;
+  display: none; position: fixed; inset: var(--nav-h) 0 auto 0; background: #fff;
   border-bottom: 1px solid var(--border); box-shadow: var(--shadow); padding: 16px 24px 24px; z-index: 49;
 }
 .mobile-menu.open { display: block; }
@@ -487,3 +488,76 @@ p { margin: 0 0 1rem; }
 .is-rtl .pathcard__arrow { margin-left: 0; margin-right: auto; }
 .is-rtl .pathcard:hover .pathcard__arrow { transform: scaleX(-1) translateX(4px); }
 .is-rtl .hero h1 .accent::after { background: var(--gradient); }
+
+/* ================================================================== */
+/* Mobile UX polish                                                   */
+/* ================================================================== */
+
+/* Anchor links shouldn't hide their target under the sticky nav */
+section[id] { scroll-margin-top: calc(var(--nav-h) + 12px); }
+
+/* Comfier, shorter nav + bigger tap targets on tablets/phones */
+@media (max-width: 900px) {
+  :root { --nav-h: 64px; }
+  .nav__brand img { height: 40px; }
+  .mobile-menu { padding: 12px 20px 20px; max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+  .mobile-menu a { padding: 15px 4px; font-size: 1.02rem; }
+  .mobile-menu a:last-of-type { border-bottom: none; }
+  .nav__actions { gap: 8px; }
+
+  /* Hero copy is centered once it stacks under the image */
+  .hero__copy { text-align: center; padding: 0 12px; }
+  .hero__copy .eyebrow { margin-inline: auto; }
+  .hero__lead { margin-inline: auto; }
+  .hero__cta { justify-content: center; }
+  .hero__stats { justify-content: center; }
+}
+
+/* Phones */
+@media (max-width: 560px) {
+  .container { padding: 0 18px; }
+  .btn-lg { padding: 1.05rem 1.6rem; font-size: .98rem; }
+  .section { padding: 56px 0; }
+  .section-head { margin-bottom: 40px; }
+  .section-head p { font-size: 1rem; }
+
+  /* Hero — stacked, full-width CTAs, evenly spaced stats */
+  .hero__grid { padding: 44px 0 60px; gap: 34px; }
+  .hero h1 { font-size: clamp(2.05rem, 8.4vw, 2.9rem); }
+  .hero__lead { font-size: 1.04rem; margin-bottom: 1.7rem; }
+  .hero__cta { flex-direction: column; align-items: stretch; gap: 12px; margin-bottom: 2rem; }
+  .hero__cta .btn { width: 100%; }
+  .hero__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; text-align: center; }
+  .hero__stat .n { font-size: 1.5rem; }
+  .hero__stat .l { font-size: .76rem; }
+
+  /* Hero visual — smaller decorative float cards, kept tidy */
+  .hero__visual { max-width: 360px; }
+  .float-card { padding: .58rem .72rem; gap: .5rem; border-radius: 13px; }
+  .float-card .ico { width: 34px; height: 34px; border-radius: 10px; }
+  .float-card .ico svg { width: 18px; height: 18px; }
+  .float-card .t { font-size: .8rem; }
+  .float-card .s { font-size: .67rem; }
+  .float-card--tl { top: 4px; left: -4px; }
+  .float-card--br { bottom: 8px; right: -4px; }
+  .hero__blob--1 { width: 170px; height: 170px; top: -30px; right: -28px; }
+  .hero__blob--2 { width: 120px; height: 120px; bottom: -26px; left: -22px; }
+
+  .statband__grid, .statband__grid--3 { grid-template-columns: repeat(2, 1fr); gap: 30px 16px; padding: 44px 0; }
+  .statband__item .n { font-size: 2rem; }
+  .statband__ico { width: 40px; height: 40px; }
+
+  .feature { padding: 26px 22px; }
+  .step { padding: 28px 24px; }
+  .cta { padding: 44px 22px; }
+  .footer { padding: 54px 0 24px; }
+  .footer__bottom { flex-direction: column; text-align: center; gap: 14px; }
+}
+
+/* Very small phones — declutter the hero */
+@media (max-width: 380px) {
+  .float-card--tl { display: none; }
+  .hero__stats { gap: 10px; }
+  .nav__brand img { height: 36px; }
+  .hero h1 { font-size: 1.95rem; }
+}

@@ -2,11 +2,9 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
 use DataSource\Entities\Course\Course;
 use DataSource\Entities\Course\CourseContent;
 use DataSource\Entities\Course\CourseStudent;
-use DataSource\Entities\Classroom\ClassSession;
 use DataSource\Entities\Classroom\ClassSessionStudent;
 
 /**
@@ -18,18 +16,20 @@ use DataSource\Entities\Classroom\ClassSessionStudent;
  *                       (written when the student marks the lesson watched).
  *  - Practice step     (stepable_type "Practices")     => a course_students row with this practice_id
  *                       (written when the student completes the practice).
+ *  - Worksheet step    (stepable_type "Worksheets")    => a course_students row with this worksheet_id
+ *                       (written when the student opens/reads the worksheet).
  *  - ClassSession step (stepable_type "ClassSessions") => a class_session_student row for THIS
- *                       student with is_given=true (per-student attendance) — applicable only to
- *                       students who belong to that session's classroom. It is NOT the session-wide
- *                       class_sessions.is_given flag, so a newly-enrolled student never inherits a
- *                       session they didn't personally attend.
+ *                       student with is_given=true (per-student attendance). Every enrolled student
+ *                       sees and counts the step (no classroom membership required); it is NOT the
+ *                       session-wide class_sessions.is_given flag, so a newly-enrolled student never
+ *                       inherits a session they didn't personally attend.
  *
  * Quizzes / other step types are not counted (no completion signal yet).
  */
 class CourseProgressService
 {
     /** Step types that contribute to progress. */
-    private const COUNTED_TYPES = ['Lessons', 'Practices', 'ClassSessions'];
+    private const COUNTED_TYPES = ['Lessons', 'Practices', 'ClassSessions', 'Worksheets', 'Links'];
 
     /**
      * Per-student progress reports for one course, batched to avoid N+1.
@@ -56,12 +56,14 @@ class CourseProgressService
             }
         }
 
-        // --- Lesson / practice completions (one query) ------------------------
-        $doneLesson = [];   // [studentId][lessonId] = true
-        $donePractice = []; // [studentId][practiceId] = true
+        // --- Lesson / practice / worksheet completions (one query) ------------
+        $doneLesson = [];    // [studentId][lessonId] = true
+        $donePractice = [];  // [studentId][practiceId] = true
+        $doneWorksheet = []; // [studentId][worksheetId] = true
+        $doneLink = [];      // [studentId][linkId] = true
         $rows = CourseStudent::where('course_id', $course->id)
             ->whereIn('student_id', $studentIds)
-            ->get(['student_id', 'lesson_id', 'practice_id']);
+            ->get(['student_id', 'lesson_id', 'practice_id', 'worksheet_id', 'link_id']);
         foreach ($rows as $row) {
             if ($row->lesson_id) {
                 $doneLesson[(int) $row->student_id][(int) $row->lesson_id] = true;
@@ -69,20 +71,19 @@ class CourseProgressService
             if ($row->practice_id) {
                 $donePractice[(int) $row->student_id][(int) $row->practice_id] = true;
             }
+            if ($row->worksheet_id) {
+                $doneWorksheet[(int) $row->student_id][(int) $row->worksheet_id] = true;
+            }
+            if ($row->link_id) {
+                $doneLink[(int) $row->student_id][(int) $row->link_id] = true;
+            }
         }
 
-        // --- Class session: which classroom each belongs to (applicability),
-        //     student classroom membership, and PER-STUDENT given attendance ----
-        $sessionClassroom = []; // [sessionId] = classroomId
-        $studentClassrooms = []; // [studentId][classroomId] = true
+        // --- Class session PER-STUDENT given attendance ----------------------
+        // A session step counts for every enrolled student (matching the course
+        // page); it is "done" only when THIS student was personally marked given.
         $givenByStudent = []; // [studentId][sessionId] = true — this student's own attendance
         if (!empty($sessionIds)) {
-            foreach (ClassSession::whereIn('id', $sessionIds)->get(['id', 'classroom_id']) as $s) {
-                $sessionClassroom[(int) $s->id] = (int) $s->classroom_id;
-            }
-            foreach (DB::table('classroom_student')->whereIn('student_id', $studentIds)->get(['student_id', 'classroom_id']) as $m) {
-                $studentClassrooms[(int) $m->student_id][(int) $m->classroom_id] = true;
-            }
             foreach (ClassSessionStudent::whereIn('class_session_id', $sessionIds)
                 ->whereIn('student_id', $studentIds)
                 ->where('is_given', true)
@@ -97,9 +98,9 @@ class CourseProgressService
                 $contents,
                 $doneLesson[$sid] ?? [],
                 $donePractice[$sid] ?? [],
-                $givenByStudent[$sid] ?? [],
-                $sessionClassroom,
-                $studentClassrooms[$sid] ?? []
+                $doneWorksheet[$sid] ?? [],
+                $doneLink[$sid] ?? [],
+                $givenByStudent[$sid] ?? []
             );
         }
 
@@ -128,7 +129,7 @@ class CourseProgressService
     /**
      * @return array{completed:int,total:int,percent:int,contents:array,next_step:?array,last_done:?array}
      */
-    private function buildReport($contents, array $doneLesson, array $donePractice, array $givenSessions, array $sessionClassroom, array $studentClassrooms): array
+    private function buildReport($contents, array $doneLesson, array $donePractice, array $doneWorksheet, array $doneLink, array $givenSessions): array
     {
         $contentsOut = [];
         $grandTotal = 0;
@@ -155,14 +156,15 @@ class CourseProgressService
                     $done = isset($doneLesson[$stepableId]);
                 } elseif ($type === 'Practices') {
                     $done = isset($donePractice[$stepableId]);
+                } elseif ($type === 'Worksheets') {
+                    $done = isset($doneWorksheet[$stepableId]);
+                } elseif ($type === 'Links') {
+                    $done = isset($doneLink[$stepableId]);
                 } else { // ClassSessions
-                    $classroomId = $sessionClassroom[$stepableId] ?? null;
-                    // A session step only applies to students in that session's classroom.
-                    if ($classroomId === null || !isset($studentClassrooms[$classroomId])) {
-                        continue;
-                    }
-                    // Done only if THIS student was personally marked given (not the
-                    // session-wide flag), so a new enrolee doesn't inherit past sessions.
+                    // Counts for every enrolled student (matches course-page
+                    // visibility). Done only if THIS student was personally marked
+                    // given — not the session-wide flag — so a new enrolee doesn't
+                    // inherit a session they didn't attend.
                     $done = isset($givenSessions[$stepableId]);
                 }
 

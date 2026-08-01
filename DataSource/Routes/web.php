@@ -19,6 +19,8 @@ use DataSource\Http\Controllers\Admin\Practice\AdminPracticeTypeController;
 use DataSource\Http\Controllers\Admin\Practice\AdminPracticeLevelController;
 use DataSource\Http\Controllers\Admin\CourseContent\AdminCourseContentController;
 use DataSource\Http\Controllers\Admin\Course\AdminCourseProgressController;
+use DataSource\Http\Controllers\Admin\Link\AdminLinkController;
+use DataSource\Http\Controllers\Admin\Worksheet\AdminWorksheetController;
 use DataSource\Http\Controllers\Admin\ResultPractice\AdminResultPracticeController;
 use DataSource\Http\Controllers\Admin\CategoryProduct\AdminCategoryProductController;
 use DataSource\Http\Controllers\Admin\Instructor\AdminInstructorNoteController;
@@ -49,6 +51,8 @@ Route::prefix('admin')->middleware(['auth', $catalogGuard])->group(function () {
         Route::resource('taxonomies', AdminTaxonomyController::class);
         Route::resource('coursePath', AdminCoursePathController::class);
         Route::resource('lessons', AdminLessonController::class);
+        Route::resource('worksheets', AdminWorksheetController::class)->except(['show']);
+        Route::resource('links', AdminLinkController::class)->except(['show']);
         Route::resource('instructors', AdminInstructorController::class);
         Route::resource('semesters', AdminSemesterController::class);
         Route::resource('students', AdminStudentController::class);

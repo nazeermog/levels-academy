@@ -84,7 +84,7 @@
                 </li>
                 <li class="nav-item {{ (Route::is('admin.org.classrooms.*') && !Route::is('admin.org.classrooms.reports.*')) ? 'menu-open' : '' }} ">
                     <a href="#" class="nav-link {{ (Route::is('admin.org.classrooms.*') && !Route::is('admin.org.classrooms.reports.*')) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-chalkboard"></i>
                         <p>
                             Classrooms
                             <i class="right fas fa-angle-left"></i>
@@ -100,7 +100,7 @@
                 </li>
                 <li class="nav-item {{Route::is('admin.org.class_session_types.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.org.class_session_types.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-clock"></i>
                         <p>
                             Session Types
                             <i class="right fas fa-angle-left"></i>
@@ -153,7 +153,7 @@
                 @if($showCatalog)
                 <li class="nav-item {{Route::is('admin.practices.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.practices.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-dumbbell"></i>
                         <p>
                             Practice Types
                             <i class="right fas fa-angle-left"></i>
@@ -177,7 +177,7 @@
                 </li>
                 <li class="nav-item {{Route::is('admin.practicesType.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.practicesType.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-layer-group"></i>
                         <p>
                             Practice Type Details
                             <i class="right fas fa-angle-left"></i>
@@ -196,7 +196,7 @@
                     </ul>
                 <li class="nav-item {{Route::is('admin.Practiceslevels.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.Practiceslevels.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-signal"></i>
                         <p>
                             Practice levels
                             <i class="right fas fa-angle-left"></i>
@@ -226,7 +226,7 @@
                 </li>
                 <li class="nav-item {{Route::is('admin.resultPractices.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.resultPractices.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-clipboard-check"></i>
                         <p>
                             Result Practices
                             <i class="right fas fa-angle-left"></i>
@@ -248,7 +248,7 @@
                 </li>
                 <li class="nav-item {{ (Route::is('admin.courseContent.*') || Route::is('admin.course-progress.*')) ?'menu-open':''}} ">
                     <a href="#" class="nav-link {{ (Route::is('admin.courseContent.*') || Route::is('admin.course-progress.*')) ?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-graduation-cap"></i>
                         <p>
                             Courses
                             <i class="right fas fa-angle-left"></i>
@@ -288,7 +288,7 @@
                 </li>
                 <li class="nav-item {{Route::is('admin.taxonomies.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.taxonomies.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-tags"></i>
                         <p>
                             Categories
                             <i class="right fas fa-angle-left"></i>
@@ -319,7 +319,7 @@
                 </li>
                 <li class="nav-item {{Route::is('admin.coursePath.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.coursePath.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-route"></i>
                         <p>
                             Course Paths
                             <i class="right fas fa-angle-left"></i>
@@ -348,7 +348,7 @@
 
                 <li class="nav-item {{Route::is('admin.lessons.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.lessons.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-play-circle"></i>
                         <p>
                             Lessons
                             <i class="right fas fa-angle-left"></i>
@@ -374,9 +374,53 @@
 
 
                 </li>
+                <li class="nav-item {{Route::is('admin.worksheets.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.worksheets.*')?'active':''}}">
+                        <i class="nav-icon fas fa-file-pdf"></i>
+                        <p>
+                            Worksheets
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.worksheets.index')}}" class="nav-link  {{ Route::is('admin.worksheets.index')?'active':''}}">
+                                <p class="ml-3">- Worksheets </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.worksheets.create')}}" class="nav-link  {{ Route::is('admin.worksheets.create')?'active':''}}">
+                                <p class="ml-3">- Upload Worksheet </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item {{Route::is('admin.links.*')?'menu-open':''}} ">
+                    <a href="#" class="nav-link {{Route::is('admin.links.*')?'active':''}}">
+                        <i class="nav-icon fas fa-link"></i>
+                        <p>
+                            Links
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('admin.links.index')}}" class="nav-link  {{ Route::is('admin.links.index')?'active':''}}">
+                                <p class="ml-3">- Links </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.links.create')}}" class="nav-link  {{ Route::is('admin.links.create')?'active':''}}">
+                                <p class="ml-3">- Add Link </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item {{Route::is('admin.instructors.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.instructors.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
                         <p>
                             Instructors
                             <i class="right fas fa-angle-left"></i>
@@ -405,7 +449,7 @@
 
                 <li class="nav-item {{Route::is('admin.students.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.students.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-user-graduate"></i>
                         <p>
                             Students
                             <i class="right fas fa-angle-left"></i>
@@ -439,7 +483,7 @@
                 </li>
                 <li class="nav-item {{Route::is('admin.semesters.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.semesters.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-calendar-alt"></i>
                         <p>
                             Semesters
                             <i class="right fas fa-angle-left"></i>
@@ -469,7 +513,7 @@
 
                 <li class="nav-item {{Route::is('admin.parentts.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.parentts.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-users"></i>
                         <p>
                             Parents
                             <i class="right fas fa-angle-left"></i>
@@ -502,7 +546,7 @@
 
                 <li class="nav-item {{Route::is('admin.categoryProduct.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.exercises.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
                             Book Exercises
                             <i class="right fas fa-angle-left"></i>
@@ -531,7 +575,7 @@
 
                 <li class="nav-item {{Route::is('admin.categoryProducts.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.categoryProducts.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-th-list"></i>
                         <p>
                             Category Products
                             <i class="right fas fa-angle-left"></i>
@@ -564,7 +608,7 @@
 
                 <li class="nav-item {{Route::is('admin.products.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.products.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-box"></i>
                         <p>
                             Products
                             <i class="right fas fa-angle-left"></i>
@@ -593,7 +637,7 @@
 
                 <li class="nav-item {{Route::is('admin.orders.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.orders.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>
                             orders
                             <i class="right fas fa-angle-left"></i>
@@ -615,7 +659,7 @@
 
                 <li class="nav-item {{Route::is('admin.blogs.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.blogs.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-newspaper"></i>
                         <p>
                             blogs
                             <i class="right fas fa-angle-left"></i>
@@ -640,7 +684,7 @@
                 </li>
                 <li class="nav-item {{Route::is('admin.userevents')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.userevents')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-history"></i>
                         <p>
                             user Events
                             <i class="right fas fa-angle-left"></i>
@@ -658,7 +702,7 @@
                 </li>
                 <li class="nav-item {{ Route::is('admin.importstudents.form') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Route::is('admin.importstudents.form') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-file-import"></i>
                         <p>
                             Import Students
                             <i class="right fas fa-angle-left"></i>
@@ -675,7 +719,7 @@
                 </li>
                 <li class="nav-item {{Route::is('admin.instructor-notes.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.instructor-notes.*')?'active':''}}">
-                        <i class="nav-icon fas fa-user-circle"></i>
+                        <i class="nav-icon fas fa-sticky-note"></i>
                         <p>
                             instructor notes
                             <i class="right fas fa-angle-left"></i>

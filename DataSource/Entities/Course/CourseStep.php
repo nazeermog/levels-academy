@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Translatable;
 use DataSource\Entities\Course\CourseContent;
 use DataSource\Entities\Classroom\ClassSession;
+use DataSource\Entities\Worksheet\Worksheet;
+use DataSource\Entities\Link\Link;
 use DataSource\Entities\PracticeType\PracticeType;
 use DataSource\Entities\PracticeType\PracticeTypeDetail;
 
@@ -53,6 +55,22 @@ class CourseStep extends Model
     public function classSession()
     {
         return $this->belongsTo(ClassSession::class, 'stepable_id');
+    }
+
+    /**
+     * The worksheet this step points to (when stepable_type === 'Worksheets').
+     */
+    public function worksheet()
+    {
+        return $this->belongsTo(Worksheet::class, 'stepable_id');
+    }
+
+    /**
+     * The link this step points to (when stepable_type === 'Links').
+     */
+    public function link()
+    {
+        return $this->belongsTo(Link::class, 'stepable_id');
     }
 
 

@@ -8,6 +8,8 @@ use DataSource\Entities\Course\CourseContent;
 use DataSource\Entities\Lesson\Lesson;
 use DataSource\Entities\Classroom\ClassSession;
 use DataSource\Entities\PracticeType\PracticeTypeDetail;
+use DataSource\Entities\Worksheet\Worksheet;
+use DataSource\Entities\Link\Link;
 
 /**
  * Read-only report of course steps whose stepable_id no longer resolves to a real
@@ -25,18 +27,22 @@ class CheckCourseSteps extends Command
         $lessonIds   = array_flip(Lesson::pluck('id')->all());
         $practiceIds = array_flip(PracticeTypeDetail::pluck('id')->all());
         $sessionIds  = array_flip(ClassSession::pluck('id')->all());
+        $worksheetIds = array_flip(Worksheet::pluck('id')->all());
+        $linkIds = array_flip(Link::pluck('id')->all());
 
         // content_id => "Course title / Content title" for context
         $contents = CourseContent::with('course')->get()->keyBy('id');
 
         $bad = [];
-        CourseStep::orderBy('course_content_id')->orderBy('ordering')->chunk(300, function ($steps) use ($lessonIds, $practiceIds, $sessionIds, $contents, &$bad) {
+        CourseStep::orderBy('course_content_id')->orderBy('ordering')->chunk(300, function ($steps) use ($lessonIds, $practiceIds, $sessionIds, $worksheetIds, $linkIds, $contents, &$bad) {
             foreach ($steps as $s) {
                 $id = (int) $s->stepable_id;
                 $ok = match ($s->stepable_type) {
                     'Lessons'       => isset($lessonIds[$id]),
                     'Practices'     => isset($practiceIds[$id]),
                     'ClassSessions' => isset($sessionIds[$id]),
+                    'Worksheets'    => isset($worksheetIds[$id]),
+                    'Links'         => isset($linkIds[$id]),
                     default         => true, // Quizzes / unknown types aren't validated
                 };
                 if (!$ok) {

@@ -11,6 +11,7 @@ use Modules\Instructor\Http\Controllers\ExpectedEarningsReportController;
 use Modules\Instructor\Http\Controllers\InstructorAvailabilityController;
 use Modules\Instructor\Http\Controllers\InstructorFreeSessionController;
 use Modules\Instructor\Http\Controllers\InstructorCourseProgressController;
+use Modules\Instructor\Http\Controllers\InstructorMyCoursesController;
 
 Route::group([
     'prefix' => 'instructor',
@@ -54,6 +55,11 @@ Route::group([
     // Per-student attendance: mark each student's session given (+ note) → charges parent, credits instructor
     Route::get('/sessions/{session}/attendance', [ClassSessionController::class, 'attendance'])->name('instructor.sessions.attendance');
     Route::post('/sessions/{session}/students/{student}/given', [ClassSessionController::class, 'markStudentGiven'])->name('instructor.sessions.student.given');
+
+    // My Courses — instructor edits the courses they teach (same builder as admin)
+    Route::get('/my-courses', [InstructorMyCoursesController::class, 'index'])->name('instructor.mycourses.index');
+    Route::get('/my-courses/{course}/edit', [InstructorMyCoursesController::class, 'edit'])->name('instructor.mycourses.edit');
+    Route::put('/my-courses/{course}', [InstructorMyCoursesController::class, 'update'])->name('instructor.mycourses.update');
 
     // Course progress (per-student, per-step)
     Route::get('/progress', [InstructorCourseProgressController::class, 'index'])->name('instructor.progress.index');
