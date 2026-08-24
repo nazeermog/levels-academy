@@ -57,18 +57,28 @@
                                     <label for="password">Password</label>
                                     <input class="form-control" type="password" name="password" placeholder="same old password, but you can change it.">
                                 </div>
+
+                                <div class="col-md-3 my-3 m-1">
+                                    <label for="organization_id">Organization</label>
+                                    <select class="form-control" name="organization_id" id="organization_id">
+                                        <option value="">Select organization</option>
+                                        @foreach($organizations as $organization)
+                                        <option value="{{ $organization->id }}" {{ optional($item->user)->organization_id == $organization->id ? 'selected' : '' }}>{{ $organization->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-3 m-1">
                                 <label for="student">Students</label>
-                              
+
                                 <select class="form-control" name="student_id[]" multiple>
                                     @foreach ($students as $student)
-                                    <option value="{{ $student->user_id }}" 
-                                    @foreach ($item->students as $oldStudent)
-                                    @if ($student->user_id == $oldStudent->user_id)
-                                    selected
-                                    @endif
-                                    @endforeach>
+                                    <option value="{{ $student->user_id }}"
+                                        @foreach ($item->students as $oldStudent)
+                                        @if ($student->user_id == $oldStudent->user_id)
+                                        selected
+                                        @endif
+                                        @endforeach>
                                         {{ $student->first_name.' '.$student->last_name }}
                                     </option>
                                     @endforeach

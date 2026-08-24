@@ -19,11 +19,11 @@ class AdminClassroomReportController extends BaseController
     {
         $currentOrg = $request->attributes->get('currentOrganization');
         $month = $request->input('month', Carbon::now()->format('Y-m'));
+        $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+        $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
         $instructorId = $request->input('instructor_id');
         $classroomId = $request->input('classroom_id');
         $typeId = $request->input('class_session_type_id');
-        $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
-        $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
         $baseQuery = function () use ($currentOrg, $startOfMonth, $endOfMonth, $instructorId, $classroomId, $typeId) {
             return ClassSession::normal()->with(['instructor', 'sessionType', 'classroom', 'classroom.students'])
@@ -41,7 +41,9 @@ class AdminClassroomReportController extends BaseController
                 ->when(!empty($typeId), function ($q) use ($typeId) {
                     $q->where('class_session_type_id', $typeId);
                 })
-                ->whereBetween('held_at', [$startOfMonth, $endOfMonth]);
+                ->when(!empty($month), function ($q) use ($startOfMonth, $endOfMonth) {
+                    $q->whereBetween('held_at', [$startOfMonth, $endOfMonth]);
+                });
         };
 
         // Sessions list (paginated)
@@ -118,11 +120,11 @@ class AdminClassroomReportController extends BaseController
     {
         $currentOrg = $request->attributes->get('currentOrganization');
         $month = $request->input('month', Carbon::now()->format('Y-m'));
+        $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+        $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
         $instructorId = $request->input('instructor_id');
         $classroomId = $request->input('classroom_id');
         $typeId = $request->input('class_session_type_id');
-        $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
-        $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
 
         $sessions = ClassSession::normal()->with(['sessionType', 'classroom', 'classroom.students', 'instructor'])
             ->when($currentOrg, function ($q) use ($currentOrg) {
@@ -139,13 +141,17 @@ class AdminClassroomReportController extends BaseController
             ->when(!empty($typeId), function ($q) use ($typeId) {
                 $q->where('class_session_type_id', $typeId);
             })
-            ->whereBetween('held_at', [$startOfMonth, $endOfMonth])
+            ->when(!empty($month), function ($q) use ($startOfMonth, $endOfMonth) {
+                $q->whereBetween('held_at', [$startOfMonth, $endOfMonth]);
+            })
             ->get();
 
         $sessionIds = $sessions->pluck('id')->all();
 
         // Pull all transactions for month and match those referencing our sessions (by description)
-        $monthlyTx = Transaction::whereBetween('created_at', [$startOfMonth, $endOfMonth])->get();
+        $monthlyTx = Transaction::when(!empty($month), function ($q) use ($startOfMonth, $endOfMonth) {
+            $q->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+        })->get();
         $txBySession = $monthlyTx->filter(function ($t) {
             return is_string($t->desc) && preg_match('/Class session #(\d+)/i', $t->desc);
         })->groupBy(function ($t) {
@@ -256,13 +262,13 @@ class AdminClassroomReportController extends BaseController
     {
         $currentOrg = $request->attributes->get('currentOrganization');
         $month = $request->input('month', Carbon::now()->format('Y-m'));
+        $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+        $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
         $studentId = $request->input('student_id');
         $parentId = $request->input('parent_id');
         $classroomId = $request->input('classroom_id');
         $typeId = $request->input('class_session_type_id');
-        $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
-        $endOfMonth = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
-
+        
         $sessions = ClassSession::normal()->with(['classroom'])
             ->when($currentOrg, function ($q) use ($currentOrg) {
                 $q->whereHas('classroom', function ($cq) use ($currentOrg) {
@@ -275,11 +281,15 @@ class AdminClassroomReportController extends BaseController
             ->when(!empty($typeId), function ($q) use ($typeId) {
                 $q->where('class_session_type_id', $typeId);
             })
-            ->whereBetween('held_at', [$startOfMonth, $endOfMonth])
+            ->when(!empty($month), function ($q) use ($startOfMonth, $endOfMonth) {
+                $q->whereBetween('held_at', [$startOfMonth, $endOfMonth]);
+            })
             ->get();
         $sessionIds = $sessions->pluck('id')->all();
 
-        $txQuery = Transaction::whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+        $txQuery = Transaction::when(!empty($month), function ($q) use ($startOfMonth, $endOfMonth) {
+            $q->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+        });
         if (!empty($studentId)) {
             $txQuery->where('student_id', $studentId);
         }
@@ -350,7 +360,9 @@ class AdminClassroomReportController extends BaseController
                 return $c->students->pluck('id');
             })->unique()->values();
         $studentsList = Student::whereIn('user_id', $studentUserIds)->orderBy('first_name')->get();
-        $parentIds = Transaction::whereBetween('created_at', [$startOfMonth, $endOfMonth])->distinct()->pluck('parent_id')->filter();
+        $parentIds = Transaction::when(!empty($month), function ($q) use ($startOfMonth, $endOfMonth) {
+                $q->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+            })->distinct()->pluck('parent_id')->filter();
         $parentsList = Parentt::whereIn('user_id', $parentIds)->orderBy('first_name')->get();
 
         return view('datasource::management.classrooms.report.student_dues', compact(
@@ -377,6 +389,8 @@ class AdminClassroomReportController extends BaseController
     {
         $currentOrg   = $request->attributes->get('currentOrganization');
         $month        = $request->input('month', Carbon::now()->format('Y-m'));
+        $startOfMonth = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+        $endOfMonth   = Carbon::createFromFormat('Y-m', $month)->endOfMonth();
         $instructorId = $request->input('instructor_id');
         $classroomId  = $request->input('classroom_id');
         $typeId       = $request->input('class_session_type_id');
@@ -500,16 +514,19 @@ class AdminClassroomReportController extends BaseController
      * Map of [session_id => number of students billed] for the month, derived
      * from charge transactions whose description references "Class session #<id>".
      */
-    private function billedStudentCountBySession(Carbon $startOfMonth, Carbon $endOfMonth)
+    private function billedStudentCountBySession(?Carbon $startOfMonth, ?Carbon $endOfMonth)
     {
-        return Transaction::whereBetween('created_at', [$startOfMonth, $endOfMonth])
-            ->where('is_credit', 0)
+        $query = Transaction::query();
+        if (!empty($startOfMonth) && !empty($endOfMonth)) {
+            $query->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+        }
+        return $query->where('is_credit', 0)
             ->get()
             ->filter(function ($t) {
-                return is_string($t->desc) && preg_match('/Class session #(\d+)/i', $t->desc);
+                return is_string($t->desc) && preg_match('/Class session #(\\d+)/i', $t->desc);
             })
             ->groupBy(function ($t) {
-                preg_match('/Class session #(\d+)/i', $t->desc, $m);
+                preg_match('/Class session #(\\d+)/i', $t->desc, $m);
                 return (int) $m[1];
             })
             ->map(function ($group) {

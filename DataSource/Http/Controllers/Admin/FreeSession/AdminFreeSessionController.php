@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Support\IcsBuilder;
-use App\Jobs\SendSessionInvite;
+use App\Jobs\SendSessionWhatsApp;
+use App\Support\SessionMessage;
 use DataSource\Entities\User\User;
+use DataSource\Entities\Parentt\Parentt;
+use DataSource\Entities\Student\Student;
 use DataSource\Entities\Classroom\ClassSession;
 use DataSource\Entities\FreeSession\FreeSessionRequest;
 use DataSource\Entities\FreeSession\InstructorAvailability;
@@ -17,8 +19,8 @@ use DataSource\Entities\FreeSession\InstructorAvailability;
 /**
  * Admin management of free-session requests (the waiting list).
  * The admin assigns a pending request to an instructor's available time slot,
- * which creates a free ClassSession and emails the requesting user a calendar
- * invite (same flow normal sessions use).
+ * which creates a free ClassSession and sends the requesting user a WhatsApp
+ * message with the date and a calendar link (same flow normal sessions use).
  */
 class AdminFreeSessionController extends BaseController
 {
@@ -112,94 +114,64 @@ class AdminFreeSessionController extends BaseController
             return back()->withErrors(['error' => $e->getMessage()]);
         }
 
-        // Scheduling is committed. Send the calendar invite in the background AFTER
-        // the response — a mail failure must never affect the (already saved) assignment.
+        // Scheduling is committed. Send the WhatsApp notification in the background AFTER
+        // the response — a delivery failure must never affect the (already saved) assignment.
         $this->sendInvite($freeSession, $session, $slot);
 
         return redirect()->route('admin.free-sessions.index')
-            ->with('success', 'Free session scheduled. A calendar invite is being emailed to the user.');
+            ->with('success', 'Free session scheduled. A WhatsApp message is being sent to the user.');
     }
 
     /**
-     * Queue an ICS calendar invite to the requesting user after commit.
-     * Mirrors the invite logic in Modules\Instructor ClassSessionController::store.
+     * Send the requesting user a WhatsApp notification after commit.
+     * Mirrors the notification logic in Modules\Instructor ClassSessionController::store.
      */
     private function sendInvite(FreeSessionRequest $freeSession, ClassSession $session, InstructorAvailability $slot): void
     {
         try {
             $attendeeUser = User::find($freeSession->user_id);
-            if (!$attendeeUser || empty($attendeeUser->email)) {
-                Log::warning('[ICS][free] No attendee email', ['request_id' => $freeSession->id]);
+            if (!$attendeeUser) {
+                Log::warning('[WhatsApp][free] No attendee user', ['request_id' => $freeSession->id]);
                 return;
             }
 
-            $instructorUser  = User::find($slot->instructor_id);
-            $instructorEmail = $instructorUser?->email ?? config('mail.from.address');
-            $instructorName  = trim(($instructorUser->first_name ?? '') . ' ' . ($instructorUser->last_name ?? ''));
+            // The requester's phone lives on their student/parent profile (keyed by user_id).
+            $phone = optional(Parentt::find($freeSession->user_id))->phone_number
+                ?? optional(Student::find($freeSession->user_id))->phone_number;
+            if (empty($phone)) {
+                Log::warning('[WhatsApp][free] Attendee has no phone — skipping', [
+                    'request_id' => $freeSession->id,
+                    'user_id'    => $freeSession->user_id,
+                ]);
+                return;
+            }
 
-            $domain = parse_url(config('app.url'), PHP_URL_HOST) ?: 'levels-academy.local';
-            $uid    = 'free-session-' . $session->id . '@' . $domain;
+            $instructorUser = User::find($slot->instructor_id);
+            $instructorName = trim(($instructorUser->first_name ?? '') . ' ' . ($instructorUser->last_name ?? ''));
 
-            $startUtc = Carbon::parse($session->held_at)->setTimezone('UTC');
-            $endUtc   = Carbon::parse($session->end_at)->setTimezone('UTC');
-            $summary  = 'Free Trial Session';
-            $description = 'Your free trial session with ' . ($instructorName ?: 'your instructor') . '.'
-                . ($session->content ? "\n" . $session->content : '');
+            $meta = [
+                'summary'         => 'Free Trial Session',
+                'description'     => 'Your free trial session with ' . ($instructorName ?: 'your instructor') . '.'
+                    . ($session->content ? "\n" . $session->content : ''),
+                'start_utc'       => Carbon::parse($session->held_at)->setTimezone('UTC'),
+                'end_utc'         => Carbon::parse($session->end_at)->setTimezone('UTC'),
+                'instructor_name' => $instructorName ?: null,
+            ];
 
-            $attendees = [[
-                'email' => $attendeeUser->email,
-                'name'  => trim(($attendeeUser->first_name ?? '') . ' ' . ($attendeeUser->last_name ?? '')),
-            ]];
-
-            $ics = IcsBuilder::buildInvite([
-                'uid'             => $uid,
-                'summary'         => $summary,
-                'description'     => $description,
-                'organizer_email' => $instructorEmail,
-                'organizer_name'  => $instructorName ?: null,
-                'start_utc'       => $startUtc,
-                'end_utc'         => $endUtc,
-                'attendees'       => $attendees,
-                'sequence'        => 0,
-                'method'          => 'REQUEST',
+            Log::info('[WhatsApp][free] Dispatch notification', [
+                'session_id' => $session->id,
+                'user_id'    => $freeSession->user_id,
             ]);
 
-            // Render in the attendee's timezone when we know it (auto-detected at login).
-            $attendeeTz = ($attendeeUser->timezone && in_array($attendeeUser->timezone, timezone_identifiers_list(), true))
-                ? $attendeeUser->timezone : null;
-            $startUtcText  = $attendeeTz
-                ? $startUtc->copy()->setTimezone($attendeeTz)->format('Y-m-d H:i') . ' (' . $attendeeTz . ')'
-                : $startUtc->format('Y-m-d H:i') . ' UTC';
-            $endUtcText    = $attendeeTz
-                ? $endUtc->copy()->setTimezone($attendeeTz)->format('Y-m-d H:i') . ' (' . $attendeeTz . ')'
-                : $endUtc->format('Y-m-d H:i') . ' UTC';
-            $startIsoParam = $startUtc->format('Ymd\THis\Z');
-            $endIsoParam   = $endUtc->format('Ymd\THis\Z');
-            $startLocalLink = 'https://www.timeanddate.com/worldclock/fixedtime.html?iso=' . $startIsoParam;
-            $endLocalLink   = 'https://www.timeanddate.com/worldclock/fixedtime.html?iso=' . $endIsoParam;
-
-            $body = '<p>Your free trial session has been scheduled.</p>'
-                . '<p><strong>' . $summary . '</strong></p>'
-                . '<p>Instructor: ' . ($instructorName ?: 'TBA') . '</p>'
-                . '<p>'
-                . 'Starts: ' . $startUtcText . ' (<a href="' . $startLocalLink . '">view in your local time</a>)<br>'
-                . 'Ends: ' . $endUtcText . ' (<a href="' . $endLocalLink . '">view in your local time</a>)'
-                . '</p>'
-                . '<p>Tip: Open the attached calendar invite; your calendar will show the event in your local time automatically.</p>';
-
-            $email = $attendeeUser->email;
-            Log::info('[ICS][free] Dispatch invite', ['session_id' => $session->id, 'to' => $email]);
             // afterResponse() runs the send after the HTTP response is returned, so a slow
-            // or failing mail server never blocks or breaks the assignment request. If a real
+            // or failing gateway never blocks or breaks the assignment request. If a real
             // queue worker is configured later, the job already implements ShouldQueue.
-            SendSessionInvite::dispatch(
-                $email,
-                'Your Free Trial Session',
-                $body,
-                $ics
+            SendSessionWhatsApp::dispatch(
+                $phone,
+                SessionMessage::whatsappBody($meta, $attendeeUser->timezone)
             )->afterResponse();
         } catch (\Throwable $e) {
-            Log::error('[ICS][free] Mail block failed', [
+            Log::error('[WhatsApp][free] Notify block failed', [
                 'request_id' => $freeSession->id ?? null,
                 'error'      => $e->getMessage(),
             ]);

@@ -31,9 +31,7 @@ class RoleMiddleware
                 case 'super_admin':
                     return redirect()->route('admin.dashboard');
                 case 'admin':
-                    return redirect()->route(
-                        config('features.organizations') ? 'admin.org.dashboard' : 'admin.dashboard'
-                    );
+                    return redirect()->route('admin.dashboard');
                 case 'parent':
                     return redirect()->route('parent.dashboard');
                 case 'instructor':

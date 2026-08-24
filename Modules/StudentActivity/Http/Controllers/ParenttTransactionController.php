@@ -17,21 +17,56 @@ class ParenttTransactionController extends Controller
 
   public function transactions()
   {
-    $parentId = Auth::id();
-    $parent = Parentt::find($parentId);
-
+    $parent = Parentt::find(Auth::id());
     if (!$parent) {
       return redirect()->back()->withError('Parent not found.');
     }
 
+    return view('studentactivity::transaction', $this->buildReport($parent));
+  }
+
+  /**
+   * Downloadable PDF of the same transactions report.
+   */
+  public function transactionsPdf()
+  {
+    $parent = Parentt::find(Auth::id());
+    if (!$parent) {
+      return redirect()->back()->withError('Parent not found.');
+    }
+
+    $data = $this->buildReport($parent);
+    $data['generatedAt'] = now();
+    $data['appName'] = config('app.name');
+
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('studentactivity::transaction_pdf', $data)
+      ->setPaper('a4', 'portrait');
+
+    return $pdf->download('transactions-report.pdf');
+  }
+
+  /**
+   * Build the parent's financial statement: every transaction plus the paid /
+   * charged / balance totals. A credit (is_credit=1) is a payment in; a debit
+   * (is_credit=0) is a charge owed. Balance = paid - charged (negative = owed).
+   */
+  private function buildReport(Parentt $parent): array
+  {
     $list = $parent->transactions()->with(['student', 'course'])
       ->orderBy('created_at', 'desc')
       ->get();
 
-    $table_name = 'Transactions';
-    $balance = $parent->balance();
+    $totalPaid    = (float) $list->where('is_credit', 1)->sum('price');
+    $totalCharged = (float) $list->where('is_credit', 0)->sum('price');
 
-    return view('studentactivity::transaction', compact('list', 'table_name', 'balance'));
+    return [
+      'table_name'   => 'Transactions',
+      'list'         => $list,
+      'totalPaid'    => $totalPaid,
+      'totalCharged' => $totalCharged,
+      'balance'      => $totalPaid - $totalCharged,
+      'parentName'   => trim(($parent->first_name ?? '') . ' ' . ($parent->last_name ?? '')),
+    ];
   }
 
   public function showAddMoney()

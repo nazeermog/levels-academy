@@ -1,6 +1,11 @@
+@php
+$org = $currentOrganization ?? null;
+$brandLogo = $org ? asset('images/logo/' . $org->subdomain . '.png') : asset('images/logo/Levels-logo.png');
+$brandName = $org && $org->name ? $org->name : config('app.name', 'Levels Academy');
+@endphp
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="{{ route('admin.dashboard') }}" class="brand-link">
-        <img src="{{asset('images/logo/Levels-logo.png')}}" alt="{{ config('app.name', 'Project Name') }} Logo" class="brand-image  " height="100" width="100" style="opacity: .8">
+        <img src="{{ $brandLogo }}" alt="{{ $brandName }} Logo" class="brand-image  " height="100" width="100" style="opacity: .8" onerror="this.src='{{ asset('images/logo/Levels-logo.png') }}'">
 
     </a>
 
@@ -12,11 +17,11 @@
                 @php
                 $sidebarUser = auth()->user();
                 $orgsOn = (bool) config('features.organizations');
-                // Global catalog/dashboard: super_admin always; admin only when organizations are OFF (merged "sees everything" mode).
-                $showCatalog = $sidebarUser && ($sidebarUser->role === 'super_admin' || ($sidebarUser->role === 'admin' && ! $orgsOn));
+                // Organization admins can manage the shared catalog; organization CRUD stays super-admin-only below.
+                $showCatalog = $sidebarUser && in_array($sidebarUser->role, ['admin', 'super_admin'], true);
                 @endphp
                 @if(auth()->check() && in_array(auth()->user()->role, ['admin','super_admin']))
-                {{-- Dashboard (global) is the first item — only when the global catalog is available. --}}
+                {{-- Dashboard is available to both admin roles. --}}
                 @if($showCatalog)
                 <li class="nav-item {{ Route::is('admin.dashboard') ? 'active' : '' }}">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}">
@@ -26,8 +31,8 @@
                 </li>
                 @endif
 
-                {{-- All organization features grouped in one tab. Hidden until config('features.organizations') is true. --}}
-                @if(config('features.organizations'))
+                {{-- Organization management remains super-admin-only; org admins get their own settings and users. --}}
+                @if(config('features.organizations') && in_array(auth()->user()?->role, ['admin', 'super_admin'], true))
                 <li class="nav-item {{ (Route::is('admin.org.dashboard') || Route::is('admin.org.users.*') || Route::is('admin.org.settings.*') || Route::is('admin.org.instructor-notes.*') || Route::is('admin.organizations.*')) ? 'menu-open' : '' }} ">
                     <a href="#" class="nav-link {{ (Route::is('admin.org.dashboard') || Route::is('admin.org.users.*') || Route::is('admin.org.settings.*') || Route::is('admin.org.instructor-notes.*') || Route::is('admin.organizations.*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-sitemap"></i>
@@ -149,7 +154,7 @@
                     </ul>
                 </li>
                 @endif
-                {{-- Global catalog: super_admin always; admin only when organizations are OFF. --}}
+                {{-- Shared catalog and settings are available to both admin roles. --}}
                 @if($showCatalog)
                 <li class="nav-item {{Route::is('admin.practices.*')?'menu-open':''}} ">
                     <a href="#" class="nav-link {{Route::is('admin.practices.*')?'active':''}}">

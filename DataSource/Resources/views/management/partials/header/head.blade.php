@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="{{asset('images/s2.png')}}" sizes="192x192">
+    <link rel="icon" href="{{ $brandLogo ?? asset('images/s2.png') }}" sizes="192x192">
     <title>{{ config('app.name', 'Project Name') }} - @yield('title') </title>
 
     <!-- Google Font: Source Sans Pro -->

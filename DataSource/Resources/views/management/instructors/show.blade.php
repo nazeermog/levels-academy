@@ -39,7 +39,7 @@
                                 @foreach (localeSupported() as $locale)
                                 <div class="col-md-3 m-1">
                                     <label for="">Spec {{ ucwords($locale) }}</label>
-                                    <input type="text" class="form-control" name="spec-{{$locale}}" value="{{old('spec-'.$locale,$item->translateOrDefault($locale)->spec)}}" placeholder="Enter Spec {{ucwords($locale)}}">
+                                    <input type="text" class="form-control" name="spec-{{$locale}}" value="{{ old('spec-'.$locale, optional($item->translateOrDefault($locale))->spec) }}" placeholder="Enter Spec {{ucwords($locale)}}">
                                 </div>
                                 @endforeach
                             </div>
@@ -47,7 +47,7 @@
                                 @foreach (localeSupported() as $locale)
                                 <div class="col-md-3 m-1">
                                     <label for="">About {{ ucwords($locale) }}</label>
-                                    <input type="text" class="form-control" name="about-{{$locale}}" value="{{old('about-'.$locale,$item->translateOrDefault($locale)->about)}}" placeholder="Enter About {{ucwords($locale)}}">
+                                    <input type="text" class="form-control" name="about-{{$locale}}" value="{{ old('about-'.$locale, optional($item->translateOrDefault($locale))->about) }}" placeholder="Enter About {{ucwords($locale)}}">
                                 </div>
                                 @endforeach
                             </div>
@@ -55,7 +55,7 @@
                                 @foreach (localeSupported() as $locale)
                                 <div class="col-md-3 m-1">
                                     <label for="">Country {{ ucwords($locale) }}</label>
-                                    <input type="text" class="form-control" name="country-{{$locale}}" value="{{old('country-'.$locale,$item->translateOrDefault($locale)->country)}}" placeholder="Enter Country {{ucwords($locale)}}">
+                                    <input type="text" class="form-control" name="country-{{$locale}}" value="{{ old('country-'.$locale, optional($item->translateOrDefault($locale))->country) }}" placeholder="Enter Country {{ucwords($locale)}}">
                                 </div>
                                 @endforeach
                             </div>
@@ -70,6 +70,16 @@
                                             @endif>
                                             {{ $user->first_name.' '.$user->last_name }}
                                         </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 m-1">
+                                    <label for="organization_id">Organization</label>
+                                    <select class="form-control" name="organization_id" id="organization_id">
+                                        <option value="">Select organization</option>
+                                        @foreach($organizations as $organization)
+                                        <option value="{{ $organization->id }}" {{ optional($item->user)->organization_id == $organization->id ? 'selected' : '' }}>{{ $organization->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

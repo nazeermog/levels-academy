@@ -15,19 +15,18 @@ class Update extends FormRequest
 
     public function rules()
     {
-       $mergeArray = [];
-       foreach (localeSupported() as $locale) {
-           $mergeArray['spec-' . $locale] = ['required', 'string'];
-           $mergeArray['about-' . $locale] = ['required', 'string'];
-           $mergeArray['country-' . $locale] = ['required', 'string'];
-
-       }
-       return array_merge([
-        'avatar' => [''],
-        'user_id' => ['required','numeric'],
-        'model_id' => ['integer','required'],
-    ], $mergeArray);
-        return[];
+        $mergeArray = [];
+        foreach (localeSupported() as $locale) {
+            $mergeArray['spec-' . $locale] = ['required', 'string'];
+            $mergeArray['about-' . $locale] = ['required', 'string'];
+            $mergeArray['country-' . $locale] = ['required', 'string'];
+        }
+        return array_merge([
+            'avatar' => [''],
+            'user_id' => ['required', 'numeric'],
+            'model_id' => ['integer', 'required'],
+            'organization_id' => ['required', 'exists:organizations,id'],
+        ], $mergeArray);
+        return [];
     }
 }
-

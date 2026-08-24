@@ -34,6 +34,7 @@ class AdminParenttRepository
             $user->password = bcrypt($data['password']);
             $user->email = $data['email'];
             $user->role = 'parentt';
+            $user->organization_id = $data['organization_id'] ?? null;
 
             $user->save();
 
@@ -67,6 +68,7 @@ class AdminParenttRepository
             }
             $user->email = $data['email'];
             $user->role = 'parentt';
+            $user->organization_id = $data['organization_id'] ?? null;
 
             $user->save();
 

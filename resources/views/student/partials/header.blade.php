@@ -1,3 +1,8 @@
+@php
+$org = $currentOrganization ?? null;
+$brandLogo = $org ? asset('images/logo/' . $org->subdomain . '.png') : asset('images/logo/Levels-logo.png');
+$brandName = $org && $org->name ? $org->name : 'Levels Academy';
+@endphp
 <div id="header" class="mdk-header js-mdk-header mb-0" data-fixed>
   <div class="mdk-header__content">
 
@@ -19,12 +24,12 @@
 
         <span class="avatar avatar-sm navbar-brand-icon mr-0 mr-lg-8pt">
 
-          <span class=" rounded"><img src="{{asset('images/logo/woderhafen.jpg')}}" alt="logo" class="img-fluid" style="margin-top: 10px;border-radius: inherit;" /></span>
+          <span class=" rounded"><img src="{{ $brandLogo }}" alt="{{ $brandName }} logo" class="img-fluid" style="border-radius: inherit;" onerror="this.src='{{ asset('images/logo/Levels-logo.png') }}'" /></span>
 
         </span>
 
         <span class="d-none d-lg-block">
-          Wunderhafen
+          {{ $brandName }}
         </span>
       </a>
 

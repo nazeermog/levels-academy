@@ -47,6 +47,15 @@ Import Students
               <label class="form-label fw-bold">Upload CSV File</label>
               <input type="file" name="file" class="form-control" required>
             </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold" for="organization_id">Organization</label>
+              <select name="organization_id" id="organization_id" class="form-control">
+                <option value="">Select organization</option>
+                @foreach($organizations as $organization)
+                <option value="{{ $organization->id }}" {{ request()->attributes->get('currentOrganization') && auth()->user()->role !== 'super_admin' && request()->attributes->get('currentOrganization')->id == $organization->id ? 'selected' : '' }}>{{ $organization->name }}</option>
+                @endforeach
+              </select>
+            </div>
           </div>
 
           <button type="submit" class="btn btn-success">Import Students</button>

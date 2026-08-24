@@ -68,6 +68,16 @@
                                     <label for="password">Password</label>
                                     <input class="form-control" type="password" name="password" placeholder="same old password, but you can change it.">
                                 </div>
+
+                                <div class="col-md-3 my-3 m-1">
+                                    <label for="organization_id">Organization</label>
+                                    <select class="form-control" name="organization_id" id="organization_id">
+                                        <option value="">Select organization</option>
+                                        @foreach($organizations as $organization)
+                                        <option value="{{ $organization->id }}" {{ optional($item->user)->organization_id == $organization->id ? 'selected' : '' }}>{{ $organization->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-3 m-1">
                                 <label for="avatar">Avatar</label>

@@ -4,48 +4,57 @@
     <section class="content">
         <div class="container-fluid">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="card-title">Instructor Session Totals @if(isset($currentOrg) && $currentOrg) ({{ $currentOrg->name }}) @endif</h3>
-                    <form method="GET" action="" class="form-inline">
-                        <div class="form-group mb-0 mr-2">
-                            <label for="month" class="mr-2">Month</label>
-                            <input type="month" id="month" name="month" value="{{ $month ?? '' }}" class="form-control" />
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-6 d-flex align-items-center">
+                            <h3 class="card-title mb-0">Instructor Session Totals @if(isset($currentOrg) && $currentOrg) ({{ $currentOrg->name }}) @endif</h3>
+                            <button type="button" onclick="window.print()" class="btn btn-sm btn-outline-primary d-print-none ml-3">Save as PDF</button>
                         </div>
-                        <div class="form-group mb-0 mr-2">
-                            <label for="instructor_id" class="mr-2">Instructor</label>
-                            <select id="instructor_id" name="instructor_id" class="form-control">
-                                <option value="">All</option>
-                                @foreach(($instructors ?? collect()) as $ins)
-                                    <option value="{{ $ins->id }}" {{ (string)($instructorId ?? '') === (string)$ins->id ? 'selected' : '' }}>
-                                        {{ $ins->first_name }} {{ $ins->last_name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                        <div class="col-12 col-md-6">
+                            <form method="GET" action="" class="d-flex flex-wrap justify-content-end">
+                                <div class="form-group mb-2 mr-2 d-flex align-items-center" style="min-width:140px;">
+                                    <label for="month" class="mr-2 mb-0">Month</label>
+                                    <input type="month" id="month" name="month" value="{{ $month ?? '' }}" class="form-control form-control-sm" />
+                                </div>
+                                <div class="form-group mb-2 mr-2 d-flex align-items-center" style="min-width:160px;">
+                                    <label for="instructor_id" class="mr-2 mb-0">Instructor</label>
+                                    <select id="instructor_id" name="instructor_id" class="form-control form-control-sm">
+                                        <option value="">All</option>
+                                        @foreach(($instructors ?? collect()) as $ins)
+                                            <option value="{{ $ins->id }}" {{ (string)($instructorId ?? '') === (string)$ins->id ? 'selected' : '' }}>
+                                                {{ $ins->first_name }} {{ $ins->last_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group mb-2 mr-2 d-flex align-items-center" style="min-width:160px;">
+                                    <label for="classroom_id" class="mr-2 mb-0">Classroom</label>
+                                    <select id="classroom_id" name="classroom_id" class="form-control form-control-sm">
+                                        <option value="">All</option>
+                                        @foreach(($classrooms ?? collect()) as $cls)
+                                            <option value="{{ $cls->id }}" {{ (string)($classroomId ?? '') === (string)$cls->id ? 'selected' : '' }}>
+                                                {{ $cls->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group mb-2 mr-2 d-flex align-items-center" style="min-width:160px;">
+                                    <label for="class_session_type_id" class="mr-2 mb-0">Type</label>
+                                    <select id="class_session_type_id" name="class_session_type_id" class="form-control form-control-sm">
+                                        <option value="">All</option>
+                                        @foreach(($types ?? collect()) as $tp)
+                                            <option value="{{ $tp->id }}" {{ (string)($typeId ?? '') === (string)$tp->id ? 'selected' : '' }}>
+                                                {{ $tp->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-2 d-flex align-items-center">
+                                    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group mb-0 mr-2">
-                            <label for="classroom_id" class="mr-2">Classroom</label>
-                            <select id="classroom_id" name="classroom_id" class="form-control">
-                                <option value="">All</option>
-                                @foreach(($classrooms ?? collect()) as $cls)
-                                    <option value="{{ $cls->id }}" {{ (string)($classroomId ?? '') === (string)$cls->id ? 'selected' : '' }}>
-                                        {{ $cls->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group mb-0 mr-2">
-                            <label for="class_session_type_id" class="mr-2">Type</label>
-                            <select id="class_session_type_id" name="class_session_type_id" class="form-control">
-                                <option value="">All</option>
-                                @foreach(($types ?? collect()) as $tp)
-                                    <option value="{{ $tp->id }}" {{ (string)($typeId ?? '') === (string)$tp->id ? 'selected' : '' }}>
-                                        {{ $tp->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary ml-2">Filter</button>
-                    </form>
+                    </div>
                 </div>
                 <div class="card-body table-responsive p-0">
                     <div class="p-3">

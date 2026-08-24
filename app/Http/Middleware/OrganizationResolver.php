@@ -28,7 +28,21 @@ class OrganizationResolver
         View::share('currentOrganization', $organization);
         if ($organization) {
             $request->attributes->set('currentOrganization', $organization);
+            // Brand the whole request as this org: everything using config('app.name')
+            // (page titles, meta, etc.) then renders the org name instead of "Levels Academy".
+            if ($organization->name) {
+                config(['app.name' => $organization->name]);
+            }
         }
+
+        // Brand logo + name available to every view (favicons, layouts) — the org's
+        // logo on an org subdomain, the Levels logo otherwise.
+        View::share('brandLogo', $organization
+            ? asset('images/logo/' . $organization->subdomain . '.png')
+            : asset('images/logo/Levels-logo.png'));
+        View::share('brandName', $organization && $organization->name
+            ? $organization->name
+            : config('app.name', 'Levels Academy'));
 
         return $next($request);
     }

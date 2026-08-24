@@ -10,13 +10,14 @@ use DataSource\Entities\Classroom\ClassSession;
 use DataSource\Entities\Classroom\ClassSessionType;
 use DataSource\Entities\Classroom\ClassSessionStudent;
 use DataSource\Entities\Student\Student;
+use DataSource\Entities\Parentt\Parentt;
 use DataSource\Entities\Transaction\Transaction;
 use DataSource\Entities\User\User;
 use Illuminate\Support\Facades\DB;
-use App\Support\IcsBuilder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
-use App\Jobs\SendSessionInvite;
+use App\Jobs\SendSessionWhatsApp;
+use App\Support\SessionMessage;
 
 class ClassSessionController extends Controller
 {
@@ -315,31 +316,29 @@ class ClassSessionController extends Controller
     }
 
     /* ----------------------------------------------------------------------
-     | Calendar invites (ICS email to parents)
+     | Session notifications (WhatsApp to parents)
      * -------------------------------------------------------------------- */
 
     /**
-     * Queue an ICS calendar invite to each enrolled student's parent.
-     * Failures are logged but never block session creation.
+     * Notify each enrolled student's parent over WhatsApp with the session
+     * date/time and a Google Calendar link. Failures are logged but never block
+     * session creation.
      */
     private function sendInvites(Classroom $classroom, ClassSession $session, array $studentUserIds, int $instructorId): void
     {
         try {
             $instructor = User::find($instructorId);
-            $instructorEmail = $instructor->email ?? null;
+            $instructorEmail = $instructor->email ?? '';
             $parentUserIds = $this->parentUserIdsFor($studentUserIds);
 
-            Log::info('[ICS] Prepared parent recipients', [
+            Log::info('[WhatsApp] Prepared parent recipients', [
                 'session_id' => $session->id,
                 'parent_count' => count($parentUserIds),
-                'instructor_email_present' => (bool) $instructorEmail,
             ]);
 
-            if (empty($parentUserIds) || !$instructorEmail) {
-                Log::warning('[ICS] No recipients or missing instructor email', [
+            if (empty($parentUserIds)) {
+                Log::warning('[WhatsApp] No parent recipients for session', [
                     'session_id' => $session->id,
-                    'parent_count' => count($parentUserIds),
-                    'instructor_email_present' => (bool) $instructorEmail,
                 ]);
                 return;
             }
@@ -353,8 +352,8 @@ class ClassSessionController extends Controller
                 }
             });
         } catch (\Throwable $e) {
-            // Swallow mail errors so they never block session creation.
-            Log::error('[ICS] Mail block failed', [
+            // Swallow notification errors so they never block session creation.
+            Log::error('[WhatsApp] Notify block failed', [
                 'session_id' => $session->id ?? null,
                 'error' => $e->getMessage(),
             ]);
@@ -382,80 +381,33 @@ class ClassSessionController extends Controller
     }
 
     /**
-     * Build the ICS payload + email body and dispatch the invite job for one parent.
+     * Resolve the parent's WhatsApp number and dispatch the notification for one parent.
      */
     private function queueInviteForParent($parentUserId, ClassSession $session, array $meta): void
     {
         $parentUser = User::find($parentUserId);
-        if (!$parentUser || empty($parentUser->email)) {
+        if (!$parentUser) {
             return;
         }
 
-        Log::info('[ICS] Queue invite', [
-            'session_id' => $session->id,
-            'to' => $parentUser->email,
-        ]);
-
-        $ics = IcsBuilder::buildInvite([
-            'uid' => $meta['uid'],
-            'summary' => $meta['summary'],
-            'description' => $meta['description'],
-            'organizer_email' => $meta['organizer_email'],
-            'organizer_name' => $meta['organizer_name'],
-            'start_utc' => $meta['start_utc'],
-            'end_utc' => $meta['end_utc'],
-            'attendees' => [[
-                'email' => $parentUser->email,
-                'name' => $this->fullName($parentUser),
-            ]],
-            'sequence' => 0,
-            'method' => 'REQUEST',
-        ]);
-
-        SendSessionInvite::dispatch(
-            $parentUser->email,
-            'Class Session Invitation',
-            $this->buildInviteEmailBody($meta, $parentUser->timezone),
-            $ics
-        )->onQueue('default');
-    }
-
-    /**
-     * HTML body for the invite email. When the recipient's timezone is known it
-     * renders the times in their local zone; otherwise falls back to UTC + a
-     * "view in local time" link.
-     */
-    private function buildInviteEmailBody(array $meta, ?string $tz = null): string
-    {
-        /** @var Carbon $startUtc */
-        $startUtc = $meta['start_utc'];
-        /** @var Carbon $endUtc */
-        $endUtc = $meta['end_utc'];
-
-        $useTz = ($tz && in_array($tz, timezone_identifiers_list(), true)) ? $tz : null;
-
-        if ($useTz) {
-            $startText = $startUtc->copy()->setTimezone($useTz)->format('Y-m-d H:i').' ('.$useTz.')';
-            $endText = $endUtc->copy()->setTimezone($useTz)->format('Y-m-d H:i').' ('.$useTz.')';
-        } else {
-            $startText = $startUtc->format('Y-m-d H:i').' UTC';
-            $endText = $endUtc->format('Y-m-d H:i').' UTC';
+        $phone = optional(Parentt::find($parentUserId))->phone_number;
+        if (empty($phone)) {
+            Log::info('[WhatsApp] Parent has no phone — skipping', [
+                'session_id' => $session->id,
+                'parent_user_id' => $parentUserId,
+            ]);
+            return;
         }
 
-        $startLocalLink = 'https://www.timeanddate.com/worldclock/fixedtime.html?iso='.$startUtc->format('Ymd\THis\Z');
-        $endLocalLink = 'https://www.timeanddate.com/worldclock/fixedtime.html?iso='.$endUtc->format('Ymd\THis\Z');
+        Log::info('[WhatsApp] Queue session notification', [
+            'session_id' => $session->id,
+            'parent_user_id' => $parentUserId,
+        ]);
 
-        return '<p>You have a new class session.</p>'
-            .'<p><strong>'.$meta['summary'].'</strong></p>'
-            .'<p>Classroom: '.$meta['classroom_name'].'</p>'
-            .'<p>'
-            .'Starts: '.$startText.' '
-            .'(<a href="'.$startLocalLink.'">view in your local time</a>)'
-            .'<br>'
-            .'Ends: '.$endText.' '
-            .'(<a href="'.$endLocalLink.'">view in your local time</a>)'
-            .'</p>'
-            .'<p>Tip: Open the attached calendar invite; your calendar will show the event in your local time automatically.</p>';
+        SendSessionWhatsApp::dispatch(
+            $phone,
+            SessionMessage::whatsappBody($meta, $parentUser->timezone)
+        )->onQueue('default');
     }
 
     /**

@@ -22,6 +22,7 @@ class Store extends FormRequest
             'last_name' => ['required', 'string'],
             'email' => ['required', 'email'],
             'password' => ['required'],
+            'organization_id' => ['required', 'exists:organizations,id'],
             'city' => ['required', 'string'],
             'country' => ['required', 'string'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],

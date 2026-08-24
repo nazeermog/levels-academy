@@ -15,19 +15,19 @@ class Update extends FormRequest
 
     public function rules()
     {
-       $mergeArray = [];
- 
-       return array_merge([
-        'student_id' => ['required'],
-        'first_name' => ['required','string'],
-        'last_name' => ['required','string'],
-        'email' => ['required','email'],
-        'password'=>[''],
-        'model_id' => ['integer','required'],
+        $mergeArray = [];
+
+        return array_merge([
+            'student_id' => ['required'],
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => [''],
+            'organization_id' => ['required', 'exists:organizations,id'],
+            'model_id' => ['integer', 'required'],
 
 
-    ], $mergeArray);
-        return[];
+        ], $mergeArray);
+        return [];
     }
 }
-

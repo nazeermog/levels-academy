@@ -62,5 +62,15 @@
 <!-- ./wrapper -->
 @include('datasource::management.partials.footer.js')
 @include('partials.localtime')
+<style>
+    /* "Save as PDF" support: printing shows only the report content. */
+    @media print {
+        .main-sidebar, .main-header, .navbar, .content-header, .main-footer,
+        .preloader, #loading-show, .d-print-none { display: none !important; }
+        .content-wrapper { margin-left: 0 !important; }
+        body { background: #fff !important; }
+        .card { box-shadow: none !important; border: 1px solid #ddd !important; }
+    }
+</style>
 </body>
 </html>

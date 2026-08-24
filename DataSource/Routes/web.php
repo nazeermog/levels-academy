@@ -35,10 +35,10 @@ use DataSource\Http\Controllers\Admin\Organization\OrgSettingsController;
 use DataSource\Http\Controllers\Admin\FreeSession\AdminFreeSessionController;
 
 
-// Master switch: when organizations are OFF, admins get the full global catalog
-// ("sees everything" mode). When ON, the global catalog is super_admin-only and
-// admins are scoped to their organization screens (original behaviour).
-$catalogGuard = config('features.organizations') ? 'role:super_admin' : 'role:super_admin,admin';
+// Admins get the full global catalog alongside super_admins (the same "sees
+// everything" access), regardless of the organizations flag. Only the Organizations
+// management tab (below) stays super_admin-only.
+$catalogGuard = 'role:super_admin,admin';
 
 // Global admin catalog/content management
 Route::prefix('admin')->middleware(['auth', $catalogGuard])->group(function () {

@@ -15,19 +15,18 @@ class Store extends FormRequest
 
     public function rules()
     {
-       $mergeArray = [];
-       foreach (localeSupported() as $locale) {
-           $mergeArray['spec-' . $locale] = ['required', 'string'];
-           $mergeArray['about-' . $locale] = ['required', 'string'];
-           $mergeArray['country-' . $locale] = ['required', 'string'];
+        $mergeArray = [];
+        foreach (localeSupported() as $locale) {
+            $mergeArray['spec-' . $locale] = ['required', 'string'];
+            $mergeArray['about-' . $locale] = ['required', 'string'];
+            $mergeArray['country-' . $locale] = ['required', 'string'];
+        }
+        return array_merge([
+            'avatar' => ['required'],
+            'user_id' => ['required', 'numeric'],
+            'organization_id' => ['required', 'exists:organizations,id'],
 
-       }
-       return array_merge([
-        'avatar' => ['required'],
-        'user_id' => ['required','numeric'],
-
-    ], $mergeArray);
-        return[];
+        ], $mergeArray);
+        return [];
     }
 }
-

@@ -9,27 +9,33 @@ Expected Earnings
 
       {{-- ── Filter Card ── --}}
       <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h3 class="card-title mb-0">Expected Earnings</h3>
-          <form method="GET" action="{{ route('instructor.reports.expected_earnings') }}" class="form-inline flex-wrap justify-content-end">
-            <div class="form-group mb-2 mr-2">
-              <label for="month" class="sr-only">Month</label>
-              <input type="month" id="month" name="month" value="{{ $month ?? '' }}" class="form-control form-control-sm" />
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-12 col-md-6 d-flex align-items-center">
+              <h3 class="card-title mb-0">Expected Earnings</h3>
             </div>
-            <div class="form-group mb-2 mr-2">
-              <label for="classroom_id" class="sr-only">Classroom</label>
-              <select id="classroom_id" name="classroom_id" class="form-control form-control-sm">
-                <option value="">All Classrooms</option>
-                @foreach($classrooms as $cls)
-                  <option value="{{ $cls->id }}" {{ (string)($classroomId ?? '') === (string)$cls->id ? 'selected' : '' }}>
-                    {{ $cls->name }}
-                  </option>
-                @endforeach
-              </select>
+            <div class="col-12 col-md-6 d-flex justify-content-end align-items-center">
+              <form method="GET" action="{{ route('instructor.reports.expected_earnings') }}" class="d-flex flex-wrap justify-content-end">
+                <div class="form-group mb-2 mr-2 d-flex align-items-center" style="min-width:140px;">
+                  <label for="month" class="sr-only mb-0 mr-2">Month</label>
+                  <input type="month" id="month" name="month" value="{{ $month ?? '' }}" class="form-control form-control-sm" />
+                </div>
+                <div class="form-group mb-2 mr-2 d-flex align-items-center" style="min-width:160px;">
+                  <label for="classroom_id" class="sr-only mb-0 mr-2">Classroom</label>
+                  <select id="classroom_id" name="classroom_id" class="form-control form-control-sm">
+                    <option value="">All Classrooms</option>
+                    @foreach($classrooms as $cls)
+                      <option value="{{ $cls->id }}" {{ (string)($classroomId ?? '') === (string)$cls->id ? 'selected' : '' }}>
+                        {{ $cls->name }}
+                      </option>
+                    @endforeach
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary mb-2">Apply</button>
+                <a href="{{ route('instructor.reports.expected_earnings') }}" class="btn btn-sm btn-outline-secondary mb-2 ml-2">Reset</a>
+              </form>
             </div>
-            <button type="submit" class="btn btn-sm btn-primary mb-2">Apply</button>
-            <a href="{{ route('instructor.reports.expected_earnings') }}" class="btn btn-sm btn-outline-secondary mb-2 ml-2">Reset</a>
-          </form>
+          </div>
         </div>
 
         {{-- ── Summary Cards ── --}}

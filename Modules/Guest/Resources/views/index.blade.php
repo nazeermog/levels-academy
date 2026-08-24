@@ -20,6 +20,14 @@
     // Count helpers (locale aware)
     $courseWord = fn ($n) => $n . ' ' . ($n == 1 ? __('landing.word_course') : __('landing.word_courses'));
     $lessonWord = fn ($n) => $n . ' ' . ($n == 1 ? __('landing.word_lesson') : __('landing.word_lessons'));
+
+    // Org-aware branding: on yasmine.levels-academy.com show the org's logo, name and theme.
+    $org          = $currentOrganization ?? null;
+    $defaultBrand = __('landing.hero_eyebrow');
+    $brandName    = $org && $org->name ? $org->name : $defaultBrand;
+    $brandLogo    = $org ? asset('images/logo/' . $org->subdomain . '.png') : asset('images/logo/Levels-logo.png');
+    // Swap the brand name inside translated prose without forking the lang files.
+    $brand        = fn ($key, $r = []) => str_replace($defaultBrand, $brandName, __($key, $r));
 @endphp
 <!DOCTYPE html>
 <html lang="{{ $locale }}" dir="{{ $isRtl ? 'rtl' : 'ltr' }}">
@@ -28,13 +36,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{ __('landing.hero_eyebrow') }} — {{ __('landing.cta_title') }}</title>
+    <title>{{ $brandName }} — {{ __('landing.cta_title') }}</title>
     <meta name="description" content="{{ strip_tags(__('landing.hero_lead')) }}">
-    <link rel="icon" href="{{ asset('images/logo/Levels-logo.png') }}" type="image/png">
+    <link rel="icon" href="{{ $brandLogo }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/landing.css') }}" rel="stylesheet">
+    @if ($org)
+    {{-- Yasmine brand recolor: green-dominant (emerald + mint) with a jasmine-pink accent. --}}
+    <style>
+        :root {
+            --teal: #2f9e7a; --teal-dark: #1f7a50; --teal-darker: #16593a; --teal-soft: #eaf7f1;
+            --gradient: linear-gradient(135deg, #57c99a 0%, #1f7a50 100%);
+            --gradient-dark: linear-gradient(135deg, #1f7a50 0%, #12583a 100%);
+        }
+        .hero__blob--2 { background: linear-gradient(135deg, #d996b0, var(--teal)) !important; }
+    </style>
+    @endif
 </head>
 
 <body class="{{ $isRtl ? 'is-rtl' : '' }}">
@@ -43,7 +62,7 @@
     <header class="nav" id="nav">
         <div class="container nav__inner">
             <a href="{{ route('guest.index') }}" class="nav__brand">
-                <img src="{{ asset('images/logo/Levels-logo.png') }}" alt="{{ __('landing.hero_eyebrow') }}">
+                <img src="{{ $brandLogo }}" alt="{{ $brandName }}">
             </a>
 
             <ul class="nav__links">
@@ -88,7 +107,7 @@
     <section class="hero">
         <div class="container hero__grid">
             <div class="hero__copy">
-                <span class="eyebrow"><span class="dot"></span> {{ __('landing.hero_eyebrow') }}</span>
+                <span class="eyebrow"><span class="dot"></span> {{ $brandName }}</span>
                 <h1>{!! __('landing.hero_title') !!}</h1>
                 <p class="hero__lead">{{ __('landing.hero_lead') }}</p>
                 <div class="hero__cta">
@@ -125,7 +144,7 @@
                 <span class="hero__blob hero__blob--1"></span>
                 <span class="hero__blob hero__blob--2"></span>
                 <div class="hero__photo">
-                    <img src="{{ asset('images/photodune-4161018-group-of-students-m.jpg') }}" alt="{{ __('landing.hero_eyebrow') }}">
+                    <img src="{{ asset('images/photodune-4161018-group-of-students-m.jpg') }}" alt="{{ $brandName }}">
                 </div>
                 <div class="float-card float-card--tl">
                     <span class="ico">
@@ -182,7 +201,7 @@
             <div class="section-head reveal">
                 <span class="eyebrow"><span class="dot"></span> {{ __('landing.features_eyebrow') }}</span>
                 <h2>{{ __('landing.features_title') }}</h2>
-                <p>{{ __('landing.features_sub') }}</p>
+                <p>{{ $brand('landing.features_sub') }}</p>
             </div>
 
             <div class="grid-3">
@@ -336,7 +355,7 @@
                 <div class="step reveal">
                     <div class="step__num">1</div>
                     <h3>{{ __('landing.step1_t') }}</h3>
-                    <p>{{ __('landing.step1_d') }}</p>
+                    <p>{{ $brand('landing.step1_d') }}</p>
                 </div>
                 <div class="step reveal" data-delay="1">
                     <div class="step__num">2</div>
@@ -359,7 +378,7 @@
                 <div class="section-head reveal">
                     <span class="eyebrow"><span class="dot"></span> {{ __('landing.blog_eyebrow') }}</span>
                     <h2>{{ __('landing.blog_title') }}</h2>
-                    <p>{{ __('landing.blog_sub') }}</p>
+                    <p>{{ $brand('landing.blog_sub') }}</p>
                 </div>
 
                 <div class="cards cards--3">
@@ -380,7 +399,7 @@
                                 <div class="card__title">{{ $blog->title }}</div>
                                 <div class="blogcard__foot">
                                     <span class="blogcard__avatar">{{ $initials }}</span>
-                                    <span class="blogcard__author">{{ $author ?: __('landing.blog_author_fallback') }}</span>
+                                    <span class="blogcard__author">{{ $author ?: $brand('landing.blog_author_fallback') }}</span>
                                 </div>
                             </div>
                         </a>
@@ -397,7 +416,7 @@
                 <span class="cta__pattern"></span>
                 <div class="cta__inner">
                     <h2>{{ __('landing.cta_title') }}</h2>
-                    <p>{{ __('landing.cta_sub') }}</p>
+                    <p>{{ $brand('landing.cta_sub') }}</p>
                     <a href="{{ route('login') }}" class="btn btn-white btn-lg">{{ __('landing.cta_btn') }}</a>
                 </div>
             </div>
@@ -409,7 +428,7 @@
         <div class="container">
             <div class="footer__grid">
                 <div class="footer__brand">
-                    <img src="{{ asset('images/logo/Levels-logo.png') }}" alt="{{ __('landing.hero_eyebrow') }}">
+                    <img src="{{ $brandLogo }}" alt="{{ $brandName }}">
                     <p>{{ __('landing.footer_about') }}</p>
                 </div>
                 <div>
@@ -443,7 +462,7 @@
                 </div>
             </div>
             <div class="footer__bottom">
-                <span>{{ __('landing.footer_rights', ['year' => date('Y')]) }}</span>
+                <span>{{ $brand('landing.footer_rights', ['year' => date('Y')]) }}</span>
                 <div class="footer__social">
                     <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
                     <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>

@@ -4,8 +4,10 @@ namespace DataSource\Http\Controllers\Admin\Instructor;
 
 use DataSource\Entities\Instructor\Instructor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use DataSource\Entities\User\User;
+use DataSource\Entities\Organization\Organization;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\Instructor\Store;
 use DataSource\Http\Requests\Admin\Instructor\Update;
@@ -26,29 +28,34 @@ class AdminInstructorController extends BaseController
     public function create()
     {
         $users = User::all();
+        $currentOrg = request()->attributes->get('currentOrganization');
+        $organizations = Organization::when($currentOrg && Auth::user()?->role !== 'super_admin', fn($query) => $query->whereKey($currentOrg->id))->orderBy('name')->get();
         $route_name = $this->route_name;
         $table_name = $this->table_name;
-        return view($this->module . '.create', compact('route_name', 'table_name','users'));
+        return view($this->module . '.create', compact('route_name', 'table_name', 'users', 'organizations'));
     }
     public function show($id)
     {
         $users = User::all();
+        $currentOrg = request()->attributes->get('currentOrganization');
+        $organizations = Organization::when($currentOrg && Auth::user()?->role !== 'super_admin', fn($query) => $query->whereKey($currentOrg->id))->orderBy('name')->get();
         $route_name = $this->route_name;
         $table_name = $this->table_name;
-        $item=Instructor::find($id);
-        return view($this->module . '.show', compact('route_name', 'table_name','users','item'));
+        $item = Instructor::find($id);
+        return view($this->module . '.show', compact('route_name', 'table_name', 'users', 'organizations', 'item'));
     }
-    
+
     public function store(Request $request)
     {
         $storeRequest = new Store();
         $data = $request->validate($storeRequest->rules());
+        $data['organization_id'] = $this->organizationId($request);
 
         $lessonRepo = $this->getRepository();
 
 
         //dd($data);
-        $course = $lessonRepo->store($request,$data);
+        $course = $lessonRepo->store($request, $data);
 
         return redirect()->route('admin.instructors.index')->withSuccess('instructor created successfully');
     }
@@ -56,15 +63,22 @@ class AdminInstructorController extends BaseController
     {
         $storeRequest = new Update();
         $data = $request->validate($storeRequest->rules());
+        $data['organization_id'] = $this->organizationId($request);
 
         $lessonRepo = $this->getRepository();
 
 
         // dd($data);
-        $course = $lessonRepo->update($request,$data);
+        $course = $lessonRepo->update($request, $data);
 
         return redirect()->route('admin.instructors.index')->withSuccess('instructor created successfully');
     }
-    
 
+    private function organizationId(Request $request): ?int
+    {
+        $currentOrg = $request->attributes->get('currentOrganization');
+        return $currentOrg && Auth::user()?->role !== 'super_admin'
+            ? (int) $currentOrg->id
+            : ($request->input('organization_id') ?: null);
+    }
 }

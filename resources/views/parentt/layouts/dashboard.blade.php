@@ -14,7 +14,8 @@
           content="IE=edge">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Levels Academy</title>
+    <title>{{ config('app.name') }}</title>
+    <link rel="icon" href="{{ $brandLogo ?? asset('images/logo/Levels-logo.png') }}" type="image/png">
 
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots"

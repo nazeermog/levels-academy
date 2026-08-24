@@ -1,34 +1,55 @@
-/* Yasmine theme: import base app.css then override colors (old values commented) */
+/* ============================================================================
+   Yasmine theme — matched to yasmine-center.com: green-dominant (deep emerald
+   CTAs + bright mint) with jasmine-pink as the accent (logo / soft tints).
+   Loads the full base app first, then overrides brand colors + clean touches.
+   ============================================================================ */
 @import url('app.css');
 
 :root {
-    /* --blue: #aad8ce; */
-    --blue: #3b82f6;
-    /* --primary: #f6c200; */
-    --primary: #6a1b9a;
-    /* --secondary: #aad8ce; */
-    --secondary: #8e24aa;
-    /* --success: #77c13a; */
-    --success: #43a047;
-    /* --info: #17a2b8; */
-    --info: #5e35b1;
-    /* --warning: #e4a93c; */
-    --warning: #fb8c00;
-    /* --danger: #d9534f; */
-    --danger: #e53935;
-    /* --light: #ebebeb; */
-    --light: #f5e9ff;
-    /* --dark: #303840; */
-    --dark: #2a2438;
-    /* --accent: #ed0b4c; */
-    --accent: #ab47bc;
+    /* Brand palette (old base values kept in comments for easy revert) */
+    /* --blue: #aad8ce; */      --blue: #1f7a50;        /* emerald (primary CTAs) */
+    /* --primary: #f6c200; */   --primary: #1f7a50;     /* deep emerald — "Join Class" buttons */
+    /* --secondary: #aad8ce; */ --secondary: #57c99a;   /* bright mint */
+    /* --success: #77c13a; */   --success: #2f9e7a;     /* medium green */
+    /* --info: #17a2b8; */      --info: #4cbf8c;
+    /* --warning: #e4a93c; */   --warning: #f5a623;     /* star gold */
+    /* --danger: #d9534f; */    --danger: #d9534f;
+    /* --light: #ebebeb; */     --light: #eef8f2;       /* pale mint */
+    /* --dark: #303840; */      --dark: #1b2a24;        /* near-black green */
+    /* --accent: #ed0b4c; */    --accent: #d996b0;      /* jasmine pink (logo) */
+
+    --ys-green: #1f7a50;
+    --ys-green-dark: #16593a;
+    --ys-mint: #57c99a;
+    --ys-pink: #d996b0;
+    --ys-pink-dark: #c47a98;
 }
 
-[dir] .btn-primary { /* was #5567ff */ background-color: var(--primary); }
+/* Buttons — flat, rounded, confident emerald */
+[dir] .btn { border-radius: 8px; font-weight: 600; }
+[dir] .btn-primary { background-color: var(--primary); border-color: var(--primary); }
 [dir] .btn-primary:hover,
-[dir] .btn-primary:focus { /* was #2f45ff */ background-color: #5e1a8a; }
+[dir] .btn-primary:focus,
+[dir] .btn-primary:active { background-color: var(--ys-green-dark); border-color: var(--ys-green-dark); }
+[dir] .btn-outline-primary { color: var(--primary); border-color: var(--primary); }
+[dir] .btn-outline-primary:hover { background-color: var(--primary); border-color: var(--primary); color: #fff; }
+[dir] .btn-success { background-color: var(--ys-mint); border-color: var(--ys-mint); }
+[dir] .btn-success:hover { background-color: var(--success); border-color: var(--success); }
+
+/* Accents */
 [dir] .bg-primary { background-color: var(--primary) !important; }
-[dir] .text-primary { color: var(--primary) !important; }
-[dir] .preloader { /* was #5567ff */ background: var(--primary); }
+.text-primary { color: var(--primary) !important; }
+[dir] .bg-success { background-color: var(--ys-mint) !important; }
+.text-success { color: var(--success) !important; }
+a { color: var(--ys-green); }
+a:hover { color: var(--ys-green-dark); }
+[dir] .preloader { background: var(--primary); }
 
+/* Jasmine-pink accent (badges / highlights) */
+[dir] .badge-primary { background-color: var(--primary); }
+[dir] .badge-accent, [dir] .badge-pink { background-color: var(--ys-pink); color: #fff; }
 
+/* Cleaner surfaces */
+[dir] .card { border-radius: 12px; border-color: rgba(31, 122, 80, 0.12); }
+[dir] .page-item.active .page-link { background-color: var(--primary); border-color: var(--primary); }
+[dir] .form-control:focus { border-color: var(--ys-mint); box-shadow: 0 0 0 0.15rem rgba(87, 201, 154, 0.22); }

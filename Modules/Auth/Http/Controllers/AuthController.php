@@ -33,9 +33,9 @@ class AuthController extends Controller
     return match ($role) {
       'student' => route('student.dashboard'),
       'super_admin' => route('admin.dashboard'),
-      // When organizations are active, admins land on their Organization Dashboard;
-      // otherwise (merged mode) they land on the global Dashboard.
-      'admin' => config('features.organizations') ? route('admin.org.dashboard') : route('admin.dashboard'),
+      // Admins get the full global admin experience (same as super_admin minus the
+      // Organizations tab); they land on the global Dashboard.
+      'admin' => route('admin.dashboard'),
       'parentt' => route('parentt.dashboard'),
       'instructor' => route('instructor.dashboard'),
       default => route('login'),

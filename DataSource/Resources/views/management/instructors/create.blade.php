@@ -44,6 +44,16 @@
       </div>
 
       <div class="col-md-3 m-1">
+        <label for="organization_id">Organization</label>
+        <select class="form-control" name="organization_id" id="organization_id">
+          <option value="">Select organization</option>
+          @foreach($organizations as $organization)
+          <option value="{{ $organization->id }}" {{ request()->attributes->get('currentOrganization') && auth()->user()->role !== 'super_admin' && request()->attributes->get('currentOrganization')->id == $organization->id ? 'selected' : '' }}>{{ $organization->name }}</option>
+          @endforeach
+        </select>
+      </div>
+
+      <div class="col-md-3 m-1">
         <label for="avatar">avatar</label>
         <input class="form-control-file" type="file" name="avatar" id="avatar">
       </div>

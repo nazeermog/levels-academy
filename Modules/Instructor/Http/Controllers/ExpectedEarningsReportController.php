@@ -28,7 +28,7 @@ class ExpectedEarningsReportController extends Controller
         $classroomsQuery = Classroom::with(['defaultSessionType'])
             ->where('instructor_id', $instructorId)
             ->whereNotNull('class_session_type_id')
-            ->when(!empty($classroomId), fn ($q) => $q->where('id', $classroomId));
+            ->when(!empty($classroomId), fn($q) => $q->where('id', $classroomId));
 
         $classroomRows = $classroomsQuery->orderBy('name')->get();
 
@@ -82,7 +82,7 @@ class ExpectedEarningsReportController extends Controller
         $daysCsv = (string) $classroom->days_of_week;
         $days    = array_values(array_filter(
             array_map('intval', explode(',', $daysCsv)),
-            fn ($v) => $v >= 1 && $v <= 7
+            fn($v) => $v >= 1 && $v <= 7
         ));
 
         // If specific weekdays are configured, count how many of those days fall in the month

@@ -31,6 +31,16 @@
         <label for="password">Password</label>
         <input class="form-control" type="password" name="password">
       </div>
+
+      <div class="col-md-3 my-3 m-1">
+        <label for="organization_id">Organization</label>
+        <select class="form-control" name="organization_id" id="organization_id">
+          <option value="">Select organization</option>
+          @foreach($organizations as $organization)
+          <option value="{{ $organization->id }}" {{ request()->attributes->get('currentOrganization') && auth()->user()->role !== 'super_admin' && request()->attributes->get('currentOrganization')->id == $organization->id ? 'selected' : '' }}>{{ $organization->name }}</option>
+          @endforeach
+        </select>
+      </div>
     </div>
 
     <div class="col-md-3 m-1">

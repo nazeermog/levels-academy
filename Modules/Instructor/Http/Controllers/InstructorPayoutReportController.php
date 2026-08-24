@@ -52,7 +52,7 @@ class InstructorPayoutReportController extends Controller
     private function buildPayoutData(Request $request): array
     {
         $instructorId = Auth::id();
-        $month = $request->input('month'); // null => all time
+        $month = $request->input('month', Carbon::now()->format('Y-m'));
         $studentFilterId = $request->input('student_id');
         $typeFilterId = $request->input('class_session_type_id');
         $classroomFilterId = $request->input('classroom_id');

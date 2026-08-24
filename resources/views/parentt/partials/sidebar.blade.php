@@ -92,7 +92,7 @@
                         ['route' => 'parentt.childrenEvents', 'icon' => 'event', 'en' => 'Watch childrens events', 'ar' => 'شاهد فعاليات أطفالك', 'de' => 'Sehen Sie sich die Veranstaltungen Ihrer Kinder an'],
                         ['route' => 'parentt.notes.childernNotes', 'icon' => 'note', 'en' => 'View Notes', 'ar' => 'عرض الملاحظات', 'de' => 'Notizen anzeigen'],
                         ['route' => 'parentt.classrooms.sessions', 'icon' => 'event_note', 'en' => 'Classroom Sessions', 'ar' => 'جلسات الصف', 'de' => 'Unterrichtssitzungen'],
-                        ['route' => 'parentt.transactions.index', 'icon' => 'format_shapes', 'en' => 'View Transactions', 'ar' => 'عرض المعاملات', 'de' => 'Transaktionen anzeigen'],
+                        ['route' => 'parentt.transactions.index', 'icon' => 'receipt_long', 'en' => 'Transactions Report', 'ar' => 'تقرير المعاملات', 'de' => 'Transaktionsbericht'],
                         ['route' => 'parentt.addmoney.show', 'icon' => 'add_circle', 'en' => 'Add Money', 'ar' => 'إضافة رصيد', 'de' => 'Geld hinzufügen'],
                         ['route' => 'parentt.absences.index', 'icon' => 'event_busy', 'en' => 'Absence Requests', 'ar' => 'طلبات الغياب', 'de' => 'Fehlzeitenanträge'],
                     ];
@@ -106,7 +106,7 @@
                             class="sidebar-menu-button {{ $isActive ? 'active' : '' }}"
                             href="{{ route($item['route']) }}"
                         >
-                            <span class="material-icons sidebar-menu-icon">{{ $item['icon'] }}</span>
+                            <span class="material-icons sidebar-menu-icon" style="color:#ffffff;">{{ $item['icon'] }}</span>
                             <span class="sidebar-menu-text font-droid">
                                 {{ $item[$locale] ?? $item['en'] }}
                             </span>

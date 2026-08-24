@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use DataSource\Entities\User\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use DataSource\Entities\Course\Course;
 use Illuminate\Support\Facades\Storage;
 use DataSource\Entities\Parentt\Parentt;
 use DataSource\Entities\Student\Student;
+use DataSource\Entities\Organization\Organization;
 use DataSource\Entities\Inrollment\Inrollment;
 use DataSource\Http\Controllers\BaseController;
 use DataSource\Http\Requests\Admin\Student\Store;
@@ -33,7 +35,10 @@ class AdminStudentController extends BaseController
     {
         $route_name = $this->route_name;
         $table_name = $this->table_name;
-        return view($this->module . '.create', compact('route_name', 'table_name'));
+        $currentOrg = request()->attributes->get('currentOrganization');
+        $organizations = Organization::when($currentOrg && Auth::user()?->role !== 'super_admin', fn($query) => $query->whereKey($currentOrg->id))
+            ->orderBy('name')->get();
+        return view($this->module . '.create', compact('route_name', 'table_name', 'organizations'));
     }
 
     public function show($user_id)
@@ -41,7 +46,10 @@ class AdminStudentController extends BaseController
         $route_name = $this->route_name;
         $table_name = $this->table_name;
         $item = $this->getRepository()->find($user_id);
-        return view($this->module . '.show', compact('route_name', 'table_name', 'item'));
+        $currentOrg = request()->attributes->get('currentOrganization');
+        $organizations = Organization::when($currentOrg && Auth::user()?->role !== 'super_admin', fn($query) => $query->whereKey($currentOrg->id))
+            ->orderBy('name')->get();
+        return view($this->module . '.show', compact('route_name', 'table_name', 'item', 'organizations'));
     }
 
     public function store(Request $request)
@@ -58,6 +66,7 @@ class AdminStudentController extends BaseController
             $user->email = $request->input('email');
             $user->password = bcrypt($request->input('password'));
             $user->role = 'student';
+            $user->organization_id = $this->organizationId($request);
             $user->save();
 
             $student = new Student();
@@ -94,6 +103,7 @@ class AdminStudentController extends BaseController
             $user->first_name = $request->input('first_name');
             $user->last_name = $request->input('last_name');
             $user->email = $request->input('email');
+            $user->organization_id = $this->organizationId($request);
             // Don't change role on edit — trial students are promoted only via the
             // explicit "Promote to student" action, not by editing their details.
 
@@ -140,6 +150,14 @@ class AdminStudentController extends BaseController
         return back()->withSuccess('Trial student upgraded to a full student.');
     }
 
+    private function organizationId(Request $request): ?int
+    {
+        $currentOrg = $request->attributes->get('currentOrganization');
+        return $currentOrg && Auth::user()?->role !== 'super_admin'
+            ? (int) $currentOrg->id
+            : ($request->input('organization_id') ?: null);
+    }
+
     public function tiles()
     {
         $studentsCount = Student::count();
@@ -160,14 +178,20 @@ class AdminStudentController extends BaseController
     }
     public function importform()
     {
-        return view('datasource::management.student.import');
+        $currentOrg = request()->attributes->get('currentOrganization');
+        $organizations = Organization::when($currentOrg && Auth::user()?->role !== 'super_admin', fn($query) => $query->whereKey($currentOrg->id))
+            ->orderBy('name')->get();
+        return view('datasource::management.student.import', compact('organizations'));
     }
 
     public function import(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:csv,txt|max:2048',
+            'organization_id' => 'required|exists:organizations,id',
         ]);
+
+        $organizationId = $this->organizationId($request);
 
         $file = $request->file('file');
         $allData = [];
@@ -197,6 +221,7 @@ class AdminStudentController extends BaseController
                         'first_name' => $data['first_name'] ?? '',
                         'last_name'  => $data['last_name'] ?? '',
                         'password'   => Hash::make($plainPassword),
+                        'organization_id' => $organizationId,
                     ]
                 );
 

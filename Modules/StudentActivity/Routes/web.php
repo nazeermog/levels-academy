@@ -17,6 +17,7 @@ Route::group([
     Route::post('/notes/{note}/check', [ParenttNotesController::class, 'check'])->name('parentt.notes.check');
     Route::get('/classroom-sessions', [ParenttNotesController::class, 'childrenClassroomSessions'])->name('parentt.classrooms.sessions');
     Route::get('/transactions', [ParenttTransactionController::class, 'transactions'])->name('parentt.transactions.index');
+    Route::get('/transactions/pdf', [ParenttTransactionController::class, 'transactionsPdf'])->name('parentt.transactions.pdf');
     Route::get('addmoney', [ParenttTransactionController::class, 'showAddMoney'])->name('parentt.addmoney.show');
     Route::post('/add-money', [ParenttTransactionController::class, 'addMoney'])->name('parentt.addmoney');
 

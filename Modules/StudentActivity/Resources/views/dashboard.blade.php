@@ -9,7 +9,7 @@
         ['route' => 'parentt.childrenEvents',         'icon' => 'event',       'bg' => 'bg-blue',  'en' => "Children's Events",   'ar' => 'شاهد فعاليات أطفالك', 'de' => 'Veranstaltungen der Kinder'],
         ['route' => 'parentt.notes.childernNotes',    'icon' => 'note',        'bg' => 'bg-gray',  'en' => 'View Notes',          'ar' => 'عرض الملاحظات',       'de' => 'Notizen anzeigen'],
         ['route' => 'parentt.classrooms.sessions',    'icon' => 'event_note',  'bg' => 'bg-blue',  'en' => 'Classroom Sessions',  'ar' => 'جلسات الصف',          'de' => 'Unterrichtssitzungen'],
-        ['route' => 'parentt.transactions.index',     'icon' => 'attach_money','bg' => 'bg-green', 'en' => 'Transactions',        'ar' => 'عرض المعاملات',       'de' => 'Transaktionen'],
+        ['route' => 'parentt.transactions.index',     'icon' => 'receipt_long','bg' => 'bg-green', 'en' => 'Transactions',        'ar' => 'عرض المعاملات',       'de' => 'Transaktionen'],
         ['route' => 'parentt.addmoney.show',          'icon' => 'add_circle',  'bg' => 'bg-gray',  'en' => 'Add Money',           'ar' => 'إضافة رصيد',          'de' => 'Geld hinzufügen'],
         ['route' => 'parentt.absences.index',         'icon' => 'event_busy',  'bg' => 'bg-blue',  'en' => 'Absence Requests',    'ar' => 'طلبات الغياب',        'de' => 'Fehlzeitenanträge'],
     ];

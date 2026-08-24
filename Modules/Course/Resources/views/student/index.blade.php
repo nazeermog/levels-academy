@@ -105,7 +105,7 @@
             <img src="{{asset('/images/paths/woderhafen.jpeg')}}" width="40" alt="Angular" class="rounded">
           </a>
           <div class="flex">
-            <a class="card-title" href="#">Wunderhafen</a>
+            <a class="card-title" href="#">{{ config('app.name') }}</a>
             <p class="lh-1 mb-0">
               <span class="text-50 small">Elijah Murray</span>
             </p>
