@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\SendSessionWhatsApp;
+use App\Jobs\SendSessionReminderWhatsApp;
 use App\Support\SessionMessage;
 
 class ClassSessionController extends Controller
@@ -41,7 +42,7 @@ class ClassSessionController extends Controller
             ->where('instructor_id', Auth::id())
             ->get();
 
-        $events = $sessions->map(fn (ClassSession $session) => $this->toCalendarEvent($session));
+        $events = $sessions->map(fn(ClassSession $session) => $this->toCalendarEvent($session));
 
         return response()->json($events);
     }
@@ -80,6 +81,7 @@ class ClassSessionController extends Controller
             'is_given' => (bool) ($data['is_given'] ?? false),
             'zoom_url' => $data['zoom_url'] ?? null,
         ]);
+        $this->scheduleReminder($session);
 
         return redirect()->route('instructor.sessions.index')->with('success', 'Session updated.');
     }
@@ -107,6 +109,7 @@ class ClassSessionController extends Controller
             $this->sendInvites($classroom, $session, $studentUserIds, $instructorId);
 
             DB::commit();
+            $this->scheduleReminder($session);
 
             return redirect()->route('instructor.sessions.attendance', $session->id)
                 ->with('success', 'Session saved. Mark each student as given when the session is delivered.');
@@ -203,7 +206,7 @@ class ClassSessionController extends Controller
             ->with('session.sessionType')
             ->select('class_session_student.*')
             ->get()
-            ->sum(fn ($r) => (float) optional(optional($r->session)->sessionType)->teacher_payout);
+            ->sum(fn($r) => (float) optional(optional($r->session)->sessionType)->teacher_payout);
 
         return view('instructor::classrooms.sessions.history', compact('rows', 'totalEarned'));
     }
@@ -251,7 +254,7 @@ class ClassSessionController extends Controller
             'price'      => $type->price,
             'type'       => 'once',
             'is_credit'  => 0,
-            'desc'       => 'Class session #'.$session->id.' charge: '.$type->name,
+            'desc'       => 'Class session #' . $session->id . ' charge: ' . $type->name,
         ]);
     }
 
@@ -270,7 +273,7 @@ class ClassSessionController extends Controller
 
         return [
             'id' => $session->id,
-            'title' => $typeName ? $classroomName.' · '.$typeName : $classroomName,
+            'title' => $typeName ? $classroomName . ' · ' . $typeName : $classroomName,
             'start' => optional($session->held_at)->toIso8601String(),
             'end' => $session->end_at ? $session->end_at->toIso8601String() : null,
             'url' => route('instructor.sessions.edit', $session->id),
@@ -343,6 +346,12 @@ class ClassSessionController extends Controller
                 return;
             }
 
+            // Test mode redirects every recipient to one number, so queue one invite
+            // instead of sending the same session invite once per real parent.
+            if (config('services.whatsapp.test_to')) {
+                $parentUserIds = array_slice($parentUserIds, 0, 1);
+            }
+
             $meta = $this->buildInviteMeta($classroom, $session, $instructorEmail, $this->fullName($instructor));
 
             // Only send once the surrounding transaction has committed.
@@ -360,6 +369,40 @@ class ClassSessionController extends Controller
         }
     }
 
+    private function scheduleReminder(ClassSession $session): void
+    {
+        if (!$session->held_at || $session->reminder_sent_at) {
+            return;
+        }
+
+        if (config('queue.default') === 'sync') {
+            Log::warning('[WhatsApp] reminder not scheduled because QUEUE_CONNECTION=sync', [
+                'session_id' => $session->id,
+            ]);
+            return;
+        }
+
+        $reminderAt = $session->held_at->copy()->subMinutes(SessionMessage::reminderLeadMinutes());
+        if ($reminderAt->lte(now())) {
+            Log::info('[WhatsApp] reminder skipped because the configured reminder window has passed', [
+                'session_id' => $session->id,
+                'held_at' => $session->held_at->toIso8601String(),
+            ]);
+            return;
+        }
+
+        try {
+            SendSessionReminderWhatsApp::dispatch($session->id)
+                ->onQueue('default')
+                ->delay($reminderAt);
+        } catch (\Throwable $e) {
+            Log::error('[WhatsApp] could not schedule session reminder', [
+                'session_id' => $session->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
     /**
      * Static invite details shared by every recipient of this session.
      */
@@ -369,9 +412,9 @@ class ClassSessionController extends Controller
         $tz = config('app.timezone', 'UTC');
 
         return [
-            'uid' => 'session-'.$session->id.'@'.$domain,
-            'summary' => 'Class Session at '.$classroom->name,
-            'description' => 'Classroom: '.$classroom->name."\n".(string) ($session->content ?? ''),
+            'uid' => 'session-' . $session->id . '@' . $domain,
+            'summary' => 'Class Session at ' . $classroom->name,
+            'description' => 'Classroom: ' . $classroom->name . "\n" . (string) ($session->content ?? ''),
             'organizer_email' => $instructorEmail,
             'organizer_name' => $instructorName ?: null,
             'start_utc' => Carbon::parse($session->held_at, $tz)->setTimezone('UTC'),
@@ -483,6 +526,6 @@ class ClassSessionController extends Controller
             return '';
         }
 
-        return trim(($user->first_name ?? '').' '.($user->last_name ?? ''));
+        return trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''));
     }
 }

@@ -44,14 +44,15 @@ return [
      | so dev/local (no gateway running) never errors.
      */
     'whatsapp' => [
-        'enabled'      => env('WHATSAPP_ENABLED', false),
-        'base_url'     => env('WHATSAPP_API_URL', 'http://localhost:2785'),
-        'api_key'      => env('WHATSAPP_API_KEY'),
-        'session'      => env('WHATSAPP_SESSION', 'levels-academy'),
-        'country_code' => env('WHATSAPP_COUNTRY_CODE', '963'),
+        'enabled'            => env('WHATSAPP_ENABLED', false),
+        'base_url'           => env('WHATSAPP_API_URL', 'http://localhost:2785'),
+        'api_key'            => env('WHATSAPP_API_KEY'),
+        'session'            => env('WHATSAPP_SESSION', 'levels-academy'),
+        'country_code'       => env('WHATSAPP_COUNTRY_CODE', '963'),
+        'reminder_lead_hours' => (float) env('WHATSAPP_REMINDER_LEAD_HOURS', 2),
         // While set, EVERY message is redirected to this number instead of the real
         // parent — for testing without messaging families. Leave empty in production.
-        'test_to'      => env('WHATSAPP_TEST_TO'),
+        'test_to'            => env('WHATSAPP_TEST_TO'),
     ],
 
 ];

@@ -34,7 +34,16 @@ class GenerateClassSessionsForMonth extends Command
         }
         $monthEnd = (clone $monthStart)->endOfMonth()->endOfDay();
 
-        $this->info('Generating sessions for: '.$monthStart->format('F Y'));
+        // The existing-session check and inserts must run as one process. Without a lock,
+        // two scheduler/CLI processes can both see the same date as missing and insert it.
+        $lockName = 'levels-academy:generate-sessions:' . $monthStart->format('Y-m');
+        $lock = DB::selectOne('SELECT GET_LOCK(?, 0) AS acquired', [$lockName]);
+        if (!$lock || !(int) $lock->acquired) {
+            $this->warn('Session generation is already running for ' . $monthStart->format('Y-m') . '.');
+            return self::SUCCESS;
+        }
+
+        $this->info('Generating sessions for: ' . $monthStart->format('F Y'));
 
         $classrooms = Classroom::query()
             ->whereNotNull('instructor_id')
@@ -45,7 +54,9 @@ class GenerateClassSessionsForMonth extends Command
 
         foreach ($classrooms as $classroom) {
             $perWeek = (int) $classroom->repeats_per_week;
-            if ($perWeek <= 0) { continue; }
+            if ($perWeek <= 0) {
+                continue;
+            }
 
             // Count existing sessions in the target month for idempotency
             $existing = ClassSession::query()
@@ -109,20 +120,21 @@ class GenerateClassSessionsForMonth extends Command
                                 'price' => $perStudentPrice,
                                 'type' => 'once',
                                 'is_credit' => 0,
-                                'desc' => 'Class session #'.$session->id.' charge: '.$typeName,
+                                'desc' => 'Class session #' . $session->id . ' charge: ' . $typeName,
                             ]);
                         }
                     }
                 }
                 DB::commit();
-                $this->info("Created ".count($datesToCreate)." sessions for classroom #{$classroom->id}");
+                $this->info("Created " . count($datesToCreate) . " sessions for classroom #{$classroom->id}");
             } catch (\Throwable $e) {
                 DB::rollBack();
-                $this->error("Failed generating sessions for classroom #{$classroom->id}: ".$e->getMessage());
+                $this->error("Failed generating sessions for classroom #{$classroom->id}: " . $e->getMessage());
             }
         }
 
-        $this->info("Done. Generated {$generatedCount} sessions for ".$monthStart->format('F Y'));
+        DB::selectOne('SELECT RELEASE_LOCK(?) AS released', [$lockName]);
+        $this->info("Done. Generated {$generatedCount} sessions for " . $monthStart->format('F Y'));
         return self::SUCCESS;
     }
 
@@ -143,7 +155,7 @@ class GenerateClassSessionsForMonth extends Command
                 $monthEnd->copy()->endOfWeek(Carbon::SUNDAY)
             );
 
-            [$hh, $mm, $ss] = array_map('intval', explode(':', strlen($sessionTime) === 5 ? $sessionTime.':00' : $sessionTime));
+            [$hh, $mm, $ss] = array_map('intval', explode(':', strlen($sessionTime) === 5 ? $sessionTime . ':00' : $sessionTime));
 
             $results = [];
             foreach ($period as $weekStart) {

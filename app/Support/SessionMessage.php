@@ -46,4 +46,49 @@ class SessionMessage
 
         return implode("\n", $lines);
     }
+
+    public static function reminderLeadMinutes(): int
+    {
+        $hours = (float) config('services.whatsapp.reminder_lead_hours', 2);
+        $hours = $hours > 0 ? $hours : 2;
+
+        return (int) round($hours * 60);
+    }
+
+    public static function reminderLeadText(): string
+    {
+        $minutes = self::reminderLeadMinutes();
+        $hours = intdiv($minutes, 60);
+        $remainder = $minutes % 60;
+
+        if ($hours > 0 && $remainder === 0) {
+            return $hours === 1 ? '1 hour' : $hours . ' hours';
+        }
+
+        if ($hours > 0) {
+            $hourText = $hours === 1 ? '1 hour' : $hours . ' hours';
+            $minuteText = $remainder === 1 ? '1 minute' : $remainder . ' minutes';
+
+            return $hourText . ' and ' . $minuteText;
+        }
+
+        return $minutes === 1 ? '1 minute' : $minutes . ' minutes';
+    }
+
+    public static function reminderBody(array $meta, ?string $tz = null): string
+    {
+        $useTz = ($tz && in_array($tz, timezone_identifiers_list(), true)) ? $tz : null;
+        $zone = $useTz ?: 'UTC';
+        $label = $useTz ? ' (' . $useTz . ')' : ' UTC';
+        $startText = Carbon::parse($meta['start_utc'])->setTimezone($zone)->format('Y-m-d H:i') . $label;
+
+        return implode("\n", [
+            'Reminder from Yasmine Center',
+            '',
+            'Your lesson starts in ' . self::reminderLeadText() . '.',
+            '',
+            'Classroom: ' . ($meta['classroom_name'] ?? 'Class session'),
+            'Time: ' . $startText,
+        ]);
+    }
 }

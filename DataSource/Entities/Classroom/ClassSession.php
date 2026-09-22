@@ -26,6 +26,7 @@ class ClassSession extends Model
     protected $casts = [
         'held_at' => 'datetime',
         'end_at' => 'datetime',
+        'reminder_sent_at' => 'datetime',
         'is_given' => 'boolean',
     ];
 
@@ -78,5 +79,3 @@ class ClassSession extends Model
         return $this->belongsTo(ClassSessionType::class, 'class_session_type_id');
     }
 }
-
-

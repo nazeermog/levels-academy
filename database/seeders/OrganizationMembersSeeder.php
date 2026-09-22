@@ -80,25 +80,28 @@ class OrganizationMembersSeeder extends Seeder
                 $students[] = $student;
             }
 
-            // Link parents to students (1-to-1 mapping for sample data)
-            $parentUserIds = collect($parents)->pluck('user_id')->map(fn($id) => (int) $id)->all();
-            $studentUserIds = collect($students)->pluck('user_id')->map(fn($id) => (int) $id)->all();
+            // Link each generated parent to the matching generated student.
+            // On the current seeded database this is Parent 8 -> Student 11,
+            // Parent 9 -> Student 12, and Parent 10 -> Student 13.
+            $parentUserIds = collect($parents)->pluck('user_id')->map(fn($id) => (int) $id)->filter()->values()->all();
+            $studentUserIds = collect($students)->pluck('user_id')->map(fn($id) => (int) $id)->filter()->values()->all();
 
             // Reset links for this org's generated parents/students to keep deterministic mapping.
             DB::table('parentt_student')
                 ->whereIn('parentt_id', $parentUserIds)
                 ->orWhereIn('student_id', $studentUserIds)
+                ->orWhere('parentt_id', 0)
+                ->orWhere('student_id', 0)
                 ->delete();
 
-            for ($i = 0; $i < 3; $i++) {
-                if (isset($parents[$i]) && isset($students[$i])) {
-                    // Parent i -> Student i (user_id based keys)
-                    $parentUserId = (int) $parents[$i]->user_id;
-                    $studentUserId = (int) $students[$i]->user_id;
+            for ($i = 1; $i <= 3; $i++) {
+                $parentUserId = User::where('email', "parent{$i}@{$sub}.com")->value('id');
+                $studentUserId = User::where('email', "student{$i}@{$sub}.com")->value('id');
 
-                    DB::table('parentt_student')->insert([
-                        'parentt_id' => $parentUserId,
-                        'student_id' => $studentUserId,
+                if ($parentUserId && $studentUserId) {
+                    DB::table('parentt_student')->insertOrIgnore([
+                        'parentt_id' => (int) $parentUserId,
+                        'student_id' => (int) $studentUserId,
                     ]);
                 }
             }
@@ -130,5 +133,3 @@ class OrganizationMembersSeeder extends Seeder
         }
     }
 }
-
-

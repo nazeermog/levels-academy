@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\SendSessionWhatsApp;
+use App\Jobs\SendSessionReminderWhatsApp;
 use App\Support\SessionMessage;
 use DataSource\Entities\User\User;
 use DataSource\Entities\Parentt\Parentt;
@@ -33,9 +34,9 @@ class AdminFreeSessionController extends BaseController
 
         // Scheduled + given so the admin sees the full lifecycle of every assignment.
         $scheduled = FreeSessionRequest::whereIn('status', [
-                FreeSessionRequest::STATUS_SCHEDULED,
-                FreeSessionRequest::STATUS_GIVEN,
-            ])
+            FreeSessionRequest::STATUS_SCHEDULED,
+            FreeSessionRequest::STATUS_GIVEN,
+        ])
             ->with(['user:id,first_name,last_name,email', 'instructor:id,first_name,last_name'])
             ->latest('scheduled_at')
             ->limit(50)
@@ -117,6 +118,7 @@ class AdminFreeSessionController extends BaseController
         // Scheduling is committed. Send the WhatsApp notification in the background AFTER
         // the response — a delivery failure must never affect the (already saved) assignment.
         $this->sendInvite($freeSession, $session, $slot);
+        $this->scheduleReminder($session);
 
         return redirect()->route('admin.free-sessions.index')
             ->with('success', 'Free session scheduled. A WhatsApp message is being sent to the user.');
@@ -174,6 +176,39 @@ class AdminFreeSessionController extends BaseController
             Log::error('[WhatsApp][free] Notify block failed', [
                 'request_id' => $freeSession->id ?? null,
                 'error'      => $e->getMessage(),
+            ]);
+        }
+    }
+
+    private function scheduleReminder(ClassSession $session): void
+    {
+        if (!$session->held_at) {
+            return;
+        }
+
+        if (config('queue.default') === 'sync') {
+            Log::warning('[WhatsApp][free] reminder not scheduled because QUEUE_CONNECTION=sync', [
+                'session_id' => $session->id,
+            ]);
+            return;
+        }
+
+        $reminderAt = $session->held_at->copy()->subMinutes(SessionMessage::reminderLeadMinutes());
+        if ($reminderAt->lte(now())) {
+            Log::info('[WhatsApp][free] reminder skipped because the configured reminder window has passed', [
+                'session_id' => $session->id,
+            ]);
+            return;
+        }
+
+        try {
+            SendSessionReminderWhatsApp::dispatch($session->id)
+                ->onQueue('default')
+                ->delay($reminderAt);
+        } catch (\Throwable $e) {
+            Log::error('[WhatsApp][free] could not schedule session reminder', [
+                'session_id' => $session->id,
+                'error' => $e->getMessage(),
             ]);
         }
     }
